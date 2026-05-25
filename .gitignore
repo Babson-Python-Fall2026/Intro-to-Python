@@ -1,0 +1,36 @@
+# ==========================================================
+# .gitignore for Intro to Python Class
+# ==========================================================
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VS Code personal settings
+
+
+# Windows junk files
+Thumbs.db
+Desktop.ini
+
+# Mac junk files
+.DS_Store
+
+# Log files
+*.log
+
+# Temp files
+*.tmp
+
+# Sync state (created by sync.ps1)
+.student_config.txt
