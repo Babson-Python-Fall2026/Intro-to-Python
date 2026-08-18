@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Workbook 2 — Python Foundations</title>
+<style>
+:root {
+  --bg:       #f4f3f0;
+  --paper:    #ffffff;
+  --text:     #1c2732;
+  --muted:    #4a5568;
+  --line:     #d1d9e0;
+  --heading:  #0d2137;
+  --accent:   #1a6b9a;
+  --accent2:  #2d7a4e;
+  --aha:      #c75e1c;
+
+  --concept:  #e8f3ff;
+  --exercise: #e6f4ec;
+  --mental:   #f0eaff;
+  --warning:  #fdecea;
+  --design:   #fff8e1;
+  --tryex:    #e8f7f3;
+  --check:    #f0f7ff;
+  --aha-bg:   #fff4ec;
+  --unlock:   #18695a;
+  --unlock-bg:#e7f5f1;
+  --unlock-edge:#a8d6c8;
+
+  --code-bg:  #f5f7fa;
+  --table-hd: #eef2f6;
+  --nav-bg:   #edf1f5;
+
+  --radius:   16px;
+  --shadow:   0 1px 3px rgba(13,33,55,.07);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+}
+
+.page { max-width: 1380px; margin: 0 auto; padding: 28px 20px 100px; }
+
+header, .toc {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+header { padding: 32px 36px; margin-bottom: 22px; }
+
+.topnote {
+  background: var(--nav-bg);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 11px 15px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: .97rem;
+}
+
+.workbook-strip {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.wb-pill {
+  font-family: sans-serif;
+  font-size: .82rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+}
+.wb-pill.current {
+  background: var(--heading);
+  color: #fff;
+  border-color: var(--heading);
+  font-weight: bold;
+}
+
+.section-title {
+  margin: 42px 0 16px;
+  padding-top: 26px;
+  border-top: 2px solid var(--line);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(290px, .9fr);
+  gap: 26px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.main {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+}
+
+.sidebar {
+  position: sticky;
+  top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+h1, h2, h3, h4 { color: var(--heading); line-height: 1.2; }
+h1 { font-size: 2.5rem; margin: 0 0 12px; }
+h2 { font-size: 1.9rem; margin: 0 0 18px; }
+h3 { font-size: 1.2rem; margin: 0 0 8px; }
+h4 { font-size: 1.06rem; margin: 22px 0 8px; color: var(--accent); }
+p, li { font-size: 1.04rem; }
+.lede { font-size: 1.13rem; max-width: 84ch; }
+.muted { color: var(--muted); }
+a { color: var(--accent); }
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 16px;
+  box-shadow: var(--shadow);
+}
+.panel h3 { font-size: .97rem; margin-bottom: 7px; }
+.panel p, .panel li { font-size: .97rem; }
+.panel pre { font-size: .88rem; margin: 8px 0 4px; }
+
+.concept  { background: var(--concept);  border-left: 4px solid #5ba3d4; }
+.exercise { background: var(--exercise); border-left: 4px solid #3a9e68; }
+.mental   { background: var(--mental);   border-left: 4px solid #8a6fce; }
+.warning  { background: var(--warning);  border-left: 4px solid #d95c5c; }
+.design   { background: var(--design);   border-left: 4px solid #c49a00; }
+.tryex    { background: var(--tryex);    border-left: 4px solid #2a9d8f; }
+.aha      { background: var(--aha-bg);   border-left: 4px solid var(--aha); }
+
+.aha-block {
+  background: var(--aha-bg);
+  border: 1px solid #f0c8a8;
+  border-left: 5px solid var(--aha);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+.aha-block .aha-label {
+  font-size: .78rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--aha);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ── Now You Can (unlock) ───────────────────────────── */
+.unlock-block {
+  background: var(--unlock-bg);
+  border: 1px solid var(--unlock-edge);
+  border-left: 5px solid var(--unlock);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 18px 0 8px;
+}
+.unlock-label {
+  font-size: .76rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--unlock);
+  margin-bottom: 6px;
+  display: block;
+}
+.unlock-block p { margin: 4px 0 0; font-size: 1rem; }
+.unlock-block ul { margin: 6px 0 0; padding-left: 20px; }
+.unlock-block li { font-size: .98rem; margin-bottom: 3px; }
+
+/* ── Glossary ───────────────────────────────────────── */
+.glossary {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(0, 3fr);
+  gap: 8px 24px;
+  margin: 16px 0 0;
+}
+.glossary dt {
+  font-weight: bold;
+  color: var(--heading);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .94rem;
+  padding-top: 2px;
+  border-top: 1px solid var(--line);
+}
+.glossary dt:first-of-type, .glossary dd:first-of-type { border-top: none; padding-top: 0; }
+.glossary dd {
+  margin: 0;
+  font-size: .98rem;
+  padding-top: 2px;
+  border-top: 1px solid var(--line);
+}
+.glossary dd:first-of-type { border-top: none; padding-top: 0; }
+.glossary .letter-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 4px;
+}
+.glossary .letter-jump a {
+  font-family: sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--table-hd);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--accent);
+}
+.glossary .letter-group { margin-top: 22px; }
+.glossary .letter-group h4 {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+  color: var(--accent);
+}
+
+.check {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid #c2d9ef;
+  border-radius: 12px;
+  background: var(--check);
+}
+.check h4 {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 1rem;
+  border-bottom: 1px solid #c2d9ef;
+  padding-bottom: 6px;
+}
+.check ol { margin: 6px 0 0; padding-left: 20px; }
+.check li { font-size: .99rem; margin-bottom: 5px; }
+
+.transition-note {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .96rem;
+  font-style: italic;
+}
+
+.ref-label {
+  display: inline-block;
+  font-size: .75rem;
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--table-hd);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+code, pre {
+  font-family: "Cascadia Code", Consolas, Menlo, Monaco, monospace;
+  font-size: .93rem;
+  font-variant-ligatures: none;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid #e0e6ed;
+  border-radius: 11px;
+  padding: 14px 17px;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  white-space: pre-wrap;
+  line-height: 1.48;
+}
+
+.diagram {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .9rem;
+  background: #fafbfc;
+  border: 1px solid #dce4ec;
+  border-left: 5px solid #9fb3c8;
+  border-radius: 10px;
+  padding: 12px 15px;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  line-height: 1.5;
+}
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; }
+th, td { border: 1px solid var(--line); padding: 9px 12px; vertical-align: top; font-size: .99rem; }
+th { background: var(--table-hd); text-align: left; }
+
+.toc { padding: 20px 26px; margin: 20px 0 36px; }
+.toc h2 { margin-bottom: 14px; font-size: 1.4rem; }
+.toc ol { columns: 2; column-gap: 44px; margin: 0; padding-left: 22px; }
+.toc li { break-inside: avoid; margin-bottom: 7px; font-size: .99rem; }
+.toc li .aha-marker {
+  display: inline-block;
+  font-size: .68rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  color: var(--aha);
+  margin-left: 6px;
+  letter-spacing: .05em;
+}
+
+.footer-note {
+  margin-top: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  font-style: italic;
+}
+
+.workbook-pointer {
+  background: linear-gradient(135deg, #e8f3ff 0%, #f0eaff 100%);
+  border: 1px solid #c2d9ef;
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin: 16px 0;
+}
+.workbook-pointer h4 {
+  margin: 0 0 8px;
+  color: var(--heading);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 980px) {
+  .toc ol { columns: 1; }
+  .section { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="workbook-strip">
+    <span class="wb-pill">Workbook 1 — Working with AI</span>
+    <span class="wb-pill current">Workbook 2 — Python Foundations</span>
+    <span class="wb-pill">Workbook 3 — Data Structures &amp; Patterns</span>
+    <span class="wb-pill">Workbook 4 — The ISTI Model</span>
+  </div>
+  <div class="topnote"><strong>Design note:</strong> this workbook is meant to be read on screen while you code in VS Code. It is written to support prediction, experimentation, and modification in <code>scratch.py</code> — not passive reading.</div>
+  <h1>Workbook 2 — Foundations of Programming in Python</h1>
+  <p class="lede">This workbook builds the Python fluency you need for everything that follows. The goal is not to memorize syntax. The goal is to understand how Python stores information, how it changes information, and how to investigate behavior when something is unclear. That foundation is what lets you direct AI rather than be directed by it.</p>
+  <p class="muted"><strong>Recommended workflow:</strong> predict what the code will do, run it, observe carefully, change one thing, and run it again. Three recurring landmarks appear throughout: <span style="color:var(--aha);font-weight:bold;font-size:.85rem;">⚡ KEY IDEA</span> marks the most important conceptual moments — slow down for those. <span style="color:var(--unlock);font-weight:bold;font-size:.85rem;">⚙ NOW YOU CAN</span> appears at the end of each section to name the skill it unlocks. <span style="color:var(--accent);font-weight:bold;font-size:.85rem;">✔ CHECK YOUR UNDERSTANDING</span> ends each section with questions you should be able to answer before moving on.</p>
+</header>
+
+<!-- ══════════════ TOC ══════════════ -->
+<section class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#sec1">How to Use This Workbook</a></li>
+    <li><a href="#sec2">Computers Store Data and Change Data</a></li>
+    <li><a href="#sec3">Objects, Types, and Investigation Tools</a></li>
+    <li><a href="#sec4">Expressions, Statements, Operations, and Precedence</a></li>
+    <li><a href="#sec5">Working with Strings</a></li>
+    <li><a href="#sec6">Working with Lists</a></li>
+    <li><a href="#sec7">Working with Tuples</a></li>
+    <li><a href="#sec8">Working with Dictionaries</a></li>
+    <li><a href="#sec9">Three Ways to Talk to an Object <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec10">Variables, References, and Aliasing</a></li>
+    <li><a href="#sec11">Mutability, Rebinding, and Copying <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec12">Boolean Logic and Control Flow</a></li>
+    <li><a href="#sec13">Loops, Range, and the Accumulator Pattern</a></li>
+    <li><a href="#sec14">Tracing — Making Code Behavior Visible</a></li>
+    <li><a href="#sec15">Nested Lists and Multi-Dimensional Structures</a></li>
+    <li><a href="#sec16">Functions, Methods, and Function Signatures</a></li>
+    <li><a href="#sec17">Importing Modules and Paths in VS Code</a></li>
+    <li><a href="#sec18">Files and JSON</a></li>
+    <li><a href="#sec19">Handling Errors with try / except</a></li>
+    <li><a href="#sec20">Debugging — A Practical Walkthrough <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec21">Python Mental Model Summary</a></li>
+    <li><a href="#sec22">Glossary</a></li>
+  </ol>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 1 -->
+<h2 class="section-title" id="sec1">1. How to Use This Workbook</h2>
+<section class="section">
+  <article class="main">
+    <p>Your first job is to build language fluency and a reliable mental model of how Python behaves. You are not just learning Python — you are learning how to investigate a system.</p>
+    <p>Whenever something feels unclear, do not stare at the code passively. Create a tiny exercise and run it. Small experiments are one of the fastest ways to turn confusion into understanding. A good experiment is usually only three to ten lines long.</p>
+    <h4>Recommended working habit</h4>
+    <p>Create a file called <code>scratch.py</code> in VS Code. Use it whenever you want to test a small idea without touching your main program.</p>
+    <pre>a = [1, 2]
+b = a
+b.append(3)
+
+print(a)
+print(b)</pre>
+    <p>Before you run this, write down what you predict each <code>print</code> will produce. Then run it. If the actual output surprises you, that surprise is the most valuable thing in this workbook — it means your mental model needs an adjustment. Sections 10 and 11 will explain why.</p>
+    <p>Then change one thing and rerun. For example, replace <code>b.append(3)</code> with <code>b = b + [3]</code>. Does the behavior stay the same? If not, why not?</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Investigate any Python confusion by running a 3-10 line experiment. This is the single most important habit in this workbook — confusion becomes evidence the moment you turn it into a small experiment.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Why is a small test file like <code>scratch.py</code> useful?</li>
+        <li>What is the advantage of changing only one thing at a time in an experiment?</li>
+        <li>What is the purpose of predicting an output before running the code?</li>
+      </ol>
+    </div>
+    <p class="transition-note">With your working environment ready, Section 2 introduces the single most important idea in this workbook: every program stores data and changes data.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It — Use a Scratch File</h3><p>When something in Python is unclear, open <code>scratch.py</code> and test the smallest possible version of the idea.</p></div>
+    <div class="panel mental"><h3>🧠 Predict Before You Run</h3><p>Running code without predicting first teaches your fingers, not your mind. Predict, then run. The gap between prediction and reality is where learning happens.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 2 -->
+<h2 class="section-title" id="sec2">2. Computers Store Data and Change Data</h2>
+<section class="section">
+  <article class="main">
+    <p>Nearly every program can be understood by asking just two questions:</p>
+    <ul>
+      <li>What information is stored?</li>
+      <li>What operations change that information?</li>
+    </ul>
+    <p>A spreadsheet stores numbers and updates them when formulas run. A game stores positions and scores and updates them when the player acts. A bank stores balances and changes them when transactions occur. A portfolio program stores cash and positions and changes them when a trade is recorded.</p>
+    <pre>balance = 100
+print(balance)
+balance = balance + 25
+print(balance)</pre>
+    <p>Predict the output before running. Then run it. Then change the starting value and rerun.</p>
+    <h4>Questions worth asking about any program</h4>
+    <ul>
+      <li>What value is stored before the update?</li>
+      <li>What value is stored after the update?</li>
+      <li>Which line changes the stored value?</li>
+      <li>What value is produced by <code>balance + 25</code>?</li>
+      <li>Would the same pattern hold if we updated the value twice?</li>
+    </ul>
+    <p>These questions will reappear throughout the workbook in increasingly precise forms. By the end of the course they become the framework called <strong>State, Transitions, and Invariants</strong> — but the seed is here.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Read any program and ask the two questions that organize all of programming: what information is stored, and what operations change it?</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In the example above, which line performs the update?</li>
+        <li>What is the difference between the value stored before the update and the value produced by <code>balance + 25</code>?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 3 introduces the building blocks Python uses to store information — objects, types, and the tools that let you inspect them.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Central Idea</h3><p>Computers store data and change data. Nearly every program can be understood through these two lenses.</p></div>
+    <div class="panel warning"><h3>⚠ When Reading Code, Ask</h3>
+      <ul>
+        <li>Is this line computing a value?</li>
+        <li>Is this line creating or rebinding a reference?</li>
+        <li>Is this line changing an existing object?</li>
+        <li>Is this line controlling the flow of execution?</li>
+      </ul>
+      <p style="margin-top:8px;">These four categories cover almost everything Python does.</p>
+    </div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 3 -->
+<h2 class="section-title" id="sec3">3. Objects, Types, and Investigation Tools</h2>
+<section class="section">
+  <article class="main">
+    <p>In Python, every value you work with is an object. Numbers are objects. Strings are objects. Lists and dictionaries are objects. Every object has two things: <strong>data</strong> (its current value) and <strong>operations</strong> (what you can do with it).</p>
+    <div class="diagram">object = data + operations</div>
+
+    <span class="ref-label">Reference — built-in data types</span>
+    <table>
+      <tr><th>Type</th><th>Example</th><th>What it models</th></tr>
+      <tr><td><code>int</code></td><td><code>7</code></td><td>Whole numbers</td></tr>
+      <tr><td><code>float</code></td><td><code>3.14</code></td><td>Decimal numbers</td></tr>
+      <tr><td><code>str</code></td><td><code>"apple"</code></td><td>Text</td></tr>
+      <tr><td><code>bool</code></td><td><code>True</code></td><td>True/False conditions</td></tr>
+      <tr><td><code>list</code></td><td><code>[1, 2, 3]</code></td><td>Ordered, mutable sequence</td></tr>
+      <tr><td><code>tuple</code></td><td><code>(3, 5)</code></td><td>Fixed ordered grouping</td></tr>
+      <tr><td><code>dict</code></td><td><code>{"AAPL": 10}</code></td><td>Key/value mapping</td></tr>
+      <tr><td><code>set</code></td><td><code>{1, 2, 3}</code></td><td>Unordered unique values</td></tr>
+    </table>
+
+    <h4>Two investigation tools: type() and id()</h4>
+    <p>Python gives you two simple built-in functions for looking at any object. You will use them constantly during this course to investigate behavior that surprises you.</p>
+    <ul>
+      <li><code>type(x)</code> — tells you <em>what kind of object</em> <code>x</code> currently refers to.</li>
+      <li><code>id(x)</code> — tells you <em>which object</em> <code>x</code> currently refers to. If <code>id(a) == id(b)</code>, then <code>a</code> and <code>b</code> are literally the same object, not just equal objects.</li>
+    </ul>
+    <pre>x = 7
+y = 3.14
+name = "Alice"
+items = [1, 2, 3]
+
+print(type(x))         # &lt;class 'int'&gt;
+print(type(name))      # &lt;class 'str'&gt;
+print(type(items))     # &lt;class 'list'&gt;
+
+print(id(x))           # a big number — the object's identity
+print(id(items))       # a different big number</pre>
+    <p>The exact numbers from <code>id()</code> don't matter. What matters is whether two ids are equal — that tells you whether two variables refer to the same object. This becomes crucial in Sections 10 and 11.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Number vs Numeral</span>
+      <p style="margin:0;"><code>7</code> is a number. <code>"7"</code> is text that happens to look like a number. Python treats them completely differently:</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;margin-top:10px;">7 + 7        # 14   — arithmetic
+"7" + "7"    # "77" — string concatenation
+"7" + 7      # TypeError — Python will not guess what you meant</pre>
+      <p style="margin:8px 0 0;">Most beginner bugs in this course will trace back to a value being a string when you thought it was an integer, or vice versa. <code>type()</code> is your first debugging tool when something doesn't behave the way you expect.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Use <code>type()</code> to check what kind of object you have, and <code>id()</code> to check whether two variables refer to the same object. These two tools answer most "wait, why is this happening?" questions in beginner Python.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between a number and a numeral?</li>
+        <li>What does <code>type()</code> tell you about a variable?</li>
+        <li>What does <code>id()</code> tell you that <code>type()</code> does not?</li>
+        <li>Explain what <code>object = data + operations</code> means in your own words.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Before exploring each data type in detail, Section 4 gives you precise vocabulary for talking about what lines of code actually do — vocabulary you will use for the rest of the workbook.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 What is a String?</h3><p>Text made from characters you can type on a keyboard.</p><pre>"hello"
+"AAPL"
+"123 Main Street"</pre></div>
+    <div class="panel concept"><h3>💡 What is a List?</h3><p>An ordered sequence, like a shopping list.</p><pre>["milk", "bread", "eggs"]</pre></div>
+    <div class="panel concept"><h3>💡 What is a Dictionary?</h3><p>A mapping from keys to values.</p><pre>{"AAPL": 10, "MSFT": 5}</pre></div>
+    <div class="panel design"><h3>🧩 Symbols Matter</h3><p><code>[ ]</code> — lists, indexing, slicing<br><code>{ }</code> — dictionaries and sets<br><code>( )</code> — grouping, tuples, function calls</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 4 -->
+<h2 class="section-title" id="sec4">4. Expressions, Statements, Operations, and Precedence</h2>
+<section class="section">
+  <article class="main">
+    <p>These distinctions matter because they help you debug and reason precisely about what code is doing. They apply to everything else in this workbook.</p>
+
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Category</th><th>Meaning</th><th>Examples</th></tr>
+      <tr><td><strong>Expression</strong></td><td>Produces a value</td><td><code>3 + 5</code>, <code>len(items)</code></td></tr>
+      <tr><td><strong>Operation</strong></td><td>A computation inside an expression</td><td><code>+</code>, <code>*</code>, function call, method call</td></tr>
+      <tr><td><strong>Statement</strong></td><td>Performs an action in the program</td><td><code>x = 5</code>, <code>print(x)</code></td></tr>
+    </table>
+
+    <pre>x = len(items) + 3</pre>
+    <p>In this line, <code>len(items) + 3</code> is the <strong>expression</strong>. The function call and the <code>+</code> are <strong>operations</strong> inside that expression. The assignment as a whole is the <strong>statement</strong>.</p>
+    <p>When you are stuck debugging, ask: is this line trying to produce a value, or is it trying to do something? That single question often reveals the source of an error.</p>
+
+    <h4>Arithmetic operators and order of operations</h4>
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+      <tr><td><code>+</code></td><td>addition</td><td><code>3 + 4</code></td><td><code>7</code></td></tr>
+      <tr><td><code>-</code></td><td>subtraction</td><td><code>10 - 3</code></td><td><code>7</code></td></tr>
+      <tr><td><code>*</code></td><td>multiplication</td><td><code>3 * 4</code></td><td><code>12</code></td></tr>
+      <tr><td><code>/</code></td><td>true division</td><td><code>10 / 4</code></td><td><code>2.5</code></td></tr>
+      <tr><td><code>//</code></td><td>floor division</td><td><code>10 // 4</code></td><td><code>2</code></td></tr>
+      <tr><td><code>%</code></td><td>modulus (remainder)</td><td><code>10 % 4</code></td><td><code>2</code></td></tr>
+      <tr><td><code>**</code></td><td>exponentiation</td><td><code>2 ** 3</code></td><td><code>8</code></td></tr>
+    </table>
+    <p>Python evaluates arithmetic in the standard mathematical order: parentheses first, then <code>**</code>, then <code>*</code> , <code>/</code> , <code>//</code> , <code>%</code>, then <code>+</code> , <code>-</code>. Most operations associate left-to-right; <code>**</code> is the exception — it associates right-to-left.</p>
+    <pre>3 + 4 * 5         # 23, not 35  — * before +
+(3 + 4) * 5       # 35           — parentheses first
+2 ** 3 ** 2       # 2 ** 9 = 512  — ** is right-to-left
+10 - 3 - 2        # 5             — left-to-right
+10 / 4            # 2.5           — true division
+10 // 4           # 2             — floor division (integer result)
+10 % 4            # 2             — remainder</pre>
+    <p>Do not memorize precedence tables. When the intended order is not immediately obvious, use parentheses. Clarity is more valuable than cleverness.</p>
+
+    <h4>// and % — two operators worth knowing well</h4>
+    <p><code>//</code> and <code>%</code> answer two questions at the same time: "how many times does <em>this</em> fit into <em>that</em>, and what is left over?" They appear surprisingly often — in pagination, in scheduling, in clock arithmetic, and in unpacking digits from a number.</p>
+    <pre># How many full minutes in 137 seconds, with how many seconds left over?
+minutes = 137 // 60      # 2
+seconds = 137 % 60       # 17
+print(f"{minutes} min {seconds} sec")
+
+# Is 12 even?  An even number divided by 2 leaves remainder 0.
+print(12 % 2 == 0)       # True</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Describe any line of code precisely as a statement, an expression, or an operation. When something breaks, you can ask "which one is failing?" instead of "what's wrong?" — a much more diagnostic question.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In <code>x = len(items) + 3</code>, which part is the statement? Which parts are operations?</li>
+        <li>What is the difference between <code>/</code>, <code>//</code>, and <code>%</code>?</li>
+        <li>Evaluate <code>2 + 3 * 4</code> by hand. Then evaluate <code>(2 + 3) * 4</code>.</li>
+        <li>What does <code>17 % 5</code> evaluate to? Why?</li>
+      </ol>
+    </div>
+    <p class="transition-note">With this vocabulary in hand, Sections 5 through 8 explore each major data type in detail — starting with strings.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 A Useful Debugging Habit</h3><p>When something doesn't work, label each line: is it an expression, a statement, or a control-flow instruction? Then ask: which one is wrong?</p></div>
+    <div class="panel concept"><h3>💡 Parentheses Are Free</h3><p>Parentheses cost nothing and make intent unmistakable. Use them whenever a reader (or future you) might have to think twice about precedence.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 5 -->
+<h2 class="section-title" id="sec5">5. Working with Strings</h2>
+<section class="section">
+  <article class="main">
+    <p>A string is a sequence of characters. Strings appear everywhere — names, menu choices, file paths, stock tickers, dates, and reports.</p>
+    <pre>text = "Babson College"</pre>
+
+    <h4>len() — the length of any sequence</h4>
+    <p><code>len()</code> returns the number of items in any sequence: strings, lists, tuples, dictionaries, and sets. It is one of the most frequently used built-in functions.</p>
+    <pre>print(len("Babson"))            # 6   — characters in a string
+print(len([10, 20, 30]))        # 3   — items in a list
+print(len((1, 2)))              # 2   — items in a tuple
+print(len({"AAPL": 10, "MSFT": 5}))  # 2   — keys in a dictionary</pre>
+
+    <h4>Indexing</h4>
+    <p><strong>Indexing</strong> retrieves a single item by its position. Python counts positions starting at <strong>0</strong>, not 1. The first item is always at index 0, the second at index 1. Negative indices count from the end: <code>-1</code> is the last item, <code>-2</code> is second-to-last.</p>
+    <pre>text = "Babson"
+print(text[0])    # 'B'  — first character
+print(text[1])    # 'a'  — second character
+print(text[-1])   # 'n'  — last character
+print(text[-2])   # 'o'  — second-to-last</pre>
+    <div class="diagram">text = "Babson"
+
+index:    0   1   2   3   4   5
+char :    B   a   b   s   o   n
+
+neg idx: -6  -5  -4  -3  -2  -1</div>
+
+    <h4>Slicing</h4>
+    <p><strong>Slicing</strong> retrieves a range of items, producing a new sequence. The general pattern is:</p>
+    <pre>text[start:stop:step]</pre>
+    <p><code>start</code> is the index where the slice begins (included). <code>stop</code> is where it ends (excluded — the item at <code>stop</code> is not included). <code>step</code> is how many positions to advance each time. All three parts are optional.</p>
+    <pre>text = "Babson College"
+
+print(text[2:8])    # "bson C"   — from index 2 up to but not including 8
+print(text[2:])     # "bson College"  — from index 2 to the end
+print(text[:5])     # "Babso"    — from the beginning up to but not including 5
+print(text[::2])    # "Bbo olg"  — every second character
+print(text[-3:])    # "ege"      — last 3 characters
+print(text[::-1])   # "egelloC nosbaB"  — reversed!</pre>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Reverse-Slicing Surprise</span>
+      <p style="margin:0 0 10px;">If <code>text[::-1]</code> reverses the string, you might expect <code>text[len(text)-1 : -1 : -1]</code> to also reverse it. Predict the output before reading on:</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;">text = "Babson"
+print(text[::-1])                  # ?
+print(text[len(text)-1 : -1 : -1]) # ?</pre>
+      <p style="margin:8px 0;">The first reverses the string. The second produces an empty string <code>""</code>. Why?</p>
+      <p style="margin:0 0 8px;">When Python sees a negative index, it converts it to the equivalent positive index <em>before</em> computing the slice. For a 6-character string, <code>-1</code> becomes <code>5</code>. So <code>text[5 : -1 : -1]</code> is computed as <code>text[5 : 5 : -1]</code> — start at 5, stop at 5, going backward. That asks for nothing, so you get nothing.</p>
+      <p style="margin:0;"><strong>The fix:</strong> when stepping backward to the start of a sequence, omit <code>stop</code> entirely. <code>text[5::-1]</code> works because no stop means "go all the way."</p>
+    </div>
+
+    <h4>Common string methods</h4>
+    <p>Strings have methods you call with dot notation. Most return a new string — strings are immutable, so methods never modify the original.</p>
+
+    <span class="ref-label">Reference — you do not need to memorize this table</span>
+    <table>
+      <tr><th>Method</th><th>Example</th><th>Result</th></tr>
+      <tr><td><code>.upper()</code></td><td><code>"hello".upper()</code></td><td><code>"HELLO"</code></td></tr>
+      <tr><td><code>.lower()</code></td><td><code>"HELLO".lower()</code></td><td><code>"hello"</code></td></tr>
+      <tr><td><code>.strip()</code></td><td><code>" hi ".strip()</code></td><td><code>"hi"</code></td></tr>
+      <tr><td><code>.split(sep=None)</code></td><td><code>"a,b,c".split(",")</code></td><td><code>['a','b','c']</code></td></tr>
+      <tr><td><code>.split()</code> (no arg)</td><td><code>"hi there".split()</code></td><td><code>['hi','there']</code> — splits on any whitespace</td></tr>
+      <tr><td><code>.replace(old, new)</code></td><td><code>"cat".replace("c","b")</code></td><td><code>"bat"</code></td></tr>
+      <tr><td><code>.find(sub)</code></td><td><code>"apple".find("p")</code></td><td><code>1</code> — or <code>-1</code> if not found</td></tr>
+      <tr><td><code>.join(items)</code></td><td><code>",".join(["a","b","c"])</code></td><td><code>"a,b,c"</code></td></tr>
+      <tr><td><code>.startswith(s)</code></td><td><code>"AAPL".startswith("A")</code></td><td><code>True</code></td></tr>
+      <tr><td><code>.endswith(s)</code></td><td><code>"file.csv".endswith(".csv")</code></td><td><code>True</code></td></tr>
+    </table>
+
+    <p><code>.join()</code> matters because many programs build text from pieces:</p>
+    <pre>words = ["Computational", "Thinking", "with", "Python"]
+sentence = " ".join(words)
+print(sentence)   # "Computational Thinking with Python"</pre>
+
+    <h4>f-Strings</h4>
+    <p>f-strings let you embed values directly into a string and control how they are displayed.</p>
+    <pre>f"{value:[fill][align][width][.precision][type]}"</pre>
+    <span class="ref-label">Reference — format specifier slots, in order</span>
+    <table>
+      <tr><th>Slot</th><th>Options</th><th>Meaning</th></tr>
+      <tr><td>Fill</td><td>any single character</td><td>character used to pad (requires align)</td></tr>
+      <tr><td>Align</td><td><code>&lt;</code> <code>&gt;</code> <code>^</code></td><td>left, right, center</td></tr>
+      <tr><td>Width</td><td>a number</td><td>minimum field width</td></tr>
+      <tr><td>Precision</td><td><code>.2</code></td><td>digits after decimal</td></tr>
+      <tr><td>Type</td><td><code>d</code> <code>f</code> <code>%</code></td><td>integer, float, percent</td></tr>
+    </table>
+    <pre>n = 42
+x = 12.5
+p = 0.3789
+name = "Alice"
+
+print(f"{n:>5}")       # "   42"     right-align, width 5
+print(f"{n:0>5}")      # "00042"     zero-fill, right-align, width 5
+print(f"{x:.2f}")      # "12.50"     2 decimals
+print(f"{x:8.2f}")     # "   12.50"  width 8, 2 decimals
+print(f"{p:.1%}")      # "37.9%"     percent, 1 decimal
+print(f"{name:^10}")   # "  Alice   " center, width 10</pre>
+
+    <h4>Building a small table with f-strings</h4>
+    <pre>ticker = "AAPL"
+shares = 10
+price = 205.4
+
+print(f"{'Ticker':^10} {'Shares':^10} {'Price':^10}")
+print(f"{ticker:^10} {shares:^10d} {price:>10.2f}")</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Take any string and slice, index, transform, search, or format it. You can build readable tabular output with f-strings — a skill you'll use in every lab.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between indexing and slicing?</li>
+        <li>In <code>text[2:8]</code>, is the character at index 8 included or excluded?</li>
+        <li>Why does <code>text[len(text)-1 : -1 : -1]</code> not reverse the string? How would you fix it?</li>
+        <li>What does <code>"a,b,,c".split(",")</code> return? (Predict, then check.)</li>
+        <li>Write an f-string that prints a price right-aligned with 2 decimal places in a field of width 10.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 6 introduces lists — the most important mutable data structure in Python.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It — String Methods</h3><pre>text = " alice "
+print(text.strip())            # "alice"
+print(text.upper())            # " ALICE "
+print(text.replace("a", "A"))  # " Alice "</pre><p>Predict before running. Then change the input and observe.</p></div>
+    <div class="panel mental"><h3>🧠 Goal</h3><p>Don't memorize every method. Know the common ones, and trust that the reference table is here when you need it. Recognition matters more than recall.</p></div>
+    <div class="panel concept"><h3>💡 Strings Are Immutable</h3><p>String methods never change the original string — they return a new one. <code>text.upper()</code> does not modify <code>text</code>; it produces a new uppercase string.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 6 -->
+<h2 class="section-title" id="sec6">6. Working with Lists</h2>
+<section class="section">
+  <article class="main">
+    <p>A list is an ordered sequence of objects. Each item occupies a numbered position called an <strong>index</strong>, starting at 0 — exactly as with strings. Lists are <strong>mutable</strong>, which we'll explore properly in Section 11.</p>
+    <pre>numbers = [3, 7, 2]
+mixed   = [10, "AAPL", True]
+nested  = [[1, 2], [3, 4]]
+records = [{"ticker": "AAPL", "shares": 10}, {"ticker": "MSFT", "shares": 5}]</pre>
+
+    <h4>Indexing and slicing</h4>
+    <p>Lists use the same indexing and slicing rules as strings.</p>
+    <pre>items = [10, 20, 30, 40, 50]
+
+print(items[0])     # 10  — first item
+print(items[-1])    # 50  — last item
+print(items[1:3])   # [20, 30]  — index 1 included, index 3 excluded
+print(items[:2])    # [10, 20]
+print(items[2:])    # [30, 40, 50]</pre>
+
+    <h4>Indexing into nested lists</h4>
+    <p>When a list contains other lists, you index step by step — each <code>[ ]</code> reaches one level deeper.</p>
+    <pre>grid = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+print(grid[0])        # [1, 2, 3]   — the first inner list
+print(grid[0][1])     # 2           — second item of the first inner list
+print(grid[2][2])     # 9           — last item of the last inner list</pre>
+    <div class="diagram">grid[0][1]
+   ↑    ↑
+   |    └── second item of that inner list
+   └──── first inner list</div>
+    <p>You'll see this pattern again in Section 14 with full multi-dimensional structures, and in Section 8 with nested dictionaries.</p>
+
+    <h4>Common list methods</h4>
+    <span class="ref-label">Reference — common list methods</span>
+    <table>
+      <tr><th>Method</th><th>Example</th><th>What it does</th><th>Mutates?</th></tr>
+      <tr><td><code>.append(x)</code></td><td><code>a.append(5)</code></td><td>Add one item to the end</td><td>Yes</td></tr>
+      <tr><td><code>.extend(items)</code></td><td><code>a.extend([4,5])</code></td><td>Add multiple items</td><td>Yes</td></tr>
+      <tr><td><code>.insert(i, x)</code></td><td><code>a.insert(1, 9)</code></td><td>Insert at position i</td><td>Yes</td></tr>
+      <tr><td><code>.remove(x)</code></td><td><code>a.remove(3)</code></td><td>Remove first occurrence</td><td>Yes</td></tr>
+      <tr><td><code>.pop()</code></td><td><code>a.pop()</code></td><td>Remove and return last item</td><td>Yes</td></tr>
+      <tr><td><code>.pop(i)</code></td><td><code>a.pop(0)</code></td><td>Remove and return item at i</td><td>Yes</td></tr>
+      <tr><td><code>.sort()</code></td><td><code>a.sort()</code></td><td>Sort in place</td><td>Yes</td></tr>
+      <tr><td><code>.reverse()</code></td><td><code>a.reverse()</code></td><td>Reverse in place</td><td>Yes</td></tr>
+      <tr><td><code>.copy()</code></td><td><code>b = a.copy()</code></td><td>Make a shallow copy</td><td>No — returns new list</td></tr>
+      <tr><td><code>.index(x)</code></td><td><code>a.index(20)</code></td><td>Position of first occurrence</td><td>No — returns int</td></tr>
+      <tr><td><code>.count(x)</code></td><td><code>a.count(5)</code></td><td>How many times x appears</td><td>No — returns int</td></tr>
+    </table>
+
+    <h4>.sort() vs sorted()</h4>
+    <p>There are two ways to sort, and they behave very differently:</p>
+    <pre>numbers = [3, 1, 4, 1, 5]
+
+numbers.sort()             # mutates in place; returns None
+print(numbers)             # [1, 1, 3, 4, 5]
+
+numbers = [3, 1, 4, 1, 5]
+ordered = sorted(numbers)  # creates a new sorted list; original unchanged
+print(numbers)             # [3, 1, 4, 1, 5]
+print(ordered)             # [1, 1, 3, 4, 5]</pre>
+    <p>Use <code>.sort()</code> when you don't need the original order. Use <code>sorted()</code> when you do.</p>
+
+    <h4>enumerate and zip — iterating with extras</h4>
+    <p>These two built-in functions are most often used with lists. <code>enumerate</code> gives you the index along with each item. <code>zip</code> pairs items from two or more sequences.</p>
+    <pre>names = ["Alice", "Bob", "Cara"]
+scores = [88, 91, 79]
+
+for i, name in enumerate(names):
+    print(i, name)             # 0 Alice, 1 Bob, 2 Cara
+
+for name, score in zip(names, scores):
+    print(name, score)         # Alice 88, Bob 91, Cara 79</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Choose between mutating methods and non-mutating functions deliberately, navigate nested structures, and pair items from multiple sequences with <code>zip</code>. You can now also recognize the <code>items = items.sort()</code> bug at a glance.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>How is indexing a nested list different from indexing a flat list?</li>
+        <li>What is the difference between <code>a.pop()</code> and <code>a.pop(0)</code>?</li>
+        <li>What is the difference between <code>.sort()</code> and <code>sorted()</code>? When would you choose each?</li>
+        <li>Use <code>zip</code> to combine the lists <code>tickers</code> and <code>shares</code> into pairs.</li>
+        <li>Write a list containing a number, a string, and another list. Then append one more item.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 7 introduces tuples — a close relative of the list, but immutable.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It</h3><pre>items = [2, 4, 6]
+items.append(8)
+print(items)        # [2, 4, 6, 8]
+items.pop()
+print(items)        # [2, 4, 6]
+items.pop(0)
+print(items)        # [4, 6]</pre><p>Predict each line before running.</p></div>
+    <div class="panel warning"><h3>⚠ Mutation Returns None</h3><p>Most list methods mutate the list and return <code>None</code>. A common mistake is writing <code>items = items.sort()</code> — this rebinds <code>items</code> to <code>None</code>. Use <code>items.sort()</code> alone, or use <code>sorted(items)</code> if you need the result.</p></div>
+    <div class="panel concept"><h3>💡 <code>in</code> — Membership Test</h3><pre>3 in [1, 2, 3]    # True
+"b" in "Babson"   # True
+"AAPL" in prices  # True if key exists</pre></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 7 -->
+<h2 class="section-title" id="sec7">7. Working with Tuples</h2>
+<section class="section">
+  <article class="main">
+    <p>A tuple is an ordered grouping that is <strong>immutable</strong> — it cannot be changed after creation. You cannot append to it, remove from it, or modify any of its items. Attempting to do so raises a <code>TypeError</code>.</p>
+    <pre>point    = (3, 5)
+date     = (2026, 1, 20)
+location = (42.3, -71.2)</pre>
+    <p>Tuples support indexing and iteration like lists, but they have no mutation methods.</p>
+    <pre>point = (3, 5)
+print(point[0])    # 3
+print(point[1])    # 5
+
+point[0] = 99      # TypeError: 'tuple' object does not support item assignment</pre>
+    <p>Tuples are useful for communication and defensive programming — they signal to the reader that these values belong together as one fixed concept and should not be modified. A geographic coordinate, a date, or an RGB color value are natural tuples.</p>
+    <p>Immutability means the tuple object cannot be changed. It does <em>not</em> mean the variable name is permanent — you can always rebind the variable to a new tuple:</p>
+    <pre>point = (3, 5)
+point = (10, 20)   # rebinding — a new tuple is created, the old one is discarded</pre>
+    <p>This distinction between mutating an object and rebinding a variable is the most important idea in Sections 10 and 11. Tuples are a good early example because they leave you only one option: rebind.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Why Tuples Can Be Dictionary Keys but Lists Cannot</span>
+      <p style="margin:0 0 8px;">Dictionary keys must be <strong>immutable</strong>. A tuple can be a key. A list cannot.</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;">scores = {("Alice", 2026): 88, ("Bob", 2026): 91}   # works
+scores = {["Alice", 2026]: 88}                       # TypeError</pre>
+      <p style="margin:8px 0 0;">Why? A dictionary uses a key's value to decide where to store its entry. If the key could change after being stored, the dictionary couldn't find it again. Immutability protects that promise. You will encounter this same logic again — it's the deeper reason mutability matters at all.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Choose tuples over lists when you want to signal "this is a fixed grouping" — coordinates, dates, records, dictionary keys. Recognize when immutability is a feature, not a limitation.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Why might a tuple be a better choice than a list for a date or a geographic coordinate?</li>
+        <li>What happens if you try to call <code>append()</code> on a tuple?</li>
+        <li>What is the difference between a tuple being immutable and a variable being permanent?</li>
+        <li>Why can a tuple be a dictionary key but a list cannot?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 8 covers dictionaries — the go-to structure when you need fast lookup by a named key.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 When to Use a Tuple</h3><p>Use a tuple when a grouping should be treated as one fixed package that cannot and should not be modified — a coordinate, a date, a record returned by a function.</p></div>
+    <div class="panel exercise"><h3>▶ Try It</h3><pre>point = (3, 5)
+print(point[0])    # 3
+print(point[1])    # 5</pre><p>Now try <code>point[0] = 99</code>. Read the error message carefully.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 8 -->
+<h2 class="section-title" id="sec8">8. Working with Dictionaries</h2>
+<section class="section">
+  <article class="main">
+    <p>A dictionary maps <strong>keys</strong> to <strong>values</strong>. A key is a label used to look up the corresponding value.</p>
+    <pre>prices = {"AAPL": 205, "MSFT": 417}</pre>
+
+    <h4>Keys are like indices — but named</h4>
+    <p>A list index is an integer that identifies a position: <code>items[0]</code> uses the number 0 to look up the first item. A dictionary generalizes this idea — instead of integers, you can use any meaningful immutable label as the key.</p>
+    <div class="diagram">List:        items[0]          → integer index
+Dictionary:  prices["AAPL"]    → string key</div>
+    <p>Both give you fast lookup. The difference is that dictionary keys are meaningful names you choose, not positions assigned by order.</p>
+
+    <h4>What can be a key?</h4>
+    <p>Any <strong>immutable</strong> object can be a dictionary key — strings, integers, floats, booleans, and tuples (provided the tuple contains only immutable items). Lists and dictionaries cannot be keys because they are mutable.</p>
+    <pre>by_name   = {"Alice": 88}            # string keys — common
+by_id     = {1001: "Alice"}          # integer keys
+by_coord  = {(0, 0): "origin"}       # tuple keys — useful for grids
+by_list   = {[1, 2]: "nope"}         # TypeError — lists are mutable</pre>
+
+    <h4>Access and update</h4>
+    <pre>prices = {"AAPL": 205, "MSFT": 417}
+
+print(prices["AAPL"])      # 205  — look up by key
+prices["GOOG"] = 180       # add a new key/value pair
+prices["AAPL"] = 210       # update an existing value</pre>
+
+    <h4>Common dictionary methods</h4>
+    <span class="ref-label">Reference — common dictionary methods</span>
+    <table>
+  <tbody><tr><th>Method</th><th>Example</th><th>What it does</th><th>Mutates?</th></tr>
+  <tr><td><code>.keys()</code></td><td><code>d.keys()</code></td><td>View of all keys</td><td>No</td></tr>
+  <tr><td><code>.values()</code></td><td><code>d.values()</code></td><td>View of all values</td><td>No</td></tr>
+  <tr><td><code>.items()</code></td><td><code>d.items()</code></td><td>View of key/value pairs</td><td>No</td></tr>
+  <tr><td><code>.get(key)</code></td><td><code>d.get("AAPL")</code></td><td>Safe lookup — returns <code>None</code> if missing</td><td>No</td></tr>
+  <tr><td><code>.get(key, default)</code></td><td><code>d.get("TSLA", 0)</code></td><td>Safe lookup with a fallback value</td><td>No</td></tr>
+  <tr><td><code>.setdefault(key, default)</code></td><td><code>d.setdefault("TSLA", 0)</code></td><td>Returns value if key exists, else inserts key with default and returns it</td><td>Yes (if missing)</td></tr>
+  <tr><td><code>.update(other)</code></td><td><code>d.update({"TSLA": 3})</code></td><td>Add or update multiple entries</td><td>Yes</td></tr>
+  <tr><td><code>.pop(key)</code></td><td><code>d.pop("AAPL")</code></td><td>Remove and return a value</td><td>Yes</td></tr>
+  <tr><td><code>.pop(key, default)</code></td><td><code>d.pop("XYZ", None)</code></td><td>Remove if present, else default</td><td>Yes (if present)</td></tr>
+</tbody></table>
+
+    <h4>.get() — safer lookup</h4>
+    <p><code>d["missing"]</code> raises a <code>KeyError</code> and crashes. <code>d.get("missing")</code> returns <code>None</code>. <code>d.get("missing", 0)</code> returns <code>0</code> — the default you supplied. This is one of the most useful patterns in beginner Python:</p>
+    <pre>counts = {"AAPL": 3, "MSFT": 2}
+
+# Count safely, treating missing tickers as 0
+current = counts.get("GOOG", 0)
+counts["GOOG"] = current + 1</pre>
+
+    <h4>Indexing into nested dictionaries</h4>
+    <p>Just as with lists, you step into nested dictionaries one level at a time.</p>
+    <pre>portfolio = {
+    "client": "Alice",
+    "cash": 12000,
+    "positions": [
+        {"ticker": "AAPL", "shares": 10},
+        {"ticker": "MSFT", "shares": 5}
+    ],
+    "notes": ["retirement", "taxable account"]
+}
+
+print(portfolio["client"])                 # "Alice"
+print(portfolio["cash"])                   # 12000
+print(portfolio["positions"])              # the whole list
+print(portfolio["positions"][0])           # {"ticker": "AAPL", "shares": 10}
+print(portfolio["positions"][0]["ticker"]) # "AAPL"
+print(portfolio["notes"][1])               # "taxable account"</pre>
+    <p>This is a realistic representation of a portfolio — a dictionary with a mix of simple values, lists, and lists of dictionaries. You'll work with structures like this throughout the labs.</p>
+
+    <h4>Looping over a dictionary</h4>
+    <p>Dictionaries are iterable. Looping over them is fully covered in Section 13; here is a preview:</p>
+    <pre>portfolio = {"AAPL": 10, "MSFT": 5}
+
+for key in portfolio.keys():
+    print(key)                # "AAPL", "MSFT"
+
+for value in portfolio.values():
+    print(value)              # 10, 5
+
+for key, value in portfolio.items():
+    print(key, value)         # AAPL 10,  MSFT 5</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Store any keyed data — portfolios, lookup tables, configuration, counts. Navigate nested dictionaries one level at a time, and use <code>.get(key, default)</code> to avoid the most common dictionary crash.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>How is a dictionary key similar to a list index? How is it different?</li>
+        <li>Why can a tuple be a dictionary key but a list cannot?</li>
+        <li>What is the difference between <code>d["key"]</code> and <code>d.get("key", 0)</code>?</li>
+        <li>From the nested portfolio above, write the expression that retrieves the shares of MSFT.</li>
+        <li>What does <code>.update()</code> do when a key already exists?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 9 names a pattern you've already been using without realizing — the three different ways Python lets you talk to an object.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It — Safe Lookup</h3><pre>prices = {"AAPL": 205}
+print(prices.get("AAPL", 0))   # 205
+print(prices.get("TSLA", 0))   # 0
+print(prices.get("TSLA"))      # None</pre><p>Now try <code>prices["TSLA"]</code> directly. What happens?</p></div>
+    <div class="panel warning"><h3>⚠ KeyError</h3><p><code>d["missing"]</code> crashes. <code>d.get("missing", default)</code> doesn't. Prefer <code>.get()</code> when a key might not exist.</p></div>
+    <div class="panel mental"><h3>🧠 Dictionaries Are Mutable</h3><p>Like lists, dictionaries can be changed after creation — keys can be added, updated, or removed. The mutability rules from Section 11 apply here too.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 9 — NEW SECTION -->
+<h2 class="section-title" id="sec9">9. Three Ways to Talk to an Object <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+    <p>Stop and look at the code you've been writing. You've been asking objects to do things in three completely different ways, and Python uses different syntax for each. Once you see the pattern, a lot of Python's apparent inconsistency becomes one elegant idea.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ The Pattern</span>
+      <pre style="background:#fff;border:1px solid #f0c8a8;margin:0;">portfolio["AAPL"]    # square brackets — key or index lookup
+numbers.append(4)    # dot notation    — method call (object does something to itself)
+len(numbers)         # parentheses     — function call (something done to the object)</pre>
+      <p style="margin:10px 0 0;">Three syntaxes. Three different relationships to the object.</p>
+    </div>
+
+    <h4>1. Brackets — lookup by key or index</h4>
+    <p>Brackets ask: "give me the item stored at this position or under this name." The object is being indexed into.</p>
+    <pre>text[0]             # first character of a string
+items[3]            # fourth item of a list
+prices["AAPL"]      # value stored under key "AAPL"
+grid[1][2]          # nested — second row, third column</pre>
+
+    <h4>2. Dot notation — methods the object knows about</h4>
+    <p>Dot notation says: "object, do this thing you know how to do." Methods are functions attached to a specific type. <code>append</code> exists on lists, not on strings. <code>upper</code> exists on strings, not on lists.</p>
+    <pre>numbers.append(4)   # lists know how to append
+text.upper()        # strings know how to uppercase
+prices.get("X", 0)  # dictionaries know how to do safe lookup</pre>
+
+    <h4>3. Functions — something done to the object from outside</h4>
+    <p>A function takes the object as an argument and does something with it. Functions work on many types — <code>len</code> works on strings, lists, tuples, dictionaries, and sets, because all of them know how to report their length.</p>
+    <pre>len(text)           # works on strings, lists, tuples, dicts, sets
+type(items)         # works on any object
+sorted(numbers)     # works on any sequence
+id(portfolio)       # works on any object</pre>
+
+    <h4>Why this matters</h4>
+    <p>When you're stuck, ask: which of the three should I be using? Some things you reach for naturally with brackets — looking up an item. Some you reach for with a method — telling the object to change itself. Some you reach for with a function — asking something general about the object.</p>
+    <p>The same object often supports all three. A list can be indexed (<code>items[0]</code>), can have methods called on it (<code>items.append(5)</code>), and can be passed to functions (<code>len(items)</code>). They are not competing — they are three different relationships.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Look at any Python line and identify whether it's a bracket lookup, a method call, or a function call. When you need to do something with an object, you can ask "which of the three syntaxes fits?" instead of guessing.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Which of the three syntaxes is <code>d.get("AAPL", 0)</code>?</li>
+        <li>Which of the three syntaxes is <code>d["AAPL"]</code>?</li>
+        <li>Which of the three syntaxes is <code>len(d)</code>?</li>
+        <li>Can you call <code>append</code> on a string? Why or why not?</li>
+        <li>Why does <code>len()</code> work on so many different types but <code>append()</code> only works on lists?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Now that you can see the patterns in Python's syntax, Sections 10 and 11 confront the most important conceptual idea in the workbook — the difference between variables, references, and the objects they point to.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Three Relationships</h3><p><strong>Brackets</strong> — look up a piece of the object<br><strong>Dot</strong> — the object does something<br><strong>Function</strong> — something is done to the object</p></div>
+    <div class="panel design"><h3>🧩 Recognize, Don't Memorize</h3><p>When you read code, identify each call as one of these three. When you write code, choose the one that fits. You'll find that most of Python falls into one of these three buckets.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 10 -->
+<h2 class="section-title" id="sec10">10. Variables, References, and Aliasing</h2>
+<section class="section">
+  <article class="main">
+    <p>A variable is not an object. A variable is a label that refers to an object. It is more accurate to think of a variable as a sticky note than as a box that holds a value.</p>
+    <div class="diagram">variable name  →  reference  →  object</div>
+    <pre>a = [1, 2]
+b = a
+
+print(id(a))
+print(id(b))     # same number — same object</pre>
+    <div class="diagram">a ─┐
+   ├──► [1, 2]
+b ─┘</div>
+    <p>This is called <strong>aliasing</strong>. Two variables are different labels for the same object. If you change the object through <code>a</code>, the change is visible through <code>b</code> — because they refer to the same thing.</p>
+
+    <h4>Aliasing with a mutable object</h4>
+    <pre>a = [1, 2]
+b = a
+a.append(3)
+print(b)    # [1, 2, 3] — b sees the change</pre>
+    <p>This is exactly the phenomenon you saw in Section 1. There is only one list. <code>a</code> and <code>b</code> are two labels for it.</p>
+
+    <h4>Aliasing with an immutable object</h4>
+    <pre>x = 10
+y = x
+x = 20         # rebinding — x now refers to a different object
+print(y)       # 10 — y still refers to the original</pre>
+    <div class="diagram">Before rebinding:    After x = 20:
+x ─┐                 x ──► 20
+   ├──► 10           y ──► 10
+y ─┘</div>
+    <p>Integers cannot be mutated — you cannot reach into an integer and change its value. So aliasing them is always safe. The risk from aliasing comes only from <strong>mutable</strong> objects like lists and dictionaries.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — This Explains Functions, Too</span>
+      <p style="margin:0 0 10px;">When you pass a variable to a function, Python passes the <em>reference</em>, not a copy of the object. Inside the function, the parameter is just another alias for the same object. Predict what happens:</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;">def add_one(items):
+    items.append(1)
+
+my_list = [10, 20]
+add_one(my_list)
+print(my_list)        # ?</pre>
+      <p style="margin:8px 0 0;">Output: <code>[10, 20, 1]</code>. The function mutated the original list because it had a reference to the same object. This surprises beginners constantly — they assume functions get a private copy. They don't. Aliasing explains why.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Reason about why two variables sometimes act independently and sometimes act as one. You can explain why a function that takes a list "magically" changes the caller's data, and you can use <code>id()</code> to verify whether two variables are aliases.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What does it mean for two variables to be aliases?</li>
+        <li>What does <code>id()</code> help you reason about?</li>
+        <li>If <code>a</code> and <code>b</code> are aliases for the same list and you call <code>a.append(5)</code>, what does <code>b</code> contain? Why?</li>
+        <li>If <code>x = 10</code> and <code>y = x</code>, then <code>x = 20</code>, what does <code>y</code> contain? Why is this different from the list case?</li>
+        <li>Why can a function modify a list passed to it but not an integer passed to it?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 11 builds directly on aliasing: it gives you the crucial distinction between mutating an object and rebinding a variable, and explains when each happens.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Variables Are Sticky Notes</h3><p>Don't picture a variable as a box that contains a value. Picture it as a sticky note attached to an object. Multiple sticky notes can point to the same object.</p></div>
+    <div class="panel concept"><h3>💡 id() Tells You Identity</h3><p><code>id(x) == id(y)</code> means <code>x</code> and <code>y</code> are the same object. Not just equal — literally the same one.</p></div>
+    <div class="panel warning"><h3>⚠ Aliasing Bites With Mutability</h3><p>Aliasing only causes surprises with <strong>mutable</strong> objects — lists and dictionaries. Aliasing integers, strings, and tuples is always safe.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 11 -->
+<h2 class="section-title" id="sec11">11. Mutability, Rebinding, and Copying <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+    <p>This is the most important conceptual section in the workbook. Understanding it will prevent an entire class of confusing bugs and will give you the leverage you need to direct AI confidently.</p>
+
+    <h4>The core distinction: mutating vs rebinding</h4>
+    <p>There are two completely different things that can happen when you "change" something in Python. You must be able to tell them apart:</p>
+    <ul>
+      <li><strong>Mutating an object</strong> — the object itself changes. Its contents are modified in place. Every variable that refers to that object sees the new contents.</li>
+      <li><strong>Rebinding a variable</strong> — the variable is made to point to a different object. The original object is untouched. Other variables that still refer to the original object are unaffected.</li>
+    </ul>
+    <p>Mutation changes what is <em>inside</em> the box. Rebinding moves the label to a different box.</p>
+
+    <h4>Mutation: visible through all aliases</h4>
+    <pre>a = [1, 2]
+b = a              # b is an alias — same object
+
+b.append(3)        # mutation — the object itself changes
+print(a)           # [1, 2, 3] — a sees the change too
+print(b)           # [1, 2, 3]
+print(id(a) == id(b))   # True — still the same object</pre>
+    <div class="diagram">a ─┐
+   ├──► [1, 2, 3]   ← the one object was mutated
+b ─┘</div>
+
+    <h4>Rebinding: only one variable changes</h4>
+    <pre>a = [1, 2]
+b = a              # b is an alias
+
+b = b + [3]        # rebinding — b now points to a new list
+print(a)           # [1, 2]       — original unchanged
+print(b)           # [1, 2, 3]    — new object
+print(id(a) == id(b))   # False — different objects now</pre>
+    <div class="diagram">a ──► [1, 2]        ← original, unchanged
+b ──► [1, 2, 3]     ← brand new object</div>
+
+    <h4>Immutable objects: only rebinding is possible</h4>
+    <p>Integers, floats, strings, and tuples are immutable — they have no methods that change them in place. When their value appears to change, Python is always creating a new object and rebinding the variable:</p>
+    <pre>x = 10
+y = x
+x = 20         # rebinding — x points to a new integer object
+print(x)       # 20
+print(y)       # 10 — y still refers to the original</pre>
+    <p>This is why aliasing integers and strings is always safe — you cannot mutate them at all.</p>
+
+    <h4>Copying fixes the aliasing problem for mutable objects</h4>
+    <pre>a = [1, 2, 3]
+b = a.copy()       # b is a new, independent list
+b.append(4)
+print(a)           # [1, 2, 3]    — unaffected
+print(b)           # [1, 2, 3, 4]</pre>
+
+    <h4>Shallow vs deep copy</h4>
+    <p><code>a.copy()</code> makes a <strong>shallow copy</strong> — a new outer list, but the inner objects are still shared. For a flat list of numbers or strings that's fine, because those items are immutable. But for a list of lists, shallow copying leaves you with a new outer list whose inner lists are still aliased:</p>
+    <pre>import copy
+
+a = [[1, 2], [3, 4]]
+b = a.copy()          # shallow copy
+b[0].append(99)
+print(a)              # [[1, 2, 99], [3, 4]]  — inner list was shared!
+
+a = [[1, 2], [3, 4]]
+c = copy.deepcopy(a)  # deep copy — all inner objects also copied
+c[0].append(99)
+print(a)              # [[1, 2], [3, 4]]  — unaffected</pre>
+
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Action</th><th>What happens</th><th>Other aliases affected?</th></tr>
+      <tr><td>Mutation</td><td>Existing object changes in place</td><td>Yes</td></tr>
+      <tr><td>Rebinding</td><td>Variable points to a different object</td><td>No</td></tr>
+      <tr><td>Aliasing</td><td>Two variables refer to the same object</td><td>n/a — they share fate</td></tr>
+      <tr><td>Shallow copy</td><td>New outer object; inner objects still shared</td><td>No (for flat lists)</td></tr>
+      <tr><td>Deep copy</td><td>Fully independent copy of all nested objects</td><td>No</td></tr>
+    </table>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Why This Matters For AI Use</span>
+      <p style="margin:0;">When you ask AI to fix a bug and the code "doesn't work the way you'd expect," the cause is almost always one of: a mutation that propagated through an alias, a rebinding that didn't propagate to other aliases, or a shallow copy that should have been deep. Knowing these three failure modes lets you diagnose AI-generated code instead of just hoping it works.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Diagnose the single most common class of bug in Python — the one where "the variable changed when I didn't expect it to" or "my function isn't modifying what I expected." You now have the vocabulary (mutation, rebinding, aliasing, shallow vs deep copy) and the tools (<code>id()</code>) to investigate either kind of surprise.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between mutating an object and rebinding a variable?</li>
+        <li>Why does <code>b = a</code> not create a second list?</li>
+        <li>Replace <code>b.append(3)</code> with <code>b = b + [3]</code> in the aliasing example. What changes and why?</li>
+        <li>Why is aliasing an integer safe, but aliasing a list potentially dangerous?</li>
+        <li>When would you need <code>copy.deepcopy()</code> instead of <code>.copy()</code>?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 12 turns to a different category of question — how programs make decisions using boolean logic.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel warning"><h3>⚠ The Most Common Mistake</h3><p><code>b = a</code> does not copy a list. It creates a second reference to the same list. Use <code>b = a.copy()</code> when you want an independent copy.</p></div>
+    <div class="panel exercise"><h3>▶ Try It</h3><p>Run both the mutation example and the rebinding example. Print <code>id(a)</code> and <code>id(b)</code> in each case. What do the ids tell you that <code>print(a)</code> alone doesn't?</p></div>
+    <div class="panel mental"><h3>🧠 The Label and the Box</h3><p>A variable is a label. An object is the box.<br><strong>Mutation</strong> changes what's inside the box.<br><strong>Rebinding</strong> moves the label to a different box.<br>These are different operations with different consequences.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 12 -->
+<h2 class="section-title" id="sec12">12. Boolean Logic and Control Flow</h2>
+<section class="section">
+  <article class="main">
+    <p>Boolean values represent <code>True</code> or <code>False</code>. They are the basis for every decision in a program.</p>
+
+    <h4>Comparison operators</h4>
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Operator</th><th>Meaning</th></tr>
+      <tr><td><code>==</code></td><td>equal to</td></tr>
+      <tr><td><code>!=</code></td><td>not equal to</td></tr>
+      <tr><td><code>&lt;</code></td><td>less than</td></tr>
+      <tr><td><code>&gt;</code></td><td>greater than</td></tr>
+      <tr><td><code>&lt;=</code></td><td>less than or equal to</td></tr>
+      <tr><td><code>&gt;=</code></td><td>greater than or equal to</td></tr>
+    </table>
+
+    <h4>Logical operators</h4>
+    <pre>a and b      # True if both are True
+a or b       # True if either is True
+not a        # flips True to False (and vice versa)
+x in items   # True if x appears in items</pre>
+    <p>Be careful: <code>not x</code> and <code>x != y</code> mean different things. <code>not x</code> flips a truth value. <code>x != y</code> compares two values for inequality.</p>
+
+    <h4>Selection with if / elif / else</h4>
+    <pre>score = 75
+
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+else:
+    print("Below C")</pre>
+    <p>Python checks conditions from top to bottom and runs the first branch whose condition is true. Order matters.</p>
+
+    <h4>De Morgan's Laws</h4>
+    <p>These two rewrite rules are useful when negating compound conditions:</p>
+    <pre>not (A and B)   ==   (not A) or  (not B)
+not (A or  B)   ==   (not A) and (not B)</pre>
+    <p>Verify them in Python yourself:</p>
+    <pre>cases = [(True, True), (True, False), (False, True), (False, False)]
+
+for a, b in cases:
+    left  = not (a and b)
+    right = (not a) or (not b)
+    print(a, b, left, right)</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Express any decision a program needs to make. You can build compound conditions with <code>and</code>, <code>or</code>, and <code>not</code>, order branches correctly in <code>if / elif / else</code>, and use short-circuit evaluation to guard against errors.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between <code>not x</code> and <code>x != y</code>?</li>
+        <li>Why does order matter in an <code>if / elif / else</code> chain?</li>
+        <li>What is the value of <code>not (True and False)</code>? Of <code>(not True) or (not False)</code>?</li>
+        <li>Write a single condition that is true when <code>x</code> is between 10 and 20 inclusive.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 13 introduces loops — where programs begin to feel dynamic over time.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It — Circle a List with %</h3><pre>colors = ["red", "green", "blue"]
+for i in range(8):
+    print(colors[i % len(colors)])</pre><p>Why does the list repeat instead of failing with an index error?</p></div>
+    <div class="panel concept"><h3>💡 Short-Circuit Evaluation</h3><p><code>and</code> stops at the first <code>False</code>. <code>or</code> stops at the first <code>True</code>. This lets you guard against errors: <code>x is not None and x &gt; 0</code> never evaluates the second part if <code>x</code> is <code>None</code>.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 13 -->
+<h2 class="section-title" id="sec13">13. Loops, Range, and the Accumulator Pattern</h2>
+<section class="section">
+  <article class="main">
+    <p>Loops repeat work. They are where programs begin to feel dynamic — operating on collections of data and producing aggregated results.</p>
+
+    <h4>for loops</h4>
+    <pre>numbers = [2, 4, 6]
+for x in numbers:
+    print("Number:", x)
+    print("Double:", x * 2)</pre>
+    <p>The loop variable <code>x</code> takes on one value at a time from the list.</p>
+
+    <h4>range</h4>
+    <pre>range(stop)
+range(start, stop)
+range(start, stop, step)</pre>
+    <pre>for i in range(5):           # 0, 1, 2, 3, 4
+    print(i)
+
+for i in range(2, 8):        # 2, 3, 4, 5, 6, 7
+    print(i)
+
+for i in range(2, 10, 2):    # 2, 4, 6, 8
+    print(i)
+
+for i in range(10, 0, -2):   # 10, 8, 6, 4, 2
+    print(i)</pre>
+
+    <h4>The accumulator pattern</h4>
+    <p>This is the single most important loop pattern in the workbook, and one of the most important patterns in all of programming. You will see it dozens of times. Once you recognize the shape, you'll find it everywhere.</p>
+    <pre>numbers = [2, 4, 6]
+total = 0                    # initialize the accumulator
+for x in numbers:
+    total = total + x        # update on each iteration
+print(total)                 # 12</pre>
+
+    <table>
+      <tr><th>Step</th><th>x</th><th>total</th></tr>
+      <tr><td>start</td><td>—</td><td>0</td></tr>
+      <tr><td>after iteration 1</td><td>2</td><td>2</td></tr>
+      <tr><td>after iteration 2</td><td>4</td><td>6</td></tr>
+      <tr><td>after iteration 3</td><td>6</td><td>12</td></tr>
+    </table>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Accumulator Pattern Is Everywhere</span>
+      <p style="margin:0 0 10px;">The accumulator pattern has the same three-part shape every time: initialize a value, loop over data, update the value. The data type of the accumulator changes — but the shape doesn't:</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;">total = 0                   # accumulate a number
+for x in numbers:
+    total = total + x
+
+count = 0                   # accumulate a count
+for x in items:
+    if x &gt; 100:
+        count = count + 1
+
+text = ""                   # accumulate a string
+for word in words:
+    text = text + word + " "
+
+result = []                 # accumulate a list
+for x in numbers:
+    if x % 2 == 0:
+        result.append(x)
+
+best = None                 # accumulate the running best
+for price in prices:
+    if best is None or price &lt; best:
+        best = price</pre>
+      <p style="margin:8px 0 0;">When you recognize this pattern, you stop seeing five different problems. You start seeing one pattern with five different accumulator types. That's a real shift in how you read code.</p>
+    </div>
+
+    <h4>while loops</h4>
+    <p>A <code>while</code> loop keeps running as long as a condition is true. Use it when you don't know how many iterations you'll need in advance.</p>
+    <pre>count = 0
+while count &lt; 3:
+    print(count)
+    count = count + 1</pre>
+    <p>A <code>for</code> loop iterates over something you already have. A <code>while</code> loop keeps going until something becomes true. They are not interchangeable.</p>
+
+    <h4>When while is the right choice</h4>
+    <p>Input validation — keep asking until the user gives a valid answer:</p>
+    <pre>answer = ""
+while answer not in ["yes", "no"]:
+    answer = input("Enter yes or no: ")</pre>
+
+    <p>Searching for a threshold — keep going until a condition is met:</p>
+    <pre>balance = 1000
+years = 0
+while balance &lt; 2000:
+    balance = balance * 1.07
+    years = years + 1
+print("Years to double:", years)</pre>
+
+    <p>Game loops — keep running until the player quits:</p>
+    <pre>playing = True
+while playing:
+    move = input("Enter move (or 'quit'): ")
+    if move == "quit":
+        playing = False</pre>
+
+    <h4>break, continue, and pass</h4>
+    <pre>for x in [1, 2, 3, 4]:
+    if x == 3:
+        break              # exits the loop entirely
+    print(x)               # prints 1, 2
+
+for x in [1, 2, 3, 4]:
+    if x == 3:
+        continue           # skips to next iteration
+    print(x)               # prints 1, 2, 4
+
+if True:
+    pass                   # placeholder — does nothing</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Recognize the accumulator pattern as the unifying shape behind dozens of looping problems. Choose <code>for</code> when you know how many iterations you need, <code>while</code> when you don't, and use <code>break</code> and <code>continue</code> deliberately rather than by guess.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Use <code>range(start, stop, step)</code> to print even numbers from 2 to 10.</li>
+        <li>What are the three parts of the accumulator pattern?</li>
+        <li>Identify the accumulator pattern in the input validation example. What is being accumulated?</li>
+        <li>What is the difference between <code>break</code> and <code>continue</code>?</li>
+        <li>Give an example of a problem where a <code>while</code> loop is a better fit than a <code>for</code> loop.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 14 develops the skill that makes loops legible: tracing. It's the technique you'll reach for whenever a loop confuses you, on homework, on the midterm, or when reviewing AI-generated code.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 for vs while</h3><p><strong>for</strong> — iterate over something you already have.<br><strong>while</strong> — keep going until something becomes true.<br><br>If you can't decide, ask: do I know the number of iterations in advance?</p></div>
+    <div class="panel design"><h3>🧩 The Three-Part Shape</h3><p>Initialize. Loop. Update.<br><br>Whenever you write a loop that builds up a result, ask yourself which of these three steps you're on.</p></div>
+    <div class="panel mental"><h3>🧠 Tracing Makes It Visible</h3><p>When a loop confuses you, fill in a trace table step by step. Watching variables change row by row is how the loop becomes concrete.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 14 — NEW SECTION (TRACING) -->
+<h2 class="section-title" id="sec14">14. Tracing — Making Code Behavior Visible</h2>
+<section class="section">
+  <article class="main">
+    <p>Tracing is the technique of walking through code by hand, one line at a time, recording the value of each variable as you go. It is one of the highest-leverage skills in this workbook. When you can trace, you can read code with confidence. When you can't, every loop is a guess.</p>
+    <p>Tracing is what makes computational thinking concrete. The STI framework in Workbook 3 asks you to identify state and watch it change — a trace table is the literal answer to "how does state change over time."</p>
+
+    <h4>The trace table</h4>
+    <p>A trace table is a grid with one column per variable and one row per iteration. You fill it in step by step. The point is not to be fast — the point is to make invisible state visible.</p>
+
+    <pre>numbers = [3, 1, 4, 1, 5]
+total = 0
+for x in numbers:
+    total = total + x
+print(total)</pre>
+
+    <table>
+      <tr><th>Iteration</th><th>x</th><th>total (after update)</th></tr>
+      <tr><td>start</td><td>—</td><td>0</td></tr>
+      <tr><td>1</td><td>3</td><td>3</td></tr>
+      <tr><td>2</td><td>1</td><td>4</td></tr>
+      <tr><td>3</td><td>4</td><td>8</td></tr>
+      <tr><td>4</td><td>1</td><td>9</td></tr>
+      <tr><td>5</td><td>5</td><td>14</td></tr>
+    </table>
+
+    <p>The final value of <code>total</code> is 14. You knew that without running the code, because the trace made the computation explicit.</p>
+
+    <h4>Tracing a while loop with an early exit</h4>
+    <pre>prices = [45, 130, 88, 210, 55]
+result = None
+i = 0
+while i &lt; len(prices) and result is None:
+    if prices[i] &gt; 100:
+        result = prices[i]
+    i = i + 1
+print(result)</pre>
+
+    <p>A while loop has two things to track: the variables, and the condition that decides whether to keep going.</p>
+
+    <table>
+      <tr><th>Iter</th><th>i</th><th>prices[i]</th><th>prices[i] &gt; 100?</th><th>result</th><th>Continue loop?</th></tr>
+      <tr><td>start</td><td>0</td><td>—</td><td>—</td><td>None</td><td>—</td></tr>
+      <tr><td>1</td><td>0 → 1</td><td>45</td><td>False</td><td>None</td><td>Yes</td></tr>
+      <tr><td>2</td><td>1 → 2</td><td>130</td><td>True</td><td>130</td><td>No — result is not None</td></tr>
+    </table>
+
+    <p>The trace shows exactly why the loop ends after iteration 2: the condition <code>result is None</code> becomes false. Without tracing, that early exit is invisible.</p>
+
+    <h4>Tracing a function call</h4>
+    <p>When tracing a function, treat each call as its own mini-trace. Record what the parameters bind to at the start, then trace the body, then record what gets returned.</p>
+    <pre>def deposit(balance, amount):
+    if amount &lt;= 0:
+        return balance
+    return balance + amount
+
+balance = 100
+balance = deposit(balance, 50)
+balance = deposit(balance, -10)
+print(balance)</pre>
+
+    <table>
+      <tr><th>Call</th><th>balance in</th><th>amount</th><th>returns</th><th>balance after assignment</th></tr>
+      <tr><td>deposit(balance, 50)</td><td>100</td><td>50</td><td>150</td><td>150</td></tr>
+      <tr><td>deposit(balance, -10)</td><td>150</td><td>-10</td><td>150 (early return)</td><td>150</td></tr>
+    </table>
+
+    <h4>Common tracing mistakes</h4>
+    <p>Three mistakes show up reliably. Recognizing them is half the battle.</p>
+    <ul>
+      <li><strong>Mistake 1: Updating a variable before recording its previous value.</strong> If a row says "after update," you have to actually wait until after the update to fill it in. Skipping ahead loses the step-by-step record that makes tracing useful.</li>
+      <li><strong>Mistake 2: Confusing loop variable assignment with the loop condition.</strong> In a <code>for</code> loop, the loop variable is assigned a new value each iteration. In a <code>while</code> loop, you must update the variable explicitly inside the body — or the loop runs forever. Trace tables surface infinite loops immediately because the condition column never changes.</li>
+      <li><strong>Mistake 3: Tracing in your head instead of on paper.</strong> Once a problem has more than two variables and more than three iterations, head-tracing breaks down. Write it out. There is no shame in this — professionals do it constantly when reasoning about tricky code.</li>
+    </ul>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Read any loop or short function and predict its behavior before running it. On the midterm, you can fill in trace tables under time pressure. When reviewing AI-generated code, you can verify what it actually does rather than trusting that it works.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Trace the accumulator example with the input <code>numbers = [10, -5, 7, 2]</code>. What is the final value of <code>total</code>?</li>
+        <li>Modify the price-search example to look for prices greater than 500. Trace what happens. What is the final value of <code>result</code>?</li>
+        <li>What is the difference between tracing a <code>for</code> loop and tracing a <code>while</code> loop?</li>
+        <li>Why is tracing on paper more reliable than tracing in your head?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 15 extends loops into two and three dimensions — lists that contain lists, traced row by row, layer by layer.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Trace Tables Make State Visible</h3><p>State is what changes over time. A trace table is a literal picture of state changing. This is also the bridge to STI in Workbook 3.</p></div>
+    <div class="panel design"><h3>🧩 One Column Per Variable</h3><p>Every variable that changes during the loop gets its own column. Don't combine them — the whole point is to see them change independently.</p></div>
+    <div class="panel exercise"><h3>▶ Try It</h3><p>Take any loop from Section 13 and build a trace table for it before running. Then run the code. Did your trace match?</p></div>
+    <div class="panel warning"><h3>⚠ Infinite Loops Show Up Here</h3><p>If a <code>while</code> trace gets to iteration 10 and the condition still hasn't moved toward false, you have an infinite loop. Tracing catches it before the program does.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 15 (was 14) -->
+<h2 class="section-title" id="sec15">15. Nested Lists and Multi-Dimensional Structures</h2>
+<section class="section">
+  <article class="main">
+    <p>A 2-D list is a list of lists. This structure is useful for grids, boards, tables, and any data that has rows and columns. You saw nested indexing in Section 6 — this section shows how to build these structures with loops.</p>
+
+    <h4>Build a 2-D list with nested loops</h4>
+    <pre>board = []
+
+for row in range(2):
+    current_row = []
+    for col in range(3):
+        current_row.append(0)
+    board.append(current_row)
+
+print(board)         # [[0, 0, 0], [0, 0, 0]]</pre>
+    <div class="diagram">board[row][column]
+
+board[0]     → [0, 0, 0]
+board[1]     → [0, 0, 0]
+board[0][2]  → 0</div>
+
+    <h4>Build a 3-D list with nested loops</h4>
+    <p>A 3-D list is a list of boards — useful for representing a stack of grids.</p>
+    <pre>cube = []
+
+for layer in range(2):
+    board = []
+    for row in range(2):
+        current_row = []
+        for col in range(2):
+            current_row.append(0)
+        board.append(current_row)
+    cube.append(board)</pre>
+    <div class="diagram">x[0]       → [[a, b], [c, d]]  ← one board
+x[0][0]    → [a, b]            ← one row
+x[0][0][0] → a                 ← one cell</div>
+
+    <h4>A dangerous shortcut — avoid this</h4>
+    <pre>bad_board = [[0] * 3] * 2
+bad_board[0][0] = 99
+print(bad_board)     # [[99, 0, 0], [99, 0, 0]] — both rows changed!</pre>
+    <p>This creates two references to the <em>same</em> inner list. Mutating one row mutates all of them. This is the aliasing trap from Section 10, applied to nested structures. The safe approach uses nested loops to create distinct inner lists:</p>
+    <pre>good_board = []
+for row in range(2):
+    current_row = []
+    for col in range(3):
+        current_row.append(0)
+    good_board.append(current_row)</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Represent grids, boards, and tables as nested lists, and build them with nested loops. You also know to avoid the <code>[[0]*3]*2</code> trap — and you can explain why that trap exists in terms of aliasing.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What does <code>x[0]</code> mean in the 3-D example? What about <code>x[0][0]</code> and <code>x[0][0][0]</code>?</li>
+        <li>Why does <code>bad_board</code> have the problem it does? Connect this back to aliasing from Section 10.</li>
+        <li>Create a 3-D list with nested loops and explain what each dimension represents.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 16 introduces functions — the primary tool for organizing programs into manageable, reusable pieces.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel warning"><h3>⚠ Aliasing Strikes Again</h3><p>The <code>bad_board</code> mistake isn't a new concept — it's the aliasing rule from Section 10 showing up in a new context. <code>[[0]*3]*2</code> creates two references to one inner list.</p></div>
+    <div class="panel concept"><h3>💡 Dimensions Match Loops</h3><p>A 1-D sequence is usually built with one loop. A 2-D structure with two nested loops. A 3-D structure with three. The depth of nesting matches the number of dimensions.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 16 (was 15) -->
+<h2 class="section-title" id="sec16">16. Functions, Methods, and Function Signatures</h2>
+<section class="section">
+  <article class="main">
+    <p>A function packages a computation behind a name. The goal is not just shorter code — the goal is clearer thinking, less repetition, and better decomposition. A good function does one thing, has a name that says what it does, and makes the calling code readable without looking inside.</p>
+
+    <h4>Why functions matter: a report writer example</h4>
+    <pre># Repeated code — hard to maintain
+ticker = "AAPL"
+shares = 10
+price = 205.4
+value = shares * price
+print(f"{ticker:^10} {shares:^10d} {price:>10.2f} {value:>12.2f}")
+
+ticker = "MSFT"
+shares = 5
+price = 417.2
+value = shares * price
+print(f"{ticker:^10} {shares:^10d} {price:>10.2f} {value:>12.2f}")</pre>
+
+    <p>Now the same logic with functions:</p>
+    <pre>def print_header():
+    print(f"{'Ticker':^10} {'Shares':^10} {'Price':^10} {'Value':^12}")
+    print("-" * 46)
+
+def print_row(ticker, shares, price):
+    value = shares * price
+    print(f"{ticker:^10} {shares:^10d} {price:>10.2f} {value:>12.2f}")
+
+def print_report(positions):
+    print_header()
+    for ticker, shares, price in positions:
+        print_row(ticker, shares, price)
+
+positions = [
+    ("AAPL", 10, 205.4),
+    ("MSFT", 5, 417.2),
+    ("GOOG", 3, 152.8)
+]
+
+print_report(positions)</pre>
+
+    <h4>Function anatomy</h4>
+    <pre>def add(a, b):
+    return a + b
+
+print(add(3, 4))    # 7</pre>
+    <ul>
+      <li><strong>Function signature:</strong> <code>add(a, b)</code></li>
+      <li><strong>Parameters:</strong> names in the definition (<code>a</code>, <code>b</code>)</li>
+      <li><strong>Arguments:</strong> values passed in the call (<code>3</code>, <code>4</code>)</li>
+      <li><strong>Return value:</strong> the value sent back to the caller</li>
+    </ul>
+
+    <h4>Default arguments</h4>
+    <p>You can give a parameter a default value. If the caller omits that argument, the default is used.</p>
+    <pre>def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")                # Hello, Alice!
+greet("Bob", "Hi")            # Hi, Bob!
+greet("Carol", greeting="Hey")  # Hey, Carol!</pre>
+
+    <h4>return vs print</h4>
+    <pre>def square(x):
+    return x * x      # sends the value back
+
+def show_square(x):
+    print(x * x)      # displays it; returns nothing</pre>
+    <p><code>return</code> hands a value back to the caller, who can use it. <code>print</code> just displays the value. They are completely different — and confusing them is a common bug.</p>
+
+    <h4>Functions and aliasing</h4>
+    <p>Remember from Section 10: when you pass a list or dictionary to a function, the function receives a reference to the same object, not a copy. Mutations inside the function affect the original.</p>
+    <pre>def append_zero(items):
+    items.append(0)
+
+my_list = [1, 2, 3]
+append_zero(my_list)
+print(my_list)        # [1, 2, 3, 0]</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Decompose programs into small, testable functions with clear signatures. You can decide when to <code>return</code> a value versus <code>print</code> one, and you can predict what happens when a function receives a mutable argument like a list.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Why is the report writer example better with functions than with repeated print statements?</li>
+        <li>What is the difference between a parameter and an argument?</li>
+        <li>What is the difference between <code>return</code> and <code>print</code>?</li>
+        <li>If a function takes a list as a parameter and calls <code>.append()</code> on it, does the original list change? Why?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 17 covers how to import code written by others and how files are organized in this course.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Visual Model</h3><pre>definition → parameters
+call       → arguments</pre></div>
+    <div class="panel concept"><h3>💡 Functions Call Functions</h3><p>In the report example, <code>print_report()</code> calls <code>print_header()</code> and <code>print_row()</code>. This is how programmers decompose large tasks into small, testable pieces.</p></div>
+    <div class="panel warning"><h3>⚠ Mutable Arguments</h3><p>Passing a list to a function lets the function modify your data. If you don't want this, pass <code>my_list.copy()</code> or make the function return a new list instead.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 17 (was 16) -->
+<h2 class="section-title" id="sec17">17. Importing Modules and Paths in VS Code</h2>
+<section class="section">
+  <article class="main">
+    <p>Python programs can import code from the standard library and from your own files. This lets you reuse existing functionality instead of writing everything from scratch.</p>
+    <pre>import math
+print(math.sqrt(16))    # 4.0
+
+from math import sqrt
+print(sqrt(16))         # 4.0</pre>
+
+    <h4>Project structure in this course</h4>
+    <pre>C:\PythonClass
+└── student_repo
+    ├── src
+    │   └── main.py
+    ├── lib
+    │   └── utils.py
+    ├── data
+    │   └── prices.csv
+    └── sandbox
+        └── experiments.py</pre>
+
+    <h4>Current working directory</h4>
+    <pre>import os
+print(os.getcwd())</pre>
+
+    <h4>Absolute vs relative paths</h4>
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Type</th><th>Example</th><th>Meaning</th></tr>
+      <tr><td>Absolute</td><td><code>C:\PythonClass\student_repo\data\prices.csv</code></td><td>Full path from the drive root</td></tr>
+      <tr><td>Relative</td><td><code>data\prices.csv</code></td><td>Relative to the current folder</td></tr>
+      <tr><td>Relative</td><td><code>.\data\prices.csv</code></td><td>Explicit current folder</td></tr>
+      <tr><td>Relative</td><td><code>..\other\file.txt</code></td><td>Go up one folder</td></tr>
+    </table>
+    <p><code>.</code> is the current folder. <code>..</code> is the parent folder.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Import functions and modules from Python's standard library, read and write paths relative to your project root, and reason about why a file your program can't find may be a path problem rather than a code problem.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between an absolute path and a relative path?</li>
+        <li>What do <code>.</code> and <code>..</code> mean?</li>
+        <li>Why do students often not need to write <code>.</code> explicitly when working inside <code>student_repo</code>?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 18 puts paths to work — reading and writing files is where programs persist information across runs.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Course Context</h3><p>For this course, the current working directory is almost always <code>student_repo</code> or something inside it. Relative paths like <code>data\prices.csv</code> are usually enough.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 18 (was 17) -->
+<h2 class="section-title" id="sec18">18. Files and JSON</h2>
+<section class="section">
+  <article class="main">
+    <p>Programs often need to save data between runs. Files let information persist after the program stops.</p>
+
+    <h4>Four ways to read a text file</h4>
+    <pre>with open("data.txt", "r") as f:
+    content = f.read()       # reads the entire file as one string
+
+with open("data.txt", "r") as f:
+    line = f.readline()      # reads one line; returns "" when no more
+
+with open("data.txt", "r") as f:
+    lines = f.readlines()    # creates a list of lines
+
+with open("data.txt", "r") as f:
+    for line in f:           # iterate one line at a time — most common
+        print(line)</pre>
+    <p>The <code>for line in f:</code> idiom is the one you'll use most often. It reads the file lazily, one line at a time, without ever loading the whole file into memory. For very large files this matters; for small files all four approaches work.</p>
+
+    <h4>Writing and appending</h4>
+    <pre>with open("notes.txt", "w") as f:    # "w" = write (overwrites existing file)
+    f.write("Hello\n")
+    f.write("World\n")
+
+with open("notes.txt", "a") as f:    # "a" = append (adds to existing file)
+    f.write("Another line\n")</pre>
+    <p>Mode <code>"w"</code> overwrites any existing file. Mode <code>"a"</code> adds to the end. Choose carefully — <code>"w"</code> on a file with existing content destroys that content.</p>
+
+    <h4>First pattern: CSV</h4>
+    <p><strong>a) Create the object in Python</strong></p>
+    <pre>positions = [("AAPL", 10), ("MSFT", 5)]</pre>
+    <p><strong>b) Write to CSV</strong></p>
+    <pre>with open("positions.csv", "w") as f:
+    f.write("ticker,shares\n")
+    for ticker, shares in positions:
+        f.write(f"{ticker},{shares}\n")</pre>
+    <p><strong>c) Read and recreate the object</strong></p>
+    <pre>positions = []
+with open("positions.csv", "r") as f:
+    next(f)   # skip the header line
+    for line in f:
+        ticker, shares = line.strip().split(",")
+        positions.append((ticker, int(shares)))</pre>
+
+    <h4>Second pattern: JSON</h4>
+    <p><strong>a) Create the object</strong></p>
+    <pre>positions = [
+    {"ticker": "AAPL", "shares": 10},
+    {"ticker": "MSFT", "shares": 5}
+]</pre>
+    <p><strong>b) Write to JSON</strong></p>
+    <pre>import json
+with open("positions.json", "w") as f:
+    json.dump(positions, f, indent=2)</pre>
+    <p><strong>c) Read and recreate the object</strong></p>
+    <pre>import json
+with open("positions.json", "r") as f:
+    positions = json.load(f)</pre>
+
+    <p>With CSV, you manually split strings, convert types, and rebuild the object. With JSON, the structure is already represented — what you wrote is what you get back. That is why JSON is simpler for structured data.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Persist data between program runs. Read text files four different ways for different needs, choose between write and append mode deliberately, and use JSON to save and restore structured Python objects without writing a parser.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the difference between <code>read()</code>, <code>readline()</code>, and <code>readlines()</code>?</li>
+        <li>What does <code>for line in f:</code> do that the other three don't?</li>
+        <li>What is the difference between write mode (<code>"w"</code>) and append mode (<code>"a"</code>)?</li>
+        <li>Why does JSON make reconstruction of structured objects easier than CSV?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 19 introduces <code>try / except</code> — the tool for handling errors gracefully when file operations and many other things go wrong.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel exercise"><h3>▶ Try It — Compare Four Methods</h3><p>Create a small text file with three lines. Read it four different ways — <code>read()</code>, <code>readline()</code>, <code>readlines()</code>, and <code>for line in f:</code>. Print the result of each. Describe what each one gives you.</p></div>
+    <div class="panel concept"><h3>💡 Why JSON Matters</h3><p>JSON gives you a standard, readable way to store structured objects. The shape you write in Python is the shape you get back.</p></div>
+    <div class="panel warning"><h3>⚠ Write Mode Destroys</h3><p>Opening a file with <code>"w"</code> erases it before writing. If you want to keep existing content, use <code>"a"</code> for append.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 19 (was 18) -->
+<h2 class="section-title" id="sec19">19. Handling Errors with try / except</h2>
+<section class="section">
+  <article class="main">
+    <p>Errors in Python raise <strong>exceptions</strong>. If an exception is not handled, the program crashes. The <code>try / except</code> block lets you catch errors and respond gracefully instead of stopping.</p>
+
+    <h4>Basic pattern</h4>
+    <pre>try:
+    result = int(input("Enter a number: "))
+    print("You entered:", result)
+except ValueError:
+    print("That was not a valid number.")</pre>
+    <p>Python runs the code in the <code>try</code> block. If a <code>ValueError</code> is raised, execution jumps to the <code>except</code> block. If no error occurs, the <code>except</code> block is skipped entirely.</p>
+
+    <h4>Handling file errors</h4>
+    <pre>import json
+
+try:
+    with open("prices.json", "r") as f:
+        data = json.load(f)
+except FileNotFoundError:
+    print("File not found. Starting with empty data.")
+    data = []</pre>
+
+    <h4>Handling multiple exception types</h4>
+    <pre>try:
+    value = int(input("Enter shares: "))
+    price = float(input("Enter price: "))
+    total = value * price
+    print(f"Total value: {total:.2f}")
+except ValueError:
+    print("Please enter a valid number.")
+except ZeroDivisionError:
+    print("Cannot divide by zero.")</pre>
+
+    <h4>else and finally</h4>
+    <pre>try:
+    result = int(input("Enter a number: "))
+except ValueError:
+    print("Invalid input.")
+else:
+    print("Success:", result)    # runs only if no exception
+finally:
+    print("Done.")               # always runs</pre>
+
+    <h4>Common exceptions to know</h4>
+    <span class="ref-label">Reference</span>
+    <table>
+      <tr><th>Exception</th><th>When it occurs</th></tr>
+      <tr><td><code>ValueError</code></td><td><code>int("abc")</code> — wrong type of value</td></tr>
+      <tr><td><code>TypeError</code></td><td><code>"hello" + 5</code> — wrong type for an operation</td></tr>
+      <tr><td><code>KeyError</code></td><td><code>d["missing"]</code> — key not in dictionary</td></tr>
+      <tr><td><code>IndexError</code></td><td><code>items[99]</code> — index out of range</td></tr>
+      <tr><td><code>FileNotFoundError</code></td><td><code>open("x.txt")</code> — file does not exist</td></tr>
+      <tr><td><code>ZeroDivisionError</code></td><td><code>10 / 0</code> — division by zero</td></tr>
+    </table>
+
+    <h4>A practical pattern: keep asking until valid</h4>
+    <pre>while True:
+    try:
+        shares = int(input("Enter number of shares: "))
+        break
+    except ValueError:
+        print("Please enter a whole number.")</pre>
+    <p>This combines <code>while True</code> with <code>try / except</code> to make a robust input loop. The loop exits with <code>break</code> only after valid input.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Write programs that don't crash on predictable failures — invalid user input, missing files, type mismatches. You can choose which exceptions to catch (and which to let propagate) deliberately, rather than wrapping everything in a generic <code>except</code>.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What happens if an exception is raised inside a <code>try</code> block but there is no matching <code>except</code>?</li>
+        <li>What is the difference between <code>else</code> and <code>finally</code> in a try block?</li>
+        <li>Which exception type would you catch if the user types "abc" when your program calls <code>int(input(...))</code>?</li>
+        <li>Write a robust input loop that keeps asking until the user enters a positive number.</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 20 puts everything together into the most important applied skill in this workbook — debugging.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 When to Use try / except</h3><p>Use it when failure is predictable and recoverable. Common cases: user input, file reading, network calls, dictionary lookups where a key might be missing.</p></div>
+    <div class="panel warning"><h3>⚠ Don't Catch Everything</h3><p>Avoid <code>except Exception</code> or bare <code>except:</code>. Catching every possible error hides bugs and makes debugging much harder.</p></div>
+    <div class="panel tryex"><h3>🛡 Defensive Programming</h3><p>A program that crashes on bad input is not finished. Anticipating failure and handling it is part of completing a design.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 20 — NEW DEBUGGING SECTION -->
+<h2 class="section-title" id="sec20">20. Debugging — A Practical Walkthrough <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+    <p>Every section of this workbook prepared you for this one. Debugging is the skill that makes everything else useful — because everyone writes code that doesn't work the first time, and the difference between a programmer who gets stuck and one who doesn't is the discipline of investigation, not raw talent.</p>
+    <p>You already have the investigation tools — <code>type()</code>, <code>id()</code>, <code>print()</code>, the trace table, and <code>scratch.py</code>. This section shows them in action on three real bugs.</p>
+
+    <h4>The general strategy</h4>
+    <p>When something doesn't work, do not stare at the code. Investigate.</p>
+    <ol>
+      <li><strong>Simplify.</strong> Strip the program down to the smallest version that still shows the problem. Most bugs disappear or become obvious in the smaller version.</li>
+      <li><strong>Make the invisible visible.</strong> Add <code>print()</code> statements that show variable values at each step. Use <code>type()</code> if you suspect a value is the wrong kind of object. Use <code>id()</code> if you suspect aliasing.</li>
+      <li><strong>Trace it.</strong> If the bug is in a loop, fill in a trace table by hand. If it's in a function, write down what each argument binds to.</li>
+      <li><strong>Verify your assumptions.</strong> Almost every bug comes from an assumption that turned out to be false. Test the assumption explicitly before moving on.</li>
+      <li><strong>Reproduce in scratch.py.</strong> Once you suspect a specific cause, build a 3-line example that isolates it. If the example reproduces the bug, you've found it. If it doesn't, your suspicion was wrong — try the next one.</li>
+    </ol>
+
+    <h4>Bug 1 — Type confusion</h4>
+    <p>A student writes a program to compute total revenue from a list of prices, but it crashes with an error.</p>
+    <pre>prices = ["10", "20", "30"]
+total = 0
+for p in prices:
+    total = total + p
+print(total)</pre>
+    <p>Running this raises <code>TypeError: unsupported operand type(s) for +: 'int' and 'str'</code>.</p>
+
+    <p><strong>Step 1 — make the invisible visible.</strong> The error mentions <code>int</code> and <code>str</code>. Which is which?</p>
+    <pre>print(type(total))    # &lt;class 'int'&gt;
+print(type(p))        # &lt;class 'str'&gt;</pre>
+
+    <p><strong>Step 2 — verify the assumption.</strong> The student assumed the prices were numbers. They are not — they are strings that look like numbers. This is the "number vs numeral" idea from Section 3 showing up as a real bug.</p>
+
+    <p><strong>Step 3 — fix.</strong></p>
+    <pre>prices = ["10", "20", "30"]
+total = 0
+for p in prices:
+    total = total + int(p)     # convert each string to an integer
+print(total)                   # 60</pre>
+
+    <p><strong>The lesson:</strong> when the error mentions a type, the first move is to check the types. <code>type()</code> answers the question instantly.</p>
+
+    <h4>Bug 2 — Aliasing</h4>
+    <p>A student writes a function that should give every player a fresh inventory, but something strange happens.</p>
+    <pre>def make_player(name, starting_items):
+    return {"name": name, "items": starting_items}
+
+starter = []
+alice = make_player("Alice", starter)
+bob   = make_player("Bob", starter)
+
+alice["items"].append("sword")
+print(alice["items"])   # ['sword']
+print(bob["items"])     # ['sword']   — Bob has Alice's sword!</pre>
+
+    <p><strong>Step 1 — make the invisible visible.</strong> The student assumed Alice and Bob have separate inventories. Are they actually separate?</p>
+    <pre>print(id(alice["items"]))    # 140234...
+print(id(bob["items"]))      # 140234...   — same number!</pre>
+
+    <p><strong>Step 2 — diagnose.</strong> Same id means same object. Alice's items list and Bob's items list are aliases for the original <code>starter</code> list. Mutating one mutates the other. This is Section 10 made painful.</p>
+
+    <p><strong>Step 3 — fix.</strong></p>
+    <pre>def make_player(name, starting_items):
+    return {"name": name, "items": starting_items.copy()}</pre>
+
+    <p>Now each player gets a fresh copy of the starting items.</p>
+
+    <p><strong>The lesson:</strong> when you write "two variables should be independent" and they aren't, <code>id()</code> tells you whether they share an object. The fix is almost always to <code>.copy()</code> the mutable input.</p>
+
+    <h4>Bug 3 — Off-by-one in a loop</h4>
+    <p>A student writes a loop that should print the first five even numbers but prints six numbers instead.</p>
+    <pre>n = 0
+count = 0
+while count &lt;= 5:
+    if n % 2 == 0:
+        print(n)
+        count = count + 1
+    n = n + 1</pre>
+
+    <p><strong>Step 1 — trace it.</strong> Fill in a trace table for the first several iterations.</p>
+    <table>
+      <tr><th>Step</th><th>n</th><th>even?</th><th>count after</th><th>printed?</th></tr>
+      <tr><td>start</td><td>0</td><td>—</td><td>0</td><td>—</td></tr>
+      <tr><td>1</td><td>0</td><td>yes</td><td>1</td><td>0</td></tr>
+      <tr><td>2</td><td>1</td><td>no</td><td>1</td><td>—</td></tr>
+      <tr><td>3</td><td>2</td><td>yes</td><td>2</td><td>2</td></tr>
+      <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+      <tr><td>?</td><td>10</td><td>yes</td><td>6</td><td>10</td></tr>
+    </table>
+
+    <p><strong>Step 2 — diagnose.</strong> The loop condition is <code>count &lt;= 5</code>. The student wanted "stop after five." But <code>&lt;= 5</code> includes 5, so the loop runs while count is 0, 1, 2, 3, 4, AND 5 — six iterations, not five. This is a classic off-by-one error.</p>
+
+    <p><strong>Step 3 — fix.</strong></p>
+    <pre>while count &lt; 5:        # strictly less than — stops after exactly 5</pre>
+
+    <p><strong>The lesson:</strong> when a loop runs one too many or one too few times, trace the boundary explicitly. The error is almost always at the first or last iteration — the trace table makes that boundary visible.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Debugging Is The Job</span>
+      <p style="margin:0;">Professional programmers spend more time debugging than writing new code. The investigation skills in this section — checking types, checking identity, tracing loops, simplifying to the smallest reproducer — are not training wheels. They are the actual core of the work. Get good at them and you will be able to fix code you didn't write, including code AI wrote.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Investigate a bug systematically rather than guessing. You can recognize the three most common failure modes — type confusion, aliasing, and off-by-one — and you know which tool to reach for first in each case. Most importantly, you can debug code AI gives you instead of trusting it blindly.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What is the first investigation tool you should reach for when an error message mentions types?</li>
+        <li>What is the first tool you should reach for when two variables that "should be independent" aren't behaving that way?</li>
+        <li>What is the first tool you should reach for when a loop is running the wrong number of times?</li>
+        <li>Why is simplifying the program a useful first move when debugging?</li>
+        <li>Take Bug 2 and modify it: pass <code>starter</code> to three players. Without copying, what happens when player 3 appends an item?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 21 consolidates the main ideas of the workbook into one compact reference page you can keep open during the midterm and during your labs.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 The Investigation Toolkit</h3><p><code>type(x)</code> — what kind of object?<br><code>id(x)</code> — which object?<br><code>print(x)</code> — what is its value right now?<br><strong>Trace table</strong> — how is state changing?<br><code>scratch.py</code> — does my hypothesis hold?</p></div>
+    <div class="panel design"><h3>🧩 Stop Guessing, Start Investigating</h3><p>When you reach for "I think the problem might be...", stop. Replace it with "I'll check the type / id / value." Investigation beats intuition.</p></div>
+    <div class="panel warning"><h3>⚠ Three Common Failure Modes</h3><ul>
+      <li>Type confusion — number vs numeral</li>
+      <li>Aliasing — shared mutable state</li>
+      <li>Off-by-one — loop boundaries</li>
+    </ul><p>You will see these three a lot. Recognizing them by sight is half of getting fast at debugging.</p></div>
+    <div class="panel tryex"><h3>🛡 Read the Error Message</h3><p>Error messages tell you the file, the line, and often the exact problem. Read them carefully. Most beginners skip past the error message and look at the code — read the message first.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 21 — MENTAL MODEL SUMMARY -->
+<h2 class="section-title" id="sec21">21. Python Mental Model Summary</h2>
+<section class="section">
+  <article class="main">
+    <p>This is the consolidation page. Keep it open while coding — especially during the midterm. It pulls together the key ideas from the workbook into one compact reference.</p>
+
+    <h4>Variable → Reference → Object</h4>
+    <p>A variable is not an object. A variable is a label that refers to an object.</p>
+    <div class="diagram">x = 10
+y = x
+x = 20
+
+After rebinding:
+x ──► 20
+y ──► 10</div>
+
+    <h4>Mutation vs Rebinding</h4>
+    <div class="diagram">mutation  → object changes   → all aliases see it
+rebinding → variable retargets → other aliases unaffected</div>
+    <pre>numbers.append(4)        # mutation
+numbers = numbers + [4]  # rebinding</pre>
+
+    <h4>Three ways to talk to an object</h4>
+    <div class="diagram">obj[key]          → portfolio["AAPL"]   ← lookup
+obj.method()      → numbers.append(4)   ← method call
+function(obj)     → len(numbers)        ← function call</div>
+
+    <h4>Expressions, statements, operations</h4>
+    <div class="diagram">Expression → produces a value
+Statement  → performs an action
+Operation  → transforms data inside an expression</div>
+
+    <h4>Core control flow</h4>
+    <div class="diagram">if / elif / else → decisions
+for              → iterate over a known sequence
+while            → repeat until a condition changes
+range()          → generate numeric sequences
+break            → exit a loop
+continue         → skip to next iteration</div>
+
+    <h4>The accumulator pattern</h4>
+    <div class="diagram">initialize → loop → update
+
+total = 0
+for x in numbers:
+    total = total + x</div>
+
+    <h4>Error handling</h4>
+    <div class="diagram">try    → attempt code that might fail
+except → handle a specific error
+else   → run only if no error
+finally → always run</div>
+
+    <h4>The investigation tools</h4>
+    <pre>type(x)    # what kind of object?
+id(x)      # which object?
+len(x)     # how many items?</pre>
+
+    <h4>Debugging strategy</h4>
+    <ol>
+      <li>Simplify the program — strip away anything not relevant to the bug.</li>
+      <li>Print intermediate values — make invisible state visible.</li>
+      <li>Check types with <code>type()</code> — values are often a string when you thought they were a number.</li>
+      <li>Check identity with <code>id()</code> — two variables might be aliases when you thought they were independent.</li>
+      <li>Test small pieces in <code>scratch.py</code>.</li>
+      <li>Verify every assumption.</li>
+    </ol>
+
+    <div class="workbook-pointer">
+      <h4>Where this leads next</h4>
+      <p style="margin:0 0 8px;"><strong>Workbook 2 — Data Structures and Patterns</strong> develops the small set of patterns (accumulator, lookup table, filter, frequency count, nested traversal, state machine) that cover most of the problems you will encounter.</p>
+      <p style="margin:0 0 8px;"><strong>Workbook 3 — State, Transitions, and Invariants</strong> introduces the framework for designing programs as systems — what changes, what causes change, and what must remain true.</p>
+      <p style="margin:0;"><strong>Workbook 4 — Controlling AI Through Design</strong> shows how the Python fluency you've built here, combined with STI, gives you the leverage to direct AI rather than be directed by it. It also contains the required AI prompt for the exam.</p>
+    </div>
+
+    <div class="footer-note"><strong>Closing thought:</strong> By the end of this workbook, you do not need to know all of Python. The goal was different — to understand enough syntax, structure, and behavior to reason carefully about programs and to be ready for everything ahead. If you can predict what code will do, explain why it does it, recognize patterns, and debug what doesn't work, you've gotten what this workbook was designed to give you.</div>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 The Four Aha Moments</h3><ul>
+      <li>Reverse slicing — negative indices resolve before iteration.</li>
+      <li>Three ways to talk to an object — brackets, dot, function.</li>
+      <li>Aliasing, mutation, rebinding — the heart of debugging.</li>
+      <li>Debugging is the job — type, id, trace, scratch.</li>
+    </ul></div>
+    <div class="panel design"><h3>🧩 What You Can Now Do</h3><p>Read Python code and predict its behavior. Investigate surprises with <code>type()</code>, <code>id()</code>, and <code>print()</code>. Recognize patterns across problems. Debug your own code and AI's code. Direct AI with precision.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 22 — GLOSSARY -->
+<h2 class="section-title" id="sec22">22. Glossary</h2>
+<section class="glossary">
+  <p class="muted" style="margin-top:0;">A reference for the vocabulary used in this workbook. Useful during the midterm when a term feels half-remembered. Italicized terms refer to other glossary entries.</p>
+
+  <div class="letter-jump">
+    <a href="#g-a">A</a><a href="#g-b">B</a><a href="#g-c">C</a><a href="#g-d">D</a><a href="#g-e">E</a><a href="#g-f">F</a><a href="#g-i">I</a><a href="#g-k">K</a><a href="#g-l">L</a><a href="#g-m">M</a><a href="#g-o">O</a><a href="#g-p">P</a><a href="#g-r">R</a><a href="#g-s">S</a><a href="#g-t">T</a><a href="#g-v">V</a>
+  </div>
+
+  <div class="letter-group" id="g-a">
+    <h4>A</h4>
+    <dl>
+      <dt>accumulator</dt><dd>A variable that builds up a result across the iterations of a loop. The accumulator pattern is initialize, loop, update. Examples: a running <em>total</em>, a count, a list under construction, a running best.</dd>
+      <dt>alias</dt><dd>Two variables that refer to the same object. Created by an assignment like <code>b = a</code> when <code>a</code> refers to a <em>mutable</em> object. Mutating through one alias is visible through the other.</dd>
+      <dt>argument</dt><dd>The value you pass to a function when you call it. <code>add(3, 4)</code> has arguments <code>3</code> and <code>4</code>. Distinct from <em>parameter</em>.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-b">
+    <h4>B</h4>
+    <dl>
+      <dt>bool</dt><dd>A type with exactly two values: <code>True</code> and <code>False</code>. Booleans are the result of comparisons and the basis of every <em>conditional</em> in a program.</dd>
+      <dt>break</dt><dd>A statement that exits the nearest enclosing loop immediately. Distinct from <em>continue</em>, which skips to the next iteration.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-c">
+    <h4>C</h4>
+    <dl>
+      <dt>continue</dt><dd>A statement that skips the rest of the current iteration and proceeds to the next one. The loop itself does not exit.</dd>
+      <dt>copy (shallow)</dt><dd>A new outer object containing references to the same inner objects as the original. For a flat list of numbers or strings this gives you full independence; for a list of lists, the inner lists are still shared.</dd>
+      <dt>copy (deep)</dt><dd>A fully independent copy in which every nested object is also copied. Required when nested mutable structures need to be independent. Available as <code>copy.deepcopy(x)</code>.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-d">
+    <h4>D</h4>
+    <dl>
+      <dt>default argument</dt><dd>A value given to a parameter that is used if the caller omits the corresponding argument. Defined in the function signature: <code>def greet(name, greeting="Hello"):</code>.</dd>
+      <dt>dictionary (dict)</dt><dd>A built-in <em>mutable</em> type that maps <em>keys</em> to values. Keys must be <em>immutable</em>. Useful when you need fast lookup by a meaningful name.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-e">
+    <h4>E</h4>
+    <dl>
+      <dt>enumerate</dt><dd>A built-in function that pairs each item of an iterable with its index. Use it when you want both during iteration: <code>for i, x in enumerate(items):</code>.</dd>
+      <dt>exception</dt><dd>A signal raised when something goes wrong during execution. Common types include <code>ValueError</code>, <code>TypeError</code>, <code>KeyError</code>, <code>IndexError</code>, <code>FileNotFoundError</code>. Handled with <code>try / except</code>.</dd>
+      <dt>expression</dt><dd>Code that produces a value. <code>3 + 5</code>, <code>len(items)</code>, and <code>x &gt; 0</code> are all expressions. Distinct from a <em>statement</em>, which performs an action.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-f">
+    <h4>F</h4>
+    <dl>
+      <dt>f-string</dt><dd>A string literal prefixed with <code>f</code> that lets you embed Python expressions and formatting directives inside curly braces. <code>f"{price:>10.2f}"</code> right-aligns <code>price</code> in a width-10 field with 2 decimals.</dd>
+      <dt>function</dt><dd>A named, reusable piece of code that takes arguments, executes a body, and optionally returns a value. The basic unit of decomposition.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-i">
+    <h4>I</h4>
+    <dl>
+      <dt>id()</dt><dd>A built-in function that returns a number uniquely identifying an object. If <code>id(a) == id(b)</code>, <code>a</code> and <code>b</code> are literally the same object — they are <em>aliases</em>. Investigation tool number one for aliasing bugs.</dd>
+      <dt>immutable</dt><dd>An object whose value cannot be changed after creation. Integers, floats, strings, tuples, and frozensets are immutable in Python. Immutable objects can be safely used as dictionary keys.</dd>
+      <dt>index</dt><dd>An integer that identifies a position in a sequence. Python uses zero-based indexing — the first item is at index 0. Negative indices count from the end (<code>-1</code> is the last item).</dd>
+      <dt>invariant</dt><dd>A condition that must always be true while a program is running. Example: a bank balance should never be negative. Identifying invariants is a core skill in the STI framework (Workbook 3).</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-k">
+    <h4>K</h4>
+    <dl>
+      <dt>key</dt><dd>The label used to look up a value in a dictionary. Keys must be <em>immutable</em> — strings, integers, floats, booleans, and tuples of immutable values all work; lists and dictionaries do not.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-l">
+    <h4>L</h4>
+    <dl>
+      <dt>len()</dt><dd>A built-in function that returns the number of items in a sequence. Works on strings, lists, tuples, dictionaries, and sets.</dd>
+      <dt>list</dt><dd>A built-in <em>mutable</em> ordered sequence of items. Items are accessed by integer index. Lists support many mutation methods (<code>append</code>, <code>pop</code>, <code>sort</code>, etc.).</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-m">
+    <h4>M</h4>
+    <dl>
+      <dt>method</dt><dd>A function that belongs to an object and is called with dot notation. <code>items.append(5)</code> calls the <code>append</code> method on the list <code>items</code>. Different types have different methods.</dd>
+      <dt>module</dt><dd>A file containing Python code that can be imported into another file. Modules from the standard library (<code>math</code>, <code>json</code>, <code>os</code>, <code>random</code>) cover a wide range of common needs.</dd>
+      <dt>mutable</dt><dd>An object whose contents can be changed in place after creation. Lists, dictionaries, and sets are mutable. <em>Mutating</em> a mutable object affects every <em>alias</em>.</dd>
+      <dt>mutation</dt><dd>Changing the contents of an existing object in place. Distinct from <em>rebinding</em>, which makes a variable point to a different object. <code>a.append(3)</code> mutates; <code>a = a + [3]</code> rebinds.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-o">
+    <h4>O</h4>
+    <dl>
+      <dt>object</dt><dd>Anything you can refer to with a variable in Python. Every object has a type, an identity (returned by <code>id()</code>), and a set of operations you can perform on it. Objects bundle data with operations.</dd>
+      <dt>operation</dt><dd>A computation that transforms data, performed inside an <em>expression</em>. Arithmetic (<code>+</code>, <code>*</code>), comparisons (<code>&lt;</code>, <code>==</code>), function calls, and method calls are all operations.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-p">
+    <h4>P</h4>
+    <dl>
+      <dt>parameter</dt><dd>A name in a function definition that will receive an argument when the function is called. <code>def add(a, b):</code> has parameters <code>a</code> and <code>b</code>. Distinct from <em>argument</em>, which is the value passed in.</dd>
+      <dt>predict-then-run</dt><dd>The recommended habit in this workbook: write down what you think the code will produce before running it. The gap between prediction and actual output is the most valuable signal you have for what you don't yet understand.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-r">
+    <h4>R</h4>
+    <dl>
+      <dt>range()</dt><dd>A built-in function that generates a sequence of integers. <code>range(stop)</code>, <code>range(start, stop)</code>, and <code>range(start, stop, step)</code> are the three forms. The <code>stop</code> value is excluded.</dd>
+      <dt>rebinding</dt><dd>Making a variable refer to a different object. <code>x = 20</code> when <code>x</code> previously referred to <code>10</code> rebinds <code>x</code>. Distinct from <em>mutation</em>; rebinding doesn't affect other aliases.</dd>
+      <dt>reference</dt><dd>The mechanism by which a variable points to an object. A variable does not contain a value — it contains a reference to a value. Multiple variables can hold references to the same object (see <em>alias</em>).</dd>
+      <dt>return</dt><dd>A statement that exits a function and sends a value back to the caller. Distinct from <code>print</code>, which displays a value but returns nothing.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-s">
+    <h4>S</h4>
+    <dl>
+      <dt>scratch.py</dt><dd>A small file used for experiments. The recommended habit when something is unclear: open scratch.py, write three to ten lines that test the smallest version of the question, predict, run, observe.</dd>
+      <dt>signature</dt><dd>The "shape" of a function: its name and its parameter list. <code>add(a, b)</code> is the signature of a function that takes two arguments.</dd>
+      <dt>slice</dt><dd>A subsequence extracted from a string, list, or tuple. The general form is <code>seq[start:stop:step]</code>. The <code>stop</code> index is excluded.</dd>
+      <dt>state</dt><dd>The information a program holds that changes as it runs. Identifying state is a core STI skill (Workbook 3). Trace tables are pictures of state changing over time.</dd>
+      <dt>statement</dt><dd>A line of code that performs an action — an assignment, a print, a control-flow instruction. Distinct from an <em>expression</em>, which produces a value.</dd>
+      <dt>STI</dt><dd>State, Transitions, Invariants — the computational thinking framework developed in Workbook 3. The bridge between Python fluency and program design.</dd>
+      <dt>string</dt><dd>A built-in immutable sequence of characters. Created with quotes: <code>"hello"</code> or <code>'hello'</code>. Supports indexing, slicing, and many methods.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-t">
+    <h4>T</h4>
+    <dl>
+      <dt>trace table</dt><dd>A grid showing how each variable changes across the iterations of a loop or the calls of a function. The primary tool for verifying behavior without running code.</dd>
+      <dt>transition</dt><dd>An operation that changes the <em>state</em> of a system from one valid configuration to another. In a bank account, deposit and withdraw are transitions. STI concept.</dd>
+      <dt>try / except</dt><dd>The Python mechanism for catching exceptions. Code in the <code>try</code> block runs normally; if an exception of the matching type is raised, the <code>except</code> block runs instead of crashing.</dd>
+      <dt>tuple</dt><dd>A built-in immutable ordered grouping. Useful for fixed records, coordinates, dates, and as dictionary keys. Created with parentheses: <code>(3, 5)</code>.</dd>
+      <dt>type()</dt><dd>A built-in function that reports what kind of object a value is. The first investigation tool to reach for when an operation fails for "type" reasons.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="g-v">
+    <h4>V</h4>
+    <dl>
+      <dt>variable</dt><dd>A name that refers to an object. Not the same as the object itself — a variable is a label, not a box. Multiple variables can refer to the same object.</dd>
+    </dl>
+  </div>
+</section>
+
+</div><!-- .page -->
+</body>
+</html>

@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Workbook 3 — Data Structures &amp; Patterns</title>
+<style>
+:root {
+  --bg:       #f4f3f0;
+  --paper:    #ffffff;
+  --text:     #1c2732;
+  --muted:    #4a5568;
+  --line:     #d1d9e0;
+  --heading:  #0d2137;
+  --accent:   #1a6b9a;
+  --accent2:  #2d7a4e;
+  --aha:      #c75e1c;
+
+  --concept:  #e8f3ff;
+  --exercise: #e6f4ec;
+  --mental:   #f0eaff;
+  --warning:  #fdecea;
+  --design:   #fff8e1;
+  --tryex:    #e8f7f3;
+  --check:    #f0f7ff;
+  --aha-bg:   #fff4ec;
+  --unlock:   #18695a;
+  --unlock-bg:#e7f5f1;
+  --unlock-edge:#a8d6c8;
+
+  --code-bg:  #f5f7fa;
+  --table-hd: #eef2f6;
+  --nav-bg:   #edf1f5;
+
+  --radius:   16px;
+  --shadow:   0 1px 3px rgba(13,33,55,.07);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+}
+
+.page { max-width: 1380px; margin: 0 auto; padding: 28px 20px 100px; }
+
+header, .toc {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+header { padding: 32px 36px; margin-bottom: 22px; }
+
+.topnote {
+  background: var(--nav-bg);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 11px 15px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: .97rem;
+}
+
+.workbook-strip {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.wb-pill {
+  font-family: sans-serif;
+  font-size: .82rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+}
+.wb-pill.current {
+  background: var(--heading);
+  color: #fff;
+  border-color: var(--heading);
+  font-weight: bold;
+}
+
+.section-title {
+  margin: 42px 0 16px;
+  padding-top: 26px;
+  border-top: 2px solid var(--line);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(290px, .9fr);
+  gap: 26px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.main {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+}
+
+.sidebar {
+  position: sticky;
+  top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+h1, h2, h3, h4 { color: var(--heading); line-height: 1.2; }
+h1 { font-size: 2.5rem; margin: 0 0 12px; }
+h2 { font-size: 1.9rem; margin: 0 0 18px; }
+h3 { font-size: 1.2rem; margin: 0 0 8px; }
+h4 { font-size: 1.06rem; margin: 22px 0 8px; color: var(--accent); }
+p, li { font-size: 1.04rem; }
+.lede { font-size: 1.13rem; max-width: 84ch; }
+.muted { color: var(--muted); }
+a { color: var(--accent); }
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 16px;
+  box-shadow: var(--shadow);
+}
+.panel h3 { font-size: .97rem; margin-bottom: 7px; }
+.panel p, .panel li { font-size: .97rem; }
+.panel pre { font-size: .88rem; margin: 8px 0 4px; }
+
+.concept  { background: var(--concept);  border-left: 4px solid #5ba3d4; }
+.exercise { background: var(--exercise); border-left: 4px solid #3a9e68; }
+.mental   { background: var(--mental);   border-left: 4px solid #8a6fce; }
+.warning  { background: var(--warning);  border-left: 4px solid #d95c5c; }
+.design   { background: var(--design);   border-left: 4px solid #c49a00; }
+.tryex    { background: var(--tryex);    border-left: 4px solid #2a9d8f; }
+.aha      { background: var(--aha-bg);   border-left: 4px solid var(--aha); }
+
+.aha-block {
+  background: var(--aha-bg);
+  border: 1px solid #f0c8a8;
+  border-left: 5px solid var(--aha);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+.aha-block .aha-label {
+  font-size: .78rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--aha);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ── In-class exercise marker ───────────────────────── */
+.classwork {
+  background: var(--check);
+  border: 1px solid #b9d4e8;
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin: 24px 0;
+}
+.classwork .classwork-label {
+  font-size: .78rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: block;
+}
+.classwork p { margin: 0; font-size: 1rem; }
+
+/* ── Now You Can (unlock) ───────────────────────────── */
+.unlock-block {
+  background: var(--unlock-bg);
+  border: 1px solid var(--unlock-edge);
+  border-left: 5px solid var(--unlock);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 18px 0 8px;
+}
+.unlock-label {
+  font-size: .76rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--unlock);
+  margin-bottom: 6px;
+  display: block;
+}
+.unlock-block p { margin: 4px 0 0; font-size: 1rem; }
+.unlock-block ul { margin: 6px 0 0; padding-left: 20px; }
+.unlock-block li { font-size: .98rem; margin-bottom: 3px; }
+
+/* ── Glossary ───────────────────────────────────────── */
+.glossary {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(0, 3fr);
+  gap: 8px 24px;
+  margin: 16px 0 0;
+}
+.glossary dt {
+  font-weight: bold;
+  color: var(--heading);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .94rem;
+  padding-top: 2px;
+  border-top: 1px solid var(--line);
+}
+.glossary dt:first-of-type, .glossary dd:first-of-type { border-top: none; padding-top: 0; }
+.glossary dd {
+  margin: 0;
+  font-size: .98rem;
+  padding-top: 2px;
+  border-top: 1px solid var(--line);
+}
+.glossary dd:first-of-type { border-top: none; padding-top: 0; }
+.glossary .letter-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 4px;
+}
+.glossary .letter-jump a {
+  font-family: sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--table-hd);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--accent);
+}
+.glossary .letter-group { margin-top: 22px; }
+.glossary .letter-group h4 {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+  color: var(--accent);
+}
+
+.check {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid #c2d9ef;
+  border-radius: 12px;
+  background: var(--check);
+}
+.check h4 {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 1rem;
+  border-bottom: 1px solid #c2d9ef;
+  padding-bottom: 6px;
+}
+.check ol { margin: 6px 0 0; padding-left: 20px; }
+.check li { font-size: .99rem; margin-bottom: 5px; }
+
+.transition-note {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .96rem;
+  font-style: italic;
+}
+
+.ref-label {
+  display: inline-block;
+  font-size: .75rem;
+  font-family: sans-serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--table-hd);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+code, pre {
+  font-family: "Cascadia Code", Consolas, Menlo, Monaco, monospace;
+  font-size: .93rem;
+  font-variant-ligatures: none;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid #e0e6ed;
+  border-radius: 11px;
+  padding: 14px 17px;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  white-space: pre-wrap;
+  line-height: 1.48;
+}
+
+.diagram {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .9rem;
+  background: #fafbfc;
+  border: 1px solid #dce4ec;
+  border-left: 5px solid #9fb3c8;
+  border-radius: 10px;
+  padding: 12px 15px;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  line-height: 1.5;
+}
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; }
+th, td { border: 1px solid var(--line); padding: 9px 12px; vertical-align: top; font-size: .99rem; }
+th { background: var(--table-hd); text-align: left; }
+
+.toc { padding: 20px 26px; margin: 20px 0 36px; }
+.toc h2 { margin-bottom: 14px; font-size: 1.4rem; }
+.toc ol { columns: 2; column-gap: 44px; margin: 0; padding-left: 22px; }
+.toc li { break-inside: avoid; margin-bottom: 7px; font-size: .99rem; }
+.toc li .aha-marker {
+  display: inline-block;
+  font-size: .68rem;
+  font-family: sans-serif;
+  font-weight: 800;
+  color: var(--aha);
+  margin-left: 6px;
+  letter-spacing: .05em;
+}
+
+.footer-note {
+  margin-top: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  font-style: italic;
+}
+
+.workbook-pointer {
+  background: linear-gradient(135deg, #e8f3ff 0%, #f0eaff 100%);
+  border: 1px solid #c2d9ef;
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin: 16px 0;
+}
+.workbook-pointer h4 {
+  margin: 0 0 8px;
+  color: var(--heading);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 980px) {
+  .toc ol { columns: 1; }
+  .section { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="workbook-strip">
+    <span class="wb-pill">Workbook 1 — Working with AI</span>
+    <span class="wb-pill">Workbook 2 — Python Foundations</span>
+    <span class="wb-pill current">Workbook 3 — Data Structures &amp; Patterns</span>
+    <span class="wb-pill">Workbook 4 — The ISTI Model</span>
+  </div>
+  <div class="topnote"><strong>Design note:</strong> read this workbook before class — it's the reference. Class time weaves between short discussion of these ideas and the in-class notebook exercises, marked below with <span style="color:var(--accent);font-weight:bold;">▶ In-Class Exercise</span>. Predict, run, change one thing, run again. The goal is not to memorize structures — it is to recognize which structure a problem is asking for.</div>
+  <h1>Workbook 3 — Data Structures &amp; Patterns</h1>
+  <p class="lede">Workbook 2 gave you the individual containers — lists, tuples, dictionaries, sets. This workbook is about <em>composing</em> them and learning the handful of patterns that operate on them. The central skill is modeling: looking at a messy situation and choosing a representation that makes the work you need to do easy. That single choice is the most important thing you specify — to yourself when you write code, and to the AI when you direct it.</p>
+  <p class="muted"><strong>Recommended workflow:</strong> predict what the code will do, run it, observe carefully, change one thing, and run it again. Recurring landmarks: <span style="color:var(--aha);font-weight:bold;font-size:.85rem;">⚡ KEY IDEA</span> marks the most important conceptual moments. <span style="color:var(--unlock);font-weight:bold;font-size:.85rem;">⚙ NOW YOU CAN</span> names the skill each section unlocks. <span style="color:var(--accent);font-weight:bold;font-size:.85rem;">✔ CHECK YOUR UNDERSTANDING</span> ends each section. <span style="color:#4a5568;font-weight:bold;font-size:.85rem;">Going further</span> subsections take an idea a step deeper — read them if time allows. One more promise: <strong>all Python used here was introduced in Workbook 2 (Python Foundations).</strong> If you see something unfamiliar, check there first — the new learning in these pages is about <em>thinking</em>, not syntax.</p>
+</header>
+
+<!-- ══════════════ TOC ══════════════ -->
+<section class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#sec0">Why This Workbook Exists</a></li>
+    <li><a href="#sec1">The Parallel-Lists Trap</a></li>
+    <li><a href="#sec2">Records — The List of Dicts <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec3">Grids — The List of Lists (2-D, and Going Further to 3-D)</a></li>
+    <li><a href="#sec4">Index Arithmetic — 1-D ↔ 2-D <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec5">The Grouping Pattern — Dict of Lists <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec6">The Counting Pattern</a></li>
+    <li><a href="#sec7">Fast Lookup — The Dict as an Index</a></li>
+    <li><a href="#sec8">Choosing a Shape — A Decision Guide</a></li>
+    <li><a href="#sec9">Driving a Program — The Menu Loop</a></li>
+    <li><a href="#sec10">Directing the AI with a Representation <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ol>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 0 -->
+<h2 class="section-title" id="sec0">0. Why This Workbook Exists</h2>
+<section class="section">
+  <article class="main">
+    <p>Nearly every program you will ever write does two things: it <em>stores</em> information and it <em>changes</em> information. Workbook 2 made that idea concrete one container at a time. But real problems rarely fit a single list or a single dictionary. Real data is nested, related, and shaped — a portfolio is many holdings, each with several fields; a class is many students, each with a section and a list of scores; a board game is a grid of cells.</p>
+    <p>This is where most beginners get stuck — not on syntax, but on a quieter question: <em>which structure is this problem asking for?</em> That question is the heart of computational thinking. Once you can look at a situation and see its shape, the code almost writes itself. Choose the wrong shape and you will fight the structure on every line.</p>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Representation Drives Computation</span>
+      <p style="margin:0;">The representation you choose decides how hard everything else will be. A well-chosen structure makes the operations you need feel obvious; a poorly chosen one makes simple things painful. Before you write a loop, ask: <strong>what shape is this data, and what shape makes my job easy?</strong> And keep in mind there is usually more than one workable shape — the real skill is weighing what each one makes easy or hard.</p>
+    </div>
+    <p>There is a second reason this matters in <em>this</em> course specifically. When you direct an AI to write code, the single most important thing you can specify is the data representation. Watch the same request at three levels:</p>
+    <pre>Tier 1 — lazy:
+"Write code to track my stock holdings."
+
+Tier 2 — better:
+"Model each holding as a dict with keys ticker, shares, and
+ cost_basis. Store all holdings in a list. Write a function that
+ returns the total cost basis."
+
+Tier 3 — directed:
+The same words as Tier 2 — but written AFTER you have answered,
+in your own words: Why a dict and not a tuple? Why these three
+fields? Why a list and not a dict keyed by ticker? What exactly
+should the function return, and what about an empty portfolio?</pre>
+    <p>Tier 1 leaves every decision to the AI, and you get whatever it guesses. Tier 2 hands the AI a precise contract — but read it carefully: if you wrote those words without knowing <em>why</em> each choice is right, the design thinking still wasn't yours. Tier 3 is the real goal of this course, and notice that it isn't a fancier prompt — it's the same prompt produced by a different process. <strong>The prompt documents decisions; it doesn't make them.</strong> The AI's proper jobs are to help you specify the problem, surface edge cases, and reveal assumptions you didn't know you were making — the design decisions stay with you. Choosing representations well is, quite literally, how you stay in control of the AI rather than being directed by it. Section 10 returns to this and works it in full.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>State the central question of this workbook in your own words: every problem has a shape, and the shape tells you the structure. You will spend the rest of these pages learning to recognize the common shapes.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What are the two things nearly every program does?</li>
+        <li>In your own words, what does "representation drives computation" mean?</li>
+        <li>Why is naming the data representation the most useful thing you can put in a prompt to an AI?</li>
+        <li>What is the difference between Tier 2 and Tier 3 — and why is it not visible in the prompt text itself?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 1 starts with the most common modeling mistake beginners make — one you have probably already made without noticing.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Modeling</h3><p>Modeling is choosing how to represent a real situation as data. It is a decision, not a mechanical step — and it is the decision that matters most.</p></div>
+    <div class="panel mental"><h3>🧠 The First Question</h3><p>Before writing any loop, ask: <em>what shape is this data?</em> One value per thing → list. A label per value → dict. Many things with the same fields → a list of dicts.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 1 -->
+<h2 class="section-title" id="sec1">1. The Parallel-Lists Trap</h2>
+<section class="section">
+  <article class="main">
+    <p>Suppose you want to keep track of three students and their scores. Almost every beginner reaches for this:</p>
+    <pre>names  = ["Ana", "Ben", "Cara"]
+scores = [88, 72, 95]
+emails = ["ana@x.edu", "ben@x.edu", "cara@x.edu"]</pre>
+    <p>This is called <strong>parallel lists</strong>: several lists kept in lockstep, where position <code>0</code> in each list refers to the same person. To work with student <code>i</code>, you index all three lists with the same <code>i</code>:</p>
+    <pre>for i in range(len(names)):
+    print(names[i], scores[i], emails[i])</pre>
+    <p>It works — until it doesn't. The relationship between the three lists exists only in your head. Python does not know that <code>names[1]</code> and <code>scores[1]</code> belong together. <strong>Predict the output before you read on:</strong> what happens when you sort the students by score like this?</p>
+    <pre>scores.sort(reverse=True)        # sort ONLY the scores list
+
+for i in range(len(names)):
+    print(names[i], scores[i])   # names and scores no longer match!</pre>
+    <p>Ana is now paired with the wrong score. The lists desynchronized the instant you reordered one without the others. The same trap springs whenever you insert in the middle, delete an entry, or filter — you have to remember to do it to <em>every</em> list, in the same way, every time.</p>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — A Representation Can Be Valid and Still Wrong</span>
+      <p style="margin:0;">Parallel lists are perfectly legal Python. They run without error. But they encode a relationship — "these belong together" — that the language cannot see or protect. The bug isn't in any single line; it's in the <em>shape</em> of the data. A correct representation makes the relationship explicit so it can't fall apart.</p>
+    </div>
+    <p>The fix is to stop scattering one thing across several lists, and instead keep each thing's fields <em>together</em>. That is the subject of Section 2.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Recognize the parallel-lists anti-pattern on sight: multiple lists indexed by the same variable, with the "belongs-together" relationship living only in the programmer's memory. When you see it, you know a refactor is coming.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What makes two or more lists "parallel"?</li>
+        <li>Explain precisely why sorting only <code>scores</code> breaks the data.</li>
+        <li>Name two other operations besides sorting that can desynchronize parallel lists.</li>
+        <li>Where does the "belongs-together" relationship actually live in the parallel-lists version?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Section 2 introduces the structure that fixes all of this at once — and happens to be the most common shape in real-world data.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel warning"><h3>⚠ The Lockstep Assumption</h3><p>Any code that indexes two lists with the same variable is silently assuming they stay aligned forever. That assumption is one careless <code>sort</code> away from a bug.</p></div>
+    <div class="panel exercise"><h3>▶ Try It — Break It Yourself</h3><p>Type the parallel-lists example, sort one list, and print the pairs. Seeing the mismatch with your own eyes is worth more than being told it happens.</p></div>
+  </aside>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 2 -->
+<h2 class="section-title" id="sec2">2. Records — The List of Dicts</h2>
+<section class="section">
+  <article class="main">
+    <p>The repair for parallel lists is to keep each thing's fields bundled together in one object. A dictionary is perfect for this: it labels each value with a name. One dictionary describes one thing — we call it a <strong>record</strong>.</p>
+    <pre>student = {"name": "Ana", "score": 88, "email": "ana@x.edu"}</pre>
+    <p>Now collect many records in a list. A <strong>list of dicts</strong> can represent a table — provided every dict uses the <em>same set of keys</em>. In that representation, each dict is a row, and the shared keys act like column names.</p>
+    <pre>students = [
+    {"name": "Ana",  "score": 88, "email": "ana@x.edu"},
+    {"name": "Ben",  "score": 72, "email": "ben@x.edu"},
+    {"name": "Cara", "score": 95, "email": "cara@x.edu"},
+]</pre>
+    <p>Each row carries its own fields, so they can never desynchronize. To sort the table by score, we tell <code>sort</code> what to sort <em>by</em> with a small named function — a <strong>key function</strong> — that takes one record and returns the value to order on:</p>
+    <pre>def by_score(s):
+    return s["score"]
+
+students.sort(key=by_score, reverse=True)
+
+for s in students:
+    print(s["name"], s["score"])   # always the right pairing</pre>
+    <p>Because the unit being moved is the whole dict, the relationship between fields is preserved automatically. Name, score, and email travel together. The shape protects the relationship for you.</p>
+
+    <h4>How key= works — and how to see it</h4>
+    <p>The <code>key=</code> argument looks like magic and isn't. Start with a surprising fact: <code>sort</code> never compares the dictionaries at all. Try sorting them with no key:</p>
+    <pre>students.sort()
+# TypeError: '&lt;' not supported between instances of 'dict' and 'dict'</pre>
+    <p>It crashes, because Python has no rule for "is this dict less than that dict?" Now add the key function back:</p>
+    <pre>students.sort(key=by_score)        # works perfectly</pre>
+    <p>Nothing about the dictionaries changed. The key function hands <code>sort</code> something it <em>can</em> compare — the scores, which are just integers — and the records ride along wherever their score goes. <strong>The records are never compared; only the keys are.</strong> That is why a list of dicts sorts fine even though a dict on its own can't be ordered. You can watch the key function being called by having it print:</p>
+    <pre>def by_score(s):
+    print("  key called on", s["name"])
+    return s["score"]
+
+students.sort(key=by_score, reverse=True)
+# one "key called on..." line per record — sort calls it once on each</pre>
+    <p>To <em>see</em> the records riding along as whole units, give each one a field that has nothing to do with the sort — a seat number — and print the table before and after. <strong>Predict the AFTER ordering before you read it:</strong></p>
+    <pre>students = [
+    {"name": "Ana",  "score": 88, "seat": 1},
+    {"name": "Ben",  "score": 72, "seat": 2},
+    {"name": "Cara", "score": 95, "seat": 3},
+]
+students.sort(key=by_score, reverse=True)
+for s in students:
+    print(s)
+# {'name': 'Cara', 'score': 95, 'seat': 3}
+# {'name': 'Ana',  'score': 88, 'seat': 1}
+# {'name': 'Ben',  'score': 72, 'seat': 2}</pre>
+    <p>Look at the <code>seat</code> column after the sort: 3, 1, 2. That sequence isn't sorted on its own — each seat landed wherever its record's <em>score</em> sent it. The seat had no say in the ordering, yet it followed its owner. That is "riding along," made visible — and it is exactly what the parallel-lists version of Section 1 fails to do, where sorting one list leaves the others stranded.</p>
+    <p>Two honest footnotes. Python's sort is <strong>stable</strong> — records with equal keys keep their original order, so you never need a tiebreaker. And the ordering algorithm itself (Python uses a method called Timsort) is a topic for another day; the mental model you need is just <em>compute a key for each item, then order by the keys</em>.</p>
+
+    <h4>The operations you will use constantly</h4>
+    <pre># filter — keep the records that match a condition
+passing = []
+for s in students:
+    if s["score"] &gt;= 80:
+        passing.append(s)
+
+# find — the record with the largest score (same key function)
+top = max(students, key=by_score)
+
+# transform — pull one field out of every record
+all_names = []
+for s in students:
+    all_names.append(s["name"])</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — A List of Dicts Is an In-Memory Table</span>
+      <p style="margin:0;">This is the single most common shape in real-world programming: rows of records, each with the same fields. A CSV file, a database query result, a JSON API response, the holdings in your portfolio labs — they all arrive as a list of dicts. When you learn to think in rows-of-records, an enormous range of real problems suddenly looks familiar.</p>
+    </div>
+    <p>One discipline matters: every record should have the <em>same set of keys</em>. That uniformity is what lets one loop work for every row — and it is an example of a structural rule your data must always satisfy. Workbook 4 — the Inputs, State, Transitions &amp; Invariants workbook — will give this kind of rule a formal name: an <em>invariant</em>. You can already feel why it matters: the moment one record is missing a key, the loop that reads that key breaks. Real-world data is often messier than our examples — records arrive with missing fields or inconsistently named keys — and cleaning them into a uniform shape is frequently the first job of a program.</p>
+
+    <h4>Going further: lightweight pairs</h4>
+    <p>When a "record" is just two or three fixed values that never change — a coordinate, a (label, number) pair — a <strong>tuple</strong> is a lighter choice than a dict, and a <em>list of tuples</em> is a common shape:</p>
+    <pre>points = [(0, 0), (3, 4), (6, 8)]    # list of coordinate pairs
+for x, y in points:                  # unpack each tuple as you loop
+    print(x, y)</pre>
+    <p>You'll see these pairs again in Section 4, where (row, column) positions are exactly this shape. Reach for a dict when fields need names; reach for a tuple when a fixed little group of values is enough.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Model "many things, each with the same fields" as a list of dicts; sort it with a named key function (knowing the records ride along while only the keys are compared); and filter, find, and transform it without risking the desynchronization that plagues parallel lists.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In the table analogy, what is a row and what is a column?</li>
+        <li>Why does <code>students.sort()</code> with no key raise a <code>TypeError</code>, while <code>sort(key=by_score)</code> works?</li>
+        <li>When sorting by score, what does <code>sort</code> actually compare — the records or the scores?</li>
+        <li><strong>Recognize the shape:</strong> you have 200 customers, each with a name, email, and total spend, and you need to sort them by spend and email the top 10. What structure does this ask for, and why?</li>
+        <li>Why should every record in the list share the same keys?</li>
+      </ol>
+    </div>
+    <p class="transition-note">A list of dicts handles "rows of records." Section 3 turns to a different shape entirely: data laid out as a grid.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Record</h3><p>A single dict describing one thing, with a fixed set of named fields. A list of records is a table.</p></div>
+    <div class="panel design"><h3>📊 In Excel Terms</h3><p>A list of dicts <em>is</em> a spreadsheet: each dict is a row, each key is a column header. If you can picture the sheet, you can picture the structure.</p></div>
+    <div class="panel mental"><h3>🧠 key= Is a Function</h3><p><code>key=by_score</code> hands <code>sort</code> a function it calls on each record to get the value to order by. Sort compares those values — never the records.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>Open the notebook. <strong>1 · Design:</strong> you'll be handed raw data as parallel lists and as loose values — in a markdown cell, name the record shape you'll use and justify it (what are the fields? why a dict per thing?). <strong>2 · Direct:</strong> build the list of dicts and sort it with a key function — or write the prompt that makes the AI build exactly that shape. <strong>3 · Reflect:</strong> answer a follow-up question about the result and note anything the build revealed that your design hadn't anticipated.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 3 -->
+<h2 class="section-title" id="sec3">3. Grids — The List of Lists (2-D)</h2>
+<section class="section">
+  <article class="main">
+    <p>Some data is naturally two-dimensional: a game board, a seating chart, a spreadsheet of numbers, a grid of pixels. The natural representation is a <strong>list of lists</strong> — an outer list whose items are themselves lists. Each inner list is a row.</p>
+    <pre>grid = [
+    [1, 2, 3],
+    [4, 5, 6],
+]
+print(grid[0])        # [1, 2, 3]  — the first row
+print(grid[1][2])     # 6          — row 1, column 2</pre>
+    <p>The access pattern is <code>grid[row][col]</code>: the first index selects a row, the second a position within that row. Reading a grid means looping twice — once over the rows, once over the cells in each row:</p>
+    <pre>for row in grid:
+    for value in row:
+        print(value, end=" ")
+    print()                # newline at the end of each row</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Nested Structure, Nested Iteration</span>
+      <p style="margin:0;">A grid is a list inside a list, so reading it takes a loop inside a loop. The shape of the data and the shape of the code mirror each other. Whenever you see two levels of nesting in a structure, expect two levels of nesting in the loop that walks it.</p>
+    </div>
+    <h4>Building a grid — and a trap to avoid</h4>
+    <p>You will often need to build a grid of a given size, filled with a starting value. <strong>Predict the output before you read on</strong> — here is a tempting shortcut that hides a serious bug:</p>
+    <pre>rows, cols = 2, 3
+grid = [[0] * cols] * rows     # DANGER
+grid[0][0] = 99
+print(grid)                    # [[99, 0, 0], [99, 0, 0]] — both rows changed!</pre>
+    <p>This is the aliasing trap from Workbook 2 (sections 10–11) in disguise. Start with what list repetition actually means: <code>*</code> on a list is just repeated <em>concatenation</em>, joining copies of the contents end to end:</p>
+    <pre>[0] * 3       is the same as     [0] + [0] + [0]     ==  [0, 0, 0]</pre>
+    <p>So the inner <code>[0] * cols</code> makes a new list whose slots all reference the same <code>0</code>. That is harmless, because <code>0</code> is <em>immutable</em>: the only way to change a slot is to rebind it to a different object, which leaves the others alone. The outer <code>* rows</code> is a different story: it makes <code>rows</code> references to the same inner <em>list</em>, and a list is <em>mutable</em>. When you write <code>grid[0][0] = 99</code>, you reach <em>into</em> that one shared list and mutate it — and because every row is the very same list, every row shows the change. The rule, which is just those sections restated: <strong>sharing references to an immutable object is safe; sharing references to a mutable object is the trap.</strong></p>
+    <p>The correct way is to build a fresh inner list for each row, so the rows are independent objects. The clearest construction is the explicit double loop — build each row cell by cell, then append the finished row:</p>
+    <pre>grid = []
+for r in range(rows):
+    row = []                   # a brand-new inner list each pass
+    for c in range(cols):
+        row.append(0)          # fill the row cell by cell
+    grid.append(row)
+
+grid[0][0] = 99
+print(grid)                    # [[99, 0, 0], [0, 0, 0]] — correct</pre>
+    <h4>Two ways to build a row — and two mental models</h4>
+    <p>Once the double loop is comfortable, you'll meet a compact variant that builds each row with repetition instead of an inner loop:</p>
+    <pre>grid = []
+for r in range(rows):
+    grid.append([0] * cols)    # still a brand-new inner list each pass — safe</pre>
+    <p>Both are correct, because each pass creates a new inner list. So which to reach for? <strong>The explicit double loop is the safer default</strong>: it makes the structure visible, and it generalizes — the inner <code>append</code> can compute any starting value (the column number, a random value, a value read from a file), while <code>[0] * cols</code> only works when every cell starts identical. Reach for the compact form once you understand exactly why the aliasing trap above happens — and never put the <code>*</code> on the <em>outside</em>.</p>
+    <p>Keep two mental models separate here. <em>Construction</em> is building the grid row by row — that's the double loop. <em>Direct access</em> is reading or changing one cell of a grid that already exists — that's <code>grid[r][c]</code>. They are different operations, and mixing them up is a common source of confusion: you never need index arithmetic to build a grid, and you never need a loop to change one cell.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Represent grid-shaped data as a list of lists, read it with a nested loop, and build a correctly-sized grid with an explicit double loop — knowing the compact <code>[0] * cols</code> row is safe only inside a fresh-row-per-pass loop, and keeping <em>construction</em> (build row by row) and <em>direct access</em> (<code>grid[r][c]</code>) as separate mental models.</p>
+    </div>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Row Then Column</h3><p><code>grid[row][col]</code>. The first bracket picks the row; the second picks the cell in it. Say it out loud every time until it's automatic.</p></div>
+    <div class="panel warning"><h3>⚠ The Multiplication Trap</h3><p><code>[[0]*cols]*rows</code> repeats the <em>same</em> inner list. Build rows with an explicit loop so each one is a new object.</p></div>
+    <div class="panel concept"><h3>💡 Repetition = Concatenation</h3><p><code>[0]*3</code> is <code>[0]+[0]+[0]</code>. Sharing refs to immutable values is safe; sharing refs to a mutable list is the trap.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> given a grid problem, state in a markdown cell what the rows and columns mean and what each cell holds. <strong>2 · Build:</strong> construct a correctly-sized grid with the double loop, fill it, and read it back with a nested loop — then deliberately trigger the aliasing trap so you can see it spring. <strong>3 · Reflect:</strong> explain in one sentence why your version is immune to the trap. The "Going further" subsection below is the deeper 3-D idea — we'll reach it if time allows.</p>
+</div>
+
+<section class="section">
+  <article class="main">
+    <h4>Going further: there's rarely one right shape</h4>
+    <p>Here is a thinking move worth more than any single structure. When you model something, you almost never face one correct shape and a pile of wrong ones — you face several workable shapes, each making different things easy. The skilled move is to <em>pause and consider the alternatives</em>: list the shapes the data could take, ask what each one makes cheap and what it makes expensive, and choose on purpose. A 3-D structure — a list of lists of lists — is the cleanest place to watch this happen, because the data can be identical and the only thing you change is the order of the axes.</p>
+    <p>Take a small cube — 2 layers, each a 2-row by 3-column grid — and store the same values two ways. The key is that the axes are genuinely <em>reordered</em>, not just renamed:</p>
+    <pre>Layout A  (stack of grids):   A[layer][row][col]    shape 2 x 2 x 3
+Layout B  (column-first):     B[col][row][layer]    shape 3 x 2 x 2</pre>
+    <p>Abstract index paths are hard to <em>feel</em>, so look at the actual structures. To make the layer dimension jump out, let every cell hold its layer number — all the <code>1</code>s are layer 0, all the <code>2</code>s are layer 1:</p>
+    <pre>A = [                       # A[layer][row][col]
+    [ [1, 1, 1],            #   layer 0: a 2x3 grid of 1s
+      [1, 1, 1] ],
+    [ [2, 2, 2],            #   layer 1: a 2x3 grid of 2s
+      [2, 2, 2] ],
+]
+
+B = [                       # B[col][row][layer]
+    [ [1, 2], [1, 2] ],     #   col 0: for each row, [layer0, layer1]
+    [ [1, 2], [1, 2] ],     #   col 1
+    [ [1, 2], [1, 2] ],     #   col 2
+]</pre>
+    <p>Same cube, same values — in A the layers sit together as whole grids; in B each innermost pair threads <em>through</em> the layers. Now ask each layout for "all of layer 0" and watch the difference:</p>
+    <pre>print(A[0])                 # [[1, 1, 1], [1, 1, 1]]   one index — done
+
+layer0 = []                 # from B, the same request is a gather:
+for col in B:               # visit every column...
+    row_vals = []
+    for pair in col:        # ...and every row in it...
+        row_vals.append(pair[0])   # ...plucking out the layer-0 value
+    layer0.append(row_vals)
+print(layer0)               # [[1, 1], [1, 1], [1, 1]] — and note the
+                            # shape came out column-major, not row-major</pre>
+    <p>And the mirror image: "all of column 2" is <code>B[2]</code> — one index — but from A it's the same kind of nested-loop gather. In summary:</p>
+    <pre>"give me all of layer 0"   ->  A[0]                one index    (cheap)
+                               a nested gather     from B       (awkward)
+
+"give me all of column 2"  ->  B[2]                one index    (cheap)
+                               a nested gather     from A       (awkward)</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — There's Rarely One Right Shape</span>
+      <p style="margin:0;">Each layout makes a <em>different</em> slice the cheap, single-index one. So the design rule is: order the axes so the slice you take most often is the easy one. And the precise way to say what's going on — the <em>information</em> is the same in both layouts; what you're choosing is the layout, the path to each element, and which operations are cheap. The data doesn't change. The cost of your questions does — which is exactly why pausing to consider the alternatives, here and everywhere, is the habit to build. (And a scope note: 3-D structures themselves are genuinely "going further" material — most of you won't need them until work like image processing. The <em>habit</em> of weighing layouts is the takeaway, and it applies to every structure in this workbook.)</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In <code>grid[2][4]</code>, which number is the row and which is the column?</li>
+        <li>Rewrite <code>[0] * 4</code> as a sum of lists to show what repetition means.</li>
+        <li>Explain why <code>[0] * cols</code> is safe but <code>[inner] * rows</code> is the trap, in terms of mutability.</li>
+        <li>Write the correct construction of a 3×5 grid of zeros using an explicit loop.</li>
+        <li><strong>Recognize the shape:</strong> you want to store, for each of 12 months, a 7×24 grid of average temperatures (day-of-week by hour). What structure is that, and if you mostly ask "show me a whole month," which axis should be outermost?</li>
+      </ol>
+    </div>
+    <p class="transition-note">A grid stores data by (row, column). But the same data can also live in a single flat list — and converting between the two is one of the most quietly powerful tricks in programming. That is Section 4.</p>
+  </article>
+</section>
+<!-- ══════════════════════════════════════════════════════ SEC 4 -->
+<h2 class="section-title" id="sec4">4. Index Arithmetic — 1-D ↔ 2-D</h2>
+<section class="section">
+  <article class="main">
+    <p>A grid and a flat list can hold exactly the same data. A 2×5 grid has ten cells; so does a flat list of ten items. The question is how to translate a position in one into a position in the other — and the answer is a small piece of arithmetic that shows up everywhere from spreadsheets to image pixels to game boards.</p>
+    <p>Lay out ten letters in a flat list, then arrange them into a grid of 2 rows by 5 columns:</p>
+    <pre>dim_1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+rows, cols = 2, 5
+
+dim_2 = []
+for i in range(rows):
+    row = []
+    for j in range(cols):
+        idx = i * cols + j        # (row, col) -> flat index
+        row.append(dim_1[idx])
+    dim_2.append(row)
+
+for row in dim_2:
+    print(row)
+# ['a', 'b', 'c', 'd', 'e']
+# ['f', 'g', 'h', 'i', 'j']</pre>
+    <p>The key line is <code>idx = i * cols + j</code>. To find the flat position of the cell at row <code>i</code>, column <code>j</code>: skip <code>i</code> whole rows (each <code>cols</code> long), then step <code>j</code> into the current row. Going the other direction reverses the arithmetic with integer division and remainder:</p>
+    <pre>flat = []
+for idx in range(rows * cols):
+    i = idx // cols              # which row?  how many full rows fit
+    j = idx % cols               # which column?  what's left over
+    flat.append(dim_2[i][j])
+
+print(flat)
+# ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — // and % Convert Between a Line and a Grid</span>
+      <p style="margin:0 0 10px;">These two formulas are inverses of each other, and they are worth committing to memory:</p>
+<pre style="background:#fff;border:1px solid #f0c8a8;">idx = i * cols + j     # (row, col)  -&gt;  flat index
+i   = idx // cols      # flat index  -&gt;  row
+j   = idx % cols       # flat index  -&gt;  column</pre>
+      <p style="margin:8px 0 0;">This is computational thinking in its purest form: a spatial idea (a grid) turned into pure arithmetic. The same relationship indexes pixels in an image, cells in a spreadsheet, and squares on a chessboard.</p>
+    </div>
+    <p>Step back for a second. You have just held the same ten letters as a flat list <em>and</em> as a grid — the same data wearing two different shapes, and which one you reach for depends on what you need to do with it. Hold onto that observation; it is a habit we will name outright in Section 8.</p>
+    <h4>Sub-example: wrap-around with %</h4>
+    <p>The remainder operator <code>%</code> has a second everyday use: cycling through a fixed set of choices as a counter keeps climbing. Because <code>cnt % length</code> can never reach <code>length</code>, it always lands back inside the list:</p>
+    <pre>fruit = ['grapes', 'oranges', 'apples', 'pears', 'blueberries']
+
+cnt = 0
+length = len(fruit)
+while cnt &lt; 13:
+    print(cnt + 1, fruit[cnt % length])   # wraps back to the start
+    cnt += 1
+    if cnt % length == 0:
+        print()                            # blank line every full cycle</pre>
+    <p>As <code>cnt</code> runs 0, 1, 2, … the index <code>cnt % length</code> runs 0,1,2,3,4,0,1,2,3,4,… — looping through the fruit forever. Think of <code>%</code> as a "stay in bounds" tool: it keeps any climbing number inside a fixed range.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Convert any (row, column) position to a flat index and back using <code>i*cols+j</code>, <code>idx//cols</code>, and <code>idx%cols</code> — and use <code>%</code> to wrap a climbing counter around a fixed-length sequence.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In a grid with 5 columns, what flat index holds the cell at row 2, column 3?</li>
+        <li>Flat index 13 in a 5-column grid is at which row and column?</li>
+        <li>Why can <code>cnt % length</code> never be equal to or larger than <code>length</code>?</li>
+        <li>What does <code>cnt // cols</code> tell you, in plain words?</li>
+        <li>Modify the fruit loop to print a blank line after every <em>third</em> fruit instead of every full cycle.</li>
+      </ol>
+    </div>
+    <p class="transition-note">So far the structures have been about <em>storing</em> shaped data. The next sections are about a family of <em>patterns</em> — recurring moves you make on data. The first is the one genuinely new algorithm in this workbook.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Skip, Then Step</h3><p><code>i*cols + j</code>: skip <code>i</code> full rows, then step <code>j</code> across. That sentence <em>is</em> the formula.</p></div>
+    <div class="panel design"><h3>🧩 // and % Are a Pair</h3><p>Division gives the row; remainder gives the column. They always come together when you flatten or unflatten a grid.</p></div>
+    <div class="panel concept"><h3>💡 Wrap-Around</h3><p><code>value % n</code> keeps a number inside <code>0 … n-1</code>. Use it for cycling, repeating, and "stay in bounds."</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> before coding, write the two formulas from memory and predict the flat index of one named cell. <strong>2 · Build:</strong> flatten a grid into a 1-D list and rebuild it, using only <code>i*cols+j</code>, <code>//</code>, and <code>%</code> — then use wrap-around to deal a deck of cards into hands. <strong>3 · Reflect:</strong> compare each predicted index to the real one; where a prediction missed, trace which of the two formulas you misapplied.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 5 -->
+<h2 class="section-title" id="sec5">5. The Grouping Pattern — Dict of Lists</h2>
+<section class="section">
+  <article class="main">
+    <p>Here is a problem you will meet again and again: you have a flat list of things, and you want to sort them into named buckets. Group students by section. Group transactions by month. Group holdings by sector. The result is a <strong>dict of lists</strong> — each key names a bucket, and each value is the list of things in that bucket.</p>
+    <pre>students = [
+    {"name": "Ana",  "section": "A", "score": 88},
+    {"name": "Ben",  "section": "B", "score": 72},
+    {"name": "Cara", "section": "A", "score": 95},
+    {"name": "Dan",  "section": "B", "score": 64},
+    {"name": "Eve",  "section": "A", "score": 90},
+]</pre>
+    <p>The pattern is one pass over the data. For each item, work out which bucket it belongs in, and append it there. The only wrinkle is the very first time you see a bucket: it does not exist yet, so you create an empty list before appending.</p>
+    <pre>by_section = {}                       # the dict of lists we're building
+for s in students:
+    key = s["section"]
+    if key not in by_section:         # first time we've seen this bucket
+        by_section[key] = []          # create the empty list
+    by_section[key].append(s["name"])
+
+print(by_section)
+# {'A': ['Ana', 'Cara', 'Eve'], 'B': ['Ben', 'Dan']}</pre>
+    <p>This is the accumulator pattern from Workbook 2, lifted to a new level. There, you accumulated into a single number or a single list. Here you accumulate into <em>many</em> lists at once, one per key — but the three-part shape is identical: initialize the container, loop over the data, update on each pass.</p>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Grouping Is Accumulating Into Buckets</span>
+      <p style="margin:0;">Recognize this shape and you have a tool you'll use for the rest of your programming life: take a flat list, route each item into a bucket keyed by some property, and you've grouped it in a single pass. The moment you catch yourself wanting "how many / which ones, broken down by ___ ?", that blank is your grouping key.</p>
+    </div>
+
+    <h4>Keep the whole record</h4>
+    <p>So far each bucket holds <em>names</em> (strings). But you can append the whole record instead of just one field — it is a one-character change, <code>s</code> in place of <code>s["name"]</code>:</p>
+    <pre>by_section = {}
+for s in students:
+    key = s["section"]
+    if key not in by_section:
+        by_section[key] = []
+    by_section[key].append(s)        # the whole record, not just the name</pre>
+    <p>Now each bucket is a list of dicts — a <em>dict of lists of dicts</em>. Why bother? Because each bucket is now a little table, and any pattern you know works <em>inside</em> a bucket. To get the average score per section, run the Workbook 2 accumulator once within each group:</p>
+    <pre>for section in by_section:
+    members = by_section[section]
+    total = 0
+    for s in members:
+        total = total + s["score"]
+    average = total / len(members)
+    print(section, average)
+
+# A 91.0
+# B 68.0</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Patterns Nest</span>
+      <p style="margin:0;">Grouping doesn't have to throw information away. Keep the whole record in each bucket and every bucket becomes a small table you can run any pattern on — including the accumulator from Workbook 2. The outer loop walks the groups; the inner loop works one group. This "group, then compute within each group" move is exactly what the portfolio labs do: group holdings by sector, then total the value of each sector.</p>
+    </div>
+
+    <h4>Going further: setdefault</h4>
+    <p>Now that you've written the "if the key isn't there yet, make an empty list" step by hand, here is the shortcut — and it's a built-in dict method, no import needed. <code>d.setdefault(key, default)</code> returns the existing value for a key, or, if the key is absent, installs the default <em>and</em> returns it. Either way, what comes back is the bucket — ready to append to:</p>
+    <pre>by_section = {}
+for s in students:
+    by_section.setdefault(s["section"], []).append(s["name"])</pre>
+    <p>It does exactly what your hand-written version did — which is why it was worth writing the long way first. The convenience is only useful once you understand the pattern it hides; and when you read AI-generated code, you'll now recognize this one-liner (and its cousins) as the grouping pattern in disguise.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Take any flat collection and sort it into named buckets in a single pass — keeping either one field or the whole record — then run a pattern within each bucket to summarize it. This is the Python form of a pivot table or a SQL <code>GROUP BY</code> with an aggregate.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What are the keys and what are the values in a "dict of lists"?</li>
+        <li>Why must you create an empty list the first time a key appears?</li>
+        <li>What single change turns "dict of lists of names" into "dict of lists of records"?</li>
+        <li>In the average-per-section code, what does the outer loop iterate over, and the inner loop?</li>
+        <li><strong>Recognize the shape:</strong> you have a year of sales transactions and your boss wants total revenue per region <em>and</em> the average sale size per region. What structure gets you both, and what would go wrong if you stored only the running totals?</li>
+      </ol>
+    </div>
+    <p class="transition-note">When the thing you accumulate per bucket is a count rather than a list, grouping becomes the counting pattern — common enough to deserve its own section.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Dict of Lists</h3><p>Keys name the buckets; each value is the list of items in that bucket. The shape of "things sorted into named groups."</p></div>
+    <div class="panel design"><h3>📊 In Excel Terms</h3><p>Grouping is a <em>pivot table</em>: choose a field to group by (the rows of the pivot), and each group collects the matching records. "Group, then compute" is the pivot's value area.</p></div>
+    <div class="panel mental"><h3>🧠 Group, Then Compute</h3><p>Keep whole records in the buckets, then run a pattern inside each one. Outer loop = groups; inner loop = one group.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> given a flat list of transactions, state in markdown which field is your grouping key and whether each bucket holds one field or whole records — and why. <strong>2 · Build:</strong> group into a dict of lists, then summarize each group with an inner pattern. <strong>3 · Reflect:</strong> one problem is a deliberate "wrong shape" trap — storing only a total leaves you unable to answer the follow-up question. Write a sentence on what the trap reveals about choosing before coding.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 6 -->
+<h2 class="section-title" id="sec6">6. The Counting Pattern</h2>
+<section class="section">
+  <article class="main">
+    <p>Counting is grouping's close cousin. Instead of collecting items into a list per bucket, you keep a running tally per bucket. The structure is a dict mapping each key to a number, and the build follows the same one-pass shape — initialize a count the first time a key appears, then add one each time you see it again.</p>
+    <pre>votes = ["yes", "no", "yes", "yes", "no", "abstain", "yes"]
+
+counts = {}
+for v in votes:
+    if v not in counts:
+        counts[v] = 0          # first sighting: start the tally at 0
+    counts[v] += 1             # every sighting: add one
+
+print(counts)
+# {'yes': 4, 'no': 2, 'abstain': 1}</pre>
+    <p>This is a frequency table, built by hand. The "first time, initialize" step is the same wrinkle as in grouping — the only difference is that the bucket starts at <code>0</code> instead of <code>[]</code>, and you add instead of append.</p>
+    <p>A common variation counts a derived property rather than the value itself. To count how many words fall into each length:</p>
+    <pre>words = ["to", "be", "or", "not", "to", "be"]
+
+length_counts = {}
+for w in words:
+    n = len(w)                 # the key is computed from the item
+    length_counts[n] = length_counts.get(n, 0) + 1
+
+print(length_counts)
+# {2: 5, 3: 1}</pre>
+    <p>Here <code>get(n, 0)</code> does the "first time" work: it returns the current count for <code>n</code>, or <code>0</code> if <code>n</code> has never been seen. (Trace it: "to", "be", "or", "to", "be" are all length 2 — that's five — and only "not" is length 3.)</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Build a frequency table from any collection in a single pass, tallying either the values themselves or a property computed from them, using <code>dict.get(key, 0) + 1</code> to handle the first sighting cleanly.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>How does the counting pattern differ from the grouping pattern? What's the same?</li>
+        <li>Why does each new key start at <code>0</code>?</li>
+        <li>What does <code>counts.get("yes", 0)</code> return before <code>"yes"</code> has ever been counted?</li>
+        <li>Rewrite the <code>votes</code> example using <code>.get()</code> instead of the <code>if v not in counts</code> check.</li>
+        <li><strong>Recognize the shape:</strong> you have a list of 10,000 page-view records and want the number of views per URL. Which pattern is this, and what are the dict's keys and values?</li>
+      </ol>
+    </div>
+    <p class="transition-note">Grouping and counting both <em>build</em> a dict from a list. Section 7 uses a dict for the opposite purpose: looking things up fast.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Frequency Table</h3><p>A dict mapping each distinct value to how many times it occurred. Counting is grouping where the bucket is a tally.</p></div>
+    <div class="panel mental"><h3>🧠 .get(key, 0)</h3><p>Returns the current count, or 0 if the key is new. The clean way to say "start at zero the first time."</p></div>
+    <div class="panel design"><h3>🧩 Same Shape</h3><p>Initialize, loop, update — identical to grouping. Only the bucket type (number vs list) and the update (<code>+= 1</code> vs <code>append</code>) change.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> for a dataset of words, page views, or grades, state in markdown what the dict's keys and values will be — and whether you're counting the raw value or a <em>computed</em> property of it. <strong>2 · Build:</strong> build the frequency table by hand with <code>.get(key, 0)</code>. <strong>3 · Reflect:</strong> hand-tally a small slice of the data and check it against your program's output; if they disagree, trace which sighting was miscounted.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 7 -->
+<h2 class="section-title" id="sec7">7. Fast Lookup — The Dict as an Index</h2>
+<section class="section">
+  <article class="main">
+    <p>So far you have used dicts to <em>build</em> results. Their other great strength is retrieval. If you have a list of records and you keep needing to find "the one with id X," scanning the whole list every time is wasteful. Build a dict once that maps the id straight to the record, and every later lookup is instant.</p>
+    <pre>students = [
+    {"id": 101, "name": "Ana"},
+    {"id": 102, "name": "Ben"},
+    {"id": 103, "name": "Cara"},
+]
+
+by_id = {}                         # build the index once
+for s in students:
+    by_id[s["id"]] = s
+
+print(by_id[102]["name"])          # 'Ben' — direct, no scan</pre>
+    <p>That loop turns a list you'd have to search into a lookup table you can index. The trade is deliberate: a little setup cost now buys cheap lookups forever after — exactly what a database does when you add an index to a column. (If you go on to a databases course, this section is the idea behind <code>CREATE INDEX</code>.)</p>
+    <h4>Guarding against missing keys</h4>
+    <p>Indexing a dict with a key that isn't there raises a <code>KeyError</code> and crashes. When a key might be absent, use <code>.get()</code>, which returns <code>None</code> (or a default you supply) instead of crashing:</p>
+    <pre>by_id.get(999)              # None — no such student
+by_id.get(999, "unknown")   # 'unknown' — your chosen fallback</pre>
+    <h4>A dict can replace a chain of if/elif</h4>
+    <p>When you find yourself writing a long ladder of <code>if</code>/<code>elif</code> that maps one value to another, a dict usually says it more clearly:</p>
+    <pre># the long way
+if code == "A":
+    label = "Excellent"
+elif code == "B":
+    label = "Good"
+elif code == "C":
+    label = "Fair"
+else:
+    label = "Unknown"
+
+# the dict way
+labels = {"A": "Excellent", "B": "Good", "C": "Fair"}
+label = labels.get(code, "Unknown")</pre>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — A Dict Is a Pre-Computed Answer</span>
+      <p style="margin:0;">A list answers "what's in position 3?" A dict answers "what's associated with <em>this key</em>?" — without searching. <strong>Whenever you find yourself searching a list of dictionaries for a specific item, that's the signal to build a dictionary lookup table indexed by the field you're searching on.</strong> In Section 2's terms: you're indexing the table by one of its columns — exactly what a database index is. You pay once to set it up and save on every lookup after.</p>
+    </div>
+    <h4>Nesting: a dict of dicts</h4>
+    <p>When each looked-up thing is itself a record, you get a <strong>dict of dicts</strong> — a lookup table whose values are full records. This is the natural shape for configuration and for "look up everything about X by its id":</p>
+    <pre>prices = {
+    "AAPL": {"price": 195.0, "sector": "Tech"},
+    "JNJ":  {"price": 158.0, "sector": "Health"},
+}
+print(prices["AAPL"]["sector"])   # 'Tech'</pre>
+    <h4>Going further: sometimes two structures are better than one</h4>
+    <p>Choosing the right data structure is important — but for some problems, no single structure does everything well. In those cases you can keep <strong>two representations of the same data</strong>, each optimized for a different operation. A common example from the portfolio labs: you need to display holdings <em>in the order they were bought</em> (a list is perfect for that) and also check quickly <em>whether a ticker is already in the portfolio</em> (a set is perfect for that). So you maintain both:</p>
+    <pre>holdings_list = ["AAPL", "MSFT", "NVDA"]    # for ordered display
+holdings_set  = {"AAPL", "MSFT", "NVDA"}    # for fast membership tests
+
+if "TSLA" not in holdings_set:              # instant, no scan
+    holdings_list.append("TSLA")
+    holdings_set.add("TSLA")                # keep BOTH in sync</pre>
+    <p>The tradeoff is right there in the last two lines: every add or remove now has to touch both structures, and the moment they disagree you have a bug. That sync cost is real — which is why you only reach for this pattern when the payoff in speed or clarity is worth it. You won't need it in the early labs, but as your programs grow you may find yourself reaching for it naturally; when you do, you'll recognize this page.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Build a dict index to replace repeated list-scanning, guard missing keys with <code>.get()</code>, collapse an if/elif ladder into a lookup, and nest dicts to model "everything about X, keyed by X."</p>
+    </div>
+
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>What problem does building a dict index solve that a plain list doesn't?</li>
+        <li>What's the difference between <code>by_id[999]</code> and <code>by_id.get(999)</code> when 999 is absent?</li>
+        <li>Rewrite a 4-branch if/elif that maps day numbers 1–4 to weekday names as a dict.</li>
+        <li>In the <code>prices</code> dict of dicts, how would you read JNJ's price?</li>
+        <li><strong>Recognize the shape:</strong> a checkout program needs the price of a product every time an item is scanned, thousands of times a day. What structure should hold the catalog, and why not a list?</li>
+        <li>In the "two structures" example, what does each representation make cheap, and what ongoing cost do you take on by keeping both?</li>
+      </ol>
+    </div>
+    <p class="transition-note">You now have several shapes and three patterns. Section 8 steps back and asks the question this whole workbook is really about: given a problem, how do you choose?</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Index</h3><p>A dict built so you can jump straight to a value by its key, instead of scanning a list to find it.</p></div>
+    <div class="panel design"><h3>📊 In Excel Terms</h3><p>A dict index is <em>VLOOKUP</em>: instead of scanning a column for a match, you jump straight to the row by its key. Building the dict is building the lookup table once.</p></div>
+    <div class="panel warning"><h3>⚠ KeyError</h3><p>Indexing an absent key crashes. Use <code>.get(key, default)</code> whenever the key might not be there.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> name the field you keep searching the records for — that's your index key; say so in markdown. <strong>2 · Build:</strong> turn the list of records into a dict index and compare it against scanning; then replace a messy if/elif ladder with a lookup dict. <strong>3 · Reflect:</strong> one problem hands you a key that isn't there — note how <code>.get()</code> handled it, and where in your own labs a missing key could realistically appear.</p>
+</div>
+<!-- ══════════════════════════════════════════════════════ SEC 8 -->
+<h2 class="section-title" id="sec8">8. Choosing a Shape — A Decision Guide</h2>
+<section class="section">
+  <article class="main">
+    <p>You now have a small toolkit of shapes and patterns. The skill that ties them together — the actual computational thinking — is selection: looking at a problem and recognizing which shape it wants. But notice the word is <em>recognizing</em>, not <em>finding the one answer</em>. A problem rarely has a single correct shape; it has several workable ones, each making different things easy. The real skill is to consider the alternatives and choose deliberately. This section is the map.</p>
+    <p>Start from the <em>question you need to answer</em>, not from the structures. The question reveals the shape:</p>
+    <table>
+      <tr><th>When you need to…</th><th>Reach for…</th><th>Because…</th></tr>
+      <tr><td>Keep many things, each with the same fields</td><td>List of dicts</td><td>Each record's fields stay bundled and can't desynchronize</td></tr>
+      <tr><td>Store data in rows and columns / a grid</td><td>List of lists</td><td>Two indices, <code>[row][col]</code>, mirror the two dimensions</td></tr>
+      <tr><td>Sort items into named groups</td><td>Dict of lists</td><td>One bucket (list) per key, filled in a single pass</td></tr>
+      <tr><td>Count occurrences of something</td><td>Dict of counts</td><td>One tally per key</td></tr>
+      <tr><td>Look something up by a key, fast and repeatedly</td><td>Dict (an index)</td><td>Direct access with no scanning</td></tr>
+      <tr><td>Look up a whole record by a key</td><td>Dict of dicts</td><td>Key → record, the shape of config and "by-id" tables</td></tr>
+    </table>
+    <p>The reference also runs the other way. Given a structure, here is what it is <em>for</em>:</p>
+    <table>
+      <tr><th>Structure</th><th>Access</th><th>Its natural job</th></tr>
+      <tr><td><code>list of dicts</code></td><td><code>data[i]["field"]</code></td><td>A table of records — the most common real-world shape</td></tr>
+      <tr><td><code>list of lists</code></td><td><code>grid[row][col]</code></td><td>Grids, boards, matrices, anything 2-D</td></tr>
+      <tr><td><code>dict of lists</code></td><td><code>groups[key]</code></td><td>Grouping / bucketing</td></tr>
+      <tr><td><code>dict of dicts</code></td><td><code>table[key]["field"]</code></td><td>Lookup tables, configuration, by-id records</td></tr>
+    </table>
+    <p>You do not need to memorize these tables. They are here so that, when a problem stalls you, you can scan for the row that matches the question you're stuck on.</p>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Consider the Alternatives</span>
+      <p style="margin:0;">The habit underneath every table on this page is this: don't grab the first shape that comes to mind. Ask what shapes the data <em>could</em> take and what each one makes cheap or expensive, then choose on purpose. You have already met this several times without it being named — the same ten letters as a flat list or a grid (Section 4), the same records as a list of dicts or grouped into a dict of lists (Sections 2 and 5), the same navigation as nested loops or a stack (Section 9), and, most starkly, the same cube under two axis orders (Section 3, Going further). Same data, different shapes, different costs. Learning to pause and weigh those shapes — rather than reaching for the first one — is the point of this whole workbook.</p>
+    </div>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Structure Is Your Program's State</span>
+      <p style="margin:0;">The structure you choose <em>is</em> the information your program holds — its <strong>state</strong>. Workbook 4 will build a whole framework (Inputs, State, Transitions, Invariants) on this idea, with the <strong>invariant</strong> — a condition that should always hold — at its heart. A taste of it now: a good structure makes the rules easy to state. "Every record in this list has the same keys" and "every count is a non-negative number" are invariants. When your representation makes its invariants obvious, your code becomes easy to reason about. When it hides them — as parallel lists hid "these stay aligned" — bugs move in.</p>
+    </div>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Move from a problem statement to a data representation deliberately: name the question you need to answer, weigh the alternative shapes the data could take, match it to the one that makes your work easiest, and articulate the invariant that keeps that shape trustworthy.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>"Show me average score per section" — which structure does this ask for?</li>
+        <li>"Find the holding with ticker AAPL instantly" — which structure?</li>
+        <li>"Store a tic-tac-toe board" — which structure?</li>
+        <li>State one invariant for a list-of-dicts table of students.</li>
+        <li>Why does an unstated invariant — like parallel lists staying aligned — tend to produce bugs?</li>
+      </ol>
+    </div>
+    <p class="transition-note">The remaining two sections put these structures to work: first inside a running program, then inside a prompt to the AI.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Question First</h3><p>Don't start from "which structure?" Start from "what do I need to ask of this data?" The question names the shape.</p></div>
+    <div class="panel design"><h3>🧩 More Than One Answer</h3><p>Most data fits several shapes. Before committing, name two or three and ask what each makes cheap or expensive — then choose on purpose.</p></div>
+    <div class="panel concept"><h3>💡 Invariant</h3><p>A condition that should always be true. "Every record has the same keys." Good structures make their invariants visible.</p></div>
+    <div class="panel design"><h3>🧩 Bridge to Workbook 4</h3><p>Structure = state. The rules that must always hold = invariants. Workbook 4 builds the STI framework on exactly this — you're already doing the thinking.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>The big one. In the notebook you'll get problems where <em>nobody tells you the shape</em> — recognizing it unaided is the whole skill. For each: <strong>1 · Design:</strong> name the structure in a markdown cell, name one alternative you rejected, and justify the choice. <strong>2 · Build or direct:</strong> build it yourself or write the prompt that makes the AI build exactly that shape. <strong>3 · Reflect:</strong> a follow-up question reveals whether you chose well — some are deliberate traps where the obvious first guess makes the follow-up painful. Write what the trap taught you.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 9 -->
+<h2 class="section-title" id="sec9">9. Driving a Program — The Menu Loop</h2>
+<section class="section">
+  <article class="main">
+    <p>Most interactive programs — including the portfolio manager you will build in the labs — are organized around a <strong>menu</strong>: show the options, read a choice, do the work. This section builds one in three small steps, each adding exactly one new idea, and then — in Going further — shows what happens when you move the menu's structure out of the code and into the data.</p>
+
+    <h4>Step 1 — A menu that runs once (no loop yet)</h4>
+    <p>Start with the smallest possible menu: print the options, read a choice, run the matching action, done. Routing "this choice → that action" is exactly the lookup problem from Section 7, so store the actions in a dict — a <strong>dispatch table</strong>:</p>
+    <pre>def buy():   print("  ...buying...")
+def sell():  print("  ...selling...")
+def view():  print("  ...showing portfolio...")
+
+actions = {                              # dispatch table: choice -> action
+    "1": buy,
+    "2": sell,
+    "3": view,
+}
+
+print("1) Buy   2) Sell   3) View")
+choice = input("> ").strip()
+
+if choice in actions:
+    actions[choice]()                    # look up the function, then call it
+else:
+    print("Invalid choice.")</pre>
+    <p>The values in the dict are <em>functions</em> — <code>actions[choice]</code> retrieves a function, and the <code>()</code> calls it. A function is just another kind of value; a dict can hold them as happily as it holds numbers or strings. Run this and it does its one job and ends. Let that land before adding anything.</p>
+
+    <h4>Step 2 — Show the menu again: add a while loop</h4>
+    <p>Now suppose each menu item has an action, and after the action is performed you want the menu to automatically appear again, so the user can keep working until they choose to quit. That is one new idea — wrap the menu in a <code>while</code>:</p>
+    <pre>running = True
+while running:                           # the menu loop
+    print("\n1) Buy   2) Sell   3) View   4) Quit")
+    choice = input("> ").strip()
+
+    if choice == "4":
+        running = False                  # the one branch that ends the loop
+    elif choice in actions:
+        actions[choice]()
+    else:
+        print("Invalid choice — pick 1-4.")</pre>
+    <p>Nothing else changed: the dispatch table is exactly the one from Step 1. One practical note: when an action needs clean input — a share count, a dollar amount — it gets its own little inner validation loop, the <code>while True / try / except</code> pattern from Workbook 2:</p>
+    <pre>def read_positive_int(prompt):
+    while True:                          # inner validation loop
+        try:
+            n = int(input(prompt))
+            if n &gt; 0:
+                return n
+        except ValueError:
+            pass
+        print("Please enter a positive whole number.")</pre>
+    <p>That gives the full skeleton of an interactive program: an outer loop for the session, inner loops for the inputs.</p>
+
+    <h4>Step 3 — A submenu: nest another loop</h4>
+    <p>Real programs have submenus — choosing "Trade" might open its own Buy / Sell / Back screen. A submenu is just another menu loop, reached from a choice in the main one. Give it its own function with its own <code>while</code>:</p>
+    <pre>def trade_menu():
+    while True:                          # the submenu's own loop
+        print("  Trade:  1) Buy   2) Sell   3) Back")
+        choice = input("  trade > ").strip()
+        if choice == "1":
+            buy()
+        elif choice == "2":
+            sell()
+        elif choice == "3":
+            return                       # leave the submenu, back to main
+        else:
+            print("  Pick 1-3.")
+
+actions = {"1": trade_menu, "2": view}   # choosing Trade runs the submenu loop</pre>
+    <p>When you pick Trade, the main loop is still running while <code>trade_menu()</code> spins its own loop inside it — a nested while. Notice where the menu's <em>structure</em> now lives: in the shape of the program itself. The main loop physically contains the Trade loop, the way the menu contains the Trade screen.</p>
+
+    <h4>Pause — feel the friction</h4>
+    <p>This works, and for a level or two it reads naturally. But try to grow it. A submenu <em>inside</em> Trade means a loop inside a loop inside a loop. Every new screen is a new function with its own hand-written loop, its own option printing, its own "Back" branch. Moving an option from one menu to another means editing control flow in multiple places. The menu's structure is <strong>hard-coded into the nesting</strong> — and every change to the structure is a change to the code. What if you could navigate menus of <em>any</em> depth without changing the loop logic at all?</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Menu Loop Composes Patterns You Already Know</span>
+      <p style="margin:0 0 8px;">A menu loop is three familiar ideas stacked: the <em>outer loop</em> that repeats until done (Workbook 2), the <em>inner validation loops</em> that guarantee clean input (Workbook 2's <code>try/except</code> pattern), and the <em>dispatch dict</em> that routes choices to actions (Section 7's lookup). Submenus add a fourth layer by nesting one loop inside another.</p>
+      <p style="margin:0;">And the friction you just felt is the setup for one more representation decision: keep the menu structure in the <em>code's nesting</em>, or move it into <em>data</em>. The "Going further" subsection makes that move.</p>
+    </div>
+
+    <h4>Going further: the stack — menus as data</h4>
+    <p>First, the tool. A <strong>stack</strong> is just a list used with discipline: you only add to the end (<code>append</code>, called <em>push</em>) and only remove from the end (<code>pop</code>). Last in, first out — like a stack of plates. The simplest use is an undo history:</p>
+    <pre>history = []
+history.append(trade_1)     # push
+history.append(trade_2)     # push
+last = history.pop()        # pop -> trade_2 (the most recent)  ... "undo"</pre>
+    <p>Now the move. It takes two steps, and the first has nothing to do with stacks: take the menus' <em>content</em> out of the code and put it in a data structure — a dict of dicts, one record per menu. Each record holds the menu's title, its options, and which choices lead to which submenu:</p>
+    <pre>menus = {
+    "main": {
+        "title":   "Main Menu",
+        "options": {"1": "Trade", "2": "Report", "q": "Quit"},
+        "goto":    {"1": "trade", "2": "report"},   # choices that open a submenu
+    },
+    "trade": {
+        "title":   "Trade Menu",
+        "options": {"1": "Buy", "2": "Sell", "b": "Back"},
+        "goto":    {},
+    },
+    "report": {
+        "title":   "Report Menu",
+        "options": {"1": "Summary", "b": "Back"},
+        "goto":    {},
+    },
+}
+
+def display_menu(name):
+    menu = menus[name]                     # look up the menu's record
+    print("\n--- " + menu["title"] + " ---")
+    for key in menu["options"]:
+        print("  " + key + ") " + menu["options"][key])</pre>
+    <p>Look at what <code>display_menu</code> knows about any specific menu: <em>nothing</em>. It reads whatever record it is handed. The menus have become rows in a table, and the code has become generic.</p>
+    <p>Second step: track <em>where the user is</em> with a stack. Push a menu's name when you go deeper; pop to go back; loop while the stack is non-empty. One new reading trick: <code>menu_stack[-1]</code> uses index <code>-1</code> to read the <em>last</em> item of the list without removing it — a <strong>peek</strong> at the top of the stack, as opposed to <code>pop</code>, which removes it:</p>
+    <pre>menu_stack = ["main"]                   # we start inside the main menu
+while menu_stack:                       # run until backed all the way out
+    current = menu_stack[-1]            # PEEK: which menu are we in?
+    display_menu(current)
+    choice = input("> ").strip()
+    goto = menus[current]["goto"]
+
+    if choice == "b" or choice == "q":
+        menu_stack.pop()                # back one level (from main, this quits)
+    elif choice in goto:
+        menu_stack.append(goto[choice]) # go deeper
+    elif choice in menus[current]["options"]:
+        print("  (the action for '" + menus[current]["options"][choice] + "' runs here)")
+    else:
+        print("  Invalid choice.")</pre>
+    <p>One flat loop. No nesting, no per-menu functions, no per-menu "Back" handling — <code>b</code> pops, whatever menu you're in, and depth is just how many names are on the stack. Now the payoff. Add a brand-new Trade History submenu under Report:</p>
+    <pre>menus["history"] = {"title": "Trade History",
+                    "options": {"b": "Back"},
+                    "goto": {}}
+menus["report"]["options"]["2"] = "History"     # show it on the Report menu
+menus["report"]["goto"]["2"]    = "history"     # and route to it
+
+# (one quirk: "2) History" will display after "b) Back", because dicts
+#  keep keys in the order they were added — harmless, and fixable by
+#  rebuilding the options dict in the order you want)</pre>
+    <p><strong>The loop didn't change at all.</strong> Three lines of <em>data</em> added a whole screen, at any depth you like. That is the workbook's thesis one last time: nested loops and an explicit stack are <em>two representations of the same control structure</em>. Nesting hard-codes the depth; the stack carries it as data, which makes "back" uniform and arbitrary depth free. You'll reach for this in the portfolio labs — for now, hold the seed: when nesting gets unwieldy, move the structure into the data.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Grow an interactive program one idea at a time: a dispatch dict that runs once, a <code>while</code> that brings the menu back, a nested loop for a submenu — and, when the nesting starts to fight you, recognize the data-driven alternative: menus as records in a dict, position as a stack, and one flat loop that never changes.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>In Step 1, what does <code>actions[choice]</code> return, and what do the parentheses after it do?</li>
+        <li>What single idea does Step 2 add to Step 1, and which branch ends the loop?</li>
+        <li>In your own words, why does nesting a loop for every submenu become hard to maintain as the program grows?</li>
+        <li>In the stack version, what do <code>append</code> and <code>pop</code> correspond to in terms of menus — and what is <code>menu_stack[-1]</code> doing differently from <code>pop</code>?</li>
+        <li>Adding the History submenu changed the <code>menus</code> dict but not the loop. What general principle about structure-in-data versus structure-in-code does that demonstrate?</li>
+      </ol>
+    </div>
+    <p class="transition-note">One section remains, and it is the reason this workbook exists in a course about AI: how the representations you've learned become the language you use to direct the AI.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Dispatch Table</h3><p>A dict mapping each choice to the function that handles it. Replaces a long if/elif ladder with one lookup.</p></div>
+    <div class="panel design"><h3>🧩 One Idea Per Step</h3><p>Menu → loop → submenu. Each step adds exactly one decision: "I want it to repeat, so I add a loop." That sequencing is itself computational thinking.</p></div>
+    <div class="panel mental"><h3>🧠 Stack = List + Discipline</h3><p>Push with <code>append</code>, peek with <code>[-1]</code>, remove with <code>pop</code>. Last in, first out — useful for undo and for carrying menu depth as data.</p></div>
+    <div class="panel warning"><h3>⚠ Structure in Code vs Data</h3><p>Nesting hard-codes the menu tree into control flow. Putting it in a dict makes the tree editable without touching the loop.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>In the notebook. <strong>1 · Design:</strong> sketch your menu tree in markdown — which screens exist and which choices connect them. <strong>2 · Build:</strong> follow the section's progression: dispatch dict, then the loop, then one submenu, with one validating input. <strong>3 · Reflect:</strong> if time allows, the "Going further" exercise rebuilds the same navigation with the <code>menus</code> dict and a stack — then asks you to add one new submenu to each version and write a sentence comparing what each change cost.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SEC 10 -->
+<h2 class="section-title" id="sec10">10. Directing the AI with a Representation</h2>
+<section class="section">
+  <article class="main">
+    <p>This is where the whole workbook pays off. When you ask an AI to write code, the most consequential thing you can put in the prompt is the data representation. Everything the AI writes — the loops, the function signatures, the way results come back — follows from the shape you specify. Specify the shape, and you've made the important decision yourself. Leave it out, and you've handed that decision to the model.</p>
+    <h4>The same task, two prompts — and the step you can't see</h4>
+    <pre>Prompt A (shape unspecified):
+"Write Python to track my stock holdings and total their value."
+
+Prompt B (shape specified):
+"Model each holding as a dict with keys 'ticker', 'shares', and
+ 'price'. Store all holdings in a list. Write total_value(holdings)
+ that returns the sum of shares * price across the list."</pre>
+    <p>From Prompt A you might get a class, or parallel lists, or a dict keyed by ticker — whatever the model defaults to. You then have to read it, understand its choices, and adapt your other code to match. From Prompt B you get exactly the list-of-dicts table you specified, with a function whose shape you already understand because you designed it. You can <em>predict</em> the code before you read it — and prediction, as in all of Workbook 2, is the sign that you're in control.</p>
+    <p>But be careful: Prompt B's words are not the skill. A student could copy that prompt without understanding why any of its choices are right — and then the design thinking still belongs to whoever wrote the prompt, not to them. What makes a prompt <em>directed</em> is the step you can't see in the text: the design questions you answered <strong>before</strong> writing it.</p>
+    <h4>Design first: the questions you answer before you prompt</h4>
+    <p>For the holdings task, the pre-prompt questions look like this — and you should be able to answer every one in your own words:</p>
+    <pre>Why a dict per holding, and not a tuple?      (fields need names)
+Why these fields — 'price', not 'cost_basis'? (what will I compute later?)
+Why a list of holdings, not a dict by ticker? (do I need order? duplicates?)
+What exactly does total_value return?         (a float? formatted text?)
+What about the edge cases?                    (empty list? zero shares?)
+Where does the output go?                     (the screen? a file I can
+                                               upload or share — say, a CSV?)</pre>
+    <p>Notice the last one: <em>output destination is a design decision too.</em> "Print it" and "write a CSV I can upload to Canvas" are different design targets, and the choice belongs to you, not the model. Once these questions are answered, the prompt nearly writes itself — every clause in Prompt B traces back to a decision you already made. <strong>The prompt documents decisions; it doesn't make them.</strong></p>
+    <h4>A worked example: drop the n lowest scores</h4>
+    <p>Here is a task with more genuine design decisions in it. Suppose grading policy drops each student's <code>n</code> lowest scores. Before prompting, the questions: Should the original list survive unchanged, or is it fine to modify it? Sort a copy, or sort in place? What comes back — a new list of records, just the kept scores, or the names of what was dropped? And what if <code>n</code> is as big as the list? Decide, then direct:</p>
+    <pre>"I have a list of score records, each a dict with keys 'name' and
+ 'score'. Write drop_lowest(records, n) that returns a NEW list with
+ the n lowest-scoring records removed, leaving the original list
+ unchanged. Sort a copy using a key function on 'score'. If n >= the
+ number of records, return an empty list. Don't print anything — I
+ will handle output myself."</pre>
+    <p>Every clause is a decision you made: <em>NEW list</em>, <em>original unchanged</em>, <em>copy not in place</em>, <em>key function on 'score'</em>, the <em>n too big</em> edge case, and <em>output stays with you</em>. An AI given this prompt has nothing left to design — only to execute.</p>
+    <p>So what is the AI actually <em>for</em>, in this course? Three things, all of them upstream of the code: helping you <strong>specify</strong> the problem precisely, <strong>surfacing edge cases</strong> you hadn't considered ("what should happen when two students tie for the lowest score?"), and <strong>revealing unstated assumptions</strong> ("you said shares — can they be fractional?"). Used that way, the AI sharpens your design. It never replaces it.</p>
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Representation Is the Contract</span>
+      <p style="margin:0;">Naming the data shape turns a vague wish into a precise contract. The AI fills in the mechanics; <em>you</em> keep authority over the structure of your program. But the contract is only yours if the design behind it is yours: the prompt is the <em>output</em> of your thinking, not the start of it. This is the difference between using AI as a tool you direct and being carried along by whatever it produces. Every structure in this workbook is also a phrase in the language you use to give that direction.</p>
+    </div>
+    <p>This is also why the design-before-code discipline runs through the whole course. Deciding "this is a list of dicts with these keys" or "I'll group by section into a dict of lists" <em>is</em> the design. Once you've made it, the prompt almost writes itself — and so, in turn, does the code. Workbook 4 takes this all the way, building the Inputs–State–Transitions–Invariants framework into a full method for controlling AI through specification.</p>
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Direct an AI by specifying the data representation up front — naming the structure, its keys, and the function signatures that operate on it — so the code you get back is the code you intended, and you can predict it before you read it.</p>
+    </div>
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Why is the data representation the highest-leverage thing to put in a prompt?</li>
+        <li>What can go wrong when you leave the structure unspecified (Prompt A)?</li>
+        <li>Prompt B's <em>text</em> can be copied without the skill it represents. What is the invisible step that makes a prompt genuinely directed?</li>
+        <li>List three design questions you would answer before prompting for the drop-the-lowest-scores task — including one about where the output goes.</li>
+        <li>Name the three legitimate jobs the AI has <em>upstream</em> of the code, and give an example of each for a lab problem of your own.</li>
+      </ol>
+    </div>
+    <p class="transition-note">That completes Workbook 3. You can now recognize the common shapes of data, the patterns that operate on them, and — most importantly for this course — use those shapes as the language for directing an AI. Workbook 4 builds the State–Transitions–Invariants framework on exactly these foundations.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 The Contract</h3><p>A specified representation is a contract: you decide the shape, the AI fills in the mechanics.</p></div>
+    <div class="panel mental"><h3>🧠 Can You Predict It?</h3><p>If you can predict the code from your prompt, you're directing the AI. If you can't, the AI is directing you.</p></div>
+    <div class="panel design"><h3>🧩 Design Is the Shape</h3><p>Choosing "list of dicts with these keys" <em>is</em> the design step. After that, the prompt and the code follow.</p></div>
+    <div class="panel design"><h3>🧩 AI's Three Jobs</h3><p>All upstream of the code: help you specify the problem, surface edge cases, reveal unstated assumptions. The design decisions stay with you.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise</span>
+  <p>Capstone in the notebook. <strong>1 · Design:</strong> take a lab-style problem and, in a markdown cell, answer the full set of design questions — shape, fields, function contract, edge cases, and output destination — in your own words. <strong>2 · Direct:</strong> write the prompt that makes Claude build exactly that structure, then predict the code before reading it. <strong>3 · Reflect:</strong> compare what came back against your prediction; note any edge case or assumption the AI surfaced that your design missed. If the code drifts, the fix is a sharper specification, not a sharper apology.</p>
+</div>
+<!-- ══════════════════════════════════════════════════════ GLOSSARY -->
+<section class="glossary" id="glossary">
+  <h2>Glossary</h2>
+  <p class="muted">Terms introduced or emphasized in this workbook. Terms from Workbook 2 (list, dict, mutable, accumulator, reference, aliasing, invariant, state) are assumed.</p>
+
+  <div class="letter-jump">
+    <a href="#wg-c">C</a><a href="#wg-d">D</a><a href="#wg-g">G</a><a href="#wg-i">I</a>
+    <a href="#wg-k">K</a><a href="#wg-l">L</a><a href="#wg-m">M</a><a href="#wg-n">N</a>
+    <a href="#wg-p">P</a><a href="#wg-r">R</a><a href="#wg-s">S</a><a href="#wg-w">W</a>
+  </div>
+
+  <div class="letter-group" id="wg-c">
+    <h4>C</h4>
+    <dl>
+      <dt>counting pattern</dt><dd>Building a dict that maps each distinct key to how many times it occurred, in one pass. Grouping where each bucket is a tally rather than a list.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-d">
+    <h4>D</h4>
+    <dl>
+      <dt>dict of dicts</dt><dd>A dictionary whose values are themselves dictionaries (records). The natural shape for lookup tables, configuration, and "everything about X, keyed by X." Access: <code>table[key]["field"]</code>.</dd>
+      <dt>dict of lists</dt><dd>A dictionary whose values are lists. The result of the grouping pattern: each key names a bucket, each value holds the items in that bucket. When the items are records, it becomes a dict of lists of dicts — a table per group.</dd>
+      <dt>dispatch table</dt><dd>A dict mapping choices (or commands) to the functions that handle them, used to replace a long if/elif chain. Look up the function by the choice and call it.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-g">
+    <h4>G</h4>
+    <dl>
+      <dt>grouping pattern</dt><dd>Sorting a flat collection into named buckets in a single pass, producing a dict of lists. The Python equivalent of a spreadsheet pivot table or a SQL <code>GROUP BY</code>. Keep whole records in the buckets and you can summarize each group with another pattern.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-i">
+    <h4>I</h4>
+    <dl>
+      <dt>index (as a dict)</dt><dd>A dictionary built ahead of time so a value can be retrieved directly by its key, avoiding repeated scanning of a list. The "pre-compute the answer" move — the code equivalent of a spreadsheet VLOOKUP.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-k">
+    <h4>K</h4>
+    <dl>
+      <dt>key function</dt><dd>A function passed to <code>sort</code> (or <code>max</code>, <code>min</code>) via <code>key=</code>. Sort calls it once on each element to compute the value to order by, then compares only those values — never the elements themselves. This is why a list of dicts can be sorted by a field even though dicts can't be compared directly.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-l">
+    <h4>L</h4>
+    <dl>
+      <dt>LIFO</dt><dd>"Last in, first out" — the order in which a stack returns items. The most recently pushed item is the first one popped.</dd>
+      <dt>list of dicts</dt><dd>A list whose items are dictionaries with the same keys — an in-memory table of records. The most common real-world data shape; the fix for parallel lists.</dd>
+      <dt>list of lists</dt><dd>A list whose items are lists — the representation for grid-shaped (2-D) data. Access: <code>grid[row][col]</code>.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-m">
+    <h4>M</h4>
+    <dl>
+      <dt>menu loop</dt><dd>The structure of most interactive programs: an outer loop that shows options and repeats until quit, with inner validation loops for input and (usually) a dispatch table for routing choices. Submenus nest one loop inside another.</dd>
+      <dt>modeling</dt><dd>Choosing how to represent a real situation as data. The central skill of this workbook and the highest-leverage decision in most programs.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-n">
+    <h4>N</h4>
+    <dl>
+      <dt>nested loop</dt><dd>A loop inside another loop. Walking a list of lists takes a nested loop because the structure itself has two levels; a submenu nests one menu loop inside another.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-p">
+    <h4>P</h4>
+    <dl>
+      <dt>parallel lists</dt><dd>Several lists kept in lockstep so that the same index refers to one logical thing across all of them. Fragile: the "belongs-together" relationship is invisible to Python and breaks under sorting, insertion, or deletion. Repaired by a list of dicts.</dd>
+      <dt>peek</dt><dd>Reading the top of a stack without removing it — <code>stack[-1]</code>, using index <code>-1</code> for the last item. Contrast with <code>pop</code>, which removes the item as it returns it.</dd>
+      <dt>pop</dt><dd>Removing and returning the item at the end of a list — the stack operation that takes the most recently pushed item off the top.</dd>
+      <dt>push</dt><dd>Adding an item to the end of a list (via <code>append</code>) when using the list as a stack.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-r">
+    <h4>R</h4>
+    <dl>
+      <dt>record</dt><dd>A single dictionary describing one thing with a fixed set of named fields. A list of records is a table.</dd>
+      <dt>repetition (list)</dt><dd>The <code>*</code> operator on a list, which is repeated concatenation: <code>[0]*3</code> is <code>[0]+[0]+[0]</code>. It makes new slots that reference the same element — safe for immutable elements, the aliasing trap for mutable ones.</dd>
+      <dt>representation</dt><dd>The data shape chosen to stand for a real situation. The recurring theme of this workbook: the representation you pick determines how hard everything else becomes — and is the most important thing you specify when directing an AI.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-s">
+    <h4>S</h4>
+    <dl>
+      <dt>setdefault</dt><dd>A dict method, <code>d.setdefault(key, default)</code>, that returns the existing value for a key or installs and returns a default if the key is absent. Collapses the "create the bucket if needed" step in grouping (Section 5, Going further).</dd>
+      <dt>stable sort</dt><dd>A sort that keeps records with equal keys in their original relative order. Python's <code>sort</code> is stable, so equal keys never need a tiebreaker.</dd>
+      <dt>stack</dt><dd>A list used with last-in-first-out discipline: push with <code>append</code>, remove with <code>pop</code>. Useful for undo, history, and as a data-driven alternative to nested loops for menu navigation (Section 9, Going further).</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group" id="wg-w">
+    <h4>W</h4>
+    <dl>
+      <dt>wrap-around</dt><dd>Using the remainder operator <code>%</code> to keep a climbing counter inside a fixed range, so an index cycles back to the start. <code>cnt % length</code> always lands in <code>0 … length-1</code>.</dd>
+    </dl>
+  </div>
+</section>
+
+</div><!-- .page -->
+</body>
+</html>

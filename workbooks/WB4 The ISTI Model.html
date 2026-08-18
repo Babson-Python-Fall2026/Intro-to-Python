@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Workbook 4 — The ISTI Model · Inputs, State, Transitions &amp; Invariants</title>
+<style>
+:root {
+  --bg:       #f4f3f0;
+  --paper:    #ffffff;
+  --text:     #1c2732;
+  --muted:    #4a5568;
+  --line:     #d1d9e0;
+  --heading:  #0d2137;
+  --accent:   #1a6b9a;
+  --accent2:  #2d7a4e;
+  --aha:      #c75e1c;
+
+  --concept:  #e8f3ff;
+  --exercise: #e6f4ec;
+  --mental:   #f0eaff;
+  --warning:  #fdecea;
+  --design:   #fff8e1;
+  --tryex:    #e8f7f3;
+  --check:    #f0f7ff;
+  --aha-bg:   #fff4ec;
+  --unlock:   #18695a;
+  --unlock-bg:#e7f5f1;
+  --unlock-edge:#a8d6c8;
+
+  --code-bg:  #f5f7fa;
+  --table-hd: #eef2f6;
+  --nav-bg:   #edf1f5;
+
+  --radius:   16px;
+  --shadow:   0 1px 3px rgba(13,33,55,.07);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+}
+
+.page { max-width: 1380px; margin: 0 auto; padding: 28px 20px 100px; }
+
+header, .toc {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+header { padding: 32px 36px; margin-bottom: 22px; }
+
+.topnote {
+  background: var(--nav-bg);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 11px 15px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: .97rem;
+}
+
+.workbook-strip {
+  display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap;
+}
+.wb-pill {
+  font-family: sans-serif; font-size: .82rem; padding: 5px 12px;
+  border-radius: 20px; border: 1px solid var(--line);
+  background: var(--paper); color: var(--muted);
+}
+.wb-pill.current {
+  background: var(--heading); color: #fff;
+  border-color: var(--heading); font-weight: bold;
+}
+
+.section-title {
+  margin: 42px 0 16px; padding-top: 26px;
+  border-top: 2px solid var(--line);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(290px, .9fr);
+  gap: 26px; align-items: start; margin-bottom: 18px;
+}
+
+.main {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 28px 32px; box-shadow: var(--shadow);
+}
+
+.sidebar {
+  position: sticky; top: 14px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+h1, h2, h3, h4 { color: var(--heading); line-height: 1.2; }
+h1 { font-size: 2.5rem; margin: 0 0 12px; }
+h2 { font-size: 1.9rem; margin: 0 0 18px; }
+h3 { font-size: 1.2rem; margin: 0 0 8px; }
+h4 { font-size: 1.06rem; margin: 22px 0 8px; color: var(--accent); }
+p, li { font-size: 1.04rem; }
+.lede { font-size: 1.13rem; max-width: 84ch; }
+.muted { color: var(--muted); }
+a { color: var(--accent); }
+
+.panel {
+  border: 1px solid var(--line); border-radius: 14px;
+  padding: 13px 16px; box-shadow: var(--shadow);
+}
+.panel h3 { font-size: .97rem; margin-bottom: 7px; }
+.panel p, .panel li { font-size: .97rem; }
+.panel pre { font-size: .88rem; margin: 8px 0 4px; }
+
+.concept  { background: var(--concept);  border-left: 4px solid #5ba3d4; }
+.mental   { background: var(--mental);   border-left: 4px solid #8a6fce; }
+.warning  { background: var(--warning);  border-left: 4px solid #d95c5c; }
+.design   { background: var(--design);   border-left: 4px solid #c49a00; }
+
+.aha-block {
+  background: var(--aha-bg); border: 1px solid #f0c8a8;
+  border-left: 5px solid var(--aha); border-radius: 12px;
+  padding: 16px 20px; margin: 20px 0;
+}
+.aha-block .aha-label {
+  font-size: .78rem; font-family: sans-serif; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--aha); margin-bottom: 8px; display: block;
+}
+
+.classwork {
+  background: var(--check); border: 1px solid #b9d4e8;
+  border-left: 5px solid var(--accent); border-radius: 12px;
+  padding: 14px 20px; margin: 24px 0;
+}
+.classwork .classwork-label {
+  font-size: .78rem; font-family: sans-serif; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px; display: block;
+}
+.classwork p { margin: 4px 0 0; font-size: 1rem; }
+
+.ai-callout {
+  background: #f0eaff; border: 1px solid #c9b8f0;
+  border-left: 5px solid #8a6fce; border-radius: 12px;
+  padding: 13px 18px; margin: 20px 0;
+}
+.ai-callout .ai-label {
+  font-size: .76rem; font-family: sans-serif; font-weight: 800;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: #5a3fa0; margin-bottom: 5px; display: block;
+}
+.ai-callout p { margin: 0; font-size: .99rem; }
+
+.unlock-block {
+  background: var(--unlock-bg); border: 1px solid var(--unlock-edge);
+  border-left: 5px solid var(--unlock); border-radius: 12px;
+  padding: 14px 18px; margin: 18px 0 8px;
+}
+.unlock-label {
+  font-size: .76rem; font-family: sans-serif; font-weight: 800;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--unlock); margin-bottom: 6px; display: block;
+}
+.unlock-block p { margin: 4px 0 0; font-size: 1rem; }
+
+.glossary {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 28px 32px;
+  box-shadow: var(--shadow); margin-bottom: 24px;
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) minmax(0, 3fr);
+  gap: 8px 24px; margin: 16px 0 0;
+}
+.glossary dt {
+  font-weight: bold; color: var(--heading);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: .94rem; padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+.glossary dt:first-of-type { border-top: none; padding-top: 0; }
+.glossary dd {
+  margin: 0; font-size: .98rem; padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+.glossary dd:first-of-type { border-top: none; padding-top: 0; }
+.glossary .letter-group { margin-top: 22px; }
+.glossary .letter-group h4 {
+  font-family: sans-serif; font-size: 1.1rem;
+  margin: 0 0 6px; color: var(--accent);
+}
+
+.check {
+  margin-top: 24px; padding: 16px 18px;
+  border: 1px solid #c2d9ef; border-radius: 12px;
+  background: var(--check);
+}
+.check h4 {
+  margin: 0 0 10px; color: var(--accent); font-size: 1rem;
+  border-bottom: 1px solid #c2d9ef; padding-bottom: 6px;
+}
+.check ol { margin: 6px 0 0; padding-left: 20px; }
+.check li { font-size: .99rem; margin-bottom: 5px; }
+
+.transition-note {
+  margin-top: 20px; padding: 10px 14px; border-radius: 10px;
+  background: #f7f9fc; border: 1px solid var(--line);
+  color: var(--muted); font-size: .96rem; font-style: italic;
+}
+
+code, pre {
+  font-family: "Cascadia Code", Consolas, Menlo, Monaco, monospace;
+  font-size: .93rem; font-variant-ligatures: none;
+}
+pre {
+  background: var(--code-bg); border: 1px solid #e0e6ed;
+  border-radius: 11px; padding: 14px 17px; overflow-x: auto;
+  margin: 12px 0 16px; white-space: pre-wrap; line-height: 1.48;
+}
+
+.diagram {
+  font-family: "Cascadia Code", Consolas, monospace; font-size: .9rem;
+  background: #fafbfc; border: 1px solid #dce4ec;
+  border-left: 5px solid #9fb3c8; border-radius: 10px;
+  padding: 12px 15px; white-space: pre; overflow-x: auto;
+  margin: 12px 0 16px; line-height: 1.5;
+}
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; }
+th, td { border: 1px solid var(--line); padding: 9px 12px; vertical-align: top; font-size: .99rem; }
+th { background: var(--table-hd); text-align: left; }
+
+.toc { padding: 20px 26px; margin: 20px 0 36px; }
+.toc h2 { margin-bottom: 14px; font-size: 1.4rem; }
+.toc ol { columns: 2; column-gap: 44px; margin: 0; padding-left: 22px; }
+.toc li { break-inside: avoid; margin-bottom: 7px; font-size: .99rem; }
+.toc li .aha-marker {
+  display: inline-block; font-size: .68rem; font-family: sans-serif;
+  font-weight: 800; color: var(--aha); margin-left: 6px; letter-spacing: .05em;
+}
+
+@media (max-width: 980px) {
+  .toc ol { columns: 1; }
+  .section { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="workbook-strip">
+    <span class="wb-pill">Workbook 1 — Working with AI</span>
+    <span class="wb-pill">Workbook 2 — Python Foundations</span>
+    <span class="wb-pill">Workbook 3 — Data Structures &amp; Patterns</span>
+    <span class="wb-pill current">Workbook 4 — The ISTI Model</span>
+  </div>
+  <div class="topnote"><strong>Design note:</strong> read this workbook before class — it is the reference. Class time moves between discussion and the in-class notebook exercises marked <span style="color:var(--accent);font-weight:bold;">▶ In-Class Exercise</span>. The exercises form a continuous thread: each one deepens the same meal-plan account example so that by the end you have built a complete, well-specified system from scratch.</div>
+  <h1>Workbook 4 — The ISTI Model</h1>
+  <p class="lede">Inputs, State, Transitions, Invariants. Workbooks 2 and 3 taught you how Python stores and changes data, and how to choose a representation that fits the problem. This workbook gives you a framework for thinking about a running system over time: what does it remember, what can disturb it from outside, what events change it, and what rules must hold through every change? Those four questions organize everything you have learned — and become the language you use to direct an AI to build systems correctly.</p>
+  <p class="muted"><strong>What's genuinely new here:</strong> You have been doing ISTI thinking since Workbook 2 Section 2 — "computers store data and change data" is State and Transitions. Workbook 3 Section 8 told you "the structure you choose is your program's state." This workbook names those ideas precisely, sharpens them, and adds three things that haven't been addressed: the distinction between <em>problem-level</em> state and <em>program-level</em> state; <em>derived state</em> and when to store vs. compute; and <em>invariants</em> — the rules that must hold through every change, and how to enforce them in code.</p>
+</header>
+
+<!-- ══════════════ TOC ══════════════ -->
+<section class="toc">
+  <h2>Contents</h2>
+  <ol start="0">
+    <li><a href="#sec0">Programs as Systems — The Four Questions</a></li>
+    <li><a href="#sec1">State — What the System Remembers <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec2">Inputs — What Arrives from Outside</a></li>
+    <li><a href="#sec3">Transitions — What Changes the State <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec4">Invariants — What Must Always Stay True <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec5">ISTI as Specification — Directing the AI <span class="aha-marker">⚡ KEY IDEA</span></a></li>
+    <li><a href="#sec6">Summary — The ISTI Mental Model</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ol>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ SEC 0 -->
+<h2 class="section-title" id="sec0">0. Programs as Systems — The Four Questions</h2>
+<section class="section">
+  <article class="main">
+    <p>Every program you have written stores some information and changes it. That is the seed of a bigger idea: a program is a <strong>system</strong> — something with a current condition, events that alter that condition, influences that arrive from outside, and rules that must hold throughout. Thinking of a program as a system gives you a way to reason about what it is doing at any moment, what it is allowed to do next, and whether it is behaving correctly.</p>
+
+    <p>The ISTI model names the four properties every system has:</p>
+
+    <div class="diagram">  State        what the system remembers right now
+  Inputs       what can arrive from outside and trigger a change
+  Transitions  what events change the state, and how
+  Invariants   what must remain true through every change</div>
+
+    <p>These four questions work at two distinct levels, and keeping those levels separate is the central skill this workbook develops.</p>
+
+    <h4>The problem level and the program level</h4>
+    <p>At the <strong>problem level</strong>, ISTI describes the real-world situation — before any code exists. The state of a campus meal-plan account is the student's balance. A transition is the event "student swipes at the dining hall." An invariant is "the balance is never negative." None of this mentions Python.</p>
+
+    <p>At the <strong>program level</strong>, ISTI describes what the code actually does. The state is a data structure — a dict, a list of records, a number. Transitions become Python functions. Invariants become checks you can run. And the program introduces additional data that exists purely to help the code do its work — loop counters, flags, accumulators — that have no counterpart in the problem world. These are called <strong>program artifacts</strong>. They are part of the program state — the computer is tracking them — but they are not part of the problem state, because they represent nothing in the real world.</p>
+
+    <p>The distinction matters because this is where bugs live. A program can be syntactically correct and still misrepresent the problem world — because it can express states the world can never be in, or fail to express states it legitimately can. Every section in this workbook asks both: what does the problem require, and what does the program actually do?</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ The Gap Between Levels Is Where Bugs Are Born</span>
+      <p style="margin:0;">Problem-level thinking tells you what <em>should</em> be true. Program-level thinking tells you what the code <em>actually does</em>. When those diverge — when the program can represent something the world can't, or vice versa — you have a modeling error no amount of clean syntax can fix. The tools this workbook gives you are for finding and closing that gap.</p>
+    </div>
+
+    <h4>Solve it before you code it</h4>
+    <p>There is one more step that happens before even the problem-level ISTI analysis — and it is the step most students skip. Before you think about state, before you think about transitions, you must first solve the problem in your head using a concrete example.</p>
+
+    <p>This is not optional. A student who cannot trace through a specific example by hand — "I have $30 on my card, I try to buy a $28 meal, what happens?" — is not ready to design a data structure or write a function. They will code their confusion into the program and debug it for hours.</p>
+
+    <p>The <strong>Before-You-Code</strong> check is three steps, done before touching a keyboard:</p>
+    <ol>
+      <li><strong>State the problem in one sentence.</strong> Not the solution — the problem. "A student wants to pay for a meal using their dining card balance."</li>
+      <li><strong>Trace one concrete example by hand with specific numbers.</strong> Pick real values. Follow them through manually. "Balance is $30. Meal costs $28. After the swipe, balance is $2."</li>
+      <li><strong>State the answer out loud.</strong> Not in code. In plain English. "If the balance is enough, subtract the meal cost from the balance. If not, decline and change nothing."</li>
+    </ol>
+    <p>Only after you can do all three are you ready to think about data structures, transitions, and invariants. The ISTI analysis is not a substitute for this step — it is the formalization of it.</p>
+
+    <h4>The running example</h4>
+    <p>The in-class exercises follow a single system across all four concepts: a campus meal-plan account. It is simple enough to see the skeleton of each idea clearly, but rich enough to make all four questions genuinely interesting. By the time you reach Section 5, you will have built a complete, well-specified system and turned its ISTI description into a directed prompt.</p>
+
+    <p>The text uses several other examples to illustrate specific points — a traffic light, a vending machine, a library checkout system, a gradebook. These are meant to show that ISTI is a general lens, not a technique specific to one kind of problem.</p>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Frame any program or real-world situation using the four ISTI questions, and distinguish between the problem-level description (what the world requires) and the program-level implementation (what the code actually does). Apply the Before-You-Code check before beginning any design.</p>
+    </div>
+
+    <p class="transition-note">The first and most important concept is state. Section 1 asks: what exactly does a system need to remember, and how do you decide?</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 ISTI in One Sentence</h3><p>A system has a current condition (State), events that change it (Transitions), things that arrive from outside (Inputs), and rules that must hold throughout (Invariants).</p></div>
+    <div class="panel mental"><h3>🧠 You Already Know This</h3><p>WB2 §2: "computers store data and change data" — that is State and Transitions. WB3 §8: "the structure you choose is your program's state." ISTI names what you have been doing and sharpens it.</p></div>
+    <div class="panel design"><h3>🧩 Two Levels</h3><p>Problem level: the world, before any code. Program level: the Python implementation, including program artifacts — counters, flags, accumulators — that are part of the program state but have no problem-world meaning.</p></div>
+    <div class="panel warning"><h3>⚠ Before You Code</h3><p>State the problem. Trace a concrete example. Say the answer out loud. Only then open a code cell. This is not optional — skipping it means coding your confusion.</p></div>
+  </aside>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ SEC 1 -->
+<h2 class="section-title" id="sec1">1. State — What the System Remembers <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+
+    <h4>Defining state</h4>
+    <p><strong>Problem state</strong> is the collection of data structures needed to represent the problem before a transition executes. Note two things about this definition. First, it says "data structures" broadly — a single number like a balance is a data structure just as much as a dict or a list. Second, it says "before a transition executes" — state is what you have to work with before anything happens. Transitions operate on state; they don't define it.</p>
+
+    <p><strong>Program state</strong> is everything the computer is tracking at a given moment — the problem state plus program artifacts like loop counters, flags, and accumulators. When you are reasoning about whether your system correctly models the world, focus on the problem state. When you are debugging a computation, you may need to inspect the full program state including artifacts. Recognizing the difference between problem state and program state keeps your mental model clean.</p>
+
+    <h4>State is a choice, not a given</h4>
+    <p>The world does not hand you a list of what to store — your questions do. Before designing any state, ask: what questions must this system be able to answer? That list determines the state.</p>
+
+    <p>Consider a traffic light. If the only question is "which light is currently on?", the state is just the current color. But if the question is also "how long has this light been green?", you need a timer. If the question is "how many vehicles passed through on green today?", you need a counter. Same physical system, different questions, different state.</p>
+
+    <h4>Representation is a design decision</h4>
+    <p>Once you know what question you are answering, you still have to choose <em>how</em> to represent the answer — and different representations have different consequences.</p>
+
+    <p>Consider the traffic light state. The simplest representation stores just the current color as a string:</p>
+
+    <pre>traffic_light = {'color': 'red'}</pre>
+
+    <p>An alternative representation uses a boolean for each color:</p>
+
+    <pre>traffic_light = {'red': True, 'yellow': False, 'green': False}</pre>
+
+    <p>Both answer the question "which light is on?" But they create very different obligations. With the string representation, it is <em>impossible</em> for two lights to be on simultaneously — the structure prevents it. With the boolean dict, the value <code>{'red': True, 'yellow': True, 'green': False}</code> is a perfectly valid Python object, but it represents something that can never exist in the real world. You have now taken on the obligation to enforce — through logic in your code — that exactly one value is <code>True</code> at all times.</p>
+
+    <p>This is the central lesson of representation: <strong>every representation choice creates a different set of rules you must maintain</strong>. The string representation makes the illegal state impossible to express. The boolean dict is more flexible but trades that safety for additional enforcement work. Neither is simply "better" — the right choice depends on your context. But the decision must be made consciously, not accidentally.</p>
+
+    <table>
+      <tr><th>System</th><th>Questions it must answer</th><th>Therefore state includes…</th></tr>
+      <tr><td>Traffic light (color only)</td><td>Which light is on?</td><td>Current color as string — illegal states unrepresentable</td></tr>
+      <tr><td>Traffic light (boolean)</td><td>Which light is on?</td><td>Boolean per color — must enforce exactly one True</td></tr>
+      <tr><td>Traffic light + timer</td><td>Which light? How long?</td><td>Current color, elapsed seconds</td></tr>
+      <tr><td>Meal-plan account</td><td>What is the balance?</td><td>Current balance</td></tr>
+      <tr><td>Meal-plan + audit</td><td>Balance, and show March transactions</td><td>Balance, transaction log</td></tr>
+      <tr><td>Library checkout</td><td>Which books are checked out to whom?</td><td>Dict mapping patron ID to list of book IDs</td></tr>
+      <tr><td>Gradebook</td><td>Current scores only</td><td>Dict mapping student to latest score</td></tr>
+      <tr><td>Gradebook + history</td><td>Scores and trend over time</td><td>Dict mapping student to list of scores</td></tr>
+    </table>
+
+    <h4>Stored state vs. derived state</h4>
+    <p>Once you know what the system must answer, a second question arises: does the answer need to be stored, or can it be computed from what is already stored?</p>
+
+    <p><strong>Derived state</strong> is information that can be computed from the primary state at any time. A meal-plan account's primary state is the balance. "Is this account low?" is not separate state — it is a derived fact, computed by comparing the balance to a threshold. A gradebook's primary state is the list of scores. The average is derived: <code>sum(scores) / len(scores)</code>.</p>
+
+    <p>Be thoughtful about storing derived state. If you store a derived value, you take on an additional rule: the stored value must always equal what the computation would produce. Every time the primary state changes, you have to update the derived value — and if you forget once, you have silent wrong data. Computing on demand enforces the rule automatically.</p>
+
+    <pre># Primary state — store this
+account = {"balance": 450.00, "transactions": [...]}
+
+# Derived — compute on demand, don't store
+def is_low(account, threshold=20.00):
+    return account["balance"] < threshold
+
+def total_spent(account):
+    return sum(t["amount"] for t in account["transactions"]
+               if t["type"] == "swipe")
+
+# Be careful with this — now you must keep spent_total in sync manually:
+# account = {"balance": 450.00, "transactions": [...], "spent_total": 230.00}</pre>
+
+    <p>That said, there are cases where storing a derived value is the right call. If computing it is very expensive and the question is asked constantly, storing it may be worth the maintenance cost. And if a value depends on information that will no longer be available later — "what was the balance at close of business yesterday?" — it had to be stored at the time, because it cannot be reconstructed from today's state.</p>
+
+    <h4>When a new question changes everything — the counter vs. log decision</h4>
+    <p>One of the most important lessons about state is that adding a new question can force a completely different representation. This is not a refinement — it is a redesign.</p>
+
+    <p>Suppose the only question your meal-plan system must answer is "how many transactions occurred today?" A single integer counter is the right design:</p>
+
+    <pre>account = {"balance": 450.00, "transaction_count": 0}
+
+def swipe(account, amount):
+    account["balance"] -= amount
+    account["transaction_count"] += 1</pre>
+
+    <p>The counter is primary state — it cannot be derived from anything else you are storing. It is also not "history" in any meaningful sense; it is just a running total. This is the simplest solution to the question asked.</p>
+
+    <p>Now add a second question: "show me the transactions from this morning." Suddenly the counter is useless. You cannot reconstruct the individual transactions from a count. The representation must change entirely — you now need a log:</p>
+
+    <pre>account = {"balance": 450.00, "log": []}
+
+def swipe(account, amount, location):
+    account["balance"] -= amount
+    account["log"].append({
+        "type": "swipe", "amount": amount,
+        "location": location, "balance_after": account["balance"]
+    })</pre>
+
+    <p>And once you have the log, the count becomes derived — you compute it from the log rather than maintaining a separate counter that could get out of sync:</p>
+
+    <pre>def transaction_count_today(account):
+    today = get_today()   # e.g., datetime.date.today()
+    return sum(1 for t in account["log"] if t["date"] == today)</pre>
+
+    <p>The full cascade: if the only question is a count, store a counter. If you need details about individual transactions, store a log. If you have the log, derive the count from it. The choice of representation flows entirely from the questions the system must answer — and a new question can force you back to the beginning.</p>
+
+    <h4>History as state</h4>
+    <p>The current state of most systems tells you nothing about how it got there — the current balance does not reveal which transactions produced it. If the system must answer questions about the past, past transitions must be preserved as state. They are not derivable from the current snapshot. When a transition happens, append a record of it to a log. The log is then part of the state, not a convenience — losing it means those questions become unanswerable.</p>
+
+    <h4>The two-way test</h4>
+    <p>Once you have chosen a representation, run it in both directions. <strong>World → program:</strong> can every meaningful real-world state be expressed? A meal-plan account with exactly zero balance is valid — can your representation express it? An account that has never been used? One with a very long transaction log? <strong>Program → world:</strong> does every state your program can express correspond to something meaningful in the world? A negative balance, if the account forbids overdraft, is a program state with no real-world meaning. Two log entries for the same transaction is similarly nonsensical.</p>
+
+    <p>Every mismatch in either direction is a future bug, discoverable today for free. Run this test every time you choose a representation.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — State is Chosen, Not Found</span>
+      <p style="margin:0 0 10px;">The world does not hand you a list of what to remember. Your questions do. Decide what the system must be able to answer, then choose the representation that makes those answers easy and makes invalid conditions impossible — or at least explicitly enforced.</p>
+      <p style="margin:0;">Be thoughtful about storing derived state — prefer computing it, but recognize there are cases where storing it is the right call. And distinguish carefully between problem state, which represents the real world, and program state, which includes everything the computer is tracking — among them program artifacts that have no real-world meaning.</p>
+    </div>
+
+    <div class="ai-callout">
+      <span class="ai-label">🤖 When You Direct an AI</span>
+      <p>The data structure you specify in a prompt <em>is</em> the state. An AI given "track a meal-plan account" will invent its own representation. An AI given "the account is a dict with keys <code>balance</code> (float) and <code>log</code> (list of transaction dicts)" builds exactly what you designed. The most important sentence in any prompt about a system is the one that names the state's shape. Everything else follows from it.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Determine what belongs in a system's problem state by starting from the questions it must answer. Understand that representation choices create enforcement obligations. Distinguish stored state from derived state and know when each is appropriate. Recognize the difference between problem state and program state. Apply the two-way test to any representation to find modeling errors before they become bugs.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>A library checkout system must answer "which books does patron 1042 currently have?" and "is this book currently available?" What must the state include? What is derived?</li>
+        <li>A gradebook stores each student's list of quiz scores. A classmate proposes also storing the running average per student. Make the case for and against storing it.</li>
+        <li>A vending machine must answer "how many items were sold today?" What is the simplest representation that answers only that question? Now add the question "which items were sold, and at what times?" How does the representation change? Once you have the new representation, is the count still primary state or is it now derived?</li>
+        <li>The traffic light boolean dict <code>{'red': True, 'yellow': False, 'green': False}</code> — what rule does it fail to enforce that the string representation enforces automatically? How would you enforce that rule using logic in your code?</li>
+        <li>Run the two-way test on a gradebook that stores only each student's <em>latest</em> score. What valid world-state can it not express? What program-state can it express that means nothing in the world?</li>
+      </ol>
+    </div>
+
+    <p class="transition-note">State describes the system at rest. Inputs are what disturb it from outside — and they need special treatment because they come from actors who don't know your rules.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Questions First</h3><p>What must this system be able to answer? That list determines the state. Write the questions before choosing the data structure.</p></div>
+    <div class="panel design"><h3>🧩 Representation Creates Obligations</h3><p>Every representation choice determines which illegal states are impossible by design and which must be enforced by logic. Make this choice consciously — it shapes everything that follows.</p></div>
+    <div class="panel mental"><h3>🧠 Store or Compute?</h3><p>If a value can be computed from what is already stored, prefer computing it. Be thoughtful about storing derived values — each one is a rule you must maintain manually.</p></div>
+    <div class="panel design"><h3>🧩 History Is State</h3><p>The current snapshot tells you nothing about how the system got there. If you need to answer questions about the past, store records as they happen — they cannot be reconstructed later.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise 1 — State</span>
+  <p>In the notebook. You are building a campus meal-plan account system. <strong>Before you open a code cell:</strong> apply the Before-You-Code check — state the problem in one sentence, trace a concrete example with specific dollar amounts by hand, and write the answer in plain English. Then: <strong>(a) Questions first:</strong> write in a markdown cell every question the system must be able to answer. Start with "what is the current balance?" and add at least three more — think about what a student, a dining services manager, and a financial aid auditor would each need. <strong>(b) Design the state:</strong> based on your questions, specify the Python data structure — dict keys, types, nesting. Justify each field: is it primary state, derived state, or history? <strong>(c) Two-way test:</strong> name one valid real-world account state your representation cannot express, and one program state your representation can express that corresponds to nothing real. <strong>(d) Representation choice:</strong> could you represent the account's status (active/suspended) as a boolean or as a string? What enforcement obligation does each choice create?</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SEC 2 -->
+<h2 class="section-title" id="sec2">2. Inputs — What Arrives from Outside</h2>
+<section class="section">
+  <article class="main">
+
+    <h4>What makes something an input</h4>
+    <p>A system doesn't change on its own. Something from outside triggers a change. Inputs are those triggers — events or data that arrive from actors who don't know your rules, may make mistakes, and arrive at unpredictable times.</p>
+
+    <p>At the problem level, inputs are real-world events: a student swipes a card, a librarian checks in a book, a teacher enters a grade, a coin is inserted into a vending machine. Each event carries data — the swipe amount, the book's ID, the score, the coin denomination — and the system must respond to it.</p>
+
+    <p>Three things distinguish inputs from the state changes they cause. First, inputs are <em>external</em> — they come from actors outside the system. Second, they are <em>not under your control</em> — the student might swipe with an empty balance, the librarian might scan an unknown barcode, the teacher might enter a negative score. Third, they are the <em>trigger</em> for a transition, not the transition itself. The input arrives; then the system decides what to do with it.</p>
+
+    <h4>Preserve your inputs</h4>
+    <p>As a matter of good practice, always preserve your inputs as part of the initial state before doing anything else with them. This creates an audit trail — if something goes wrong during processing, you can always go back and see exactly what arrived, before any code touched it. It also separates two things that are easy to conflate: <em>receiving</em> an input and <em>acting on</em> it. Preserving the raw input makes that separation concrete.</p>
+
+    <pre>def initialize_account(student_id, opening_balance):
+    # Preserve the inputs as part of the initial state
+    account = {
+        "student_id": student_id,
+        "opening_balance": opening_balance,   # preserved — never changes
+        "balance": opening_balance,           # working copy — transitions modify this
+        "log": []
+    }
+    return account</pre>
+
+    <p>In this course, store preserved inputs as part of the initial state. In larger production systems you would often separate raw input records from operational state, but the principle — preserve what arrived before you process it — remains the same.</p>
+
+    <h4>Cataloguing inputs</h4>
+    <p>For every system, list every input before writing any transitions. For each input, identify what data it carries and everything that could go wrong with it.</p>
+
+    <table>
+      <tr><th>System</th><th>Input</th><th>Data it carries</th><th>What can go wrong</th></tr>
+      <tr><td>Meal-plan account</td><td>Swipe at dining hall</td><td>Amount charged (cost of meal)</td><td>Amount exceeds balance; negative or zero amount; non-numeric</td></tr>
+      <tr><td>Meal-plan account</td><td>Deposit</td><td>Amount added</td><td>Negative or zero; non-numeric</td></tr>
+      <tr><td>Meal-plan account</td><td>Load from file</td><td>Saved account dict</td><td>Missing keys; corrupted balance; log out of order</td></tr>
+      <tr><td>Library checkout</td><td>Check out a book</td><td>Patron ID, book ID</td><td>Book not in catalog; book already checked out; unknown patron</td></tr>
+      <tr><td>Gradebook</td><td>Enter a score</td><td>Student name, score</td><td>Score out of range; unknown student; duplicate entry</td></tr>
+      <tr><td>Vending machine</td><td>Insert coin</td><td>Denomination</td><td>Unrecognized denomination; foreign coin</td></tr>
+      <tr><td>Vending machine</td><td>Select item</td><td>Item code</td><td>Invalid code; item sold out; insufficient credit</td></tr>
+    </table>
+
+    <h4>The boundary: validate once, trust inside</h4>
+    <p>Every system has a boundary: the edge between the interior (which you control) and the outside world (which you don't). The discipline that makes interior code simple is to validate everything at the boundary and trust it everywhere inside. If you validate inside every transition instead, you write the same checks repeatedly and eventually forget one.</p>
+
+    <pre># At the boundary: validate before anything enters
+def read_positive_float(prompt):
+    while True:
+        try:
+            amount = float(input(prompt))
+            if amount > 0:
+                return amount       # clean — let it through
+        except ValueError:
+            pass
+        print("Please enter a positive number.")
+
+# Interior transition: trusts that amount is valid
+def deposit(account, amount):
+    account["balance"] += amount
+    account["log"].append({"type": "deposit", "amount": amount,
+                           "balance_after": account["balance"]})</pre>
+
+    <p>This pattern — validate at the door, trust inside — means every transition can be written cleanly without defensive checks cluttering its logic.</p>
+
+    <h4>Three places the boundary appears</h4>
+    <p><strong>User input</strong> is the obvious one — typed values that can be wrong type, wrong sign, or empty. Handle with <code>try/except</code> and a validation loop.</p>
+
+    <p><strong>Loaded files</strong> are a less obvious boundary crossing. When you reload a saved account from JSON, that file is an input. It could have been hand-edited, written by a buggy earlier version of your program, or simply corrupted. A loaded file is not trusted state — it is untrusted input that happens to look like state. Check it before using it. Section 4 will show you how.</p>
+
+    <p><strong>Function arguments</strong> — at the function level, the parameter list is a boundary. If your function is called by other parts of your own program, its arguments are inputs to that function. Zoom in far enough and every function is a small system with its own inputs.</p>
+
+    <h4>Outputs: projections, not mutations</h4>
+    <p>The boundary runs in both directions. Outputs leave the system outward — a balance report printed to the screen, a summary saved to a file. The discipline for outputs is the mirror of input validation: outputs should be <em>projections</em> — read-only views of the state. A function that formats and prints the account balance should never modify it. A function that quietly adjusts the state on the way out is a transition wearing a disguise, and it is one of the hardest bugs to find because nobody looks for side effects in a reporting function.</p>
+
+    <pre>def report(account):
+    # read-only — this is a projection, not a transition
+    print(f"Balance: ${account['balance']:.2f}")
+    print(f"Transactions this session: {len(account['log'])}")</pre>
+
+    <div class="ai-callout">
+      <span class="ai-label">🤖 When You Direct an AI</span>
+      <p>When specifying a transition to an AI, always say explicitly what validation has already happened at the boundary. "Assume <code>amount</code> has already been validated as a positive float" tells the AI the function body should be clean. "Write the validation too" tells it to include the boundary check. Without this, the AI guesses — and may either add unwanted validation inside the function or omit it entirely.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Preserve inputs as part of initial state before processing them. Identify every input to a system and what can go wrong with each. Write boundary validation that rejects bad inputs cleanly before they enter the system. Keep outputs as read-only projections. Treat loaded files as untrusted inputs, not as trusted state.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>For the library checkout system: list every input, the data each carries, and one thing that can go wrong with each.</li>
+        <li>Why is preserving inputs as part of the initial state a useful practice? Give a specific scenario where it helps.</li>
+        <li>Why is a loaded JSON file treated as an input rather than as trusted state? Give a specific example of how a saved file could be wrong.</li>
+        <li>The <code>deposit</code> function above trusts that <code>amount</code> is valid. Where does that trust come from — and what happens to the system if that trust is misplaced?</li>
+        <li>What makes a function that modifies the state while printing a report harder to debug than a transition that explicitly modifies state?</li>
+      </ol>
+    </div>
+
+    <p class="transition-note">State is what the system remembers. Inputs are what disturb it. Transitions are the events that actually change the state — and they must cover every possible situation, not just the easy ones.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Preserve Inputs</h3><p>Store raw inputs as part of the initial state before processing them. Separates receiving from acting. Creates an audit trail you can inspect if something goes wrong downstream.</p></div>
+    <div class="panel design"><h3>🧩 Validate Once at the Boundary</h3><p>Validate at the door; trust everywhere inside. Distributing the same check through every transition means writing it multiple times and forgetting it at least once.</p></div>
+    <div class="panel mental"><h3>🧠 Three Boundary Crossings</h3><p>User input (typed), loaded files (disk), function arguments (code). All three are untrusted. All three need validation at the point they enter.</p></div>
+    <div class="panel warning"><h3>⚠ Projections vs Transitions</h3><p>A report reads state. A transition changes it. A function that does both is a transition — name it that way so you know to check it for correctness.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise 2 — Inputs</span>
+  <p>In the notebook, continuing with the meal-plan account from Exercise 1. <strong>(a) Preserve:</strong> rewrite your account initialization to preserve the raw inputs — student ID and opening balance — as part of the initial state alongside the working balance and log. <strong>(b) Catalogue:</strong> list every input the system will receive — user actions, file loads, and function calls from other code. For each, write what data it carries and what can go wrong. <strong>(c) Boundary:</strong> write <code>read_positive_float(prompt)</code> and wire it into a deposit flow. Test it deliberately — enter a negative number, a letter, an empty string — and confirm it rejects each one cleanly without crashing. <strong>(d) Projection:</strong> write <code>report(account)</code> that displays the balance and the five most recent transactions. Add a deliberate check: after calling <code>report</code>, verify that the balance has not changed. <strong>(e) Loaded file:</strong> save the account to JSON and reload it. At the moment of reload, what could have gone wrong? Write a comment listing three things you would need to check before trusting the loaded data — you will implement those checks in Exercise 4.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SEC 3 -->
+<h2 class="section-title" id="sec3">3. Transitions — What Changes the State <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+
+    <h4>What a transition is</h4>
+    <p>A transition is an event that takes the system from one state to another. At the problem level, transitions are real-world events: a student swipes, a library book is returned, a grade is recorded, a vending machine dispenses an item. At the program level, each transition becomes a Python function — named for the event, with a body that says exactly which pieces of state it touches and how.</p>
+
+    <p>Two naming principles follow directly. Functions that are transitions should be named as events: <code>swipe_card</code>, <code>return_book</code>, <code>enter_grade</code>, <code>dispense_item</code>. And the function body should touch only the state that the event actually changes — a swipe affects the balance and the log, and nothing else.</p>
+
+    <h4>Articulate the entire state space before writing any code</h4>
+    <p>Before you write a single line of Python for a transition, you must articulate the entire state space: every configuration the system could be in when that transition fires. This is not optional. A transition that handles only one configuration is not written correctly — the cases it skips become bugs.</p>
+
+    <p>Think of designing transitions the way a contract lawyer thinks about contingencies. A contract that only specifies what happens when everything goes well is not a contract — it is a wish. A useful contract specifies what happens in every case. The same is true of a transition: you must specify its behavior for every state the system could be in when it fires.</p>
+
+    <p>For the vending machine's "dispense item" transition, articulate the state space first — in plain English, before any code:</p>
+
+    <pre>dispense(machine, item_code) — state space:
+  if item_code not in machine["catalog"]        → print("Unknown item."); return
+  if machine["inventory"][item_code] == 0       → print("Sold out."); return
+  if machine["credit"] < machine["prices"][item_code]
+                                                → print("Insufficient credit."); return
+  otherwise:
+    machine["inventory"][item_code] -= 1
+    machine["credit"] -= machine["prices"][item_code]
+    # dispense the item</pre>
+
+    <p>Notice that all three denial paths leave the state completely unchanged. This is a deliberate design decision — a denied transition changes nothing. State it explicitly so there is no ambiguity about what "deny" means for the state.</p>
+
+    <p>Notice also the defensive pattern on the final branch. If your state space analysis is correct, you should never reach an unexpected condition. But if you somehow do, make it loud:</p>
+
+    <pre>def process_status(account):
+    if account["status"] == "active":
+        # handle active account
+        pass
+    elif account["status"] == "suspended":
+        # handle suspended account
+        pass
+    else:
+        print(f"FATAL ERROR: unexpected account status '{account['status']}': 301")
+        exit()</pre>
+
+    <p>The number (301) acts as a unique error code — if this ever fires in testing, you know exactly which branch in which function to inspect. This is a sign that your state space analysis missed a case, and the program is telling you loudly rather than silently producing wrong results.</p>
+
+    <h4>Drawing the state space</h4>
+    <p>For small systems, drawing the state space — every valid state as a node, every transition as a labeled arrow — makes the completeness requirement visible. For the traffic light:</p>
+
+    <div class="diagram">           change            change            change
+  [ green ] ─────────► [ yellow ] ─────────► [ red ] ─────────► [ green ]</div>
+
+    <p>Every state has an outgoing arrow. There are no dead ends. Every transition is defined for every state it can be called from. This is a complete state machine.</p>
+
+    <p>For richer systems the full diagram is too large to draw, but the discipline of asking "what is every state this transition could be called from?" is always applicable, even when the diagram is not.</p>
+
+    <h4>The second-call test and order sensitivity</h4>
+    <p>Two questions to ask of every transition you write. <strong>The second-call test:</strong> what happens when this transition fires again immediately after it just fired? Depositing twice should add twice — that is the desired behavior. Checking out a book that is already checked out should be denied — that is also desired behavior. But "desired" is a decision you must make explicitly, not discover accidentally.</p>
+
+    <p><strong>Order sensitivity:</strong> does the final state depend on the order in which transitions fire? For a meal-plan account: swipe-then-deposit may be denied (balance too low after the swipe), while deposit-then-swipe succeeds. That is correct behavior for a real system — orders are processed in the order they arrive. But it must be a deliberate decision, not a surprise.</p>
+
+    <pre># Two trajectories, same actions, different order
+# Starting state: balance = 10.00
+
+# Trajectory A: deposit first
+deposit(account, 20.00)     # balance → 30.00
+swipe_card(account, 25.00)  # balance → 5.00  ✓ succeeds
+
+# Trajectory B: swipe first
+swipe_card(account, 25.00)  # balance would go to -15.00 → DENIED
+deposit(account, 20.00)     # balance → 30.00
+
+# Same actions, different order, different final states
+# This is correct behavior — not a bug</pre>
+
+    <h4>Program artifacts in transitions</h4>
+    <p>At the program level, transition functions introduce artifacts alongside the state changes. An early <code>return</code> after a denial is a control-flow artifact. An intermediate variable <code>cost = shares * price</code> is a computational artifact. The variable <code>sym</code> in a loop over positions is an iteration artifact. These are part of the program state while the function runs — the computer is tracking them — but they have no problem-level counterpart. They are not part of the problem state.</p>
+
+    <pre>def swipe_card(account, amount):
+    # Guard: deny if swipe would exceed balance
+    if amount > account["balance"]:
+        print(f"Denied: insufficient balance (${account['balance']:.2f})")
+        return                  # program artifact: early return (control flow)
+
+    new_balance = account["balance"] - amount   # program artifact: intermediate value
+    account["balance"] = new_balance
+    account["log"].append({
+        "type": "swipe",
+        "amount": amount,
+        "balance_after": new_balance   # stored — needed for audit questions
+    })</pre>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — Articulate the Entire State Space</span>
+      <p style="margin:0 0 10px;">A transition is not written correctly until it specifies its behavior for every state the system could be in when it fires. The happy path is one case; the denial cases, the edge cases, the repeated call, the out-of-order call — those are the rest. The ones you skip are the bugs you debug later.</p>
+      <p style="margin:0;">Do this work before writing Python. Write the cases in plain English first. Then translate each case into code. The defensive <code>else</code> with a FATAL ERROR message is your safety net for cases you believed were impossible — if one ever fires, the program tells you loudly that your analysis was incomplete.</p>
+    </div>
+
+    <div class="ai-callout">
+      <span class="ai-label">🤖 When You Direct an AI</span>
+      <p>When you ask an AI to write a transition, the most important thing you can specify is every case it must handle — not just the success path. "If the swipe amount exceeds the balance, print a denial message and return without changing anything" eliminates an entire class of bug. An AI given only the success case will implement only the success case.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Articulate the entire state space before writing any transition code. Design transitions that cover every case by asking "what is every state this could be called from?" Apply the second-call test and order-sensitivity check to every transition. Implement transitions as Python functions named for the event, whose bodies touch only the relevant state and specify behavior for every case — including a defensive else for branches that should be unreachable.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>For the library checkout system: before writing any Python, write in plain English the complete state space for <code>check_out(library, patron_id, book_id)</code> — every case it must handle. Include the denial condition and response for each.</li>
+        <li>Apply the second-call test to <code>swipe_card</code>: what happens if you call it twice with the same amount? Is that the correct behavior?</li>
+        <li>In <code>swipe_card</code> above, identify every program artifact. For each one, explain what it does and why it has no problem-level counterpart.</li>
+        <li>The vending machine's <code>insert_coin</code> transition: what happens to the state if an unrecognized denomination is inserted? Write the complete transition including that case and a defensive else.</li>
+        <li>Why is "a denied transition changes nothing" a design decision worth stating explicitly, rather than something that follows automatically from the code?</li>
+      </ol>
+    </div>
+
+    <p class="transition-note">Transitions change the state, and transitions can violate rules. Invariants are the rules themselves — the conditions that must hold through every change. Section 4 shows how to enforce them in code.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 State Space First</h3><p>Before writing any transition code, write every case in plain English. Every configuration the system could be in when the transition fires must have a defined response.</p></div>
+    <div class="panel warning"><h3>⚠ The Happy-Path Trap</h3><p>Writing only the success case means the transition is not written correctly. Ask: what if balance is too low? What if the item is sold out? What if the student doesn't exist? Those cases become bugs when omitted.</p></div>
+    <div class="panel design"><h3>🧩 Defensive Else</h3><p>For branches that should be unreachable, use <code>print("FATAL ERROR: ... : 301")</code> and <code>exit()</code>. If it ever fires, the program tells you loudly that your state space analysis was incomplete.</p></div>
+    <div class="panel mental"><h3>🧠 Name Functions as Events</h3><p><code>swipe_card</code>, <code>return_book</code>, <code>enter_grade</code>. The name is the event. The body is the exact change to state, including every denial case.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise 3 — Transitions</span>
+  <p>In the notebook, continuing with the meal-plan account. <strong>Before writing any Python:</strong> apply the Before-You-Code check for each transition — trace a specific example by hand, state the answer in plain English. <strong>(a) State space:</strong> in a markdown cell, list in plain English every case the <code>swipe_card(account, amount)</code> transition must handle. Include: normal swipe, swipe that would exceed balance, swipe on a zero balance, swipe with a non-positive amount (if that can reach this function). <strong>(b) Implement:</strong> write <code>swipe_card</code> and <code>deposit</code> covering every case. Include a defensive else for any branch that should be unreachable. Run the second-call test on each. <strong>(c) Order sensitivity:</strong> run the two trajectories shown in the text (swipe-then-deposit vs. deposit-then-swipe) and print the state after each step. Write a sentence explaining why the different outcomes are correct, not a bug. <strong>(d) Artifacts:</strong> identify every program artifact in each function and annotate them with a comment explaining what they do.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SEC 4 -->
+<h2 class="section-title" id="sec4">4. Invariants — What Must Always Stay True <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+
+    <h4>What an invariant is</h4>
+    <p>An invariant is a condition that must hold in every state the system is ever in — not just after the happy-path transition, but after every transition, from every starting state, including the ones you haven't tested yet. An invariant that holds most of the time is not an invariant; it is a bug waiting for the right combination of inputs.</p>
+
+    <p>Invariants come from two sources. <strong>Domain invariants</strong> are rules of the problem world, true before any code exists. "A meal-plan balance is never negative" is a rule of the account type, not a programmer's choice. "A library book cannot be checked out to two patrons simultaneously" is a physical fact. "A gradebook score is between 0 and 100" is a rule of the grading system. These are discovered by asking the domain expert: <em>what must never happen?</em></p>
+
+    <p><strong>Structural invariants</strong> are rules about the data structure itself, arising from design choices. "Every transaction in the log has a 'type', 'amount', and 'balance_after' key." "The log is in chronological order." "Every inventory count is a non-negative integer." These are not facts about the world — they are commitments you made when you chose the representation, and breaking them means the code that reads the structure will behave unpredictably.</p>
+
+    <table>
+      <tr><th>System</th><th>Domain invariants</th><th>Structural invariants</th></tr>
+      <tr><td>Meal-plan account</td><td>Balance ≥ 0; every transaction has a positive amount</td><td>Log entries have required keys; log is in order of occurrence</td></tr>
+      <tr><td>Library checkout</td><td>A book cannot be checked out to two patrons; a patron cannot check out more than their limit</td><td>The checkout dict maps book IDs (strings) to patron IDs (strings); every book ID in checkouts exists in the catalog</td></tr>
+      <tr><td>Gradebook</td><td>Scores are between 0 and 100; a student cannot have a score entered before they are enrolled</td><td>Every student in the scores dict exists in the roster; score lists are non-empty if the student has taken any quiz</td></tr>
+      <tr><td>Vending machine</td><td>Credit never goes negative; inventory counts never go negative</td><td>Every item code in inventory exists in the price list</td></tr>
+    </table>
+
+    <h4>Three ways invariants are enforced</h4>
+    <p>Not all invariants require the same kind of enforcement. There are three modes, and choosing the right one for each rule matters.</p>
+
+    <p><strong>1. Structural enforcement</strong> — the strongest kind. The data structure itself makes the illegal state impossible to express. A dict keyed by book ID cannot have two entries for the same book; the invariant "a book has at most one checkout record" is guaranteed by the shape. You get this enforcement everywhere, automatically, including in code that hasn't been written yet. When you can choose a representation that makes an illegal state impossible to express, always prefer it over enforcing the rule in code.</p>
+
+    <p><strong>2. Logic enforcement</strong> — for invariants the structure cannot enforce on its own. An <code>if</code> check inside every relevant transition verifies that the rule holds before or after the state change. This is the same <code>if</code> your transitions already use for denial cases — the tool is familiar, the application is new.</p>
+
+    <pre>def check_invariants(account):
+    if account["balance"] < 0:
+        print(f"INVARIANT VIOLATED: balance is negative ({account['balance']})")
+        exit()
+    if not isinstance(account["balance"], (int, float)):
+        print(f"INVARIANT VIOLATED: balance is wrong type ({type(account['balance'])})")
+        exit()
+    for i, t in enumerate(account["log"]):
+        if "type" not in t:
+            print(f"INVARIANT VIOLATED: log entry {i} missing 'type'")
+            exit()
+        if "amount" not in t:
+            print(f"INVARIANT VIOLATED: log entry {i} missing 'amount'")
+            exit()
+        if t["amount"] <= 0:
+            print(f"INVARIANT VIOLATED: log entry {i} has non-positive amount")
+            exit()</pre>
+
+    <p>Collect all of a system's invariants into one <code>check_invariants</code> function and call it after every transition and after every load from disk. With this discipline in place, a bug cannot hide "somewhere" — the first failing check pins it between two checkpoints. The state was valid, one transition ran, the state is now invalid: that transition is the suspect.</p>
+
+    <pre>check_invariants(account)         # passes — state is valid
+deposit(account, 20.00)
+check_invariants(account)         # passes
+
+swipe_card(account, 15.00)
+check_invariants(account)         # INVARIANT VIOLATED: balance is negative
+                                  # — the culprit is swipe_card</pre>
+
+    <p><strong>3. Defensive else</strong> — for transitions where one branch should be unreachable given your state space analysis. As shown in Section 3, if the program reaches that branch anyway, it should stop loudly and tell you exactly where. This is not an invariant check in the traditional sense — it is a signal that your analysis was incomplete.</p>
+
+    <h4>Guards vs. invariant checks: an important distinction</h4>
+    <p>Not every check is an invariant enforcement. Some checks are <strong>guards</strong> — polite refusals of requests the outside world is legitimately allowed to make. A student asking to swipe more than their balance is not a bug. It is a normal, expected input that the system must handle gracefully. An <code>if</code> guard handles it with a message and a clean return.</p>
+
+    <p>An invariant check — whether structural or logic-enforced — is reserved for conditions that must be impossible if the code is correct. If the balance goes negative after a transition, that is not a user error — it is a bug in the transition.</p>
+
+    <table>
+      <tr><th>Situation</th><th>Correct tool</th><th>Why</th></tr>
+      <tr><td>Swipe amount exceeds balance</td><td><code>if</code> guard + message + return</td><td>Normal input — users run out of money</td></tr>
+      <tr><td>Balance is negative after a swipe</td><td>Invariant check in <code>check_invariants</code></td><td>Should be impossible if the guard works — this is a code bug</td></tr>
+      <tr><td>Log entry missing a required key</td><td>Invariant check in <code>check_invariants</code></td><td>The code that creates log entries should always include them</td></tr>
+      <tr><td>Loaded file has a negative balance</td><td>Invariant check immediately after loading</td><td>Detects corruption or a bug in the code that saved the file</td></tr>
+      <tr><td>Unexpected value in a status field</td><td>Defensive else + FATAL ERROR + exit()</td><td>Signals incomplete state space analysis — stop loudly</td></tr>
+    </table>
+
+    <p>A failing guard means "the world sent a valid but inconvenient request — handled." A failing invariant check means "the code has a bug — stop and fix it." Confusing the two either causes crashes on valid inputs or lets bugs propagate silently.</p>
+
+    <h4>Invariants catch loaded-file corruption</h4>
+    <p>Recall from Section 2 that a loaded JSON file is an input, not trusted state. Calling <code>check_invariants</code> immediately after loading turns silent corruption into a loud, located failure at the boundary — before it can propagate through the rest of the program.</p>
+
+    <pre>with open("account.json") as f:
+    account = json.load(f)
+check_invariants(account)   # fail here, loudly, if the file is wrong
+                            # not 200 lines later in a confusing cascade</pre>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — An Invariant You Can Run Is a Tripwire</span>
+      <p style="margin:0 0 10px;">When an invariant lives only in comments or design notes, it can be violated silently and the violation can travel far before anyone notices. When it is a check called after every transition, it fires the moment the rule breaks and names exactly which transition broke it.</p>
+      <p style="margin:0;">Write the rules in plain English first. Then ask: is this rule enforced by the structure (best), enforced by logic in <code>check_invariants</code> (good), or does it require a defensive else to catch the impossible (safety net)? Match the enforcement to the kind of rule.</p>
+    </div>
+
+    <div class="ai-callout">
+      <span class="ai-label">🤖 When You Direct an AI</span>
+      <p>After specifying a transition, ask the AI: "what invariant checks should my <code>check_invariants</code> function include after calling this?" This puts the AI in its most useful role — interrogating your design, surfacing rules you may not have made explicit. Compare what it proposes against your own list; anything it finds that you missed is a gap in your specification. The AI should ask you how you want to handle each gap — not decide for you.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Identify a system's domain and structural invariants. Choose structural enforcement when the representation can make illegal states impossible to express. Translate remaining invariants into a <code>check_invariants</code> function built from <code>if</code> checks, and call it after every transition and every load. Distinguish guards (for valid but inconvenient inputs) from invariant checks (for conditions that mean the code is wrong).</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>For the gradebook: write three domain invariants and two structural invariants in plain English. For each, say whether you would enforce it structurally or with a logic check in <code>check_invariants</code>.</li>
+        <li><code>check_invariants</code> passes, one transition runs, then it fails. What do you now know? What still needs to be determined?</li>
+        <li>Classify each as a guard or an invariant check: (a) rejecting a swipe that would exceed the balance; (b) detecting that the balance is negative after a deposit; (c) rejecting a book checkout for an unknown patron ID; (d) detecting that a log entry is missing its "amount" key.</li>
+        <li>The library checkout system uses a dict mapping book ID to patron ID. What invariant does that structure enforce automatically, without any code? What invariant does it <em>not</em> enforce — requiring a logic check instead?</li>
+        <li>When should you use a defensive else with FATAL ERROR and exit() rather than a guard or an invariant check? Give an example of each and explain the difference.</li>
+      </ol>
+    </div>
+
+    <p class="transition-note">You can now describe any system completely: what it remembers, what can disturb it, what events change it, and what rules must hold throughout. The final skill is turning that description into a precise specification that directs an AI to build the system correctly.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Three Enforcement Modes</h3><p>Structural (illegal state impossible by design), logic (if checks in check_invariants), defensive else (FATAL ERROR for unreachable branches). Match the mode to the kind of rule.</p></div>
+    <div class="panel design"><h3>🧩 The Discipline</h3><p>One <code>check_invariants</code> function. Called after every transition. Called after every load from disk. That is the entire practice — and it turns debugging from guesswork into forensics.</p></div>
+    <div class="panel warning"><h3>⚠ Guard vs Invariant Check</h3><p>Guard: the world made a valid but inconvenient request — say no politely. Invariant check: the code produced an impossible condition — stop and fix the code. Confusing them produces crashes on valid inputs or silent propagating bugs.</p></div>
+    <div class="panel mental"><h3>🧠 Domain First</h3><p>"What must never happen?" — ask the person who knows the domain. Their answers are your invariants. The most important ones aren't invented by programmers; they are discovered.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise 4 — Invariants (Capstone)</span>
+  <p>In the notebook, completing the meal-plan account. <strong>(a) Identify:</strong> write every domain invariant and structural invariant for the system in plain English — at least five total. For each, decide whether to enforce it structurally, with a logic check, or via a defensive else. <strong>(b) Implement:</strong> translate them into a <code>check_invariants(account)</code> function using <code>if</code> checks that print a clear INVARIANT VIOLATED message and exit. Wire it after every transition from Exercise 3. <strong>(c) Bug hunt:</strong> a deliberately buggy <code>swipe_card</code> will be provided that subtracts the amount without checking the balance. Use <code>check_invariants</code> called after each step to locate exactly which call breaks an invariant, then fix the missing guard. <strong>(d) Loaded-file check:</strong> load the account you saved in Exercise 2. Hand-edit the JSON to introduce a violation — make the balance negative, or remove a required key from a log entry. Reload and call <code>check_invariants</code>: confirm the corruption is caught at the boundary, not silently accepted. <strong>(e) Classify:</strong> for each check in your <code>check_invariants</code>, label it as enforcing a domain invariant or a structural invariant, and explain whether the same rule could have been enforced by the data structure choice instead.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SEC 5 -->
+<h2 class="section-title" id="sec5">5. ISTI as Specification — Directing the AI <span style="color:var(--aha);font-size:1rem;">⚡ KEY IDEA</span></h2>
+<section class="section">
+  <article class="main">
+
+    <p>Workbook 1 described three ways to use AI. The third — and the only one that keeps the design yours — is: <em>you do the design thinking, the AI executes and interrogates.</em> Everything in this workbook has been building toward that. A complete ISTI description is a complete design. The prompt is how you hand that design to the AI.</p>
+
+    <h4>The AI as Socratic partner, not answer machine</h4>
+    <p>Before looking at the worked example, you need to understand how to use the AI in this process — because it is probably different from how you have used it before.</p>
+
+    <p>Most students use AI the same way: ask a question, receive an answer, copy the answer. That mode of use does not develop skill. If the AI builds the system for you, the design still belongs to whoever wrote the prompt — and if that wasn't you, you learned nothing.</p>
+
+    <p>In this process, the AI plays a different role. When it finds a gap in your specification, it does not fill the gap — it asks you how you want to handle it. When your proposed solution has a problem, the AI explains what is wrong with your reasoning, not what the right answer is. Only if you are truly stuck does the AI offer frameworks for thinking — ways of approaching the problem, not the answer itself.</p>
+
+    <p>This means you should expect the AI to push back. That is not a failure — it is the AI doing its job. When it asks "how do you want to handle the case where the deposit amount is less than the fee?", it has found a real gap in your design. The answer is yours to work out.</p>
+
+    <p>A well-written ISTI spec also happens to be <strong>AI-agnostic</strong> — you can give it to Claude, ChatGPT, or any other tool and get consistent, comparable results, because the design is fully specified before the AI touches it. The AI becomes interchangeable. The quality of the code the AI produces is a direct reflection of the quality of your spec — and students feel that immediately. A vague spec produces vague code. A precise spec produces precise code.</p>
+
+    <h4>The three-step workflow: Problem → Program → Prompt</h4>
+    <p>The workflow maps directly onto the two-level framework this workbook has been building. Each step is distinct. The design happens entirely before the AI is involved.</p>
+
+    <p><strong>Step 1 — Problem level (ISTI spec in plain English).</strong> Describe the system in the language of the real world, with no Python. What must be remembered? What events happen? What rules hold? This is the problem state description. Nothing here mentions data structures or implementation.</p>
+
+    <p><strong>Step 2 — Program level (pseudocode).</strong> Cross from the problem world into the implementation world. Write four to six lines that commit to the order of operations. This is where you make the implementation decisions: check the guard before changing anything, compute the new balance, update the state, record the transaction. If you can write these lines, the Python is a translation exercise.</p>
+
+    <p><strong>Step 3 — The prompt.</strong> The prompt formalizes the pseudocode as instructions for the AI. It adds no new thinking — it writes down what the pseudocode already decided, in enough detail that the AI has nothing left to guess.</p>
+
+    <h4>A worked example: swipe_card</h4>
+
+    <p><strong>Step 1 — Problem-level ISTI spec:</strong></p>
+
+    <pre>SYSTEM     Campus meal-plan account
+
+STATE      The account has a current balance (a dollar amount, never negative)
+           and a log of every transaction that has occurred.
+
+INPUT      A swipe event: the cost of the meal being purchased (a positive
+           dollar amount, already validated before this function is called).
+
+TRANSITION swipe_card — the student uses their card to pay for a meal.
+  Cases:
+    If the meal cost exceeds the current balance:
+      → the card is declined; nothing changes
+    Otherwise:
+      → the balance decreases by the meal cost
+      → a record of the transaction is added to the log
+
+INVARIANTS after the call:
+    The balance is never negative.
+    Every log entry records the type, amount, and balance after the transaction.</pre>
+
+    <p><strong>Step 2 — Program-level pseudocode:</strong></p>
+
+    <pre>check whether amount exceeds balance — if so, print denial message and return
+compute new_balance = balance - amount
+update account["balance"] to new_balance
+append {"type": "swipe", "amount": amount, "balance_after": new_balance} to log</pre>
+
+    <p>Four lines. The first line encodes a critical decision: check before changing anything, so a declined swipe leaves the account exactly as it was. This is the order-of-operations decision that must be made explicitly — it cannot be left for the AI to guess.</p>
+
+    <p><strong>Step 3 — The prompt:</strong></p>
+
+    <pre>"The account state is a dict with two keys: 'balance' (float, never
+ negative) and 'log' (list of dicts). Each log entry has keys 'type'
+ (str), 'amount' (float, positive), and 'balance_after' (float).
+
+ Write swipe_card(account, amount). Assume amount has already been
+ validated as a positive float before this function is called.
+
+ If amount exceeds account['balance']: print a denial message and
+ return immediately — do not change anything.
+ Otherwise: subtract amount from balance and append
+ {'type': 'swipe', 'amount': amount, 'balance_after': new_balance}
+ to log. Return None. Print nothing on success.
+
+ Use only basic Python: dicts, lists, functions, no imports."</pre>
+
+    <p>Read the prompt against the pseudocode: every line of the pseudocode is present. The AI has nothing left to design — no structure to guess, no edge case to invent, no order of operations to decide.</p>
+
+    <h4>Using the AI to find gaps — deliberately</h4>
+    <p>After receiving the code, ask the AI one more question:</p>
+
+    <pre>"What cases or edge conditions does my specification not address?
+ Don't fix them — ask me how I want to handle each one."</pre>
+
+    <p>For <code>swipe_card</code> as specified, a good AI might ask: <em>"Your spec doesn't say what happens if amount is exactly equal to balance — is that a successful swipe that results in a zero balance, or should it be treated differently?"</em></p>
+
+    <p>This is a real question. Zero balance is a valid state for a meal plan card — the student has spent everything. So the answer is: a swipe for exactly the balance amount succeeds, leaving a zero balance. You add that to the spec and the AI updates the code.</p>
+
+    <p>The AI found the gap. You decided how to handle it. The design is still yours.</p>
+
+    <p>If you propose a solution the AI thinks has a problem — say, you decide that a zero balance should be denied — the AI might respond: <em>"If you deny a swipe when balance equals amount, the student can never spend their last dollar. Is that the intended behavior for this account type?"</em> It explains what is wrong with your reasoning. It does not tell you what to do instead. You have to think it through.</p>
+
+    <h4>The test of a complete specification</h4>
+    <p>One question tells you whether a specification is complete: <em>could two different people, given only this description, build interchangeable implementations?</em> If not, something is unspecified — a case that isn't covered, a data structure field that isn't named, a rule that isn't stated. Find it and add it before sending the prompt.</p>
+
+    <div class="aha-block">
+      <span class="aha-label">⚡ Key Idea — The Prompt Documents the Design; It Does Not Make It</span>
+      <p style="margin:0 0 10px;">The prompt is the output of your thinking, not the start of it. The workflow is: solve the problem in your head first (Before-You-Code), write the problem-level ISTI spec, write the pseudocode, then formalize it as a prompt. Anyone can copy a finished prompt and receive correct code — but the design belongs to whoever worked through those three steps.</p>
+      <p style="margin:0;">Use the AI to interrogate your design — not to make it. When the AI finds a gap, that is a success. It means your spec was good enough to expose the question. Answer the question, update the spec, and continue.</p>
+    </div>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>Turn a complete ISTI description into a directed prompt using the three-step workflow: problem-level spec, pseudocode, prompt. Use the AI as a Socratic partner — to find gaps, question your reasoning, and execute your design — rather than as an answer machine. Evaluate what the AI surfaces and make the design decisions yourself.</p>
+    </div>
+
+    <div class="check">
+      <h4>✔ Check Your Understanding</h4>
+      <ol>
+        <li>Map each paragraph of the worked prompt to the pseudocode line it came from. Is there anything in the prompt that is not in the pseudocode? Should there be?</li>
+        <li>The prompt says "assume amount has already been validated." What would change in the code if that sentence were removed — and at what step of the three-step workflow should that validation decision have been made?</li>
+        <li>The pseudocode says "check whether amount exceeds balance first." Which ISTI concept does that ordering enforce, and what would go wrong if the subtraction happened before the check?</li>
+        <li>When the AI asks "is a zero-balance swipe a success or a denial?", which of Workbook 1's three legitimate AI roles is it playing? Why is it asking instead of deciding?</li>
+        <li>Write the three-step workflow (problem-level spec, pseudocode, prompt) for <code>deposit_with_fee(account, amount, fee)</code>: deposits amount minus fee, denies if amount ≤ fee. Cover every case.</li>
+      </ol>
+    </div>
+
+    <p class="transition-note">The full model is in hand. One page remains — the summary that compresses this entire workbook into a single reference.</p>
+  </article>
+  <aside class="sidebar">
+    <div class="panel concept"><h3>💡 Three-Step Workflow</h3><p>Problem-level ISTI spec (plain English, no code) → Pseudocode (order of operations) → Prompt (formalize for AI). The design happens entirely before the AI is involved.</p></div>
+    <div class="panel design"><h3>🧩 AI-Agnostic Spec</h3><p>A well-written ISTI spec works with any AI tool. The design is yours; the AI is interchangeable. Quality of output reflects quality of spec — vague in, vague out.</p></div>
+    <div class="panel mental"><h3>🧠 Socratic AI</h3><p>When the AI finds a gap, it asks — you decide. When your answer has a problem, it explains what's wrong — you try again. Only when you're truly stuck does it offer frameworks, not answers.</p></div>
+    <div class="panel warning"><h3>⚠ Why the Transcript Is Graded</h3><p>The code proves the AI can program. The transcript — your spec, your pseudocode, your responses to the AI's questions — proves you can design. That is what is being assessed.</p></div>
+  </aside>
+</section>
+
+<div class="classwork">
+  <span class="classwork-label">▶ In-Class Exercise 5 — ISTI as Specification</span>
+  <p>In the notebook, completing the meal-plan account system. <strong>(a) Problem-level spec:</strong> write the complete ISTI spec in plain English for <code>deposit_with_fee(account, amount)</code>: a flat $1.50 fee is deducted from every deposit. Cover every case — what if amount ≤ fee? What if amount is zero or negative? What goes in the log? What are the invariants? <strong>(b) Pseudocode:</strong> write the four-to-six line plain-English pseudocode before writing any Python. Submit it for approval before proceeding. <strong>(c) Prompt:</strong> turn your spec and pseudocode into a directed prompt. Send it to the AI and have it build the function. <strong>(d) Gap-finding:</strong> after receiving the code, ask the AI "what cases or edge conditions does my specification not address? Don't fix them — ask me how I want to handle each one." For each gap the AI surfaces, write your answer in a markdown cell before asking the AI to update the code. <strong>(e) Verify:</strong> run your full <code>check_invariants</code> against the result. <strong>(f) Reflect:</strong> write one sentence on what the AI caught that you missed, and one sentence on why your answer to that gap — not the AI's — is what matters.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SEC 6 -->
+<h2 class="section-title" id="sec6">6. The ISTI Mental Model — Summary</h2>
+<section class="section">
+  <article class="main">
+    <p>The whole workbook on one page.</p>
+
+    <h4>The four questions</h4>
+    <pre>State        What must the system remember?
+             Determined by the questions it must answer — not by the world.
+             Problem state: the data structures representing the real world
+               before a transition executes.
+             Program state: everything the computer tracks — problem state
+               plus program artifacts (counters, flags, accumulators).
+             Representation choices determine which invariants are free
+               (enforced by structure) and which cost you code.
+             Be thoughtful about storing derived state — prefer computing it.
+             History is state only when audit questions require it.
+             Run the two-way test on every representation.
+
+Inputs       What arrives from outside?
+             From actors who don't know your rules, at unpredictable times.
+             Preserve inputs as part of initial state before processing.
+             Validate once at the boundary; trust everywhere inside.
+             Three crossing points: user input, loaded files, function args.
+             Outputs are projections — read-only; never mutate on the way out.
+
+Transitions  What events change the state?
+             Articulate the entire state space before writing any code.
+             A transition not written correctly leaves unhandled cases as bugs.
+             Denied transitions change nothing.
+             Defensive else + FATAL ERROR for branches that should be unreachable.
+             Apply the second-call test and order-sensitivity check.
+             At the program level: functions named for the event + program artifacts.
+
+Invariants   What must always stay true?
+             Domain invariants: discovered by asking "what must never happen?"
+             Structural invariants: from your representation choices.
+             Make illegal states unrepresentable first (structural enforcement).
+             Logic enforcement: if checks in check_invariants() for the rest.
+             Defensive else: for the truly unreachable.
+             check_invariants() after every transition and every load.</pre>
+
+    <h4>The two levels</h4>
+    <pre>Problem level    describe the world — what must be remembered,
+                 what events happen, what rules hold. No code.
+
+Program level    implement it — data structures, functions, if checks,
+                 plus program artifacts (counters, flags, accumulators)
+                 that are part of program state but have no problem-level meaning.</pre>
+
+    <h4>ISTI as specification — the three-step workflow</h4>
+    <pre>Step 1 — Problem-level ISTI spec
+         Describe the system in plain English: state, inputs,
+         transitions (all cases), invariants. No Python.
+
+Step 2 — Pseudocode
+         Four to six lines committing to the order of operations.
+         Check guards before changing state. Name every step.
+         If you can write this, the Python is a translation exercise.
+
+Step 3 — Prompt
+         Formalize the pseudocode as AI instructions.
+         No new thinking — write down what the pseudocode decided.
+         Test: could two people build interchangeable code from this?
+
+After the prompt — use the AI as Socratic partner:
+         Ask: "what cases does my spec not address?
+               Don't fix them — ask me how I want to handle each one."
+         The AI finds gaps. You make the decisions.</pre>
+
+    <h4>The questions to keep asking</h4>
+    <pre>Have I solved this with a concrete example before touching code?  (Before-You-Code)
+What must this system remember?                    (state — and why those fields)
+What representation? What obligations does it create?  (representation choice)
+What can arrive from outside?                      (inputs — and what can go wrong)
+Have I preserved the inputs?                       (input preservation)
+What events change the state?                      (transitions — every case)
+What must always stay true?                        (invariants — enforce them)
+Store or compute?                                  (derived state question)
+Is any information lost if not stored now?         (history question)
+Can every valid world-state be expressed?          (two-way test, direction 1)
+Does every expressible state mean something?       (two-way test, direction 2)
+Could any two people build this from my spec?      (completeness test)</pre>
+
+    <div class="unlock-block">
+      <span class="unlock-label">⚙ Now You Can</span>
+      <p>See any system through the ISTI lens — real or coded, familiar or new. Solve the problem in your head before writing a line of code. Describe it at the problem level before designing the implementation. Choose representations that enforce rules structurally where possible. Write transitions that cover the full state space. Enforce the rules that remain. Turn the whole description into a specification that leaves nothing for an AI to guess — and use that AI as a partner who interrogates your thinking, not one who replaces it.</p>
+    </div>
+  </article>
+  <aside class="sidebar">
+    <div class="panel mental"><h3>🧠 Carry-Out Card</h3><p>Solve it first. What must it remember? What can arrive? What changes it? What must stay true? Store or compute? Two-way test. Enforce the rules. Spec before prompt. AI interrogates — you decide.</p></div>
+    <div class="panel design"><h3>🧩 What Comes Next</h3><p>Every lab that follows asks you to apply ISTI before writing code. The four questions are the exam — asked of a system you haven't seen before, with your reasoning as the answer.</p></div>
+  </aside>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ GLOSSARY -->
+<h2 class="section-title" id="glossary">7. Glossary</h2>
+<div class="glossary">
+  <p class="muted">ISTI vocabulary. Terms from Workbooks 2 and 3 (list, dict, function, key function, accumulator, aliasing, mutability, representation) are defined in those glossaries.</p>
+
+  <div class="letter-group">
+    <h4>B – D</h4>
+    <dl>
+      <dt>Before-You-Code</dt>
+      <dd>The three-step check required before any design or coding work: (1) state the problem in one sentence; (2) trace a concrete example by hand with specific values; (3) state the answer in plain English. Skipping this step means coding your confusion. Section 0.</dd>
+      <dt>boundary</dt>
+      <dd>The edge of a system: inside it you control everything; outside it nothing. Inputs cross inward (validate them), outputs cross outward (project, don't mutate), state crosses time through files (check on the way back in). Section 2.</dd>
+      <dt>derived state</dt>
+      <dd>Information that can be computed from the primary state at any time. Be thoughtful about storing it — storing a derived value creates a synchronization rule you must maintain manually. Example: average score is <code>sum(scores) / len(scores)</code>. Section 1.</dd>
+      <dt>domain invariant</dt>
+      <dd>A rule that comes from the problem world, not from the code: "balance is never negative," "a book cannot be checked out to two patrons." Discovered by asking "what must never happen?" Section 4.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group">
+    <h4>G – I</h4>
+    <dl>
+      <dt>guard</dt>
+      <dd>An <code>if</code>-check that politely refuses a request the outside world is legitimately allowed to make (a swipe that exceeds the balance). Contrast with an invariant check, which halts on a condition the code itself must never produce. Section 4.</dd>
+      <dt>input</dt>
+      <dd>Anything that arrives from outside the system: typed values, loaded files, function arguments. Not trusted; preserved and validated at the boundary before entering the system. Section 2.</dd>
+      <dt>invariant</dt>
+      <dd>A rule that must hold in every state the system can be in, through every transition. Enforced structurally (by representation choice), logically (by if checks in check_invariants), or defensively (by else branches that should never fire). Section 4.</dd>
+      <dt>ISTI</dt>
+      <dd>Inputs, State, Transitions, Invariants — the four questions that describe any system, and the specification language this workbook is built around.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group">
+    <h4>P – R</h4>
+    <dl>
+      <dt>primary state</dt>
+      <dd>The information that must be stored because it cannot be derived from other stored values and cannot be reconstructed once discarded. Contrast with derived state. Section 1.</dd>
+      <dt>problem state</dt>
+      <dd>The collection of data structures needed to represent the real-world problem before a transition executes. Does not include program artifacts. Contrast with program state. Section 0.</dd>
+      <dt>program artifacts</dt>
+      <dd>Variables that exist to help the program run but have no counterpart in the problem world: loop counters, index variables, boolean flags, temporary accumulators. Part of the program state, but not part of the problem state. Section 0.</dd>
+      <dt>program state</dt>
+      <dd>Everything the computer is tracking at a given moment — the problem state plus program artifacts. When debugging a computation, you may need to inspect the full program state. Contrast with problem state. Section 0.</dd>
+      <dt>projection</dt>
+      <dd>A read-only view of state formatted for output — a report, a display. Projections never mutate state; a function that reads and writes state is a transition, not a projection. Section 2.</dd>
+    </dl>
+  </div>
+
+  <div class="letter-group">
+    <h4>S – U</h4>
+    <dl>
+      <dt>second-call test</dt>
+      <dd>Ask of every transition: what happens when it fires again immediately? Decide on purpose. Do not discover the behavior accidentally when a user does the same thing twice. Section 3.</dd>
+      <dt>state</dt>
+      <dd>What the system must remember in order to answer its questions. A choice, not a given — determined entirely by what the system must be able to say. See also: problem state, program state. Section 1.</dd>
+      <dt>state space</dt>
+      <dd>Every configuration the system could possibly be in. Transitions must be written correctly for every state in the space — not just the easy ones. Section 3.</dd>
+      <dt>structural invariant</dt>
+      <dd>A rule about the data structure itself arising from design choices: "every log entry has 'type', 'amount', and 'balance_after' keys." Contrast with domain invariant. Section 4.</dd>
+      <dt>transition</dt>
+      <dd>An event that takes the system from one state to another. At the problem level: a real-world event. At the program level: a function named for that event, whose body specifies the effect on state for every case in the state space. Section 3.</dd>
+      <dt>two-way test</dt>
+      <dd>The mapping audit run on every representation: (1) can every valid world-state be expressed? (2) does every expressible program-state mean something in the world? Both directions, every time. Section 1.</dd>
+      <dt>unrepresentable</dt>
+      <dd>The strongest form of invariant enforcement: choosing a data structure in which the illegal state cannot be expressed at all. Better than checking for the rule; the structure enforces it everywhere, forever. Section 4.</dd>
+    </dl>
+  </div>
+</div>
+
+<p class="muted" style="text-align:center; margin:40px 0 20px;">Workbook 4 — The ISTI Model · Computational Thinking with AI and Python · The four questions are yours now.</p>
+
+</div>
+</body>
+</html>

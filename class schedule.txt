@@ -1,0 +1,43 @@
+Classes 1–2
+ClassCoverage
+1 Setup — VS Code, GitHub, environment scripts, course objectives
+2 AI workbook (complete) — three ways to ask, detective toolkit, project setup, Prompt 1 activated
+
+Classes 3–12 — Python Workbook
+ClassSections     The story of the day
+3  §2 Store & Change Data · §3 Objects, Types & Investigation ToolsThe two questions of the course; everything is an object (§1 intro assigned as pre-reading)
+4  §4 Expressions, Statements & Precedence · §5 StringsComputing values; first real data type
+5  §6 Lists · §7 TuplesSequences — the mutable one and the frozen one
+6  §8 Dictionaries · §9 Three Ways to Talk to an Object ⚡Lookup by name, then the synthesis day: brackets, dots, functions
+7  §10 References & Aliasing · §11 Mutability, Rebinding & Copying ⚡The conceptual summit — one story told across two sections
+8  §12 Boolean Logic & Control Flow · §13 Loops & the Accumulator ⚡Decisions, then repetition — the heaviest day, deliberately mid-arc
+9  §14 Tracing · §15 Nested ListsTracing pays off immediately on nested loops
+10 §16 Functions & Signatures · §17 Imports & PathsThe big section paired with a light one
+11 §18 Files & JSON · §19 try / exceptNatural pair — files are where errors are normal
+12 §20 Debugging WalkthroughCapstone: integrates everything · Lab 1 launch
+
+Classes 13–16 — Data Structures Workbook
+ClassSections     The story of the day
+13 §0 Why · §1 Parallel-Lists Trap · §2 Records ⚡The representation argument and the core shape (§0–1 are short) · Prompt 2 activates
+14 §3 Grids · §4 Index Arithmetic ⚡The spatial pair
+15 §5 Grouping ⚡ · §6 Counting · §7 Fast LookupThe dict-pattern siblings — counting is quick once grouping lands
+16 §8 Choosing a Shape · §9 Menu Loop · §10 Directing AI ⚡Synthesis, the applied capstone, and §10 doubling as the Lab 2 briefing
+
+Classes 17–22 — ISTI Workbook: 
+ClassSections     The story of the day
+17 §1 Dimension Map · §2 Programs as Systems ⚡ · §3 The Problem WorldConceptual launch — discussion-heavy, almost no code · Prompt 3 activates
+18 §4 The Program World · §5 The Mapping ⚡The heart: Python as a systems kit, then buy_stock cracks live
+19 §6 The Boundary · §7 TimeDefend the door, then press play — trajectory exercises need a full half-class
+20 §8 Invariants You Can Run ⚡Alone on purpose: assert is new Python, and the forensics exercises are hands-on heavy
+21 §9 ISTI as Specification ⚡Alone on purpose: the course thesis lands here, full Architect workflow practiced end-to-end
+22 §10 Systems Within Systems · §11 SummaryLight close · Lab 3 launch with working time
+
+If you need a class back, the compression is clean: fold §10–11 into class 21 (composition is short and the summary is a one-pager), 
+making ISTI a 5-class unit ending at 21, with class 22 becoming a pure Lab 3 work day. I'd only do that if the calendar forces it — 
+sections 8 and 9 are where the exam skill actually gets built, and they're the ones I'd protect.
+
+That leaves classes 23–26 for Lab 3 completion plus your TBD content, as planned.
+Two pacing flags for your review: class 8 is the densest Python day (control flow plus the accumulator pattern back-to-back) — 
+if your sections run long in practice, the §13 spillover naturally absorbs into class 9, since tracing re-teaches loops anyway. 
+And class 16 carries three data-structures sections; it works because §10 is short and thesis-shaped, but if the menu loop eats 
+the clock, §10 moves intact to the top of Lab 2 week.
