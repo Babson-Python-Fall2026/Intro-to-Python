@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt 2: The Designer — AI Workbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a2e; --paper: #faf8f4; --card: #ffffff; --rule: #e2ddd6;
+      --muted: #7a7469; --accent: #c84b31; --accent2: #2e6fad; --accent3: #2a7d4f;
+      --yellow-bg: #fffbec; --blue-bg: #f0f6ff; --green-bg: #f0faf4;
+      --red-bg: #fff4f2; --code-bg: #f4f2ef; --nav-w: 260px;
+      --prompt-color: #7c3aed;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Serif 4', Georgia, serif; background: var(--paper); color: var(--ink); line-height: 1.7; font-size: 1.05rem; }
+
+    #sidebar { position: fixed; top: 0; left: 0; width: var(--nav-w); height: 100vh; background: var(--ink); overflow-y: auto; padding: 32px 0 40px; z-index: 100; }
+    #sidebar .logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,.12); margin-bottom: 20px; }
+    #sidebar .logo span { display: block; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; line-height: 1.3; }
+    #sidebar .logo small { font-family: 'Source Serif 4', serif; font-size: .75rem; color: rgba(255,255,255,.4); font-style: italic; }
+    #sidebar .logo .prompt-badge { display: inline-block; margin-top: 10px; background: var(--prompt-color); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; }
+    #sidebar nav a { display: block; padding: 9px 24px; font-family: 'Source Serif 4', serif; font-size: .9rem; color: rgba(255,255,255,.65); text-decoration: none; border-left: 3px solid transparent; transition: all .18s; }
+    #sidebar nav a:hover, #sidebar nav a.active { color: #fff; border-left-color: var(--prompt-color); background: rgba(255,255,255,.06); }
+    #sidebar nav .nav-section { padding: 18px 24px 6px; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.3); font-family: 'JetBrains Mono', monospace; }
+    .nav-series { padding: 14px 24px 0; }
+    .nav-series a { display: block; padding: 6px 0; font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: rgba(255,255,255,.35); text-decoration: none; }
+    .nav-series a.current { color: #fff; font-weight: 600; }
+    .nav-series a:hover { color: rgba(255,255,255,.7); }
+
+    #main { margin-left: var(--nav-w); padding: 56px 60px 100px; max-width: calc(var(--nav-w) + 860px); }
+    #progress-bar { position: fixed; top: 0; left: var(--nav-w); right: 0; height: 3px; background: var(--prompt-color); transform-origin: left; transform: scaleX(0); z-index: 200; transition: transform .1s linear; }
+
+    .chapter-header { margin-bottom: 52px; padding-bottom: 32px; border-bottom: 2px solid var(--rule); }
+    .chapter-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; color: var(--prompt-color); margin-bottom: 12px; }
+    .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1.1; color: var(--ink); margin-bottom: 12px; }
+    .chapter-header .lede { font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--muted); max-width: 60ch; line-height: 1.6; }
+    .when-tag { display: inline-block; margin-top: 14px; background: #f3f0ff; border: 1px solid #d4c5f9; color: var(--prompt-color); font-family: 'JetBrains Mono', monospace; font-size: .75rem; padding: 4px 12px; border-radius: 20px; }
+
+    .section { margin-bottom: 52px; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--ink); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+    .section h3 { font-family: 'Source Serif 4', serif; font-size: 1.12rem; font-weight: 600; color: var(--ink); margin: 26px 0 10px; }
+    .section p { margin-bottom: 16px; max-width: 72ch; }
+
+    .callout { border-radius: 12px; padding: 18px 22px; margin: 22px 0; border-left: 4px solid; max-width: 72ch; }
+    .callout.yellow { background: var(--yellow-bg); border-color: #e6a817; }
+    .callout.blue   { background: var(--blue-bg);   border-color: var(--accent2); }
+    .callout.green  { background: var(--green-bg);  border-color: var(--accent3); }
+    .callout.purple { background: #f3f0ff; border-color: var(--prompt-color); }
+    .callout strong { display: block; margin-bottom: 5px; font-size: .83rem; text-transform: uppercase; letter-spacing: .08em; }
+    .callout.yellow strong { color: #a07010; }
+    .callout.blue   strong { color: var(--accent2); }
+    .callout.green  strong { color: var(--accent3); }
+    .callout.purple strong { color: var(--prompt-color); }
+    .callout p { margin: 0; max-width: none; }
+    .callout ul { margin: 8px 0 0 18px; }
+    .callout ul li { margin-bottom: 4px; }
+
+    .new-strip { background: #f3f0ff; border: 1px solid #d4c5f9; border-radius: 12px; padding: 18px 22px; margin: 22px 0; max-width: 72ch; }
+    .new-strip .strip-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--prompt-color); margin-bottom: 10px; }
+    .new-strip ul { list-style: none; padding: 0; }
+    .new-strip ul li { padding: 4px 0 4px 20px; position: relative; font-size: .95rem; border-bottom: 1px solid rgba(0,0,0,.06); }
+    .new-strip ul li:last-child { border-bottom: none; }
+    .new-strip ul li::before { content: '✦'; position: absolute; left: 0; color: var(--prompt-color); font-size: .7rem; top: 7px; }
+    .carried-strip { background: var(--green-bg); border: 1px solid #b2dfc0; border-radius: 12px; padding: 18px 22px; margin: 22px 0; max-width: 72ch; }
+    .carried-strip .strip-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent3); margin-bottom: 10px; }
+    .carried-strip ul { list-style: none; padding: 0; }
+    .carried-strip ul li { padding: 4px 0 4px 20px; position: relative; font-size: .95rem; border-bottom: 1px solid rgba(0,0,0,.06); color: var(--muted); }
+    .carried-strip ul li:last-child { border-bottom: none; }
+    .carried-strip ul li::before { content: '✓'; position: absolute; left: 0; color: var(--accent3); font-size: .8rem; top: 5px; }
+
+    .prompt-wrap { background: var(--ink); border-radius: 16px; overflow: hidden; margin: 28px 0; max-width: 80ch; }
+    .prompt-header { padding: 13px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .prompt-header span { font-family: 'JetBrains Mono', monospace; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.45); }
+    .copy-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); font-family: 'JetBrains Mono', monospace; font-size: .72rem; padding: 5px 14px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+    .copy-btn:hover { background: rgba(255,255,255,.18); }
+    .prompt-body { padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: .84rem; line-height: 1.75; color: #e8e4dc; white-space: pre-wrap; overflow-x: auto; }
+    .hl-new  { color: #c4b5fd; }
+    .hl-warn { color: #f6c05e; }
+    .hl-carried { color: #9ca3af; }
+
+    /* structure table */
+    .struct-table { width: 100%; border-collapse: collapse; max-width: 72ch; margin: 20px 0; font-size: .93rem; }
+    .struct-table th { background: var(--ink); color: #fff; padding: 10px 14px; text-align: left; font-family: 'Source Serif 4', serif; font-weight: 600; }
+    .struct-table th:first-child { border-radius: 10px 0 0 0; }
+    .struct-table th:last-child  { border-radius: 0 10px 0 0; }
+    .struct-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.5; }
+    .struct-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--prompt-color); font-weight: 600; }
+    .struct-table tr:nth-child(even) td { background: #f9f7f4; }
+
+    .divider { border: none; border-top: 1px solid var(--rule); margin: 44px 0; }
+    .exercise { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 20px 24px; margin: 26px 0; max-width: 72ch; position: relative; }
+    .exercise::before { content: 'Try It'; position: absolute; top: -11px; left: 18px; background: var(--accent); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; }
+    .exercise p { margin-bottom: 10px; max-width: none; font-size: .97rem; }
+    .response-box { width: 100%; min-height: 88px; border: 1px dashed var(--muted); border-radius: 8px; background: var(--paper); margin-top: 10px; padding: 10px 14px; font-family: 'Source Serif 4', serif; font-size: .95rem; color: var(--ink); resize: vertical; line-height: 1.6; }
+    .response-box:focus { outline: 2px solid var(--prompt-color); border-color: transparent; }
+
+    @media print { #sidebar, #progress-bar { display: none; } #main { margin-left: 0; padding: 0; max-width: none; } }
+    @media (max-width: 860px) { #sidebar { display: none; } #main { margin-left: 0; padding: 32px 20px 80px; } #progress-bar { left: 0; } .chapter-header h1 { font-size: 2.2rem; } }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="logo">
+    <span>Using AI Effectively</span>
+    <small>A Student Workbook</small>
+    <div class="prompt-badge">Prompt 2 of 3</div>
+  </div>
+  <nav>
+    <div class="nav-section">This Prompt</div>
+    <a href="#intro">Introduction</a>
+    <a href="#new">What's New</a>
+    <a href="#structures">Data Structures</a>
+    <a href="#prompt">The Prompt</a>
+    <a href="#using">How to Use It</a>
+    <div class="nav-section">Prompt Series</div>
+    <div class="nav-series">
+      <a href="prompt1-explorer.html">1 · The Explorer</a>
+      <a href="prompt2-designer.html" class="current">2 · The Designer</a>
+      <a href="prompt3-architect.html">3 · The Architect</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <div class="chapter-header" id="intro">
+    <div class="chapter-eyebrow">Prompt 2 of 3</div>
+    <h1>The Designer</h1>
+    <p class="lede">You know the basics. Now you learn to choose the right structure for the problem — and explain why.</p>
+    <div class="when-tag">Introduced: Classes 13–16 — with the Patterns &amp; Data Structures Workbook</div>
+  </div>
+
+  <div class="section">
+    <h2>Building on The Explorer</h2>
+    <p>Everything in Prompt 1 still applies. The four habits — ask why, demand simplicity, request alternatives, stay in scope — carry forward unchanged. Prompt 2 adds one new dimension: <strong>data representation</strong>.</p>
+    <p>Now that you have worked with lists, dictionaries, tuples, and other structures, you have the vocabulary to think about <em>which</em> structure fits a problem. That is a design decision, and AI should not be making it for you.</p>
+
+    <div class="new-strip">
+      <div class="strip-label">New in Prompt 2</div>
+      <ul>
+        <li>Choose your data structure before AI writes any code</li>
+        <li>Explain why that structure fits the problem</li>
+        <li>Ask AI to challenge your choice — is there a better fit?</li>
+        <li>Ask what would break if you used a different structure</li>
+      </ul>
+    </div>
+
+    <div class="carried-strip">
+      <div class="strip-label">Carried forward from Prompt 1</div>
+      <ul>
+        <li>Ask why after every answer</li>
+        <li>Demand the simplest beginner solution</li>
+        <li>Request at least one alternative approach</li>
+        <li>AI introduces only workbook concepts unless you explicitly bring in something you already know</li>
+        <li>AI asks what you have tried before writing code</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider" id="new">
+
+  <div class="section">
+    <h2>Why Data Representation Matters</h2>
+    <p>The data structure you choose shapes every line of code that follows. A poor choice makes the solution harder to write, harder to read, and more likely to break. A good choice makes the solution almost write itself.</p>
+    <p>This is a design skill — and it is one that AI will get wrong if you let it choose for you. AI will pick whatever structure makes the code easiest to generate, which is not always the structure that best fits the problem.</p>
+
+    <table class="struct-table">
+      <thead><tr><th>Structure</th><th>Best when</th><th>Ask yourself</th></tr></thead>
+      <tbody>
+        <tr><td>list</td><td>Order matters; items are the same type; you need to iterate</td><td>Do I care about position? Will I loop through everything?</td></tr>
+        <tr><td>dict</td><td>You need to look things up by name or key; pairs of related values</td><td>Will I search for items by label? Do I have key-value pairs?</td></tr>
+        <tr><td>tuple</td><td>A fixed group of related values that should not change</td><td>Is this a record that should stay together and stay fixed?</td></tr>
+        <tr><td>list of dicts</td><td>A collection of records, each with the same set of fields</td><td>Do I have multiple items, each with named properties?</td></tr>
+        <tr><td>dict of lists</td><td>Groups of items organized by category or key</td><td>Do I have categories, each containing multiple values?</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout purple">
+      <strong>The key question</strong>
+      <p>Before writing a single line of code, ask: what is the natural shape of this data? A portfolio is not a list of numbers — it is a collection of positions, each with a ticker, a quantity, and a price. That description points directly to a list of dictionaries. Getting the structure right first makes everything else easier.</p>
+    </div>
+  </div>
+
+  <hr class="divider" id="structures">
+
+  <div class="section">
+    <h2>The Data Representation Conversation</h2>
+    <p>With Prompt 2 active, your AI conversation about any non-trivial problem should include a data representation discussion before any code appears. Here is what that looks like.</p>
+
+    <div class="callout green">
+      <strong>What to tell AI before it writes code</strong>
+      <ul>
+        <li>What data structure I plan to use and why</li>
+        <li>What the structure looks like with a concrete example</li>
+        <li>Ask AI: does this structure fit the problem, or is there a better one?</li>
+        <li>Ask AI: what would break or become harder if I used a different structure?</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <p>Think about the equity portfolio system you will build in Lab 2. Before looking at any code, describe the data structure you would use to represent a portfolio of stocks. Include a concrete example showing what the data looks like.</p>
+      <textarea class="response-box" placeholder="My proposed structure:&#10;&#10;Concrete example (show what the data looks like):&#10;&#10;Why this structure fits:&#10;&#10;What AI said when I asked if there was a better choice:"></textarea>
+    </div>
+  </div>
+
+  <hr class="divider" id="prompt">
+
+  <div class="section">
+    <h2>The Prompt</h2>
+    <p>This prompt replaces Prompt 1. Use it for all Python work from this point forward. New additions are the data representation rules — everything else carries forward from Prompt 1.</p>
+
+    <div class="prompt-wrap">
+      <div class="prompt-header">
+        <span>Prompt 2 — The Designer</span>
+        <button class="copy-btn" onclick="copyPrompt('p2')">Copy</button>
+      </div>
+      <div class="prompt-body" id="p2">I am a student in a beginner Python course called Computational Thinking with AI and Python.
+
+I have uploaded the Foundations of Programming in Python workbook to this chat.
+Use that workbook to determine which Python concepts I have been taught so far.
+
+<span class="hl-warn">Rules for this conversation:</span>
+
+<span class="hl-carried">1. Use Python concepts covered in the uploaded workbook unless I explicitly introduce a concept I already know and ask to use it.
+   If a simpler solution exists using concepts I have learned, always prefer it.
+   If you think a concept outside the workbook would be useful, do not introduce it unless I ask about it.</span>
+
+<span class="hl-carried">2. Do not just give me the answer.
+   After every piece of code or explanation, ask me:
+   - Do you understand why this works?
+   - Can you explain what each part does?
+   If I cannot explain it, help me understand before moving on.</span>
+
+<span class="hl-carried">3. Always check for simplicity.
+   After giving any solution, ask:
+   - Is there a simpler beginner-level way to solve this?
+   - Does this use more code or structure than necessary?
+   If yes, show me the simpler version.</span>
+
+<span class="hl-carried">4. Always offer alternatives.
+   After giving a solution, describe one or two other approaches and the tradeoffs.</span>
+
+<span class="hl-new">5. Data representation first — new rule.
+   Before writing any code for a non-trivial problem, ask me:
+   - What data structure do you plan to use?
+   - Why does that structure fit this problem?
+   - Can you show me a concrete example of what your data looks like?
+
+   Do not choose the data structure for me.
+   After I explain my choice:
+   - Tell me whether you agree and why.
+   - Challenge my choice: ask if a different structure would work better, and why or why not.
+   - Ask: what would become harder or break if a different structure was used.</span>
+
+<span class="hl-carried">6. Keep me in charge.
+   Do not solve the whole problem for me at once.
+   Ask me what I have tried first.
+   Ask me what part I am stuck on before writing any code.</span>
+
+<span class="hl-carried">7. Do not add comments to code you generate for me.
+   I will write the comments myself to demonstrate that I understand the code.
+   If I show you my own comments, you may review them and tell me whether they accurately explain the code.</span>
+
+Here is my question or problem:
+
+[PASTE YOUR QUESTION HERE]
+
+Start by asking me what I have already tried, then ask about my data representation.</div>
+    </div>
+  </div>
+
+  <hr class="divider" id="using">
+
+  <div class="section">
+    <h2>How to Use This Prompt</h2>
+
+    <div class="callout blue">
+      <strong>The new conversation pattern</strong>
+      <p>With Prompt 2, every non-trivial problem should now follow this sequence: tell AI what you have tried → describe your data structure choice with a concrete example → AI challenges or confirms your choice → then code. If you skip the data representation step, AI will choose a structure for you — and you will not know if it was the right choice.</p>
+    </div>
+
+    <h3>Connecting to the labs</h3>
+    <p>The equity portfolio system you will build across Labs 2, 3, and 4 is a perfect test of data representation thinking. A portfolio has positions, prices, quantities, and history. Each of those has a natural structure. Working through those choices explicitly — before any code — is exactly what this prompt is designed to make you do.</p>
+
+    <div class="callout yellow">
+      <strong>Coming next — Prompt 3: The Architect</strong>
+      <p>After you have worked through the inputs, state, transitions, and invariants material, you will upgrade to Prompt 3. It adds formal design methodology: you will identify all four elements before AI writes any code, and you will submit pseudocode as a required gate.</p>
+    </div>
+  </div>
+
+</main>
+<script>
+  function copyPrompt(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    document.getElementById('progress-bar').style.transform = `scaleX(${doc.scrollTop / (doc.scrollHeight - doc.clientHeight)})`;
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) document.querySelectorAll('#sidebar nav a[href^="#"]').forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('[id]').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

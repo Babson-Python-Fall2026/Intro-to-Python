@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt 1: The Explorer — AI Workbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a2e; --paper: #faf8f4; --card: #ffffff; --rule: #e2ddd6;
+      --muted: #7a7469; --accent: #c84b31; --accent2: #2e6fad; --accent3: #2a7d4f;
+      --yellow-bg: #fffbec; --blue-bg: #f0f6ff; --green-bg: #f0faf4;
+      --red-bg: #fff4f2; --code-bg: #f4f2ef; --nav-w: 260px;
+      --prompt-color: #2e6fad;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Serif 4', Georgia, serif; background: var(--paper); color: var(--ink); line-height: 1.7; font-size: 1.05rem; }
+
+    #sidebar { position: fixed; top: 0; left: 0; width: var(--nav-w); height: 100vh; background: var(--ink); overflow-y: auto; padding: 32px 0 40px; z-index: 100; }
+    #sidebar .logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,.12); margin-bottom: 20px; }
+    #sidebar .logo span { display: block; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; line-height: 1.3; }
+    #sidebar .logo small { font-family: 'Source Serif 4', serif; font-size: .75rem; color: rgba(255,255,255,.4); font-style: italic; }
+    #sidebar .logo .prompt-badge { display: inline-block; margin-top: 10px; background: var(--prompt-color); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; }
+    #sidebar nav a { display: block; padding: 9px 24px; font-family: 'Source Serif 4', serif; font-size: .9rem; color: rgba(255,255,255,.65); text-decoration: none; border-left: 3px solid transparent; transition: all .18s; }
+    #sidebar nav a:hover, #sidebar nav a.active { color: #fff; border-left-color: var(--prompt-color); background: rgba(255,255,255,.06); }
+    #sidebar nav .nav-section { padding: 18px 24px 6px; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.3); font-family: 'JetBrains Mono', monospace; }
+    .nav-series { padding: 14px 24px 0; }
+    .nav-series a { display: block; padding: 6px 0; font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: rgba(255,255,255,.35); text-decoration: none; border-left: none; }
+    .nav-series a.current { color: #fff; font-weight: 600; }
+    .nav-series a:hover { color: rgba(255,255,255,.7); }
+
+    #main { margin-left: var(--nav-w); padding: 56px 60px 100px; max-width: calc(var(--nav-w) + 860px); }
+    #progress-bar { position: fixed; top: 0; left: var(--nav-w); right: 0; height: 3px; background: var(--prompt-color); transform-origin: left; transform: scaleX(0); z-index: 200; transition: transform .1s linear; }
+
+    .chapter-header { margin-bottom: 52px; padding-bottom: 32px; border-bottom: 2px solid var(--rule); }
+    .chapter-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; color: var(--prompt-color); margin-bottom: 12px; }
+    .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1.1; color: var(--ink); margin-bottom: 12px; }
+    .chapter-header .lede { font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--muted); max-width: 60ch; line-height: 1.6; }
+    .when-tag { display: inline-block; margin-top: 14px; background: var(--blue-bg); border: 1px solid #c5dbf5; color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: .75rem; padding: 4px 12px; border-radius: 20px; }
+
+    .section { margin-bottom: 52px; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--ink); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+    .section h3 { font-family: 'Source Serif 4', serif; font-size: 1.12rem; font-weight: 600; color: var(--ink); margin: 26px 0 10px; }
+    .section p { margin-bottom: 16px; max-width: 72ch; }
+
+    .callout { border-radius: 12px; padding: 18px 22px; margin: 22px 0; border-left: 4px solid; max-width: 72ch; }
+    .callout.yellow { background: var(--yellow-bg); border-color: #e6a817; }
+    .callout.blue   { background: var(--blue-bg);   border-color: var(--accent2); }
+    .callout.green  { background: var(--green-bg);  border-color: var(--accent3); }
+    .callout.red    { background: var(--red-bg);    border-color: var(--accent); }
+    .callout strong { display: block; margin-bottom: 5px; font-size: .83rem; text-transform: uppercase; letter-spacing: .08em; }
+    .callout.yellow strong { color: #a07010; }
+    .callout.blue   strong { color: var(--accent2); }
+    .callout.green  strong { color: var(--accent3); }
+    .callout.red    strong { color: var(--accent); }
+    .callout p { margin: 0; max-width: none; }
+
+    /* what's new strip */
+    .new-strip { background: var(--blue-bg); border: 1px solid #c5dbf5; border-radius: 12px; padding: 18px 22px; margin: 22px 0; max-width: 72ch; }
+    .new-strip .strip-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent2); margin-bottom: 10px; }
+    .new-strip ul { list-style: none; padding: 0; }
+    .new-strip ul li { padding: 4px 0 4px 20px; position: relative; font-size: .95rem; border-bottom: 1px solid rgba(0,0,0,.06); }
+    .new-strip ul li:last-child { border-bottom: none; }
+    .new-strip ul li::before { content: '✦'; position: absolute; left: 0; color: var(--accent2); font-size: .7rem; top: 7px; }
+
+    /* prompt box */
+    .prompt-wrap { background: var(--ink); border-radius: 16px; overflow: hidden; margin: 28px 0; max-width: 80ch; }
+    .prompt-header { padding: 13px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .prompt-header span { font-family: 'JetBrains Mono', monospace; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.45); }
+    .copy-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); font-family: 'JetBrains Mono', monospace; font-size: .72rem; padding: 5px 14px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+    .copy-btn:hover { background: rgba(255,255,255,.18); }
+    .prompt-body { padding: 22px 26px; font-family: 'JetBrains Mono', monospace; font-size: .84rem; line-height: 1.75; color: #e8e4dc; white-space: pre-wrap; overflow-x: auto; }
+    .hl-new  { color: #7dd3a8; }
+    .hl-warn { color: #f6c05e; }
+
+    /* habits grid */
+    .habits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 22px 0; }
+    .habit-card { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; transition: transform .15s, box-shadow .15s; }
+    .habit-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.07); }
+    .habit-card .hc-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--prompt-color); margin-bottom: 6px; }
+    .habit-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .habit-card p { font-size: .92rem; color: var(--muted); margin: 0; max-width: none; line-height: 1.55; }
+
+    .divider { border: none; border-top: 1px solid var(--rule); margin: 44px 0; }
+
+    /* exercise */
+    .exercise { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 20px 24px; margin: 26px 0; max-width: 72ch; position: relative; }
+    .exercise::before { content: 'Try It'; position: absolute; top: -11px; left: 18px; background: var(--accent); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; padding: 3px 10px; border-radius: 20px; }
+    .exercise p { margin-bottom: 10px; max-width: none; font-size: .97rem; }
+    .response-box { width: 100%; min-height: 88px; border: 1px dashed var(--muted); border-radius: 8px; background: var(--paper); margin-top: 10px; padding: 10px 14px; font-family: 'Source Serif 4', serif; font-size: .95rem; color: var(--ink); resize: vertical; line-height: 1.6; }
+    .response-box:focus { outline: 2px solid var(--accent2); border-color: transparent; }
+
+    @media print {
+      #sidebar, #progress-bar { display: none; }
+      #main { margin-left: 0; padding: 0; max-width: none; }
+      .prompt-wrap { background: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    @media (max-width: 860px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; padding: 32px 20px 80px; }
+      #progress-bar { left: 0; }
+      .chapter-header h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="logo">
+    <span>Using AI Effectively</span>
+    <small>A Student Workbook</small>
+    <div class="prompt-badge">Prompt 1 of 3</div>
+  </div>
+  <nav>
+    <div class="nav-section">This Prompt</div>
+    <a href="#intro">Introduction</a>
+    <a href="#habits">The Four Habits</a>
+    <a href="#prompt">The Prompt</a>
+    <a href="#using">How to Use It</a>
+    <div class="nav-section">Prompt Series</div>
+    <div class="nav-series">
+      <a href="prompt1-explorer.html" class="current">1 · The Explorer</a>
+      <a href="prompt2-designer.html">2 · The Designer</a>
+      <a href="prompt3-architect.html">3 · The Architect</a>
+    </div>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <div class="chapter-header" id="intro">
+    <div class="chapter-eyebrow">Prompt 1 of 3</div>
+    <h1>The Explorer</h1>
+    <p class="lede">Your first AI prompt. Simple, focused, and built around one idea: never accept the first answer.</p>
+    <div class="when-tag">Introduced: Classes 2–12 — AI Workbook, then Python Foundations Workbook</div>
+  </div>
+
+  <div class="section">
+    <h2>Why This Prompt, Why Now</h2>
+    <p>In the first weeks of the course you are learning Python syntax and basic programming concepts. You do not yet have the vocabulary for design methodology — inputs, state, transitions, invariants. That comes later.</p>
+    <p>What you can learn right now is the most important habit of all: <strong>curiosity</strong>. The Explorer prompt builds four habits that will stay with you through every subsequent prompt and every AI interaction you have in this course.</p>
+
+    <div class="new-strip">
+      <div class="strip-label">What this prompt introduces</div>
+      <ul>
+        <li>Ask why — never accept code you cannot explain</li>
+        <li>Demand simplicity — always ask for the beginner solution first</li>
+        <li>Request alternatives — there is almost always another way</li>
+        <li>Workbook constraint — all code stays within course concepts</li>
+      </ul>
+    </div>
+
+    <div class="callout yellow">
+      <strong>Before you use this prompt</strong>
+      <p>Upload the <strong>Foundations of Programming in Python workbook</strong> to your AI chat — or use your Claude Project where it is already uploaded. This tells the AI which Python concepts are in scope for this course.</p>
+    </div>
+  </div>
+
+  <hr class="divider" id="habits">
+
+  <div class="section">
+    <h2>The Four Habits</h2>
+    <p>This prompt is built around four habits. Learn these now. They will still be active in Prompt 3 through the final exam.</p>
+
+    <div class="habits-grid">
+      <div class="habit-card">
+        <div class="hc-label">Habit 01</div>
+        <h4>Ask Why</h4>
+        <p>After every answer, ask why it works. If you cannot explain the code, you do not own it yet. A correct answer you cannot explain is not useful.</p>
+      </div>
+      <div class="habit-card">
+        <div class="hc-label">Habit 02</div>
+        <h4>Demand Simplicity</h4>
+        <p>AI defaults to more complex solutions than necessary. Always ask: is there a simpler beginner-level way? The simplest correct solution is always the best starting point.</p>
+      </div>
+      <div class="habit-card">
+        <div class="hc-label">Habit 03</div>
+        <h4>Request Alternatives</h4>
+        <p>The first approach AI gives you is not the only approach. Ask for two or three different ways. Understanding multiple solutions deepens your understanding of each one.</p>
+      </div>
+      <div class="habit-card">
+        <div class="hc-label">Habit 04</div>
+        <h4>Stay in Scope</h4>
+        <p>AI should introduce only concepts covered in the Python workbook. If you explicitly introduce a concept you already know and want to use, AI may work with it. Otherwise, if AI uses something you have not learned yet, ask for a version using only what you know.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" id="prompt">
+
+  <div class="section">
+    <h2>The Prompt</h2>
+    <p>Copy and paste this prompt at the start of any AI conversation about Python in this course. Replace <code>[PASTE YOUR QUESTION HERE]</code> with your actual question or problem.</p>
+
+    <div class="prompt-wrap">
+      <div class="prompt-header">
+        <span>Prompt 1 — The Explorer</span>
+        <button class="copy-btn" onclick="copyPrompt('p1')">Copy</button>
+      </div>
+      <div class="prompt-body" id="p1">I am a student in a beginner Python course called Computational Thinking with AI and Python.
+
+I have uploaded the Foundations of Programming in Python workbook to this chat.
+Use that workbook to determine which Python concepts I have been taught so far.
+
+<span class="hl-warn">Rules for this conversation:</span>
+
+1. Use Python concepts covered in the uploaded workbook unless I explicitly introduce a concept I already know and ask to use it.
+   If a simpler solution exists using concepts I have learned, always prefer it.
+   If you think a concept outside the workbook would be useful, do not introduce it unless I ask about it.
+
+2. Do not just give me the answer.
+   After every piece of code or explanation, ask me:
+   - Do you understand why this works?
+   - Can you explain what each part does?
+   If I cannot explain it, help me understand before moving on.
+
+3. Always check for simplicity.
+   After giving any solution, ask:
+   - Is there a simpler beginner-level way to solve this?
+   - Does this use more code or more complex structures than necessary?
+   If yes, show me the simpler version.
+
+4. Always offer alternatives.
+   After giving a solution, briefly describe one or two other approaches.
+   Explain the tradeoff: why would someone choose one over the other?
+
+5. Keep me in charge.
+   Do not solve the whole problem for me at once.
+   Ask me what I have tried first.
+   Ask me what part I am stuck on before writing any code.
+
+6. Do not add comments to code you generate for me.
+   I will write the comments myself to demonstrate that I understand the code.
+   If I show you my own comments, you may review them and tell me whether they accurately explain the code.
+
+Here is my question or problem:
+
+[PASTE YOUR QUESTION HERE]
+
+Start by asking me what I have already tried.</div>
+    </div>
+  </div>
+
+  <hr class="divider" id="using">
+
+  <div class="section">
+    <h2>How to Use This Prompt</h2>
+    <p>The prompt does most of the work for you — but only if you engage with the questions AI asks back. Here is what to expect and how to respond.</p>
+
+    <h3>What AI will do</h3>
+    <div class="callout green">
+      <strong>Expected AI behavior with this prompt</strong>
+      <p>AI will ask what you have already tried before giving any code. After giving code it will ask if you can explain it. It will check whether a simpler solution exists. It will offer at least one alternative approach. If any of these don't happen, remind AI of the rules in the prompt.</p>
+    </div>
+
+    <h3>What you should do</h3>
+    <div class="callout blue">
+      <strong>Your job in the conversation</strong>
+      <p>Answer the questions AI asks back — don't skip them. When AI asks "can you explain what this does?", actually try to explain it. That explanation is where the learning happens. If you cannot explain a line of code, that is valuable information: it means you need to ask more questions before moving on.</p>
+    </div>
+
+    <h3>When the prompt is working</h3>
+    <p>You will know the prompt is working when you feel slightly challenged by the conversation — when AI asks you something you have to think about before answering. If every AI response just gives you what you asked for with no pushback, check that you pasted the full prompt correctly.</p>
+
+    <div class="exercise">
+      <p>Use this prompt with a Python problem from the workbook. After the conversation, write down one thing the AI asked you that you had to actually think about.</p>
+      <p>What was the question, and what did you learn from having to answer it?</p>
+      <textarea class="response-box" placeholder="The question AI asked me:&#10;&#10;What I had to think about:&#10;&#10;What I learned:"></textarea>
+    </div>
+
+    <div class="callout yellow">
+      <strong>Coming next — Prompt 2: The Designer</strong>
+      <p>After you have worked through the patterns and data structures material, you will upgrade to Prompt 2. It keeps everything in this prompt and adds one new skill: choosing the right data structure for the problem and being able to explain why.</p>
+    </div>
+  </div>
+
+</main>
+<script>
+  function copyPrompt(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    document.getElementById('progress-bar').style.transform = `scaleX(${doc.scrollTop / (doc.scrollHeight - doc.clientHeight)})`;
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) document.querySelectorAll('#sidebar nav a[href^="#"]').forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('[id]').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
