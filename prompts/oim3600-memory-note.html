@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OIM3600 — Memory Setting</title>
+<style>
+  :root{
+    --ink:#1b2430;
+    --paper:#eef1ec;
+    --card:#ffffff;
+    --rule:#c7cdc4;
+    --accent:#2f5d50;
+    --accent-soft:#e4ece8;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--paper);
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px);
+    background-size: 100% 2.1em;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    color:var(--ink);
+    padding:2rem;
+  }
+  .card{
+    width:100%;
+    max-width:800px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    box-shadow: 6px 6px 0 var(--accent-soft);
+    padding:2.25rem 2.25rem 1.75rem;
+  }
+  .eyebrow{
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 0.35rem;
+  }
+  h1{
+    font-size:1.3rem;
+    font-weight:600;
+    margin:0 0 1.1rem;
+    line-height:1.3;
+  }
+  .hint{
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size:0.78rem;
+    color:#5c6660;
+    margin:0 0 1.35rem;
+  }
+  .note{
+    font-size:1.02rem;
+    line-height:1.62;
+    margin:0 0 1.6rem;
+  }
+  .actions{
+    display:flex;
+    align-items:center;
+    gap:0.9rem;
+    border-top:1px solid var(--rule);
+    padding-top:1.1rem;
+  }
+  button{
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size:0.82rem;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:0.65rem 1.1rem;
+    cursor:pointer;
+  }
+  button:hover{ background:#254a40; }
+  button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .status{
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size:0.78rem;
+    color:var(--accent);
+    opacity:0;
+    transition:opacity 0.2s ease;
+  }
+  .status.show{ opacity:1; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">OIM3600 — Computational Thinking with AI &amp; Python</p>
+    <h1>Memory setting for AI-assisted problem solving</h1>
+    <p class="hint">Paste this into Settings → Memory on your Claude account.</p>
+    <p class="note" id="note-text">For OIM3600: don't let memory of past chats change how much rigor, help, or pushback I get.<br>Treat every problem-solving conversation as if it's my first, and never skip a required step<br>(what I've tried, data representation, pseudocode, etc.) because you remember me doing it before. <br>If something from a past session seems relevant, ask me to restate it rather than assuming it.</p>
+    <div class="actions">
+      <button id="copy-btn" type="button">Copy text</button>
+      <span class="status" id="status">Copied</span>
+    </div>
+  </main>
+  <script>
+    const btn = document.getElementById('copy-btn');
+    const status = document.getElementById('status');
+    const noteEl = document.getElementById('note-text');
+
+    function getNoteText(el) {
+      let out = '';
+      el.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          out += node.textContent.trim();
+        } else if (node.nodeName === 'BR') {
+          out += '\n';
+        }
+      });
+      return out;
+    }
+
+    btn.addEventListener('click', async () => {
+      const text = getNoteText(noteEl);
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      status.classList.add('show');
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => status.classList.remove('show'), 1600);
+    });
+  </script>
+</body>
+</html>
