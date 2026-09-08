@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OIM3600 — Class 3 Homework</title>
+<style>
+:root{
+  --ink:#1d2733;
+  --muted:#667085;
+  --paper:#f7f8fa;
+  --card:#ffffff;
+  --line:#d9dee7;
+  --accent:#3157a4;
+  --accent2:#2f7a55;
+  --warm:#fff7df;
+  --warm-line:#e4b33b;
+  --blue:#eef4ff;
+  --red:#fff1ef;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.65;
+}
+header{
+  background:#172033;
+  color:white;
+  padding:52px 24px 42px;
+}
+.wrap{max-width:920px;margin:0 auto}
+.eyebrow{
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  opacity:.7;
+  margin-bottom:8px;
+}
+h1{
+  font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1.08;
+  margin:0 0 10px;
+}
+header p{
+  max-width:760px;
+  margin:0;
+  color:#d7deea;
+  font-size:1.08rem;
+}
+.due{
+  display:inline-block;
+  margin-top:16px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  font-size:.9rem;
+  font-weight:700;
+}
+main{padding:34px 20px 70px}
+.purpose{
+  background:var(--warm);
+  border:1px solid #efd88f;
+  border-left:5px solid var(--warm-line);
+  border-radius:14px;
+  padding:20px 22px;
+  margin-bottom:26px;
+}
+.purpose strong{display:block;margin-bottom:6px}
+.section{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:26px 28px;
+  margin-bottom:20px;
+}
+h2{margin:0 0 12px;font-size:1.45rem}
+h3{margin:22px 0 8px;font-size:1.08rem}
+p{margin:0 0 14px}
+ul,ol{margin:10px 0 10px 24px}
+li{margin:.42rem 0}
+.choice-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:18px 0;
+}
+.choice{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+  background:#fbfcfe;
+}
+.choice strong{
+  display:block;
+  font-size:1.08rem;
+  margin-bottom:5px;
+}
+.ai{border-top:4px solid var(--accent)}
+.python{border-top:4px solid var(--accent2)}
+.callout{
+  border-radius:12px;
+  padding:16px 18px;
+  margin:18px 0;
+}
+.blue{background:var(--blue);border:1px solid #cbd8f2}
+.red{background:var(--red);border:1px solid #efc9c4}
+.label{
+  font-size:.76rem;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-weight:800;
+  margin-bottom:6px;
+}
+.blue .label{color:var(--accent)}
+.red .label{color:#a33b31}
+.submit{
+  background:#172033;
+  color:#edf1f7;
+  border-radius:16px;
+  padding:24px 26px;
+  margin-top:24px;
+}
+.submit h2,.submit strong{color:white}
+.bottom{
+  text-align:center;
+  color:var(--muted);
+  font-size:.9rem;
+  margin-top:30px;
+}
+@media(max-width:700px){
+  .choice-grid{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+}
+@media print{
+  header{background:white;color:black;padding:20px 0}
+  header p{color:#444}
+  .due{border:1px solid #ccc;background:white;color:black}
+  main{padding:10px 0}
+  .section,.purpose,.submit{break-inside:avoid}
+  .submit{background:white;color:black;border:1px solid var(--line)}
+  .submit h2,.submit strong{color:black}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">OIM3600 · Computational Thinking with AI &amp; Python</div>
+    <h1>Class 3 Homework</h1>
+    <p>Practice using AI as a tool for investigation rather than simply collecting answers.</p>
+    <div class="due">Due at the start of Class 4</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="purpose">
+    <strong>The point of this assignment</strong>
+    This is not an exercise in getting three answers from Claude. The goal is to practice using AI as a tool for <strong>investigation</strong>: asking a question, examining the answer, following up, challenging it, and deciding what you now understand.
+  </div>
+
+  <section class="section">
+    <h2>1. Review the Two Class 2 AI Notebooks</h2>
+
+    <p>Look back through the two Jupyter notebooks from <strong>Class 2</strong>.</p>
+
+    <p>You do <strong>not</strong> need to complete every exercise or fill in every response box. Instead, make sure you understand the habits the notebooks are demonstrating.</p>
+
+    <ul>
+      <li>Give the AI enough context.</li>
+      <li>Be clear about what you are trying to understand.</li>
+      <li>Do not automatically accept the first answer.</li>
+      <li>Ask follow-up questions.</li>
+      <li>Ask <em>why</em>.</li>
+      <li>Ask for examples, alternatives, or a simpler explanation.</li>
+      <li>Look for edge cases and assumptions.</li>
+      <li>Verify answers when appropriate.</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="label">What you should take away</div>
+      The notebooks are examples of <strong>how to work with AI</strong>. They are not material to memorize.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>2. Investigate Three of Your Own Questions</h2>
+
+    <p>You already created two question lists:</p>
+
+    <div class="choice-grid">
+      <div class="choice ai">
+        <strong>Choose 1 AI question</strong>
+        Select one question from the three questions you developed after reading the <em>Working with AI</em> workbook.
+      </div>
+
+      <div class="choice python">
+        <strong>Choose 2 Python questions</strong>
+        Select two questions from the three questions you developed while watching the Python course.
+      </div>
+    </div>
+
+    <p>Use Claude in the OIM3600 project to investigate each question.</p>
+
+    <h3>For each question</h3>
+    <ol>
+      <li>Start with your original question.</li>
+      <li>Read Claude's response carefully.</li>
+      <li>Ask at least <strong>two meaningful follow-up questions</strong>.</li>
+      <li>Continue until you believe you understand the issue better than when you started.</li>
+    </ol>
+
+    <p>Your follow-up questions should come from the conversation. They might ask:</p>
+
+    <ul>
+      <li>Why does this work?</li>
+      <li>Can you explain that more simply?</li>
+      <li>Can you show me an example?</li>
+      <li>What is an edge case?</li>
+      <li>What could make this answer wrong?</li>
+      <li>Is there another way to think about this?</li>
+      <li>How could I test this in Python?</li>
+    </ul>
+
+    <div class="callout red">
+      <div class="label">Avoid mechanical follow-ups</div>
+      Do not ask questions simply to reach the required number. A useful follow-up should move the investigation forward.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>3. Review the OIM3600 Claude Project Instructions</h2>
+
+    <p>Read through the project instructions that control how Claude behaves in this course.</p>
+
+    <p>Do not treat them as fixed or perfect. They were designed for a purpose, and designs can be improved.</p>
+
+    <p>Submit a short response answering these three questions:</p>
+
+    <ol>
+      <li>What is one instruction you think is especially useful? Why?</li>
+      <li>What is one instruction that seems unclear, unnecessary, too restrictive, or could otherwise be improved?</li>
+      <li>Suggest one specific change, addition, or deletion that you think would make Claude a better learning partner for this course.</li>
+    </ol>
+
+    <div class="callout blue">
+      <div class="label">Important</div>
+      You are <strong>not</strong> being graded on whether I agree with your suggestion. I am interested in whether you can explain your reasoning.
+    </div>
+  </section>
+
+  <section class="submit">
+    <h2>What to Submit</h2>
+
+    <p>For each of your three investigations, submit:</p>
+
+    <ol>
+      <li><strong>Your original question</strong></li>
+      <li><strong>Your Claude conversation</strong></li>
+      <li><strong>A short conclusion in your own words:</strong>
+        <ul>
+          <li>What do you understand now?</li>
+          <li>What was the most useful thing you discovered?</li>
+          <li>Did anything change or correct what you originally thought?</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>Also submit your short <strong>Project Instructions Reflection</strong> from Part 3.</p>
+
+    <p style="margin-bottom:0"><strong>The thinking is the deliverable.</strong> Claude can generate answers. Your job is to investigate, question, test, and understand them.</p>
+  </section>
+
+  <div class="callout blue" style="margin-top:24px;">
+    <div class="label">Submission Location</div>
+    Homework submissions should always be placed in the class folder in which they are assigned.
+  </div>
+
+  <div class="bottom">
+    OIM3600 · Computational Thinking with AI &amp; Python
+  </div>
+
+</main>
+</body>
+</html>

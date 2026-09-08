@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simple Machines, Powerful Programs | Computational Thinking with AI and Python</title>
+<style>
+:root{--ink:#142d32;--paper:#f6f3e9;--green:#006756;--muted:#516568;--line:#c7d1c9;--gold:#ffce70}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:clamp(20px,2vw,28px);line-height:1.4}header{height:64px;padding:18px 5vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:14px;letter-spacing:.07em;text-transform:uppercase}main{max-width:1600px;margin:auto}.slide{padding:40px 5vw 90px;min-height:calc(100vh - 64px);border-bottom:1px solid var(--line)}body.present .slide{display:none}body.present .slide.active{display:block}.eyebrow{color:var(--green);font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px}h1{font-size:clamp(48px,5.8vw,84px);line-height:1.04;letter-spacing:-.045em;max-width:1100px;margin:36px 0}h2{font-size:clamp(36px,3.5vw,51px);line-height:1.12;letter-spacing:-.035em;margin:0 0 28px}h3{font-size:28px;line-height:1.2;margin:0 0 18px}p{max-width:1120px;margin:16px 0}strong{color:var(--green)}.lead{font-size:clamp(28px,3vw,42px);max-width:1050px}.subtle,.note{color:var(--muted)}.note{font-size:18px;margin-top:24px}.bigline{font-size:clamp(38px,5vw,70px);font-weight:bold;line-height:1.15;margin:36px 0}.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:26px 0}.rule{border-top:3px solid var(--green);padding-top:24px}.callout{border-left:5px solid var(--green);padding:12px 24px;margin:28px 0;background:#e8eee5}table{border-collapse:collapse;width:100%;font-size:clamp(19px,1.85vw,26px)}th{text-align:left;font-size:16px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}th,td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{font-weight:bold}td.num{width:55px;color:var(--green)}code{font-family:Consolas,'Courier New',monospace;font-size:.94em}pre{background:#132f34;color:#f2f6ee;border-radius:4px;padding:24px;margin:16px 0;font-size:clamp(19px,1.9vw,27px);line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.comment{color:#a8d4bd}ul,ol{padding-left:1.25em}li{margin:12px 0}a{color:var(--green);text-underline-offset:4px}details{margin-top:20px;font-size:22px}summary{cursor:pointer;color:var(--green);font-weight:bold}details p{margin:10px 0}.cover{background:var(--ink);color:var(--paper)}.cover .eyebrow,.cover strong{color:var(--gold)}.cover .subtle{color:#c7d8d2}.cover .rule{border-color:var(--gold)}.cover .note{color:#c7d8d2}.equation{letter-spacing:.02em}.sources{font-size:21px}.sources li{margin:20px 0}.tape{font-size:29px;text-align:center;table-layout:fixed;max-width:750px}.tape td{border:2px solid var(--green);font-family:Consolas,monospace;font-weight:normal}.tape .head{background:var(--green);color:white}.controls{position:fixed;bottom:0;left:0;right:0;height:62px;background:var(--paper);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;justify-content:center;padding:8px 16px;z-index:10;font-size:15px}button,select{font:inherit;border:1px solid #8caaa0;background:white;color:var(--ink);border-radius:4px;padding:8px 12px;cursor:pointer}button:hover{background:#dfe9de}button:disabled{opacity:.4;cursor:default}button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #bb6600;outline-offset:3px}#progress{position:fixed;bottom:62px;left:0;height:3px;background:var(--green);z-index:11;transition:width .15s}#jump{min-width:0;max-width:32vw}.counter{min-width:60px;text-align:center}.hint{font-size:14px;color:var(--muted)}
+@media(max-width:750px){header{font-size:10px;padding:12px 5vw}.slide{padding-top:28px}.split{grid-template-columns:1fr;gap:20px}h2{font-size:36px}.controls{gap:5px}button,select{padding:8px;font-size:13px}.hint{display:none}th,td{padding:10px 6px}.note{font-size:16px}.sources{font-size:18px}}
+@media print{@page{size:landscape;margin:12mm}header,.controls,#progress{display:none!important}body{font-size:19px;background:white}body.present .slide,.slide{display:block!important;min-height:0;height:auto;padding:15px 20px;break-after:page;border:0}.slide:last-child{break-after:auto}h1{font-size:60px}h2{font-size:38px}.lead{font-size:29px}.bigline{font-size:42px}table{font-size:20px}pre{font-size:20px}.cover{background:white;color:var(--ink)}.cover .eyebrow,.cover strong{color:var(--green)}.cover .subtle,.cover .note{color:var(--muted)}details>*{display:block!important}details{font-size:18px}a{overflow-wrap:anywhere}}
+</style>
+</head>
+<body>
+<header><span>Computational Thinking with AI and Python</span><span>Foundations · OIM3600</span></header>
+<main>
+<section class="slide cover" data-title="Simple machines, powerful programs">
+<p class="eyebrow">01 · Computational Thinking with AI and Python</p>
+<h1>Simple machines.<br>Powerful programs.</h1>
+<p class="lead">A small set of building blocks.<br>An enormous range of possibilities.</p>
+<p class="rule subtle">How do simple operations become something useful?</p>
+<p class="note">Use the arrow keys or buttons to navigate. “All slides” opens a continuous reading view.</p>
+</section>
+<section class="slide" data-title="Turing machine primitive operations">
+<p class="eyebrow">02 · A classroom simplification</p><h2>Turing machine primitive operations</h2>
+<table><thead><tr><th>#</th><th>Action</th><th>Meaning</th></tr></thead><tbody>
+<tr><td class="num">1</td><td>Go left</td><td>Move the head one square left.</td></tr><tr><td class="num">2</td><td>Go right</td><td>Move the head one square right.</td></tr><tr><td class="num">3</td><td>Scan</td><td>Read the symbol in the current square.</td></tr><tr><td class="num">4</td><td>Print / write</td><td>Write a symbol; writing a blank erases.</td></tr><tr><td class="num">5</td><td>Choose the next instruction</td><td>Follow a rule based on the symbol and control state.</td></tr><tr><td class="num">6</td><td>Stop</td><td>Halt the computation.</td></tr></tbody></table>
+<p class="note">This is a teaching summary, not a uniquely defined list of “Turing’s six instructions.” Formal models group these actions differently. Moving along the tape is not necessarily fetching the next instruction. <a href="https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf">Source: Turing, §§1–3</a></p>
+</section>
+<section class="slide" data-title="Powerful does not mean unlimited">
+<p class="eyebrow">03 · An important boundary</p><h2>Powerful does not mean unlimited</h2>
+<p class="lead">A universal machine can perform any <strong>Turing-computable</strong> task, given enough time and memory.</p>
+<div class="split"><div class="rule"><h3>Not every problem is computable</h3><p>Some problems have no algorithm that solves every case.</p></div><div class="rule"><h3>Computable does not mean practical</h3><p>A solution may require more time or memory than we can afford.</p></div></div>
+<p class="note">The Church–Turing thesis connects this formal model to the intuitive idea of an effective algorithm. <a href="https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf">Source: Turing, §§8–11</a></p>
+</section>
+<section class="slide" data-title="Six core building blocks">
+<p class="eyebrow">04 · Our course framework</p><h2>Six core building blocks</h2>
+<table><thead><tr><th>#</th><th>Building block</th><th>Python examples</th></tr></thead><tbody>
+<tr><td class="num">1</td><td>Basic data types</td><td><code>int, float, complex, bool, str</code>; <code>None</code></td></tr>
+<tr><td class="num">2</td><td>Collections</td><td><code>list, tuple, dict, set</code></td></tr>
+<tr><td class="num">3</td><td>Variables and assignment</td><td>Name objects; assign and reassign references</td></tr>
+<tr><td class="num">4</td><td>Operators</td><td>Arithmetic, comparisons, logical operators</td></tr>
+<tr><td class="num">5</td><td>Branching</td><td><code>if, elif, else</code></td></tr>
+<tr><td class="num">6</td><td>Repetition</td><td><code>for, while, break, continue</code></td></tr></tbody></table>
+<p class="note">A practical learning map—not an exhaustive list of Python features or a mathematical minimum. <code>None</code> is the sole value of <code>NoneType</code>.</p>
+</section>
+<section class="slide" data-title="Four ways to extend what we can do">
+<p class="eyebrow">05 · Organize, connect, recover, reuse</p><h2>Four ways to extend what we can do</h2>
+<table><thead><tr><th>#</th><th>Building block</th><th>Python examples</th></tr></thead><tbody>
+<tr><td class="num">7</td><td>Functions</td><td>Parameters, arguments, return values</td></tr>
+<tr><td class="num">8</td><td>Input and output</td><td>Keyboard, screen, files</td></tr>
+<tr><td class="num">9</td><td>Error handling</td><td><code>try, except, raise</code></td></tr>
+<tr><td class="num">10</td><td>Using existing code</td><td><code>import</code>, modules, libraries</td></tr></tbody></table>
+<p class="callout">These let us organize larger programs, interact with the world, handle failures, and reuse other people’s work.</p>
+<p class="note">“Extend” means practical capability and usability—not a higher class of mathematical computability. Database and network access also depend on external systems.</p>
+</section>
+<section class="slide" data-title="Everything in Python is an object">
+<p class="eyebrow">06 · Objects and variables</p><h2>Everything in Python is an object</h2>
+<p>A <strong>class defines a type of object</strong>, such as a student, integer, or list. An <strong>object is an instance of a class</strong>.</p>
+<p>Objects have:</p>
+<ul><li><strong>Attributes</strong> — data associated with the object.</li><li><strong>Methods</strong> — operations associated with the object’s type.</li></ul>
+<p>For example, a <code>Student</code> object might have:</p>
+<table><thead><tr><th>Attributes</th><th>Methods</th></tr></thead><tbody><tr><td>Name</td><td>Enroll in a course</td></tr><tr><td>Grade</td><td>Update a grade</td></tr></tbody></table>
+<p><strong>Variables are names or labels that refer to objects.</strong></p>
+<pre><code>student = Student("Bob")</code></pre>
+<p><code>Student</code> is the class. <code>Student("Bob")</code> creates an object. <code>student</code> is the variable referring to it.</p>
+</section>
+<section class="slide" data-title="Which objects can change?">
+<p class="eyebrow">07 · Objects, variables, and types</p><h2>Which objects can change?</h2>
+<p class="lead">Variables are <strong>names / labels</strong> that refer to an object.</p>
+<div class="split"><div><h3>Primitive (basic) types</h3><table><thead><tr><th>Type</th><th>Can the object change?</th></tr></thead><tbody>
+<tr><td>Integer <code>int</code></td><td>Immutable</td></tr><tr><td>Float <code>float</code></td><td>Immutable</td></tr><tr><td>String <code>str</code></td><td>Immutable</td></tr><tr><td>Boolean <code>bool</code></td><td>Immutable</td></tr></tbody></table></div>
+<div><h3>Collections</h3><table><thead><tr><th>Type</th><th>Can the object change?</th></tr></thead><tbody><tr><td>List <code>list</code></td><td>Mutable</td></tr><tr><td>Dictionary <code>dict</code></td><td>Mutable</td></tr><tr><td>Tuple <code>tuple</code></td><td>Immutable</td></tr><tr><td>Set <code>set</code></td><td>Mutable</td></tr></tbody></table></div></div>
+<p><strong>Mutable:</strong> the object can change.<br><strong>Immutable:</strong> the object cannot change; a variable can still be reassigned.</p>
+<p class="note">A tuple can contain a mutable object, such as a list, whose contents can change. <a href="https://docs.python.org/3/reference/datamodel.html#objects-values-and-types">Source: Python data model</a></p>
+</section>
+<section class="slide" data-title="Predict: similar code, different outcomes">
+<p class="eyebrow">08 · Predict before running</p><h2>Similar code, different outcomes</h2>
+<div class="split"><div><h3>An integer</h3><pre><code>a = 5
+b = a
+a += 1
+print("a =", a)
+print("b =", b)</code></pre></div><div><h3>A list</h3><pre><code>a = [5]
+b = a
+a += [1]
+print("a =", a)
+print("b =", b)</code></pre></div></div>
+<table><thead><tr><th>After the code runs</th><th>Integer example</th><th>List example</th></tr></thead><tbody><tr><td><code>a</code> refers to</td><td><code>6</code></td><td><code>[5, 1]</code></td></tr><tr><td><code>b</code> refers to</td><td><code>5</code></td><td>The same list: <code>[5, 1]</code></td></tr></tbody></table>
+<details><summary>Reveal the explanation</summary><p>Integer addition returns a different integer. List <code>+=</code> extends the existing list. Both assign the result back to <code>a</code>; for the list, that result is the same object.</p></details>
+<p class="note"><a href="https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements">Source: Python augmented assignment</a></p>
+</section>
+<section class="slide" data-title="AI can write code. We must judge it.">
+<p class="eyebrow">09 · Computational thinking with AI</p><h2>AI can write code. We must judge it.</h2>
+<p class="lead">Knowing the building blocks lets us ask precise questions about an AI-generated program.</p>
+<table><thead><tr><th>Lens</th><th>Questions for any program</th></tr></thead><tbody><tr><td>Inputs</td><td>What information is needed? What inputs are valid?</td></tr><tr><td>State</td><td>What does the program remember, and what does each value mean?</td></tr><tr><td>Transitions</td><td>What rules change the state, and in what order?</td></tr><tr><td>Invariants</td><td>What must remain true as the program runs?</td></tr></tbody></table>
+<p class="callout">Ask AI for an explanation. Check it with normal cases, boundary cases, and invalid inputs.</p>
+
+</section>
+<section class="slide" data-title="Four tools for computational thinking">
+<p class="eyebrow">10 · Computational thinking</p><h2>Four tools for computational thinking</h2>
+<table><thead><tr><th>Tool</th><th>What we do</th><th>Question to ask</th></tr></thead><tbody>
+<tr><td>Abstraction</td><td>Represent the essential features and hide details we do not need.</td><td>What matters for this task?</td></tr>
+<tr><td>Decomposition</td><td>Break a problem into smaller, manageable parts.</td><td>What smaller tasks make up the whole?</td></tr>
+<tr><td>Pattern recognition</td><td>Look for similarities, repeated structures, and reusable ideas.</td><td>Have we solved something like this before?</td></tr>
+<tr><td>Algorithms</td><td>Specify precise steps, decisions, and repetitions to solve a problem.</td><td>What exactly happens, and in what order?</td></tr>
+</tbody></table>
+<p class="callout">Use these tools to develop a solution. Use <strong>inputs, state, transitions, and invariants</strong> to describe and check how it works.</p>
+<p class="note">These tools work together; they are not a rigid sequence. Abstraction chooses what to expose or hide. Decomposition divides the work.</p>
+</section>
+<section class="slide cover" data-title="The challenge is how we combine them">
+<p class="eyebrow">11 · The central idea</p><h2>The challenge is how we combine them</h2>
+<p class="bigline">Simple operations do not make<br>every problem simple.</p>
+<p class="lead">The hard work is choosing a representation, specifying the rules, and checking that the result is right.</p>
+<p class="rule">Python gives us the building blocks.<br>AI helps us assemble them.<br><strong>Computational thinking helps us decide what to build—and whether it works.</strong></p>
+</section>
+<section class="slide" data-title="Sources and further reading">
+<p class="eyebrow">12 · Reference</p><h2>Sources and further reading</h2>
+<ol class="sources"><li><a href="https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf">Alan Turing: On Computable Numbers, with an Application to the Entscheidungsproblem</a><br>Original paper submitted in 1936. Machine operations, universality, and limits of computation.</li><li><a href="https://docs.python.org/3/reference/datamodel.html#objects-values-and-types">Python Language Reference: Objects, values and types</a><br>Identity, types, mutability, and references.</li><li><a href="https://docs.python.org/3/reference/simple_stmts.html#augmented-assignment-statements">Python Language Reference: Augmented assignment statements</a><br>Why <code>+=</code> and <code>= … + …</code> can behave differently.</li><li><a href="https://docs.python.org/3/tutorial/">The Python Tutorial</a><br>Further reading on the building blocks introduced here.</li></ol>
+<p class="note">The six-action model and ten-building-block grouping are classroom frameworks. Code examples are illustrative and can be run independently.</p>
+</section>
+</main>
+<nav class="controls" aria-label="Presentation controls"><button id="prev" aria-label="Previous slide">← Back</button><span class="counter" id="counter" aria-live="polite"></span><button id="next" aria-label="Next slide">Next →</button><select id="jump" aria-label="Jump to slide"></select><button id="mode">All slides</button><button id="full">Full screen</button><span class="hint">← → navigate · F full screen</span></nav><div id="progress" aria-hidden="true"></div>
+<script>
+(()=>{'use strict';const slides=[...document.querySelectorAll('.slide')],jump=document.querySelector('#jump');let index=0,all=false;slides.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+' · '+s.dataset.title;jump.append(o)});function show(n,hash=true){index=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>{s.classList.toggle('active',i===index);s.setAttribute('aria-label',`Slide ${i+1} of ${slides.length}: ${s.dataset.title}`)});document.querySelector('#counter').textContent=`${index+1} / ${slides.length}`;jump.value=index;document.querySelector('#prev').disabled=index===0;document.querySelector('#next').disabled=index===slides.length-1;document.querySelector('#progress').style.width=((index+1)/slides.length*100)+'%';if(hash)history.replaceState(null,'','#slide-'+(index+1));if(all)slides[index].scrollIntoView({block:'start'});else window.scrollTo(0,0)}function fromHash(){const m=location.hash.match(/^#slide-(\d+)$/);show(m?Number(m[1])-1:0,false)}document.body.classList.add('present');fromHash();addEventListener('hashchange',fromHash);document.querySelector('#prev').onclick=()=>show(index-1);document.querySelector('#next').onclick=()=>show(index+1);jump.onchange=()=>show(Number(jump.value));document.querySelector('#mode').onclick=()=>{all=!all;document.body.classList.toggle('present',!all);document.querySelector('#mode').textContent=all?'Slide view':'All slides';show(index)};async function full(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){document.querySelector('#full').textContent='Use browser fullscreen'}}document.querySelector('#full').onclick=full;addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA|BUTTON|SUMMARY/.test(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(index-1)}if(e.key==='Home'){e.preventDefault();show(0)}if(e.key==='End'){e.preventDefault();show(slides.length-1)}if(e.key.toLowerCase()==='f')full()});})();
+</script>
+</body></html>

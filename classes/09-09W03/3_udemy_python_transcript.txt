@@ -1,0 +1,2040 @@
+Hey guys.
+
+Avi here and welcome back to our Python programming series.
+
+Today we're going to dive into the fundamentals of Python which is variables.
+
+Understanding variables is vital to programming because they help store and manage data within our programs.
+
+So what exactly is a variable?
+
+You can think of it as a storage box where you can keep different kinds of data.
+
+Imagine you have a friend who's turning 20 years old.
+
+You can store that number 20 in a variable.
+
+Or let's say you want to store a piece of text like my name is Avi.
+
+You can put that sentence or string in a variable.
+
+The process of creating a variable in Python is straightforward.
+
+You start by choosing a name for your variable.
+
+Let's go back to our friend who's turning 20.
+
+We'll create a variable named H.
+
+Then you can use an equal sign to assign a value to your variable.
+
+So age equals 20.
+
+Now age holds the value 20 when you want to use that value later on in your code, all you need to do
+
+is refer to age.
+
+But what about our sentence?
+
+My name is Avi.
+
+In Python we can store text, data or strings in a variable.
+
+For example, we can create a variable called sentence and assign it our text sentence equals.
+
+My name is Avi.
+
+That string my name is avi is denoted by quotation marks.
+
+And now the variable sentence holds that string variables are incredibly useful.
+
+They allow us to manipulate data in many ways, but that's something we'll explore further in future
+
+discussions.
+
+For now, I just want you to understand how to create these variables.
+
+One of Python's nifty features is multiple assignment.
+
+This allows us to assign values to multiple variables at once.
+
+Let's say we have several friends celebrating birthdays.
+
+Sarah is turning 16.
+
+Bob is turning 21.
+
+Mike is turning 17.
+
+Instead of creating a new variable for each friend, we can use multiple assignment like so Sarah,
+
+comma Bob.
+
+Comma Mike is equal to and then each of their respective ages 16 to 21.
+
+Comma 17.
+
+Now Sarah holds the value 16, Bob holds 21 and Mike holds 17.
+
+Another scenario where multiple assignment is handy is when you want to assign the same value to multiple
+
+variables.
+
+Say Sarah, Bob and Mike are all turning 17.
+
+You can assign the shared value by using Sara equals Bob equals Mike equals 17.
+
+Now all three variables hold the value 17.
+
+You might be thinking that's nice, but how is this useful in real life?
+
+Well, imagine you're a teacher with a list of student scores from a recent test.
+
+You could use variables to store each student's score and then calculate class statistics.
+
+Or perhaps you're building a social media app where each user has a profile.
+
+You could use variables to store users details like their name, age, and location.
+
+Knowing how to use variables gives you the power to build complex and interesting applications.
+
+Now let's see if you can apply what we've just learned.
+
+Try to create two variables in one line one for your name and another for your age.
+
+Remember, your name should be a string that is in quotation marks, so don't forget to add quotes.
+
+Hopefully you managed to do it.
+
+If not, no worries, we're just getting started.
+
+Here's what your code might look like.
+
+Name comma.
+
+Age is equal to RV comma 22.
+
+The check the value stored in name and age.
+
+You can simply refer to the variables.
+
+Today we've covered some fundamental concepts understanding what variables are, how to create and assign
+
+them, and how to assign multiple variables at once.
+
+That's it for this video guys.
+
+Thanks so much for listening and I'll see you in the next video.
+
+
+Hey guys over here and welcome back to our Python programming series.
+
+In this video we're going to be talking about arithmetic operators and strings.
+
+Arithmetic operators are probably already familiar to you from math class.
+
+They're quite straightforward.
+
+You have addition, subtraction, multiplication, division and modulus.
+
+We all know what these operators are, but today we'll see how we can apply them in Python, especially
+
+when used with variables.
+
+Let's imagine a scenario where we have two friends, one aged 12 and the other 18.
+
+We'll represent their ages with two variables.
+
+Age one set to 12 and age two set to 18.
+
+We now have these two variables and we'll see how to manipulate these values using Python's arithmetic
+
+operators.
+
+Considering they are integers, we can apply Python's arithmetic operators to play around, for instance,
+
+to calculate the sum of their ages, we can write age one plus age two, which gives us 3012, plus
+
+18.
+
+That's addition.
+
+Now let's try subtraction.
+
+If we do age one minus age two, we get negative six.
+
+That's subtraction.
+
+Let's continue with the rest of the operators.
+
+For multiplication we use the asterisk symbol which is usually shift eight.
+
+On keyboards, this symbol represents the multiplication in most programming languages, so executing
+
+age one times age two using the asterisk sign gives us 216.
+
+Next, let's do division.
+
+If we execute age one divided by age two, where the division sign is the forward slash, we get approximately
+
+0.67.
+
+Finally, let's discuss modulus.
+
+Modulus is a function that provides the remainder of a division operation.
+
+For example, we earlier divided age one by age two and got a decimal.
+
+However, if we're interested in the remainder and not the exact quotient, we can use modulus.
+
+Executing age 2% age one we get six, and for age 1% age two we get 12.
+
+Therefore, when you divide age two by age one, the remainder is six and vice versa, the remainder
+
+is 12.
+
+These arithmetic operations become especially useful when programming real world applications.
+
+For instance, consider an application that calculates the total amount you have to pay after adding
+
+various costs, or an application that calculates the average rating from different user scores.
+
+Both these applications could use arithmetic operations.
+
+After understanding arithmetic operators, let's shift our attention to strings.
+
+We're already acquainted with strings.
+
+We've seen how to create sentences using print statements like print hello, world.
+
+The content inside those quotation marks are strings.
+
+Let's take an example where the string is.
+
+Today was a beautiful day here.
+
+Sent one is a string and the data type, just like h1 and h2 are integers sent.
+
+One would be a string.
+
+Strings are text or characters enclosed within quotation marks, similar to how we used arithmetic operators
+
+with integers.
+
+We can use some of them with strings as well.
+
+For instance, let's say we have a first name and a last name, and we want to concatenate them to form
+
+a full name.
+
+Let's try doing that.
+
+Assuming the first name is Avi and the last name is Jane, we want to concatenate these two to get the
+
+full name, just like we did age one plus age two.
+
+For integers, we can do first name plus last name for strings.
+
+The output will be Avi Jane.
+
+However, to make it look more natural, we might want to insert a space between the first and last
+
+name.
+
+We can accomplish this by adding a space character like this.
+
+First name plus and then in quotation marks a space plus last name.
+
+The output now is Abby Jane.
+
+While we can use the addition operator for string concatenation, subtraction doesn't apply to strings.
+
+If you try executing first name minus last name, you'll encounter an error, although you can multiply
+
+a string by an integer.
+
+If you want to print hi ten times, you can execute hi times ten, which will repeat hi ten times.
+
+So in conclusion, we can use addition for concatenation and multiplication for repetition with strings.
+
+Division and modulus and subtraction are not applicable with strings.
+
+I'll wrap this up with an important feature of Python, which is called slicing.
+
+Let's consider the sentence Avi was playing basketball.
+
+Here we're interested only in the name Avi.
+
+Each character in a string In Python has an index which begins from zero.
+
+So A is at index zero, b is at index one, and so on.
+
+If you want to get the character at index zero, we do sentence and then in square brackets zero which
+
+returns a.
+
+To get a range of characters we can use slicing.
+
+To get Avi we'll use sentence.
+
+And then in square brackets you specify a range by specifying the initial index and then the end index
+
+exclusively.
+
+And the in between the two indexes there's a colon.
+
+So sentence zero colon three.
+
+But you might wonder why the index here is three when avi only has three characters, i.e. indices from
+
+zero, one, and two.
+
+In Python, the last index in the slice is exclusive, so sentence 0 to 3 actually gives us the characters
+
+from indices 0 to 2.
+
+That's it for arithmetic operators and strings today.
+
+Today we covered how to use arithmetic operators, apply them to integers and strings, and also introduce
+
+slicing in Python.
+
+These concepts are fundamental and will be incredibly handy as we move forward in our Python journey.
+
+Thanks so much for listening, guys, and I'll see you in the next video.
+
+
+nscript
+Hey guys.
+
+Ivy here and welcome back to our series on Python programming.
+
+Last video we dived into integers, strings and variables.
+
+But today we're going to explore a fundamental concept in Python known as placeholders.
+
+Before we dive into the technicalities, let's understand the importance of placeholders in real world
+
+applications.
+
+Imagine you're designing an automated email system that sends out personalized messages to each recipient.
+
+You can't possibly write a unique message for thousands of users, right?
+
+This is where placeholders come in handy.
+
+You can create a generic message with placeholders for names or any other specific details, and Python
+
+will automatically fill in these placeholders with the actual data.
+
+This kind of automation saves time, reduces errors, and makes your code more reusable and efficient.
+
+Now to the technical part.
+
+A placeholder is essentially a marker that stands in for some value.
+
+To illustrate, let's say I have a friend named Jake, so I declare a variable name equals Jake.
+
+If I want to form a sentence, Jake is 15 years old.
+
+I can concatenate like this name plus and then in a string is 15 years old.
+
+It works and we indeed get.
+
+Jake is 15 years old, but there's a more elegant way of doing this using placeholders.
+
+We use placeholders within a string to indicate that the placeholder should be replaced with a specific
+
+variable value.
+
+So let's create a variable sentence and set it to percent.
+
+S is 15 years old.
+
+Here, percent S is a placeholder for a string.
+
+If we print sentence, we get percent S is 15 years old.
+
+But if we apply the placeholder syntax, for example by saying print and then sentence percent name
+
+percent s is replaced with Jake giving us Jake is 15 years old.
+
+That's beautiful.
+
+Placeholders aren't limited to a single value.
+
+Let's declare sentence is equal to percent S percent S was the president of the United States using
+
+the placeholder syntax sentence percent and then in brackets Barack Obama, we can replace both placeholders
+
+and get Barack Obama was the president of the United States.
+
+You can see how placeholders make our code more readable and efficient.
+
+Now what if we wanted to include integers?
+
+We can use percent d for that.
+
+So if I wanted to say x is y years old and provide both the person's name and age, I could write percent
+
+s is percent d years old here, percent s is for the string and percent D is for the integer.
+
+If I input sentence percent of comma 23, we get.
+
+Avi is 23 years old.
+
+That's the essence of placeholders.
+
+They are markers within strings or variables that are later replaced by actual values.
+
+They're incredibly versatile and useful in many scenarios.
+
+To recap, placeholders are created using percent signs.
+
+Percent S stands for string and percent D stands for an integer.
+
+While we're on the subject of placeholders, though, it's worth mentioning another powerful feature
+
+of Python for handling strings, which is format strings, often called f strings.
+
+This is a newer method introduced in Python 3.6, and is arguably the most straightforward way to format
+
+strings.
+
+The F string syntax is quite simple just prefix your string with the letter lowercase f or capital f,
+
+and then within your string, you can directly include your variables enclosed in curly braces.
+
+For instance, if we have a variable name equals avi, we can print a greeting message using an f string
+
+like so.
+
+F and then in quotation marks hello comma and then in curly brackets.
+
+Name.
+
+When we run this code, we'll get.
+
+Hello, Avi.
+
+This approach breaks a lot of flexibility and simplicity to string formatting in Python, and one of
+
+the most convenient things about f strings is that you can use expressions inside the curly braces.
+
+So if we have the two variables x equals ten and y equals 20, we can compute their sum within an f
+
+string.
+
+We can say print f and then in quotation marks the sum of x and y is, and then in curly brackets x
+
+plus y.
+
+If we execute this code, we get the sum of x and y is 30.
+
+So in essence, f strings provide a concise, readable way to include the values of variables in strings,
+
+and they're highly recommended if you're using Python 3.6 or later.
+
+That's it for placeholders, guys.
+
+Thanks so much for listening and I'll see you in the next video.
+
+Hey guys.
+
+Ivy here and welcome back to our Python development series.
+
+Now we left off where we covered what strings are and how to add placeholders in strings.
+
+Today we'll be tackling one of Python's first data structures, which are Python lists.
+
+So first thing first, what is a list?
+
+Well, what do you think of when you hear the word list?
+
+It's a set of ordered items.
+
+They have an index.
+
+You know what each value is.
+
+And that's basically the case for a Python list.
+
+It's a series of comma separated values that allows us to access any item based on its index.
+
+Let's say I'm going shopping.
+
+Okay.
+
+I want to create a shopping list in Python.
+
+I want to get apples, oranges, bananas, and cheese.
+
+Now, one way I could do this is by associating each item with a variable.
+
+I could say item one is apples.
+
+Item two is oranges.
+
+Item three is bananas.
+
+Item four is cheese.
+
+Yes, that works, but if you think about it, you don't want to create tens or hundreds of variables
+
+because that's inefficient.
+
+Instead, we have lists.
+
+So take a look.
+
+I have apples, oranges, bananas and cheese in my list.
+
+This is the syntax.
+
+You start with the square bracket, list your items separated by commas, and then close it with a square
+
+bracket.
+
+Yes, I could have done the variables, but instead let's skip that and let's use the list instead.
+
+One key thing that you should remember about a list is that the indexing is off by one.
+
+What you might think of as the first item, which is apples, is actually index zero in the list because
+
+counting starts from zero.
+
+So if I want the second item on the list, I'm not going to say list two.
+
+I'm going to say list one, because the second item on our list is actually at the first index position.
+
+So let's go ahead and create a list and everything will make sense soon.
+
+I'm going to go ahead and call this shopping list.
+
+And again square brackets every item separated by commas.
+
+So these are the strings again apples oranges bananas and cheese okay so now we have a shopping list.
+
+If you go ahead and print this out you'll notice that this is the array format.
+
+And every item is separated by commas.
+
+Now how do we access the values.
+
+Well we just discussed that the index is off by one.
+
+So if I want the first item I say shopping list zero.
+
+It's very straightforward.
+
+All I have to do is say shopping list.
+
+And then in square brackets put in your index.
+
+So I want the first item I say shopping list zero I get apples.
+
+I want the third item.
+
+I say shopping list two.
+
+I get bananas.
+
+For the fourth item I say shopping list three I get cheese.
+
+So this is one way we can access items in a list.
+
+There's also slicing and lists.
+
+I can say shopping list and then in brackets 0 to 2.
+
+And this will get me apples and oranges.
+
+It's very similar to what we discussed before.
+
+It takes the first parameter which is zero goes to one.
+
+And then it doesn't count your end range.
+
+So it says zero one.
+
+Whoops.
+
+We don't count two.
+
+It stops.
+
+If I want to get the first three items I'll say shopping list in brackets zero colon three.
+
+It says zero, one, two and then it ignores our last value three.
+
+So that's how we access values in lists.
+
+Now what if we want to update it, say we're talking to our parents, we're talking to someone and they're
+
+like oh, go ahead and get me blueberries as well.
+
+How do we add items to our list when we've already created it?
+
+Well, one nice thing about lists is that they're mutable.
+
+You can add objects, you can append, delete, do a lot of different methods with lists.
+
+So what I'm going to do is add an item to our list and use the append function to do that shopping list
+
+dot append and then in brackets the string blueberries.
+
+Now if I print out shopping list, you're going to notice that blueberries has been appended to the
+
+end of our shopping list, which is exactly what we wanted.
+
+But now let's say, oh, we no longer need apples, we actually need cherries.
+
+There's been a mass shortage of cherries.
+
+We want cherries.
+
+Now.
+
+How do we change that?
+
+Well, there's another way we can do this.
+
+We can go ahead and say shopping list zero is equal to cherries.
+
+So the item at the first position of our list should be equal to cherries.
+
+We're basically saying that whatever item exists at this position update its value to cherries.
+
+So now when I print out shopping list instead of apples as the first value, I now get cherries and
+
+then oranges, bananas, cheese, and blueberries.
+
+So that's one way you can update values in an index.
+
+And the append method allows us to add objects to our list.
+
+Now let's say okay, we've done all of this, but guess what?
+
+We no longer need oranges because no one likes oranges.
+
+How do we delete items in our list?
+
+Well, one way you can do this is by using the delete method.
+
+You say del Del.
+
+Shopping list one.
+
+And now when I say shopping list, I see that oranges has been removed and cherries, bananas, cheese
+
+and blueberries gets printed out.
+
+All right.
+
+So what have we covered so far?
+
+We've covered how to add to a list, how to create a list, and how to delete an item from a list.
+
+Now there's a few more cool things you can do with lists.
+
+Just like we learned with the arithmetic operators, you can use the same thing for lists.
+
+You can add lists together, you can multiply lists.
+
+Let's go ahead and see how that works.
+
+First of all, let's see how many items are in my shopping list.
+
+And I can do that using the Len function.
+
+The Len method returns how many items are in my list.
+
+Okay, so there's four items in my list.
+
+Now let's say I have another list.
+
+I'm going to call this shopping list two.
+
+And this is going to have bread jam and peanut butter.
+
+I want to combine these two lists together.
+
+What I can do is say shopping list plus shopping list two.
+
+You can add lists together to create one big list.
+
+Another thing you can do is multiply a list.
+
+You can say something like, if you want to repeat values multiple times, you can say shopping list
+
+times two.
+
+And that repeats the values in shopping list twice.
+
+So these are just some of the list operations that you can use.
+
+They're very basic and they're straightforward.
+
+You can join lists together.
+
+You can repeat a list.
+
+Two more functions I want to touch base on before I end this lecture.
+
+And that's Max and min.
+
+Suppose we have a list of numbers I'm going to call this list underscore num.
+
+And I'm going to populate it with some numbers one, four, seven, 23 and six.
+
+If I want to find the max of list num the biggest number there, I can call the max function on our
+
+list num.
+
+And if I want to find the smallest value, I can say min list naught.
+
+Awesome.
+
+So in this lecture we touched base on lists.
+
+We covered what they are, how to create them, indexing, appending, deleting, list operations.
+
+And last but not least, the max and min functions.
+
+Now there's many, many more things that you can do with lists.
+
+But just as a quick introduction, I hope lists made sense to you.
+
+Anyways, that's it from my side and I'll see you in the next video.
+
+
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+Previously, we discussed lists.
+
+Today we're advancing to a new data structure known as dictionaries.
+
+Now what is a dictionary in Python?
+
+Imagine a classroom scenario where each student has a unique name and age.
+
+If we were to store this data using a list, we might end up with something like students equals Bob
+
+comma 12 and then Rachel comma 13.
+
+And then we'll add in Emily comma 15 though it's a valid approach, it's far from efficient.
+
+If we want to retrieve Rachel's age, we'd have to locate her name in the list and then find the following
+
+value lists aren't well suited for such cases.
+
+This is where dictionaries shine.
+
+Think of a geographical map.
+
+Each symbol or color represents a unique feature.
+
+For example, green indicates land, blue signifies water, and so on.
+
+This association between the symbol and its meaning forms the basis of a Python dictionary.
+
+In a dictionary, every key is linked with a value.
+
+Accessing the key retrieves its associated value.
+
+To illustrate this, let's convert our earlier list into a dictionary.
+
+Now we can go ahead and write students equals and then in curly brackets.
+
+Bob Colon 12.
+
+Rachel Colon 13.
+
+And then Emily Colon 15.
+
+Here we've created a dictionary named students, where each student's name serves as a key and their
+
+age is the corresponding value.
+
+Now, if we print students, we'll get Bob colon, 12, Rachel Colon, 13, and Emily Colon, 15.
+
+To access a value, we simply call the corresponding key.
+
+For instance, to determine Rachel's age, we can type students and then in square brackets Rachel,
+
+which will return 13.
+
+Similarly students Bob will give us 12.
+
+This demonstrates the fundamental functionality of dictionaries, creating a dictionary and accessing
+
+its values.
+
+Next, let's say Rachel just celebrated her 14th birthday and we want to update her age in our records.
+
+We can do so by setting the new value to the key.
+
+Like this.
+
+Students Rachel is equal to 14.
+
+Now students will show that Rachel's age has been updated to 14.
+
+What if a student say Emily leaves the school and we want to remove her record?
+
+Python provides the del function.
+
+To delete an entry from the dictionary, we simply specify the key we want to remove, for example,
+
+del students and then in brackets.
+
+Emily.
+
+And now Emily's record is now deleted from the dictionary, leaving only Bob and Rachel.
+
+There are also other useful dictionary operations like determining its length using the length function.
+
+Calling Len of students will return the number of entries in the dictionary.
+
+However, an important rule while working with dictionaries is to ensure the keys are unique.
+
+Having duplicate keys such as students is equal to, let's say, Bob colon 12.
+
+Bob Colon 14.
+
+Bob Colon 16.
+
+Creates confusion.
+
+Python doesn't know which Bob you're referring to when you access the key, so it defaults to the last
+
+one specified.
+
+Hence, it's crucial to keep each key unique to prevent such issues.
+
+So to recap this video dictionaries are used to associate keys and values similar to symbols in a map.
+
+You can print the dictionary, update its values, and delete dictionaries.
+
+The Len function allows you to count the number of entries in a dictionary, and always ensure that
+
+the keys in a dictionary are unique.
+
+That's a brief overview of Python dictionaries.
+
+Thanks for listening guys, and I'll see you in the next video.
+
+
+Hey, guys.
+
+Ivy here.
+
+And welcome back to our Python programming series.
+
+Today we're taking a closer look at tuples, the final data structure we'll examine in this course.
+
+Tuples, like lists are sequential and contain various data types.
+
+However, they differ in one fundamental aspect.
+
+Immutability.
+
+Once created, a tuple can't be modified.
+
+We can't add, remove, or change elements.
+
+This permeance can be highly advantageous in certain programming scenarios, which we'll dive into shortly.
+
+To create a tuple, we use rounded parentheses instead of square or curly ones.
+
+For instance, let's make a tuple of fruits.
+
+Tuple is equal to and then in rounded parentheses.
+
+Oranges.
+
+Apples.
+
+Bananas.
+
+If we print this, we get the output oranges, apples and bananas.
+
+A key feature of tuples is their immutability.
+
+This characteristic again implies that once a tuple is created, its contents remain constant throughout
+
+its life.
+
+Therefore, trying to change an element like tuple and then in square brackets zero equal to cherries
+
+should throw us an error which we see right here.
+
+So you might be wondering why would anyone use a tuple if they're so restrictive?
+
+Here are a few reasons.
+
+Number one consistency.
+
+Since tuples are immutable, they guarantee that the data they hold will remain unchanged.
+
+This is particularly useful when we want to ensure certain data remains constant throughout a program.
+
+The other is safety.
+
+Tuples protect the data they contain.
+
+This is beneficial when our program has global variables that shouldn't be changed.
+
+In Python, you can still access tuple values using indexing similar to lists.
+
+For example, just like we tried, tuple zero should give us oranges and tuple one gives us apples.
+
+We can also slice tuples just like we saw with lists, for example tuple and then in square brackets
+
+zero.
+
+Colon two provides the first two items in our tuple oranges and then apples.
+
+Even though we can't modify existing tuples, we can concatenate them or create new ones based on existing
+
+tuples.
+
+For instance, if we have another tuple, say tuple two, which is a tuple of two numbers 12 and 14,
+
+we can then concatenate tuple and tuple two to create a tuple three.
+
+By simply saying tuple three is equal to tuple plus tuple two.
+
+Our new tuple now has both our fruits and our numbers.
+
+So to summarize, tuples like lists are sequential data structures in Python.
+
+But the biggest difference is that they're immutable.
+
+We create tuples using round parentheses and access their elements via indexing and slicing.
+
+We can concatenate tuples and create new ones from existing tuples.
+
+And the immutability of such tuples ensure data consistency and safeguards the data.
+
+That was an overview of tuples in Python.
+
+Thanks for listening guys, and I'll see you in the next video.
+
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+Today we're going to cover a core programming concept, conditional statements.
+
+Fundamentally, a conditional statement operates on an if else principle.
+
+It checks whether a condition is met.
+
+That's the if part, and if not, it provides an alternative course of action.
+
+That's the else part.
+
+Imagine this scenario.
+
+It's raining outside.
+
+If it's raining, then the condition is true.
+
+I'll take an umbrella.
+
+Otherwise, the condition being false.
+
+I'll wear shorts.
+
+It's as simple as that.
+
+A conditional statement hinges on the truth value of a condition.
+
+If the condition holds the code within the if block executes.
+
+If not, the else block comes into play.
+
+Let's illustrate this with a Python example.
+
+If I write if five is greater than three followed by print hello.
+
+It prints hello.
+
+Why?
+
+Because five is indeed greater than three.
+
+The condition is true.
+
+Note here that to write an if statement in Python, you simply type if and then the condition which
+
+is marked by some sort of relational operator and then a colon sign afterwards.
+
+Now what happens when the condition isn't met?
+
+Let's try.
+
+If three is less than two, followed by a print statement such as print.
+
+Hello.
+
+As we know, three is not less than two, so nothing is printed.
+
+To handle such cases, we add an else clause.
+
+This time.
+
+If we say else print the condition was not true, it will print.
+
+The condition was not true in our console.
+
+Notice Python's depended dependent on indentation.
+
+The if and else blocks must align, and the code inside these blocks should be indented, usually by
+
+a tab or four spaces.
+
+That's how Python knows what code to execute.
+
+If the if or else conditions are met.
+
+Our conditions are built using relational operators.
+
+The greater than and less than signs that we just saw.
+
+Greater than or equal to.
+
+less than or equal to two.
+
+Equal to signs, which is a measure of equality, i.e. equal to and not equal to, which is an exclamation
+
+mark and an equal sign.
+
+A common pitfall for beginners is confusing the assignment operator, which is one equal sign with the
+
+equality operator, which is two equal signs.
+
+Five equals three would throw an error because it's trying to assign 3 to 5, which is not a valid operation.
+
+We use two equal signs to compare values like three equal to equal to two, and one equal sign to assign
+
+values like variable name is equal to avi.
+
+Lastly, let's talk about Elif shorts for else if and logical operators and an or.
+
+Elif lets us have multiple if statements in the same block.
+
+For example, with an age variable set to 16, we can create a new if Elif else block that looks like
+
+this.
+
+If age is less than or equal to 15, print.
+
+You are younger than 16.
+
+Elif, age is equal to 16.
+
+Print.
+
+You are 16.
+
+Else print.
+
+You are older than 16.
+
+You can have as many Elif statements as you want in an if else if else block, for example.
+
+The code still works if we add an else if check for the age being 17, Elif, age equals 17.
+
+Print you are 17.
+
+Similarly, using logical operators, we can chain multiple conditions together.
+
+If we wanted to check if the age falls within a range, say, greater than 13 but less than 18, how
+
+would we do that?
+
+Well, we can update our Elif statement to have two conditions.
+
+First, we want to check if age is less than 13.
+
+You are a child.
+
+Then let's update our Elif block to say Elif age greater than or equal to 13 and age less than or equal
+
+to 18.
+
+Print.
+
+You are a teenager.
+
+Else print you are an adult.
+
+If we run this with our age variable set to 16, we see you are a teenager printed out.
+
+Why is this?
+
+Well, this is because our age variable 16 is both greater than 13 and less than 18.
+
+If we change our age to 18, we see that you are an adult gets printed out.
+
+Remember that the and operator, which again is a logical operator, requires both conditions to be
+
+true.
+
+The other logical operator in this situation is called the Or operator.
+
+And the Or operator needs just one.
+
+It's this or that.
+
+And as long as one condition between the two is true, the entire condition will evaluate to true.
+
+If we wrote a new statement, let's say if five greater than 3 or 2 less than one print.
+
+Print.
+
+Hi.
+
+We see that hi gets printed out because at least one condition of the two five greater than three is
+
+true.
+
+So to recap, if and else are fundamental conditional statements with these if and else blocks exist.
+
+Six relational operators.
+
+To determine the code flow you have.
+
+Greater than, less than, greater than or equal to, less than or equal to the equality sign which
+
+is two equal twos, and then the not equal two, which is an exclamation mark, and then the equal to
+
+sign.
+
+Alongside this, the Elif statement allows you to create multiple if blocks and the and and or exist
+
+as logical operators to combine conditions in different ways.
+
+That's it for this video on conditional statements.
+
+Thanks for listening, guys, and I'll see you in the next video.
+
+
+Hey guys over here and welcome back to our Python programming series.
+
+In today's video, we're going to dive into the fascinating world of.
+
+For loops, these handy structures help you repeat a block of code for a given number of times, or
+
+over certain data types.
+
+Let's get started.
+
+First of all, for loops are fantastic for iterating over data structures.
+
+To demonstrate this, let's use lists and tuples that we've previously discussed.
+
+Let's create a list.
+
+Let's call it list one and fill it with fruits, apples, bananas and cherries.
+
+Now let's make a tuple top one populated with random numbers two, six, ten.
+
+To print every value in our list, we can employ a for loop.
+
+Our syntax is for item in list one.
+
+Colon print item.
+
+What's happening here?
+
+The for loop iterates over each item in list one.
+
+It assigns the current value to item and then prints out the item variable.
+
+So when you run the code, you'll see apples, bananas, and cherries printed on your screen, each
+
+on a new line.
+
+Let's do the same thing for our tuple top one.
+
+If we run for item in top one colon print item, it prints out each number in top one, showing that
+
+for loops work just the same for tuples.
+
+Thus, for loops are brilliant for navigating through a data structure and performing operations on
+
+each item, be it printing, modifying, or extracting information.
+
+Now for loops aren't just for data structures.
+
+They are excellent for iterating over a range of numbers, though we'll explore functions in depth in
+
+a later video.
+
+For now, we'll use the range function.
+
+Consider this code.
+
+For I in range and then in parentheses zero comma ten.
+
+Print I.
+
+This prints numbers from 0 to 9.
+
+Key point to note here, the range function does not include the end index, just like we saw with slicing
+
+and lists, so it stops one before.
+
+To print the numbers from 1 to 10, you'd use range and then in parentheses one comma 11.
+
+That way it would print out one through ten inclusive and it wouldn't count 11.
+
+Moreover, what's really exciting about the range function is that it can skip numbers.
+
+For instance, you can write for I in range and then in parentheses zero comma 11 comma two print I.
+
+And what this does is it'll print all the even numbers from 0 to 10.
+
+The two here is the increment factor.
+
+It's added to the current number to get the next number.
+
+So we can see here printed out 024, six eight and then ten.
+
+Here's a fun exercise.
+
+Try printing the first ten multiples of five.
+
+Solution.
+
+For I in range and then in parentheses five comma 51 comma five print I.
+
+This starts at five increments by five each time and stops at 50, giving you the first ten multiples
+
+of five.
+
+Awesome.
+
+Lastly, nested for loops.
+
+A for loop inside another for loop are quite powerful.
+
+Let's say that we want to iterate through the first five numbers you know are zero, one, two, three,
+
+four, and then multiply each of those numbers by zero, one, two.
+
+We can go ahead and do this using two for loops.
+
+We can nest one for loop inside of the other.
+
+So we can say here for I in range zero comma five, and then initialize a new for loop inside for j
+
+in range zero comma three print I times j.
+
+And so what this does is it'll start with the first value I being set equal to zero.
+
+And then it will iterate through each value of J012, and it'll print out zero times zero, zero times
+
+one zero times two.
+
+And then it'll go back to the outer loop and increment I by one.
+
+So now I is equal to one.
+
+Then I'll go inside of our nested loop, our j loop and print one times zero, one times one, one times
+
+two, and so on and so forth, giving you a sequence of outputs, iterating over I and j.
+
+So that is for loops in a nutshell.
+
+For loops are amazing to navigate both through data structures, iterating over elements in lists and
+
+tuples, and they're also amazing to use in form of ranges.
+
+Going through a series of numbers, whether that's incremented by one by a value greater than one,
+
+or even a negative value.
+
+And that, my friends, is for loops in Python.
+
+Thanks for listening, guys, and I'll see you in the next video.
+
+Hey guys over here and welcome back to our Python programming series.
+
+Today's focus is on while loops and control statements both essential components in Python programming.
+
+Let's dive right in.
+
+First on our list is the concept of while loops.
+
+A while loop keeps executing as long as a certain condition holds true.
+
+It's incredibly useful when you can't predict how many times your loop needs to iterate, or when the
+
+iteration depends on a variable condition.
+
+For instance, consider a home automation system that needs to regulate heating based on the room's
+
+temperature.
+
+A while loop could be used to continually check the temperature and trigger the heating.
+
+When it drops below a certain point without the while loop, you'd need to manually monitor and adjust
+
+the temperature, a task that is neither practical nor efficient.
+
+So to demonstrate this, let's write a basic while loop that has a simple counter.
+
+We'll set a variable C to zero.
+
+Now we will write our while loop while C less than five.
+
+Inside of this loop, we'll instruct Python to increment our variable C by one and then print out the
+
+new value of C.
+
+On execution, you can see that the values from 1 to 5 are printed.
+
+Why is that?
+
+Well, we can see that C starts from zero increments by one every time and then gets printed out.
+
+So 12345 at five.
+
+The condition five less than five evaluates to false and the while loop breaks.
+
+Let's move on to control statements.
+
+The exciting part of loop structures control statements can significantly alter the usual flow of execution
+
+in loops.
+
+We have three primary control statements break, continue, and pass.
+
+The break statement is up first.
+
+It allows us to terminate a loop prematurely.
+
+We can demonstrate this by initializing C to zero and setting up the exact same while loop, but instead
+
+adding an if statement in this while loop.
+
+This conditional statement will be after our increment, and we'll say here if c is equal to three,
+
+then break.
+
+What that does is upon running this code, you'll observe that the numbers one and two are printed,
+
+but the loop halts after c is equal to three.
+
+So break comes in handy when you reach your desired outcome and you want to exit the loop.
+
+Next up we have the continue statement.
+
+The continue statement lets the loop keep running, but it skips the rest of the current iteration and
+
+moves on to the next iteration of the loop.
+
+Again, we can see this with our example.
+
+If c is equal to three, continue.
+
+What that does is when the value of c is equal to three, the print statement afterwards gets skipped,
+
+and we can see in our console the values that get printed out are one, two, four, and five.
+
+So what continue does is skip everything after in that current loop iteration and go back to the beginning.
+
+Last but not least is pass.
+
+Pass is essentially a do nothing command.
+
+It serves as a placeholder and allows you to structure your code, even if you haven't decided what
+
+should go in a certain block yet.
+
+Now let's quickly summarize what we've learned in this video.
+
+We've explored while loops which keep executing as long as a condition is true.
+
+We've also learned about control statements.
+
+Brake stops the loop prematurely.
+
+Continue, skips the current iteration and moves on to the next one, and pass is a placeholder that
+
+allows you to structure your code without necessarily implementing it.
+
+That was an overview of while loops and control statements in Python.
+
+Thanks for listening guys, and I'll see you in the next video.
+
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+Today we're going to dive into the usage of try and accept statements in Python.
+
+Let's jump right in.
+
+First up we have the try and accept statement.
+
+This particular control flow and the structure comes in handy when programmers are dealing with sections
+
+of code that might possibly raise exceptions.
+
+Think of a scenario where you're fetching data from a website or calling an API.
+
+In these cases, there is a possibility of the server being down or the API not functioning as expected.
+
+In these situations, try and accept statements are a very valuable tool.
+
+Here's a simplified breakdown.
+
+If the try block encounters any errors during execution, the control gets passed over to the accept
+
+block.
+
+To illustrate this, consider the following example.
+
+We start with try and then inside of the try block.
+
+If name is greater than three, print.
+
+Hello.
+
+Since we haven't defined name, Python is bound to throw an error.
+
+Now we can handle this error with our accept block except print.
+
+An error was detected in your code.
+
+Please check your code now.
+
+If you run this code as anticipated, the output will be.
+
+An error was detected in your code.
+
+Please check your code.
+
+This is because Python identifies the error, which in this case would be undefined name and that was
+
+in the try block.
+
+So it proceeds to the accept block because it caught an error.
+
+To put it simply, the try and accept concept is very similar to an if else statement.
+
+If the try block executes successfully, everything proceeds as planned.
+
+However, at any point in the try block if an error occurs, Python immediately switches to the accept
+
+block.
+
+Let's quickly summarize what we've just covered in this tutorial.
+
+We've dived deep into Python's try and accept statement.
+
+This structure helps handle potential exceptions by attempting to execute the try block, and in case
+
+of any exception, move the control over to the accept block.
+
+This was an overview of try and Accept in Python.
+
+Thanks for listening guys, and I'll see you in the next video.
+
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+In today's video, we're diving into the heart of Python.
+
+Functions.
+
+Functions are crucial in any programming language due to their role in promoting code reuse, thereby
+
+enhancing the efficiency and compactness of your code.
+
+Let's take a real world example.
+
+Imagine you're a baker who makes a particular type of bread.
+
+Let's call it Avi's special bread.
+
+Now, to make this bread you have to follow a specific set of steps.
+
+You first mix the ingredients, then you knead the dough.
+
+Then you let it rise.
+
+And finally you bake it in the oven.
+
+Whenever you need to make this bread, you repeat these steps.
+
+Now you could think of this process as a function in the real world.
+
+You have a name for it, all these special bread, and you have a specific set of steps that you need
+
+to carry out whenever you want to make this bread.
+
+In Python, you could translate this into a function called make special bread.
+
+The function would include the steps or the lines of code needed to make the bread.
+
+And just like in real life, whenever you want to make this bread, you just have to call the function
+
+instead of writing out all the steps every time.
+
+This concept, like baking, applies to programming with functions.
+
+We bake our code into reusable sets of instructions that can be used whenever needed, saving time and
+
+making our code cleaner and more efficient.
+
+Creating a function in Python is simple.
+
+You start with the def keyword, which is short for define.
+
+After that, you enter in the function's name.
+
+For example, let's say we want to build a function that simply prints hello world.
+
+So we'll call our function hello underscore world.
+
+And then after that add in some empty parentheses.
+
+These empty brackets indicate that our function doesn't need any input parameters inside the function.
+
+We can add the code we want to reuse.
+
+In this case print hello world.
+
+Now if we just run this code, we don't see any output because we've only defined the function without
+
+calling it.
+
+Remember, a function needs to be explicitly called to execute its code so we can invoke our function
+
+by entering hello underscore world and then empty brackets, which gives us our familiar greeting hello,
+
+world.
+
+Now let's create a more interactive function, one that takes a user's name as input and greets them.
+
+We can write this as def greeting and then in parentheses name where name is our input parameter.
+
+Inside the function we can print out a customized greeting by accessing the name parameter.
+
+Our print statement will now look something like this.
+
+Print hi plus name plus exclamation mark.
+
+We can now call this function with greeting and then in parentheses avi which is the input parameter
+
+for name.
+
+And we'll see that Avi gets replaced by the print statement.
+
+And we'll see.
+
+Hi Avi printed out.
+
+Now as a quick exercise, can you define a function that adds two numbers and prints their sum?
+
+Give it a shot if you manage to define this function, fantastic.
+
+What we're looking for is def add num1 and num2.
+
+And then the reusable part of this function the code will be print Num1 plus num2.
+
+If we call add on ten and 15, we can see that the sum 25 gets printed out.
+
+Well done.
+
+Before wrapping up, let's discuss a vital part of functions the return statement.
+
+Suppose you want to save the result of the addition function instead of printing it.
+
+We define a new function add which will return num1 plus num2.
+
+The return statement essentially passes back the result of the computation to wherever the function
+
+was called from.
+
+We can then store this result in a new variable like sum, and then we can print this variable out.
+
+So sum is equal to AD 12 comma 34 and printing sum out shows the value of 46.
+
+So you can quickly see how functions can compose of one another.
+
+One that outputs of functions can be used as inputs of enclosing functions.
+
+Let's say that I wanted to multiply the sums of two numbers together.
+
+Let's define a new multiply function def mul, which takes in num one comma num2 and returns num one
+
+times num two.
+
+Now let's say that I have two sums one and two and three and four.
+
+We can chain all this together by saying print mul.
+
+And then the first input, the first num one will be the sum or the add function of one comma two.
+
+And then the second input will be the add function of three comma four.
+
+One plus two is three, three plus four is seven, and then three times seven.
+
+By executing, the function will get us 21.
+
+By using the return statement, we can enclose the outputs of functions as inputs of another function.
+
+Take note the return statement marks the end of a function's execution.
+
+Once the return statement is executed, any code placed after it won't run.
+
+So to summarize, functions are reusable code blocks created with the def keyword.
+
+There is a unique function name.
+
+You can specify parameters and then the reusable code that follows functions may appear a bit complex
+
+at first, but with understanding you'll find them invaluable in your coding journey.
+
+That was an overview of functions in Python.
+
+Thanks for listening guys, and I'll see you in the next video.
+
+
+
+Hey guys over here and welcome back to our Python programming series.
+
+In today's video, we're taking a deep dive into Python's rich treasury of built in functions.
+
+In our previous video, we mastered the craft of defining our own functions.
+
+But did you know that Python comes pre-packaged with plenty of ready to use functions, each designed
+
+to perform a specific task with various data types?
+
+Today, we'll become familiar with a selection of these functions to give you a sense of what's available
+
+in Python's functional toolbelt.
+
+To start off, let's take a look at the ABS function.
+
+The ABS or ABS stands for absolute, and it's Python's way of doing the mathematical absolute value
+
+operation.
+
+Simply put, it strips off the negative sign from any number you pass in, so the absolute value or
+
+abs of -23 transforms the -23 into a positive 23.
+
+You can very quickly apply absolute to any negative or positive number, and always get the positive
+
+sign on that number.
+
+Next we have the bool function.
+
+This function can be seen as the truth checker.
+
+It takes in any value and if that value is zero or none, it gives back false.
+
+Otherwise it returns true.
+
+For example, bool zero renders false, whereas bool one or bool 100 yields true.
+
+Also, bool none returns false as none in Python symbolizes the absence of value.
+
+Bool is a very nifty function to quickly check if a value we're dealing with is false or truthy, depending
+
+on the value it holds.
+
+Then there's the enlightening dear function.
+
+Think of it as a flashlight, illuminating all the methods you can use with a particular object.
+
+If we shine this light on a string by saying dear and then passing in the string.
+
+Hello, Python shows us a long list of all the possible string methods.
+
+Now, looking at all these methods, if you're ever curious about a certain method, Python actually
+
+provides a helpful guide in the form of the help function.
+
+This function serves up a detailed description of the requested method.
+
+So looking at all these functions, if we want to know more about the upper method for our string hello
+
+stored in the variable, then we can ask for help by saying help and then sent dot upper.
+
+Dot upper is a method that exists on the variable sent, and Python will then spill the beans on the
+
+upper method.
+
+How does it work, how you can use it, etc..
+
+Our next stop is the eval and exec functions.
+
+The eval function is Python's way of running Python code that's disguised as a string.
+
+If we have sent is equal to print hi in quotation marks, calling eval of sent will spring the code
+
+into action and print out.
+
+Hi.
+
+The exec function does something very similar, but it's designed to execute strings of code spanning
+
+multiple lines.
+
+The last thing I want to touch base on are type conversion functions, namely str or string, int and
+
+float.
+
+These are Python's inbuilt tools for converting data types.
+
+They play a crucial role whenever you need to operate on values that are not of the same type.
+
+For example, str converts its argument into a string format.
+
+If you have the integer 100 and you wish to concatenate it with a string, you can say hello plus str
+
+100 and Python will return hello 100.
+
+On the other hand, int and float come handy when you have numeric data trapped in string formats.
+
+So if you have one, two, three as a string and you want to add the number four, five, six to it,
+
+you'd use int 123 plus 456 to get 579.
+
+Likewise, floats on a string would convert the string 1 to 3.45, for example, into a floating point
+
+number.
+
+A floating point number is just another data type that enables you to use decimals while coding.
+
+Understanding and using these functions proficiently will give you more control and flexibility over
+
+your data in Python.
+
+So that's it for this video on built in functions in Python.
+
+That was a good overview of functions like abs, bool, dir.
+
+We talked about help eval exec and then type conversion functions as well.
+
+Thanks for listening guys and I'll see you in the next video.
+
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+Today's topic is a key concept in the programming world object oriented programming, or OOP for short.
+
+This paradigm is fundamental regardless of which programming language you decide to master.
+
+Any piece of code you write, any project you undertake is likely to involve some degree of object oriented
+
+design.
+
+Let's dive into classes and objects and why they're important in Python.
+
+Think of a class as an animal blueprint, let's say a dog.
+
+This blueprint class defines what a dog is.
+
+It has properties like name, breed, age, and behaviors, which are methods in programming terms like
+
+bark, eat, and sleep.
+
+However, this class dog is just a concept.
+
+It doesn't bark, it doesn't sleep.
+
+It merely describes what a dog is and what it can do.
+
+Now, an object is an instance of a class.
+
+Let's say we create two objects, Fido and Buddy from the dog class.
+
+Both Fido and Buddy have the properties of a dog.
+
+They have a name, breed, age and they can bark, eat, and sleep.
+
+However, Fido and Buddy are distinct entities and their properties can be different.
+
+Fido might be a three year old German Shepherd, while buddy is a five year old golden retriever.
+
+Why is this useful?
+
+Well, first of all, real world modeling classes and objects help model real world concepts into code,
+
+making it easier to understand and work with.
+
+Second, reusability.
+
+Once you've made a dog class, you can create as many dog objects as you need, saving you the effort
+
+of defining dogs again and again.
+
+And last but not least, organization.
+
+It helps you organize and structure your code better by creating a class dog.
+
+You can use it to create any number of dog objects, each with its own set of attributes and behaviors.
+
+This is the essence of object oriented programming.
+
+It allows you to create structured, reusable, and intuitive code.
+
+First, let's think of a class as a blueprint or a plan.
+
+Let's use the example of a person.
+
+This person blueprint is our class, and it can contain some basic information that every person has,
+
+like a name and an age.
+
+But right now it's just a blueprint.
+
+It's not a specific person, just a general idea of what a person is.
+
+In Python, we can start creating this blueprint by typing class person colon.
+
+And then for now just say pass.
+
+Next, let's create a specific person or in programming terms, an instance of the person class.
+
+This is our object.
+
+Let's call this object p to create p as a person.
+
+We type p is equal to person and then parentheses.
+
+Now p is an instance of our person class or a person object.
+
+However, our person blueprint is a bit empty right now.
+
+Let's give it some attributes like a name and an age.
+
+To do this in Python, we use a special function called underscore underscore init underscore underscore.
+
+Again, note that there are two underscores before and after the init function.
+
+This is our initialization method, which allows us to set up attributes.
+
+When we create a new person object.
+
+We can define this method in our person class like this.
+
+Def init and then parentheses.
+
+Self comma name comma h.
+
+The self keyword is a reference to the current instance of this class, and is used to access its attributes.
+
+Name and age will be parameters that we pass in to define what this object's name and age will be.
+
+Inside this method, we'll assign the values passed as arguments to the name and age attributes of the
+
+person object.
+
+Self.name is equal to name and self dot age is equal to h.
+
+Now, every time we create a new person object, we'll provide a name and an age like so.
+
+P1 is equal to person and then in parentheses.
+
+Bob comma 22.
+
+Here Bob and 22 are the attributes of the P1 object.
+
+Finally, let's add some functionality to our person class with methods.
+
+These are functions defined inside a class that perform actions related to the objects of the class.
+
+For example, we could create a Getname method that prints the person's name.
+
+Def Getname and parentheses self and a get method that prints the person's age.
+
+Def get h and parentheses self.
+
+In both methods we refer to the object's attributes by using self dot name and self dot h.
+
+Now if we want to find out the name and age of P1, we simply call these methods on the p1 object p1
+
+dot get name and p1 dot get h.
+
+To summarize, object oriented programming in Python is all about creating classes, which are blueprints
+
+and objects which are instances of these blueprints.
+
+It allows us to structure our code in a way that is easy to understand and reuse, mirroring how we
+
+categorize and think about the world around us.
+
+That's it for this video on Object oriented programming.
+
+Thanks so much for listening, guys, and I'll see you in the next video.
+
+Hey, guys.
+
+Ivy here and welcome back to our Python programming series.
+
+In this video, we're going to dive into our understanding of object oriented programming, specifically
+
+the concept of inheritance.
+
+Let's use a real life analogy to grasp this better.
+
+Imagine a car manufacturing company.
+
+They make a base model car with common features like an engine, wheels, seats, and so on.
+
+Now they also produce variations of this base model, such as a sports version with a more powerful
+
+engine, or a luxury version with high end seats.
+
+These variations inherit the common features from the base model, but also add or modify some features.
+
+That's exactly how inheritance works in programming for classes two.
+
+First of all, let's go ahead and create a base class.
+
+We're going to call this car and define some basic methods.
+
+So we have here class car.
+
+In our init method we're going to say def init self.
+
+Self dot wheels is equal to four and self dot seats is equal to five.
+
+So our base model car has four wheels and five seats.
+
+That's awesome.
+
+Let's also define a drive function.
+
+So let's say def drive self.
+
+And inside of this drive function for now let's just say we're printing.
+
+Uh you know we're driving a car.
+
+So print driving a car.
+
+Now, if we instantiate the car class and call the drive method, what happens?
+
+Well, let's define my car is equal to car in parentheses.
+
+So we have an instance of car now.
+
+And then let's call my car dot drive.
+
+This will print driving a car.
+
+Fantastic.
+
+So now we have our base class car with two attributes wheels and seats and a method called drive.
+
+Next, let's create a sporty car class that inherits from the car class.
+
+This sporty car class will have more powerful engines and fewer seats.
+
+So the way you go ahead and inherit a class is by defining it in the class definition, you pass in
+
+class sports car and then in parentheses which class you're inheriting from, which is the car class?
+
+Inside of our init method, we're going to go ahead and call a unique function super init.
+
+And then we're going to set self dot engine power equals 400 hp.
+
+And self dot seats is equal to two.
+
+And then continuing on in our drive function let's go ahead and reinitialize our drive function to say
+
+print driving a sports car.
+
+The Super.init function call is used to execute the init method of the parent car class, ensuring that
+
+we don't lose the attributes initialized there.
+
+The sports car class then modifies the seats attribute and adds a new one specifically for the sports
+
+car called engine power.
+
+Now let's go ahead and create a sports car object and call the drive method.
+
+My sports car is equal to sports car and parentheses initializing our car.
+
+And then let's go ahead and call my sports car dot drive.
+
+If you go ahead and call this method, it prints out driving a sports car.
+
+Notice that we've actually overridden the drive method in the sports car class.
+
+This means that when we call drive on a sports car, object, it will execute the sports car classes
+
+version of the method, not the car classes version.
+
+If we didn't specify the drive method in sports car, we could have easily called dot drive on our sports
+
+car object, and it would have simply printed driving a car, and it would have gotten that function
+
+from the original parent class, which is the car class.
+
+So that is inheritance in a nutshell.
+
+What we've done is sports car has inherited the base attributes and functions of the car class.
+
+In this case it had inherited wheels being four seats equals five and the drive function.
+
+And then it chose to override some of these values.
+
+Seats was then set to two instead of five, and the drive function was overridden to say driving a sports
+
+car instead of driving a car.
+
+So why is this important?
+
+Well, there are three key reasons.
+
+Number one, reusability of code.
+
+In our car example, we didn't have to rewrite the attributes for wheels and seats for the sports car.
+
+We could inherit them from the car class.
+
+This also allows for easy maintenance and updates.
+
+If we wanted to change a common feature across all car types, we just need to change it in the car
+
+class and the subclasses will inherit the changes.
+
+And last but not least, organized structure.
+
+It makes logical sense to have a base car class and then subclasses for different types of cars.
+
+It makes our code easier to understand and manage.
+
+I hope this has made inheritance in Python clear.
+
+Inheritance is a very powerful tool for creating organized, reusable, and easy to maintain code.
+
+That's it for inheritance in this video guys.
+
+Thanks so much for listening and I'll see you in the next video.
+
+

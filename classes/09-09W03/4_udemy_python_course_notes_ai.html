@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to Python — Transcript-Faithful Study Notes</title>
+<style>
+:root {
+  --ink:#18202a; --muted:#667085; --line:#d8dee8; --paper:#fbfcfe;
+  --panel:#ffffff; --video:#eaf7f1; --video-ink:#176548;
+  --study:#fff6df; --study-ink:#8a5a00; --accent:#3157a4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{padding:54px 24px 34px;background:#172033;color:white}
+header .wrap,.wrap{max-width:960px;margin:auto}
+.eyebrow{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;opacity:.72}
+h1{margin:.35rem 0 .5rem;font-size:clamp(2rem,5vw,3.4rem);line-height:1.08}
+header p{max-width:760px;color:#d5dbea;margin:.4rem 0 0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.pill{padding:6px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.pill.video{background:#d9f2e6;color:#174f3b}
+.pill.study{background:#ffe9ad;color:#6c4700}
+main.wrap{padding:32px 20px 70px}
+.intro{background:white;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:24px}
+.intro h2{margin:0 0 6px;font-size:1.15rem}
+.toc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;margin:16px 0 30px;padding:0;list-style:none}
+.toc a{display:block;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--accent)}
+.toc a:hover{background:#eef3ff}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--panel);margin:0 0 16px;overflow:hidden}
+.card-head{width:100%;border:0;background:white;padding:18px 20px;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;color:var(--ink)}
+.card-head:hover{background:#f7f9fc}
+.num{font:700 .78rem ui-monospace,SFMono-Regular,Consolas,monospace;color:#8490a3}
+.head-text{display:flex;flex-direction:column;flex:1}
+.head-text strong{font-size:1.18rem}
+.head-text small{font-size:.82rem;color:var(--muted);margin-top:2px}
+.chev{font-size:1.2rem;color:#8490a3}
+.card-body{display:none;border-top:1px solid var(--line);padding:22px}
+.card-body h3{font-size:.95rem;margin:22px 0 9px;text-transform:uppercase;letter-spacing:.05em;color:#465468}
+.source-note,.student-box,.beyond-box{border-radius:10px;padding:14px 16px}
+.source-note{background:var(--video);color:#245846;border-left:4px solid #57a983}
+.source-note span,.label{display:block;font-size:.73rem;font-weight:800;letter-spacing:.09em;margin-bottom:4px}
+.notes{padding-left:22px}
+.notes li{margin:.36rem 0}
+pre{overflow:auto;background:#111827;color:#f4f7fb;border-radius:10px;padding:16px;font-size:.9rem;line-height:1.55}
+.student-box{background:#f2f5fb;border:1px solid #dce3ef;margin-top:18px}
+.student-box .label{color:#52627a}
+.student-box p{margin:0}
+.check{padding-left:24px}
+.check li{margin:.45rem 0}
+.beyond-box{background:var(--study);color:#5f4a17;border-left:4px solid #e4b33b;margin-top:22px}
+.beyond-box .label{color:var(--study-ink)}
+.beyond-box p{margin:.2rem 0 .55rem}
+.beyond-box ul{margin:.4rem 0 0;padding-left:22px}
+footer{max-width:960px;margin:auto;padding:0 20px 40px;color:var(--muted);font-size:.86rem}
+@media(max-width:680px){.toc{grid-template-columns:1fr} .card-body{padding:18px}}
+@media print{.card-body{display:block!important} .card-head{cursor:default} .toc a{color:black}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">OIM3600 · Student Study Notes</div>
+    <h1>Introduction to Python Programming</h1>
+    <p>A transcript-faithful set of notes that separates what the Udemy videos actually teach from useful follow-up study questions.</p>
+    <div class="legend">
+      <span class="pill video">From the video</span>
+      <span class="pill study">Beyond the video</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <h2>How to use these notes</h2>
+    <p><strong>Core notes</strong> capture the important ideas in the lecture without transcribing every sentence. <strong>Code to remember</strong> reconstructs the examples in readable Python. <strong>Quick self-check</strong> tests the material actually taught. The yellow <strong>Beyond the video</strong> box deliberately separates useful extensions so they are never mistaken for lecture content.</p>
+  </div>
+
+  <ul class="toc"><li><a href="#s1">01 · Variables</a></li>
+<li><a href="#s2">02 · Arithmetic Operators &amp; Strings</a></li>
+<li><a href="#s3">03 · Placeholders &amp; F-Strings</a></li>
+<li><a href="#s4">04 · Lists</a></li>
+<li><a href="#s5">05 · Dictionaries</a></li>
+<li><a href="#s6">06 · Tuples</a></li>
+<li><a href="#s7">07 · Conditional Statements</a></li>
+<li><a href="#s8">08 · For Loops</a></li>
+<li><a href="#s9">09 · While Loops &amp; Control Statements</a></li>
+<li><a href="#s10">10 · Try / Except</a></li>
+<li><a href="#s11">11 · Functions</a></li>
+<li><a href="#s12">12 · Built-in Functions</a></li>
+<li><a href="#s13">13 · Object-Oriented Programming</a></li>
+<li><a href="#s14">14 · Inheritance</a></li></ul>
+  
+<section class="card" id="s1">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="true">
+    <span class="num">01</span>
+    <span class="head-text"><strong>Variables</strong><small>storing values · assignment · multiple assignment</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" style="display:block">
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A variable gives a name to a value so you can refer to that value later.</li>
+<li>Use the assignment operator <code>=</code>: <code>age = 20</code>.</li>
+<li>Text values are strings and are written inside quotation marks.</li>
+<li>Python supports multiple assignment: several variables can receive different values in one statement.</li>
+<li>Python also allows chained assignment when several variables receive the same value.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>age = 20
+sentence = &quot;My name is Avi&quot;
+
+sarah, bob, mike = 16, 21, 17
+sarah = bob = mike = 17</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Variable = a name for a stored value. <code>=</code> assigns. Strings need quotes. Python can assign several variables at once.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What value does <code>bob</code> hold after <code>sarah, bob, mike = 16, 21, 17</code>?</li>
+<li>Why can you use <code>age</code> later instead of writing <code>20</code> again?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>What rules does Python impose on variable names?</li>
+<li>Can a variable later refer to a value of a different type?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s2">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">02</span>
+    <span class="head-text"><strong>Arithmetic Operators &amp; Strings</strong><small>operators · concatenation · repetition · slicing</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>The video introduces <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>%</code>.</li>
+<li><code>%</code> gives the remainder after division.</li>
+<li>For strings, <code>+</code> concatenates and <code>*</code> repeats.</li>
+<li>String indexing starts at 0.</li>
+<li>A slice uses <code>text[start:end]</code>; the ending index is excluded.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>age1 = 12
+age2 = 18
+print(age2 % age1)      # 6
+
+first = &quot;Avi&quot;
+last = &quot;Jane&quot;
+print(first + &quot; &quot; + last)
+
+sentence = &quot;Avi was playing basketball&quot;
+print(sentence[0:3])    # Avi</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Numbers use arithmetic operators. Strings can be joined with <code>+</code> and repeated with <code>*</code>. Slices stop before the ending index.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What does <code>sentence[0:3]</code> return?</li>
+<li>Which arithmetic operators does the video say also work with strings?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How does floor division <code>//</code> differ from <code>/</code>?</li>
+<li>What do negative string indexes do?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s3">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">03</span>
+    <span class="head-text"><strong>Placeholders &amp; F-Strings</strong><small>old-style formatting · modern f-strings</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A placeholder marks a position in a string where a value will later be inserted.</li>
+<li>Old-style formatting uses <code>%s</code> for strings and <code>%d</code> for integers.</li>
+<li>The video then introduces f-strings as a newer and simpler formatting approach.</li>
+<li>In an f-string, variables or expressions go inside curly braces <code>{}</code>.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>sentence = &quot;%s is %d years old&quot;
+print(sentence % (&quot;Avi&quot;, 23))
+
+name = &quot;Avi&quot;
+print(f&quot;Hello, {name}&quot;)
+
+x, y = 10, 20
+print(f&quot;The sum is {x + y}&quot;)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Placeholders let values be inserted into text. Old style uses <code>%s</code>/<code>%d</code>; f-strings put variables or expressions in <code>{}</code>.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What does <code>%s</code> stand for in the video?</li>
+<li>Why is <code>f&quot;{x + y}&quot;</code> useful?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How does <code>.format()</code> compare with f-strings?</li>
+<li>How can f-strings control decimal places or add commas?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s4">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">04</span>
+    <span class="head-text"><strong>Lists</strong><small>ordered collections · indexing · mutability</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A list stores an ordered sequence of comma-separated values inside square brackets.</li>
+<li>List indexing starts at 0.</li>
+<li>Lists can be sliced using the same start/end idea used with strings.</li>
+<li>Lists are mutable: items can be added, replaced, or deleted.</li>
+<li>The video demonstrates <code>append()</code>, item assignment, <code>del</code>, <code>len()</code>, list addition, list repetition, <code>max()</code>, and <code>min()</code>.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>shopping = [&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;cheese&quot;]
+
+shopping.append(&quot;blueberries&quot;)
+shopping[0] = &quot;cherries&quot;
+del shopping[1]
+
+print(len(shopping))
+print(shopping[0:2])</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>List = ordered, zero-indexed, mutable collection. Use <code>append()</code> to add, assignment to replace, and <code>del</code> to remove.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What item is at index 2 in the original shopping list?</li>
+<li>Why does changing <code>shopping[0]</code> work?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How does <code>remove()</code> differ from <code>del</code>?</li>
+<li>How do you insert at a specific position?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s5">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">05</span>
+    <span class="head-text"><strong>Dictionaries</strong><small>keys · values · lookup · update</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A dictionary associates each key with a value.</li>
+<li>The video uses student names as keys and ages as values.</li>
+<li>Looking up a key returns its associated value.</li>
+<li>Assigning a new value to an existing key updates that entry.</li>
+<li><code>del</code> removes a key-value pair and <code>len()</code> counts entries.</li>
+<li>Keys should be unique; if the same key is written repeatedly in a dictionary literal, the last value remains.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>students = {
+    &quot;Bob&quot;: 12,
+    &quot;Rachel&quot;: 13,
+    &quot;Emily&quot;: 15
+}
+
+print(students[&quot;Rachel&quot;])
+students[&quot;Rachel&quot;] = 14
+del students[&quot;Emily&quot;]</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Dictionary = key → value mapping. Access with the key, update by assigning to the key, delete with <code>del</code>.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What does <code>students[&#x27;Rachel&#x27;]</code> return before the update?</li>
+<li>What happens when Rachel&#x27;s key is assigned the value 14?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How do <code>.keys()</code>, <code>.values()</code>, and <code>.items()</code> work?</li>
+<li>What kinds of objects are allowed to be dictionary keys?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s6">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">06</span>
+    <span class="head-text"><strong>Tuples</strong><small>ordered sequences · immutability</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>Tuples are sequential collections like lists, but the video emphasizes one major difference: tuples are immutable.</li>
+<li>After a tuple is created, its elements cannot be added, removed, or changed.</li>
+<li>Tuple elements can still be accessed by indexing and slicing.</li>
+<li>Two tuples can be concatenated to create a new tuple.</li>
+<li>The video presents immutability as useful for consistency and protecting data from change.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>fruits = (&quot;oranges&quot;, &quot;apples&quot;, &quot;bananas&quot;)
+
+print(fruits[0])
+print(fruits[0:2])
+
+numbers = (12, 14)
+combined = fruits + numbers</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Tuple = ordered sequence that cannot be changed after creation. You can index and slice it, and concatenation creates a new tuple.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>Why would <code>fruits[0] = &#x27;cherries&#x27;</code> fail?</li>
+<li>Does concatenating two tuples modify either original tuple?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How do you create a one-element tuple?</li>
+<li>Can an immutable tuple contain a mutable object?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s7">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">07</span>
+    <span class="head-text"><strong>Conditional Statements</strong><small>if · elif · else · comparisons · logic</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A conditional chooses what code to run based on whether a condition is true or false.</li>
+<li>The video introduces <code>if</code>, <code>elif</code>, and <code>else</code>.</li>
+<li>It covers six relational operators: <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, and <code>!=</code>.</li>
+<li>It distinguishes assignment <code>=</code> from equality comparison <code>==</code>.</li>
+<li>The logical operators <code>and</code> and <code>or</code> combine conditions.</li>
+<li>Indentation determines which statements belong to each block.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>age = 16
+
+if age &lt; 13:
+    print(&quot;You are a child&quot;)
+elif age &gt;= 13 and age &lt;= 18:
+    print(&quot;You are a teenager&quot;)
+else:
+    print(&quot;You are an adult&quot;)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Conditionals control flow. <code>=</code> assigns; <code>==</code> compares. <code>and</code> needs both conditions true; <code>or</code> needs at least one.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What prints when <code>age = 16</code> in the example?</li>
+<li>Why is indentation essential in an <code>if</code> statement?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>If several <code>elif</code> conditions are true, which one runs?</li>
+<li>What is Python&#x27;s one-line conditional expression?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s8">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">08</span>
+    <span class="head-text"><strong>For Loops</strong><small>iteration · range() · step · nested loops</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A <code>for</code> loop repeats code while moving through items in a data structure.</li>
+<li>The video shows iteration over lists and tuples.</li>
+<li><code>range()</code> lets a loop iterate through a sequence of numbers.</li>
+<li>The stop value in <code>range()</code> is excluded.</li>
+<li>A third <code>range()</code> argument controls the increment or step.</li>
+<li>A nested loop is a loop inside another loop; the inner loop completes for each outer-loop iteration.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>for i in range(0, 10):
+    print(i)            # 0 through 9
+
+for i in range(0, 11, 2):
+    print(i)            # 0, 2, 4, 6, 8, 10
+
+for i in range(0, 5):
+    for j in range(0, 3):
+        print(i * j)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>For loops iterate through items or ranges. <code>range()</code> excludes the stop value. A third argument changes the step.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>Why does <code>range(1, 11)</code> produce 1 through 10?</li>
+<li>How many times does the inner statement run in a 5-by-3 nested loop?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>How can <code>enumerate()</code> give both index and value?</li>
+<li>How is a list comprehension related to a for loop?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s9">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">09</span>
+    <span class="head-text"><strong>While Loops &amp; Control Statements</strong><small>condition-based repetition · break · continue · pass</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>A <code>while</code> loop keeps running while its condition remains true.</li>
+<li>The video suggests <code>while</code> loops when the number of repetitions is not known in advance.</li>
+<li><code>break</code> ends a loop immediately.</li>
+<li><code>continue</code> skips the rest of the current iteration and starts the next one.</li>
+<li><code>pass</code> does nothing; it can act as a placeholder for code not yet implemented.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>c = 0
+while c &lt; 5:
+    c += 1
+    if c == 3:
+        continue
+    print(c)            # 1, 2, 4, 5</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>While = repeat while condition is true. <code>break</code> exits, <code>continue</code> skips this iteration, <code>pass</code> is a do-nothing placeholder.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>Why does the basic counter loop stop after printing 5?</li>
+<li>What is the difference between <code>break</code> and <code>continue</code>?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>What causes an accidental infinite <code>while</code> loop?</li>
+<li>When is a <code>for</code> loop clearer than a <code>while</code> loop?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s10">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">10</span>
+    <span class="head-text"><strong>Try / Except</strong><small>handling exceptions</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>The transcript repeatedly says 'try and accept'; the Python syntax demonstrated is <code>try</code> / <code>except</code>.</li>
+<li>Code that might fail goes in the <code>try</code> block.</li>
+<li>If an exception occurs in that block, control moves to the <code>except</code> block.</li>
+<li>The example deliberately uses an undefined name to trigger an error and print a friendlier message.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>try:
+    if name &gt; 3:
+        print(&quot;Hello&quot;)
+except:
+    print(&quot;An error was detected in your code.&quot;)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Put risky code in <code>try</code>. If it raises an exception, Python moves to <code>except</code>.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>Why does the example enter the <code>except</code> block?</li>
+<li>What happens if the entire <code>try</code> block succeeds?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>Why is catching a specific exception usually better than a bare <code>except</code>?</li>
+<li>What are <code>else</code> and <code>finally</code> blocks in exception handling?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s11">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">11</span>
+    <span class="head-text"><strong>Functions</strong><small>definition · calls · parameters · return · composition</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>Functions package reusable instructions so the same code does not have to be rewritten.</li>
+<li>A function is defined with <code>def</code>, a name, parentheses, and an indented body.</li>
+<li>Defining a function does not run it; the function must be called.</li>
+<li>Parameters let a function receive inputs.</li>
+<li><code>return</code> sends a result back to the place where the function was called.</li>
+<li>The video shows that returned values can be stored and can feed into other function calls.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>def hello_world():
+    print(&quot;Hello, world&quot;)
+
+hello_world()
+
+def add(num1, num2):
+    return num1 + num2
+
+total = add(12, 34)
+print(total)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Function = reusable block defined with <code>def</code>. Calling runs it. Parameters are inputs. <code>return</code> sends a result back.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>Why does merely defining <code>hello_world()</code> produce no output?</li>
+<li>What is the difference between printing a sum and returning it?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>What is the difference between a parameter and an argument?</li>
+<li>What happens if a function reaches the end without a <code>return</code>?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s12">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">12</span>
+    <span class="head-text"><strong>Built-in Functions</strong><small>abs · bool · dir · help · eval · exec · conversion</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>Python includes ready-to-use built-in functions in addition to functions you define yourself.</li>
+<li><code>abs()</code> returns an absolute value.</li>
+<li>The video describes <code>bool()</code> as a truth check and demonstrates false results for 0 and <code>None</code>.</li>
+<li><code>dir()</code> shows available attributes/methods for an object, and <code>help()</code> provides information about how something is used.</li>
+<li>The video introduces <code>eval()</code> and <code>exec()</code> as ways to execute Python represented as strings.</li>
+<li><code>str()</code>, <code>int()</code>, and <code>float()</code> convert values between types.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>print(abs(-23))
+print(bool(0))
+print(bool(100))
+
+print(str(100))
+print(int(&quot;123&quot;))
+print(float(&quot;123.45&quot;))</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Built-ins are functions Python already provides. Important examples here: <code>abs</code>, <code>bool</code>, <code>dir</code>, <code>help</code>, <code>eval</code>, <code>exec</code>, and type conversions.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What does <code>abs(-23)</code> return?</li>
+<li>Why might <code>str(100)</code> be useful when working with text?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>Why should <code>eval()</code> and <code>exec()</code> be used cautiously?</li>
+<li>What other built-in functions have already appeared elsewhere in the course?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s13">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">13</span>
+    <span class="head-text"><strong>Object-Oriented Programming</strong><small>classes · objects · attributes · methods · self</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>The video presents a class as a blueprint and an object as an instance of that blueprint.</li>
+<li>Objects created from the same class can have different attribute values.</li>
+<li>The video motivates OOP with modeling, reusability, and organization.</li>
+<li><code>__init__</code> initializes attributes when an object is created.</li>
+<li><code>self</code> refers to the current instance.</li>
+<li>Methods are functions defined inside a class and operate in relation to its objects.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def get_name(self):
+        print(self.name)
+
+p1 = Person(&quot;Bob&quot;, 22)
+p1.get_name()</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Class = blueprint. Object = instance. <code>__init__</code> sets up instance attributes. <code>self</code> refers to the current object. Methods are functions inside the class.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What is the difference between the <code>Person</code> class and <code>p1</code>?</li>
+<li>What does <code>self.name = name</code> accomplish?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>Where are methods stored relative to instances?</li>
+<li>What is the difference between a class attribute and an instance attribute?</li></ul>
+    </div>
+  </div>
+</section>
+<section class="card" id="s14">
+  <button class="card-head" onclick="toggleCard(this)" aria-expanded="false">
+    <span class="num">14</span>
+    <span class="head-text"><strong>Inheritance</strong><small>parent classes · child classes · super() · overriding</small></span>
+    <span class="chev">⌄</span>
+  </button>
+  <div class="card-body" >
+    <div class="source-note"><span>FROM THE VIDEO</span> These notes are restricted to ideas and examples actually covered in the transcript.</div>
+    <h3>Core notes</h3>
+    <ul class="notes"><li>Inheritance lets a new class reuse features from an existing class.</li>
+<li>The video uses <code>Car</code> as a parent class and a sports-car class as a child.</li>
+<li><code>super().__init__()</code> calls the parent initialization so inherited attributes are set up.</li>
+<li>The child class can add new attributes or replace inherited attribute values.</li>
+<li>If the child defines a method with the same name as the parent's method, the child's version runs; the video calls this overriding.</li>
+<li>The stated benefits are code reuse, easier maintenance, and a logical organization of related classes.</li></ul>
+
+    <h3>Code to remember</h3>
+    <pre><code>class Car:
+    def __init__(self):
+        self.wheels = 4
+        self.seats = 5
+
+    def drive(self):
+        print(&quot;Driving a car&quot;)
+
+class SportsCar(Car):
+    def __init__(self):
+        super().__init__()
+        self.engine_power = &quot;400 hp&quot;
+        self.seats = 2
+
+    def drive(self):
+        print(&quot;Driving a sports car&quot;)</code></pre>
+
+    <div class="student-box">
+      <div class="label">A GOOD STUDENT NOTE MIGHT LOOK LIKE THIS</div>
+      <p>Inheritance = child class reuses parent class behavior/data. <code>super()</code> reaches the parent. Redefining a method in the child overrides the parent's version.</p>
+    </div>
+
+    <h3>Quick self-check</h3>
+    <ol class="check"><li>What would happen if <code>SportsCar</code> did not define its own <code>drive()</code>?</li>
+<li>Why does the child call <code>super().__init__()</code>?</li></ol>
+
+    <div class="beyond-box">
+      <div class="label">BEYOND THE VIDEO — STUDY EXTENSION</div>
+      <p>These are useful follow-up questions, but they are <strong>not presented as notes from the lecture</strong>.</p>
+      <ul><li>Can one class inherit from more than one parent?</li>
+<li>How can a child override a method but still call the parent&#x27;s version?</li></ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  Built from the supplied Udemy transcript. Obvious speech-to-text wording such as “try and accept” is flagged rather than silently treated as course terminology.
+</footer>
+
+<script>
+function toggleCard(btn){
+  const body = btn.nextElementSibling;
+  const open = body.style.display === "block";
+  body.style.display = open ? "none" : "block";
+  btn.setAttribute("aria-expanded", String(!open));
+}
+</script>
+</body>
+</html>
