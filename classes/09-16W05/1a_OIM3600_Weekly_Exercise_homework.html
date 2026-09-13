@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM3600 Weekly Exercise 1 — Python Foundations</title>
+<style>
+  :root{
+    --ink:#142d32;
+    --paper:#f6f3e9;
+    --card:#ffffff;
+    --green:#006756;
+    --green2:#e8f1ed;
+    --gold:#ffce70;
+    --muted:#5a6c70;
+    --line:#c8d2cd;
+    --blue:#eaf2fb;
+    --purple:#f1ecfb;
+    --warn:#fff4df;
+    --code:#143038;
+    --codeink:#f4f7f5;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;
+    line-height:1.55;
+  }
+  .page{max-width:1180px;margin:0 auto;padding:28px 24px 90px}
+  header{
+    background:var(--ink);
+    color:white;
+    border-radius:16px;
+    padding:34px 38px;
+    margin-bottom:24px;
+  }
+  header .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:700;
+    color:var(--gold);
+    font-size:14px;
+  }
+  h1{font-size:clamp(34px,5vw,56px);line-height:1.05;margin:10px 0 14px}
+  h2{font-size:30px;line-height:1.15;margin:0 0 16px}
+  h3{font-size:21px;margin:0 0 10px}
+  p{margin:10px 0}
+  .meta{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+    margin-top:22px;
+  }
+  .meta div{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    padding:12px 14px;
+    border-radius:10px;
+  }
+  .meta strong{display:block;color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  .box,.part{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 28px;
+    margin:18px 0;
+  }
+  .intro{background:var(--green2);border-left:5px solid var(--green)}
+  .policy{background:var(--warn);border-left:5px solid #bb7a00}
+  .part-head{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    align-items:flex-start;
+    border-bottom:2px solid var(--line);
+    padding-bottom:12px;
+    margin-bottom:18px;
+  }
+  .pts{
+    white-space:nowrap;
+    font-weight:700;
+    color:var(--green);
+    font-size:18px;
+  }
+  code{
+    font-family:Consolas,"Courier New",monospace;
+    font-size:.96em;
+  }
+  pre{
+    background:var(--code);
+    color:var(--codeink);
+    border-radius:10px;
+    padding:18px 20px;
+    overflow:auto;
+    font-size:17px;
+    line-height:1.5;
+  }
+  .q{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    margin-top:18px;
+  }
+  .q:first-child{border-top:0;padding-top:0;margin-top:0}
+  .label{
+    display:inline-block;
+    background:var(--green2);
+    color:var(--green);
+    border-radius:999px;
+    padding:3px 9px;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin-bottom:8px;
+  }
+  ol,ul{padding-left:1.35em}
+  li{margin:8px 0}
+  .rubric{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
+  .rubric th,.rubric td{
+    border:1px solid var(--line);
+    padding:10px 12px;
+    vertical-align:top;
+    text-align:left;
+  }
+  .rubric th{background:#eef2ef}
+  .callout{
+    background:var(--blue);
+    border-left:5px solid #4e86b5;
+    padding:14px 18px;
+    border-radius:8px;
+    margin:14px 0;
+  }
+  .ct{background:var(--purple);border-left:5px solid #7458aa}
+  .footer{
+    color:var(--muted);
+    text-align:center;
+    font-size:14px;
+    margin-top:34px;
+  }
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    padding:8px 0;
+    background:linear-gradient(var(--paper) 75%,rgba(246,243,233,0));
+  }
+  button{
+    border:1px solid #8da59b;
+    background:white;
+    color:var(--ink);
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  button:hover{background:#edf3ef}
+  @media(max-width:800px){
+    .meta{grid-template-columns:1fr 1fr}
+    .part-head{display:block}
+    .pts{margin-top:8px}
+  }
+  @media print{
+    body{background:white}
+    .page{max-width:none;padding:0}
+    .toolbar{display:none}
+    pre{white-space:pre-wrap}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="toolbar">
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<header>
+  <div class="eyebrow">OIM3600 · Computational Thinking with AI and Python</div>
+  <h1>Weekly Exercise 1<br>Python Foundations</h1>
+  <p style="font-size:20px;max-width:900px">
+    Predict. Run. Investigate. Modify. Build.
+  </p>
+  <div class="meta">
+    <div><strong>Worth</strong>2% of final grade</div>
+    <div><strong>Expected time</strong>60–90 minutes</div>
+    <div><strong>Reading</strong>Workbook 2, Sections 1–6</div>
+    <div><strong>Format</strong>Individual work</div>
+  </div>
+</header>
+
+<section class="box intro">
+  <h2>Purpose</h2>
+  <p>
+    This exercise is practice, not a speed test. The goal is to show that you can
+    <strong>predict Python behavior, explain what happened, investigate surprises,
+    and combine basic ideas into a small solution</strong>.
+  </p>
+  <p>
+    When a question says <strong>predict first</strong>, write down your prediction
+    before you run the code. If your prediction is wrong, do not erase it.
+    Record what actually happened and explain what changed in your understanding.
+  </p>
+</section>
+
+<section class="box">
+  <h2>How to complete the exercise</h2>
+  <ol>
+    <li>Place the supplied <code>homework.py</code> file in the same assignment folder as this HTML file.</li>
+    <li>Open <code>homework.py</code> in VS Code.</li>
+    <li>Each question is already placed inside a function such as <code>question_a1()</code>. The functions are supplied only to keep the questions separate. <strong>You are not being tested on writing functions yet.</strong></li>
+    <li>Complete all predictions, explanations, and written answers as <strong>Python comments</strong> in the places provided.</li>
+    <li>Write your Python code only where the starter file says <strong>YOUR CODE</strong> or where a question asks you to modify existing code.</li>
+    <li>At the bottom of <code>homework.py</code>, uncomment the function call for the question you are currently working on. Run one question at a time.</li>
+    <li>Do not remove the instructor's headings, starter code, or instructions unless a question specifically tells you to change something.</li>
+  </ol>
+
+  <div class="callout">
+    <strong>Important:</strong> If your original prediction is wrong, leave the prediction in the file.
+    Add an <strong>Actual result</strong> and an explanation underneath it. An incorrect prediction followed
+    by a good explanation demonstrates learning.
+  </div>
+</section>
+
+<section class="box policy">
+  <h2>AI use for this exercise</h2>
+  <p><strong>You may use your OIM3600 Project AI as a Python reference.</strong> For example, you may ask:</p>
+  <ul>
+    <li>“How do I add an item to a list?”</li>
+    <li>“What does <code>sorted()</code> return?”</li>
+    <li>“How do I slice the first three items?”</li>
+    <li>“What does <code>.strip()</code> do?”</li>
+  </ul>
+  <p>
+    <strong>You may not ask AI to design or solve a question for you.</strong>
+    The reasoning, choices, explanations, and final design must be yours.
+  </p>
+  <p>
+    If AI supplies syntax, you are still responsible for understanding why it works
+    and deciding whether it belongs in your solution.
+  </p>
+
+  <h3 style="margin-top:22px">AI conversation submission</h3>
+  <p>
+    Create a separate file named <code>ai_chat.txt</code>. Copy and paste the
+    <strong>complete OIM3600 Project conversation(s)</strong> you used while working on this exercise.
+    Do not remove prompts or AI responses from the submitted conversation.
+  </p>
+  <p>
+    If you use more than one OIM3600 conversation, place all of them in the same
+    <code>ai_chat.txt</code> file and separate them with a clear heading.
+    If you do not use AI at all, submit <code>ai_chat.txt</code> containing:
+    <code>No AI used for this exercise.</code>
+  </p>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Part A</div>
+      <h2>Predict Before You Run</h2>
+      <p>Write your prediction in <code>homework.py</code> before running the code.</p>
+    </div>
+    <div class="pts">20 points</div>
+  </div>
+
+  <div class="q">
+    <h3>A1 — Types and operations</h3>
+<pre><code>x = "7"
+y = 3
+
+print(x + str(y))
+print(x * y)
+print(type(x))
+print(type(y))</code></pre>
+    <ol>
+      <li>Predict all four outputs before running the code.</li>
+      <li>Run it. If anything surprised you, explain why.</li>
+    </ol>
+  </div>
+
+  <div class="q">
+    <h3>A2 — Strings, indexing, and slicing</h3>
+<pre><code>text = "Babson College"
+
+print(text[0])
+print(text[-1])
+print(text[1:6])
+print(text[:6])
+print(text[::-1])</code></pre>
+    <ol>
+      <li>Predict each output.</li>
+      <li>Which expression creates the largest new string?</li>
+      <li>Explain the difference between indexing and slicing in one sentence.</li>
+    </ol>
+  </div>
+
+  <div class="q">
+    <h3>A3 — Lists and sorting</h3>
+<pre><code>numbers = [4, 1, 3, 2]
+ordered = sorted(numbers)
+
+print(numbers)
+print(ordered)</code></pre>
+    <ol>
+      <li>Predict both outputs.</li>
+      <li>Does <code>sorted(numbers)</code> change <code>numbers</code>? Explain.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Part B</div>
+      <h2>Investigate a Bug</h2>
+      <p>Use small experiments instead of guessing.</p>
+    </div>
+    <div class="pts">20 points</div>
+  </div>
+
+  <div class="q">
+    <h3>B1 — Why did the list disappear?</h3>
+<pre><code>items = [3, 1, 2]
+
+items = items.sort()
+
+print(items)</code></pre>
+    <ol>
+      <li><strong>Predict first:</strong> What do you expect this to print?</li>
+      <li>Run it.</li>
+      <li>Use <code>type()</code> in a small experiment to investigate what happened.</li>
+      <li>Rewrite the code so that <code>items</code> becomes <code>[1, 2, 3]</code>.</li>
+      <li>Write a second correct version that leaves <code>items</code> unchanged and stores the sorted result in a new variable.</li>
+    </ol>
+    <div class="callout">
+      <strong>Evidence required:</strong> keep your small investigation in <code>homework.py</code>.
+      Do not submit only the final fix.
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Part C</div>
+      <h2>Modify Existing Data</h2>
+      <p>Use the tools from Sections 1–6 deliberately.</p>
+    </div>
+    <div class="pts">25 points</div>
+  </div>
+
+  <div class="q">
+    <h3>C1 — Sales list</h3>
+<pre><code>sales = [1240.50, 875.25, 1920.00, 650.75, 1435.50, 990.00]</code></pre>
+    <p>Write code that does all of the following:</p>
+    <ol>
+      <li>Creates a new list called <code>ordered_sales</code> containing the sales from largest to smallest.</li>
+      <li>Leaves the original <code>sales</code> list unchanged.</li>
+      <li>Creates <code>top_three</code> containing only the three largest sales.</li>
+      <li>Creates <code>sale_count</code> containing the number of sales.</li>
+      <li>Prints the three variables clearly using f-strings.</li>
+    </ol>
+
+    <p>Then answer in comments:</p>
+    <ol start="6">
+      <li>Why does your code not change <code>sales</code>?</li>
+      <li>Which line creates a new list by sorting?</li>
+      <li>Which line creates a new list by slicing?</li>
+    </ol>
+
+    <div class="callout">
+      A complete explanation should recognize that <code>sales</code> is
+      <strong>neither modified nor reassigned</strong>.
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Part D</div>
+      <h2>Build a Small Sales Snapshot</h2>
+      <p>Combine strings, lists, indexing, slicing, sorting, and f-strings.</p>
+    </div>
+    <div class="pts">25 points</div>
+  </div>
+
+  <div class="q">
+    <h3>D1 — Starter data</h3>
+<pre><code>report_name = "  september sales  "
+region = "Boston"
+sales = [1240.50, 875.25, 1920.00, 650.75, 1435.50, 990.00]</code></pre>
+
+    <p>Create a small report that prints something similar to:</p>
+<pre><code>SEPTEMBER SALES — Boston
+Number of sales: 6
+Largest sale: $1,920.00
+Smallest sale: $650.75
+Top three: [1920.0, 1435.5, 1240.5]</code></pre>
+
+    <p>Your program must:</p>
+    <ol>
+      <li>Remove the extra spaces from <code>report_name</code>.</li>
+      <li>Display the report name in uppercase.</li>
+      <li>Create a new descending sorted list without changing <code>sales</code>.</li>
+      <li>Use indexing to obtain the largest and smallest sale from the sorted list.</li>
+      <li>Use slicing to obtain the top three.</li>
+      <li>Use <code>len()</code> for the number of sales.</li>
+      <li>Use f-strings for the printed report.</li>
+      <li>Add one additional useful line of information of your own choosing using only ideas from Sections 1–6.</li>
+    </ol>
+
+    <div class="callout">
+      <strong>Do not use a loop.</strong> Loops have not been assigned yet.
+      Solve this using only material from Sections 1–6.
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Part E</div>
+      <h2>Computational Thinking Reflection</h2>
+      <p>Connect your Python work back to our computational-thinking discussion.</p>
+    </div>
+    <div class="pts">10 points</div>
+  </div>
+
+  <div class="q ct">
+    <p>Choose <strong>one</strong> of the following:</p>
+    <ul>
+      <li>Abstraction</li>
+      <li>Decomposition</li>
+      <li>Pattern recognition</li>
+      <li>Algorithms</li>
+    </ul>
+    <p>
+      In comments inside <code>question_e1()</code>, identify one place in this exercise
+      where you used that kind of thinking. Explain in 2–4 sentences
+      <strong>what you did and why it fits that category</strong>.
+    </p>
+  </div>
+</section>
+
+<section class="box">
+  <h2>What to submit</h2>
+  <p>Submit both files from your assignment folder:</p>
+  <ol>
+    <li><code>homework.py</code> — the supplied starter file completed with your code, predictions, investigation, and explanations.</li>
+    <li><code>ai_chat.txt</code> — the complete OIM3600 Project conversation(s) used for this exercise, or the statement <code>No AI used for this exercise.</code></li>
+  </ol>
+</section>
+
+<section class="box">
+  <h2>Before You Submit</h2>
+  <ul>
+    <li>I made predictions before running the requested code.</li>
+    <li>I did not erase incorrect predictions.</li>
+    <li>I included my investigation in Part B.</li>
+    <li>My Part C solution does not modify or reassign <code>sales</code>.</li>
+    <li>My Part D solution uses only material from Sections 1–6.</li>
+    <li>I can explain every line of code I submitted.</li>
+    <li>My written explanations are in my own words.</li>
+    <li>I included the required <code>ai_chat.txt</code> file.</li>
+  </ul>
+</section>
+
+<section class="box">
+  <h2>Grading</h2>
+  <table class="rubric">
+    <thead>
+      <tr><th>Area</th><th>Points</th><th>What is being evaluated</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Part A — Predict</td><td>20</td><td>Accurate predictions and clear explanations.</td></tr>
+      <tr><td>Part B — Investigate</td><td>20</td><td>Use of evidence, small experiments, and correct fixes.</td></tr>
+      <tr><td>Part C — Modify</td><td>25</td><td>Correct list work and understanding of new versus changed objects.</td></tr>
+      <tr><td>Part D — Build</td><td>25</td><td>Correctness, clarity, simplicity, and use of Sections 1–6.</td></tr>
+      <tr><td>Part E — Reflect</td><td>10</td><td>Accurate connection to computational thinking.</td></tr>
+      <tr><th>Total</th><th>100</th><th>Worth 2% of the final course grade.</th></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="footer">
+  OIM3600 · Computational Thinking with AI and Python · Weekly Exercise 1
+</div>
+
+</div>
+</body>
+</html>
