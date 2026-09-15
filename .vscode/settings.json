@@ -4,6 +4,7 @@
   // Use Anaconda/Conda to manage Python environments and install packages.
   "python-envs.defaultEnvManager": "ms-python.python:conda",
   "python-envs.defaultPackageManager": "ms-python.python:conda",
+
   // ── Machine identity ──────────────────────────────────────
 
   // Terminal
@@ -24,9 +25,7 @@
   "python.globalModuleInstallation": true,
   "python.terminal.activateEnvironment": false,
   "python.terminal.executeInFileDir": false,
-  "python.createEnvironment.trigger": "off",
-
-    
+  "python.createEnvironment.trigger": "off",    
 
   // Theme and UI — personal to the machine
   "workbench.colorTheme": "Tomorrow Night Blue",  
@@ -43,7 +42,6 @@
   "liveServer.settings.CustomBrowser": "chrome",
   "liveServer.settings.donotShowInfoMsg": true,
   "terminal.integrated.enableMultiLinePasteWarning": "never",
-
 
 // Disable VS Code/Copilot AI features.
 // Students use AI outside VS Code.
