@@ -1,4 +1,67 @@
+
+
 {
-    "python-envs.defaultEnvManager": "ms-python.python:conda",
-    "python-envs.defaultPackageManager": "ms-python.python:conda"
+  // Use Anaconda/Conda to manage Python environments and install packages.
+  "python-envs.defaultEnvManager": "ms-python.python:conda",
+  "python-envs.defaultPackageManager": "ms-python.python:conda",
+  // ── Machine identity ──────────────────────────────────────
+
+  // Terminal
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },  
+  "terminal.integrated.initialHint": false,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "overviewRuler",
+
+  // Python interpreter — setup50.ps1 substitutes real username  
+  "python.defaultInterpreterPath": "${env:USERPROFILE}/anaconda3/python.exe",
+  "python.globalModuleInstallation": true,
+  "python.terminal.activateEnvironment": false,
+  "python.terminal.executeInFileDir": false,
+  "python.createEnvironment.trigger": "off",
+
+    
+
+  // Theme and UI — personal to the machine
+  "workbench.colorTheme": "Tomorrow Night Blue",
+  "window.openFoldersInNewWindow": "off",
+  "window.customTitleBarVisibility": "windowed",
+  "workbench.startupEditor": "none",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.colorCustomizations": {},
+  "workbench.editor.empty.hint": "hidden",
+  "editor.minimap.enabled": false,
+  "breadcrumbs.enabled": false,
+  "extensions.ignoreRecommendations": true,
+
+  // Live Server — browser preference is machine-specific
+  "liveServer.settings.NoBrowser": false,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+
+
+// Disable VS Code/Copilot AI features.
+// Students use AI outside VS Code.
+"chat.disableAIFeatures": true,
+
+// Reduce editor hints/autocomplete.
+"editor.quickSuggestions": {
+  "other": "off",
+  "comments": "off",
+  "strings": "off"
+},
+
+"editor.parameterHints.enabled": false,
+"editor.lightbulb.enabled": "off",
+
+// Notebook
+"notebook.dragAndDropEnabled": false
 }
+
