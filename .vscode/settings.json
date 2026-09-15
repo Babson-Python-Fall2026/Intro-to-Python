@@ -29,9 +29,7 @@
     
 
   // Theme and UI — personal to the machine
-  "workbench.colorTheme": "Tomorrow Night Blue",
-  "window.openFoldersInNewWindow": "off",
-  "window.customTitleBarVisibility": "windowed",
+  "workbench.colorTheme": "Tomorrow Night Blue",  
   "workbench.startupEditor": "none",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.colorCustomizations": {},
