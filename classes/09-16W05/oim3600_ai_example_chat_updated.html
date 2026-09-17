@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OIM3600 — Example: Using AI as a Learning Partner</title>
+<style>
+:root {
+  --bg:#f4f3f0;
+  --paper:#ffffff;
+  --text:#1c2732;
+  --muted:#52606d;
+  --line:#d1d9e0;
+  --heading:#0d2137;
+  --accent:#1a6b9a;
+  --green:#2d7a4e;
+  --green-bg:#e9f6ef;
+  --blue-bg:#eaf3fb;
+  --gold:#a56b00;
+  --gold-bg:#fff7df;
+  --red:#b34a4a;
+  --red-bg:#fff0ef;
+  --code:#f5f7fa;
+  --radius:16px;
+  --shadow:0 1px 3px rgba(13,33,55,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1.65;
+}
+.page{max-width:1120px;margin:0 auto;padding:28px 20px 80px}
+header,.card,.takeaway{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+header{padding:30px 34px;margin-bottom:22px}
+.eyebrow{
+  font-family:Arial,sans-serif;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--accent);
+  font-size:.78rem;
+  margin-bottom:8px;
+}
+h1{margin:0 0 10px;color:var(--heading);font-size:2.35rem;line-height:1.15}
+h2{color:var(--heading);margin:0 0 14px;font-size:1.55rem}
+h3{color:var(--heading);margin:0 0 8px;font-size:1.1rem}
+p{margin:8px 0}
+.lede{font-size:1.08rem;max-width:85ch}
+.muted{color:var(--muted)}
+.card{padding:24px 28px;margin:18px 0}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 16px;
+  background:#fafbfc;
+}
+.rule strong{display:block;color:var(--heading);margin-bottom:4px}
+.chat-section{margin:26px 0 38px}
+.section-kicker{
+  font-family:Arial,sans-serif;
+  font-size:.77rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:5px;
+}
+.chat{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.msg{
+  border-radius:14px;
+  padding:15px 17px;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+.msg.student{background:var(--green-bg);border-left:5px solid var(--green);margin-right:9%}
+.msg.ai{background:var(--blue-bg);border-left:5px solid var(--accent);margin-left:9%}
+.role{
+  font-family:Arial,sans-serif;
+  font-weight:800;
+  font-size:.78rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.student .role{color:var(--green)}
+.ai .role{color:var(--accent)}
+pre,code{font-family:"Cascadia Code",Consolas,Menlo,monospace;font-size:.93rem}
+pre{
+  background:var(--code);
+  border:1px solid #e0e6ed;
+  border-radius:11px;
+  padding:13px 15px;
+  overflow:auto;
+  white-space:pre-wrap;
+  line-height:1.48;
+  margin:10px 0;
+}
+code{background:#f0f3f6;padding:1px 4px;border-radius:4px}
+.note{
+  margin:14px 0 4px;
+  padding:13px 16px;
+  border-radius:12px;
+  border:1px solid #edd89f;
+  border-left:5px solid var(--gold);
+  background:var(--gold-bg);
+}
+.note .label{
+  font-family:Arial,sans-serif;
+  font-size:.76rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  color:var(--gold);
+  display:block;
+  margin-bottom:4px;
+}
+.bad{
+  margin:14px 0;
+  padding:13px 16px;
+  border-radius:12px;
+  border:1px solid #efc7c4;
+  border-left:5px solid var(--red);
+  background:var(--red-bg);
+}
+.bad .label{
+  font-family:Arial,sans-serif;
+  font-size:.76rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  color:var(--red);
+  display:block;
+  margin-bottom:4px;
+}
+.takeaway{padding:22px 26px;margin-top:28px}
+.takeaway ol{margin:10px 0 0;padding-left:22px}
+.takeaway li{margin:7px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.small{font-size:.94rem}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+@media (max-width:760px){
+  .rules,.two-col{grid-template-columns:1fr}
+  .msg.student,.msg.ai{margin-left:0;margin-right:0}
+  h1{font-size:1.9rem}
+  header,.card{padding:20px}
+}
+@media print{
+  body{background:white}
+  .page{max-width:none;padding:0}
+  header,.card,.takeaway,.msg{box-shadow:none}
+  .chat-section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="eyebrow">OIM3600 · Computational Thinking with AI and Python</div>
+  <h1>Example: Using AI as a Learning Partner</h1>
+  <p class="lede">This is an edited version of a real homework conversation together with excerpts from the completed <code>homework.py</code> file. The goal is to show how AI can help you clarify Python behavior, test your mental model, and find syntax <strong>without doing the assignment for you</strong>.</p>
+  <p class="muted"><strong>Edited for teaching:</strong> repetitive exchanges have been shortened, and a few responses have been tightened so the example shows the intended workflow clearly.</p>
+</header>
+
+<section class="card">
+  <h2>The ground rules</h2>
+  <div class="rules">
+    <div class="rule"><strong>Use AI for reference and clarification.</strong> Ask what syntax means, what a method returns, or how to inspect an object.</div>
+    <div class="rule"><strong>Do the reasoning yourself.</strong> Make your prediction first. Do not ask AI to solve the exercise or write the finished answer.</div>
+    <div class="rule"><strong>Run small experiments.</strong> If you are unsure, use Python itself to test one small idea.</div>
+    <div class="rule"><strong>Push back when needed.</strong> If AI is over-explaining, going in circles, or forcing a weak interpretation of the assignment, say so and explain your reasoning.</div>
+  </div>
+</section>
+
+<section class="chat-section">
+  <div class="section-kicker">Example 1 · Prediction and clarification</div>
+  <h2>A1 — Types and operations</h2>
+  <div class="chat">
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>I'm starting the homework due Monday 9/21. Here are my predictions:</p>
+<pre># PREDICTION:
+# 1. 73 or '73'
+# 2. 777 or '777', maybe error
+# 3. string
+# 4. integer or int
+
+x = "7"
+y = 3
+
+print(x + str(y))
+print(x * y)
+print(type(x))
+print(type(y))</pre>
+      <p>How does this look?</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Good start. You made the prediction before running it. Two places are worth tightening:</p>
+      <p><strong>#1:</strong> you wrote <code>73</code> or <code>'73'</code>. What are you uncertain about — the value's type, or whether <code>print()</code> displays quote marks?</p>
+      <p><strong>#2:</strong> you wrote “maybe error.” What part of <code>x * y</code> makes you think an error is possible?</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>I wrote <code>73</code> or <code>'73'</code> because I'm not sure if <code>print()</code> will show the quotes.</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>That is a display question, not a type question. <code>print()</code> displays the contents of a string, so <code>print("73")</code> and <code>print(73)</code> both appear as:</p>
+<pre>73</pre>
+      <p>The values are still different types. If you want to know the type, inspect it with <code>type()</code>.</p>
+      <p>Now run your code and compare the actual result with your prediction.</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student</div>
+<pre>73
+777
+&lt;class 'str'&gt;
+&lt;class 'int'&gt;</pre>
+      <p>No idea why the single quotes are showing up inside <code>&lt;class 'str'&gt;</code>.</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Those quotes are part of Python's representation of the <em>type object</em>. <code>type(x)</code> is not printing the original string <code>"7"</code>; it is displaying that the object belongs to the class named <code>'str'</code>.</p>
+      <p>Your important conclusion is: <code>x</code> is a string and <code>y</code> is an integer.</p>
+    </div>
+  </div>
+  <div class="note"><span class="label">Why this is good AI use</span>The student made the prediction. AI clarified a narrow uncertainty about display versus type, then sent the student back to Python to observe the result.</div>
+</section>
+
+<section class="chat-section">
+  <div class="section-kicker">Example 2 · Investigating a bug</div>
+  <h2>B1 — Why did the list disappear?</h2>
+  <div class="chat">
+    <div class="msg student">
+      <div class="role">Student</div>
+<pre>items = [3, 1, 2]
+items = items.sort()
+print(items)</pre>
+      <p>I predict <code>None</code>. I know <code>sort()</code> sorts the list in place and returns <code>None</code>, but the question says to use <code>type()</code> in a small experiment. I don't see why.</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Your explanation is already basically there. The point of the <code>type()</code> experiment is to make the reassignment visible.</p>
+      <p>Instead of asking AI what happened, save the return value temporarily and inspect it:</p>
+<pre>items = [3, 1, 2]
+result = items.sort()
+
+print(items)
+print(result)
+print(type(result))</pre>
+      <p>Predict those three outputs, then run it. That will give you direct evidence for why <code>items = items.sort()</code> is a problem.</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>Right. <code>sort()</code> changes the existing list, but its return value is <code>None</code>. Assigning that return value back to <code>items</code> makes <code>items</code> refer to <code>None</code>.</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Exactly. Now your two fixes follow from that distinction:</p>
+      <p>Use <code>items.sort()</code> when you want to change the existing list, and use <code>sorted(items)</code> when you want a new sorted list while keeping the original.</p>
+    </div>
+  </div>
+  <div class="note"><span class="label">Why this is good AI use</span>AI did not write the homework answer first. It suggested a tiny experiment that lets the student discover the behavior from evidence.</div>
+</section>
+
+<section class="chat-section">
+  <div class="section-kicker">Example 3 · Syntax/reference help</div>
+  <h2>C1 — Building a sales snapshot</h2>
+  <div class="chat">
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>I need the sales from largest to smallest without changing the original list. Is this the right syntax?</p>
+<pre>ordered_sales = sorted(sales, reverse=True)</pre>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Yes. <code>sorted(sales, reverse=True)</code> returns a new list in descending order. It does not mutate <code>sales</code>.</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>Then for the top three I used:</p>
+<pre>top_three = ordered_sales[0:3]</pre>
+      <p>And the count:</p>
+<pre>sale_count = len(sales)</pre>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>Both are correct. The slice creates a new list containing the first three values, and <code>len(sales)</code> gives the number of sales.</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student</div>
+      <p>For “Why does your code not change <code>sales</code>?” I wrote: “because <code>sorted()</code> returned a new object.”</p>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>That's correct. No need to make it more complicated.</p>
+    </div>
+  </div>
+  <div class="note"><span class="label">Why this is good AI use</span>The student asks for confirmation of specific syntax and concepts after doing the work. AI answers the narrow question and stops.</div>
+</section>
+
+<section class="chat-section">
+  <div class="section-kicker">Example 4 · Build the solution yourself</div>
+  <h2>D1 — Putting the pieces together</h2>
+  <div class="chat">
+    <div class="msg student">
+      <div class="role">Completed homework</div>
+      <p>By Part D, the student had enough pieces to assemble the report without asking AI to write the solution:</p>
+<pre>report_name = report_name.strip()
+sorted_sales = sorted(sales, reverse=True)
+smallest = sorted_sales[-1]
+largest = sorted_sales[0]
+top_three = sorted_sales[:3]
+number_sales = len(sales)
+
+print(f'{report_name.upper()} - {region}')
+print(f'Number of Sales: {number_sales}')
+print(f'Largest sale: ${largest:,.2f}')
+print(f'Smallest sale: ${smallest:,.2f}')
+print(f'Top three: {top_three}')
+
+print(f'\n\nThe sum of all sales is: ${sum(sales):,.2f}')</pre>
+    </div>
+    <div class="msg ai">
+      <div class="role">Teaching point</div>
+      <p>This is the goal of the earlier AI conversation: by the time the assignment asks the student to combine ideas, the student should be able to do the combining.</p>
+      <p>AI may still be used as a reference for a narrow syntax question, but it should not turn “build the report” into a generated solution.</p>
+    </div>
+  </div>
+  <div class="note"><span class="label">Why this matters</span>Good AI help should eventually become less necessary. The earlier clarification about <code>sorted()</code>, slicing, indexing, and return values supports the later independent work rather than replacing it.</div>
+</section>
+
+<section class="chat-section">
+  <div class="section-kicker">Example 5 · Challenge the question when appropriate</div>
+  <h2>E1 — Computational Thinking Reflection</h2>
+  <div class="chat">
+    <div class="msg student">
+      <div class="role">Student</div>
+<pre># CHOSEN IDEA:
+# no idea
+
+# EXPLANATION:
+# we really didn't do any of these in the exercise. The instructions
+# were very explicit and for each instruction we wrote a line of code</pre>
+    </div>
+
+    <div class="msg ai">
+      <div class="role">AI</div>
+      <p>That is a defensible criticism of the question. In Part D, the task was already decomposed into explicit steps: clean the name, sort the list, find the largest and smallest values, take the top three, count the sales, and print the report.</p>
+      <p>You could say that <strong>decomposition appears in the exercise</strong>, but most of that decomposition was done by the exercise designer, not by you. You mainly translated the supplied steps into Python.</p>
+      <p>You also used Python abstractions such as <code>sorted()</code>, <code>len()</code>, <code>sum()</code>, and <code>strip()</code>, but simply calling an abstraction is not necessarily the same as doing the abstraction yourself.</p>
+    </div>
+
+    <div class="msg student">
+      <div class="role">Student conclusion</div>
+      <p>So the stronger answer is not to force one of the four labels. It is to explain that the exercise contains computational-thinking ideas, but the prompt already supplied much of the thinking.</p>
+    </div>
+  </div>
+  <div class="note"><span class="label">Why this is good AI use</span>The student did not ask AI to manufacture a reflection. The student noticed a problem with the prompt and stated a position. AI helped test whether that criticism was reasonable and sharpen the distinction between <em>using</em> an abstraction and <em>performing</em> abstraction.</div>
+</section>
+
+<section class="card">
+  <h2>What we removed from the original chat</h2>
+  <div class="two-col">
+    <div>
+      <h3>Unhelpful pattern</h3>
+      <div class="bad"><span class="label">Too much repetition</span>Repeatedly re-explaining that <code>sorted()</code> returns a new list and that the original list is unchanged, even after the student had already demonstrated that understanding.</div>
+    </div>
+    <div>
+      <h3>Better pattern</h3>
+      <div class="note"><span class="label">Acknowledge and move on</span>Once the student shows they understand the concept, confirm it briefly and continue. AI should not turn every correct answer into another lecture.</div>
+    </div>
+  </div>
+</section>
+
+<section class="takeaway">
+  <h2>What students should copy from this example</h2>
+  <ol>
+    <li><strong>Start with your own prediction or attempt.</strong> Give AI something to react to.</li>
+    <li><strong>Ask narrow questions.</strong> “Does <code>sorted()</code> change the original list?” is better than “Do this problem for me.”</li>
+    <li><strong>Use AI to design tiny experiments.</strong> Then let Python provide the evidence.</li>
+    <li><strong>Ask for syntax when you need it.</strong> Looking up how to slice, append, sort, or access a dictionary is legitimate reference use.</li>
+    <li><strong>Keep ownership of the reasoning.</strong> Your submitted explanation should be your explanation.</li>
+    <li><strong>Correct the AI's level of detail.</strong> If it is being pedantic or repetitive, say so. A productive AI conversation is interactive.</li>
+    <li><strong>Do not force an answer just because the prompt expects one.</strong> If you think the question itself is flawed, explain why and use AI to test your reasoning rather than inventing a response you do not believe.</li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>
