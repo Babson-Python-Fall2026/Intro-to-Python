@@ -34,3 +34,6 @@ Desktop.ini
 
 # Sync state (created by sync.ps1)
 .student_config.txt
+
+# Instructor files not yet released
+\#*
