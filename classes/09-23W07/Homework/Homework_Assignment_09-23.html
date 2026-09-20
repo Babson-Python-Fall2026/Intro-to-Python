@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM3600 Homework 09-23 — Python Foundations Sections 7–11</title>
+<style>
+  :root{
+    --ink:#142d32;
+    --paper:#f6f3e9;
+    --card:#ffffff;
+    --green:#006756;
+    --green2:#e8f1ed;
+    --gold:#ffce70;
+    --muted:#5a6c70;
+    --line:#c8d2cd;
+    --blue:#eaf2fb;
+    --purple:#f1ecfb;
+    --warn:#fff4df;
+    --code:#143038;
+    --codeink:#f4f7f5;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;
+    line-height:1.55;
+  }
+  .page{max-width:1180px;margin:0 auto;padding:28px 24px 90px}
+  header{
+    background:var(--ink);
+    color:white;
+    border-radius:16px;
+    padding:34px 38px;
+    margin-bottom:24px;
+  }
+  header .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:700;
+    color:var(--gold);
+    font-size:14px;
+  }
+  h1{font-size:clamp(34px,5vw,56px);line-height:1.05;margin:10px 0 14px}
+  h2{font-size:30px;line-height:1.15;margin:0 0 16px}
+  h3{font-size:21px;margin:0 0 10px}
+  p{margin:10px 0}
+  .meta{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+    margin-top:22px;
+  }
+  .meta div{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    padding:12px 14px;
+    border-radius:10px;
+  }
+  .meta strong{display:block;color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  .box,.part{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 28px;
+    margin:18px 0;
+  }
+  .intro{background:var(--green2);border-left:5px solid var(--green)}
+  .policy{background:var(--warn);border-left:5px solid #bb7a00}
+  .part-head{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    align-items:flex-start;
+    border-bottom:2px solid var(--line);
+    padding-bottom:12px;
+    margin-bottom:18px;
+  }
+  .pts{
+    white-space:nowrap;
+    font-weight:700;
+    color:var(--green);
+    font-size:18px;
+  }
+  code{
+    font-family:Consolas,"Courier New",monospace;
+    font-size:.96em;
+  }
+  pre{
+    background:var(--code);
+    color:var(--codeink);
+    border-radius:10px;
+    padding:18px 20px;
+    overflow:auto;
+    font-size:17px;
+    line-height:1.5;
+  }
+  .q{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    margin-top:18px;
+  }
+  .q:first-child{border-top:0;padding-top:0;margin-top:0}
+  .label{
+    display:inline-block;
+    background:var(--green2);
+    color:var(--green);
+    border-radius:999px;
+    padding:3px 9px;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin-bottom:8px;
+  }
+  ol,ul{padding-left:1.35em}
+  li{margin:8px 0}
+  .rubric{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
+  .rubric th,.rubric td{
+    border:1px solid var(--line);
+    padding:10px 12px;
+    vertical-align:top;
+    text-align:left;
+  }
+  .rubric th{background:#eef2ef}
+  .callout{
+    background:var(--blue);
+    border-left:5px solid #4e86b5;
+    padding:14px 18px;
+    border-radius:8px;
+    margin:14px 0;
+  }
+  .ct{background:var(--purple);border-left:5px solid #7458aa}
+  .footer{
+    color:var(--muted);
+    text-align:center;
+    font-size:14px;
+    margin-top:34px;
+  }
+  .toolbar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    padding:8px 0;
+    background:linear-gradient(var(--paper) 75%,rgba(246,243,233,0));
+  }
+  button{
+    border:1px solid #8da59b;
+    background:white;
+    color:var(--ink);
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  button:hover{background:#edf3ef}
+  @media(max-width:800px){
+    .meta{grid-template-columns:1fr 1fr}
+    .part-head{display:block}
+    .pts{margin-top:8px}
+  }
+  @media print{
+    body{background:white}
+    .page{max-width:none;padding:0}
+    .toolbar{display:none}
+    pre{white-space:pre-wrap}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="toolbar">
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<header>
+  <div class="eyebrow">OIM3600 · Computational Thinking with AI and Python</div>
+  <h1>Homework 09-23<br>Python Foundations — Sections 7–11</h1>
+  <p style="font-size:20px;max-width:900px">
+    Predict. Trace. Explain. Investigate. Research.
+  </p>
+
+  <div class="meta">
+    <div><strong>Worth</strong>2% of final grade</div>
+    <div><strong>Target time</strong>About 2 hours</div>
+    <div><strong>Sections</strong>7–11</div>
+    <div><strong>Format</strong>Individual work</div>
+  </div>
+</header>
+
+<section class="box intro">
+  <h2>Purpose</h2>
+  <p>
+    This homework builds on the Sections 7–11 class work. You will apply tuples,
+    dictionaries, object syntax, references, aliasing, mutation, rebinding, and copying
+    in new situations.
+  </p>
+  <p>
+    The goal is to demonstrate that you can <strong>reason about Python behavior,
+    solve the problems correctly, explain your thinking, and use AI to support rather
+    than replace your own work</strong>.
+  </p>
+</section>
+
+<section class="box">
+  <h2>Files for this assignment</h2>
+  <p>You will work primarily in:</p>
+  <pre><code>Homework_09-23.ipynb</code></pre>
+  <p>
+    The notebook contains all problems, starter code, prediction spaces, research prompts,
+    and the final reflection.
+  </p>
+  <div class="callout">
+    <strong>Important:</strong> The notebook is where you provide your answers.
+    Do not create a separate Python solution file.
+  </div>
+</section>
+
+<section class="box">
+  <h2>How to complete the homework</h2>
+  <ol>
+    <li>Open <code>Homework_09-23.ipynb</code> in VS Code.</li>
+    <li>Read the Markdown cells for the setup and instructions for each problem.</li>
+    <li>Enter your answers in the supplied <strong>code cells</strong>.</li>
+    <li>For written answers, predictions, and explanations, write your response as <strong>Python comments</strong> in the spaces provided.</li>
+    <li>For coding questions, add code only where the notebook asks you to do so.</li>
+    <li>When a problem says <strong>BEFORE RUNNING</strong>, write your prediction before executing the code.</li>
+    <li>If a prediction is wrong, <strong>do not erase it</strong>. Add the actual result and explain what you misunderstood.</li>
+    <li>Use small experiments when they help you understand unexpected behavior.</li>
+    <li>Save the completed notebook before submitting it.</li>
+  </ol>
+
+  <div class="callout">
+    <strong>All answers belong in <code>Homework_09-23.ipynb</code>.</strong>
+    Markdown explains the problem; the code cells provide the places for you to answer.
+  </div>
+</section>
+
+<section class="box">
+  <h2>Topics covered</h2>
+  <ul>
+    <li><strong>Section 7:</strong> Tuples</li>
+    <li><strong>Section 8:</strong> Dictionaries and nested data</li>
+    <li><strong>Section 9:</strong> Bracket lookup, method calls, and function calls</li>
+    <li><strong>Section 10:</strong> Variables, references, and aliasing</li>
+    <li><strong>Section 11:</strong> Mutability, rebinding, shallow copying, and deep copying</li>
+  </ul>
+  <p>
+    The final problem also asks you to research how passwords should be protected when
+    user information is stored in a file.
+  </p>
+</section>
+
+<section class="box policy">
+  <h2>Using your OIM3600 Claude Project</h2>
+  <p>
+    You may use your <strong>OIM3600 Project in Claude</strong> as a syntax/reference,
+    explanation, and research-support tool.
+  </p>
+  <p>
+    Do not ask Claude to simply complete the homework for you. Your submitted notebook
+    should show your own predictions, reasoning, explanations, experiments, and decisions.
+  </p>
+
+  <h3 style="margin-top:22px">Submit your Claude conversation</h3>
+  <p>
+    When you finish the homework, copy and paste the <strong>complete OIM3600 Project
+    conversation(s) with Claude</strong> that you used while working on this assignment
+    into a text file named:
+  </p>
+  <pre><code>ai_chat_09-23.txt</code></pre>
+  <p>
+    Include both your prompts and Claude's responses. Do not remove parts of the
+    conversation. If you used more than one OIM3600 Project conversation, include all of
+    them in the same text file and separate them with clear headings.
+  </p>
+  <p>
+    If you did not use Claude for the homework, submit the text file with:
+    <code>No AI used for this homework.</code>
+  </p>
+</section>
+
+<section class="part">
+  <div class="part-head">
+    <div>
+      <div class="label">Research</div>
+      <h2>Problem 11 — Password Protection</h2>
+      <p>Practice researching an unfamiliar technical topic.</p>
+    </div>
+    <div class="pts">About 25 min</div>
+  </div>
+
+  <p>
+    Problem 11 is a <strong>research and explanation</strong> problem, not a coding problem.
+    You will investigate how programs protect stored passwords.
+  </p>
+  <p>
+    Use <strong>at least two reliable non-AI sources</strong>. Claude may help you
+    understand terminology, but it should not be your only source.
+  </p>
+  <p>
+    Your answers should explain the ideas in your own words and identify the sources
+    you used and why you considered them trustworthy.
+  </p>
+</section>
+
+<section class="box">
+  <h2>Suggested pacing</h2>
+  <table class="rubric">
+    <thead>
+      <tr><th>Problems</th><th>Focus</th><th>Approximate time</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1–5</td><td>Tuples, dictionaries, nested data, and Python syntax</td><td>42 min</td></tr>
+      <tr><td>6–9</td><td>References, mutation, rebinding, functions, and copying</td><td>40 min</td></tr>
+      <tr><td>10</td><td>Integrated challenge</td><td>12 min</td></tr>
+      <tr><td>11</td><td>Password-protection research</td><td>25 min</td></tr>
+      <tr><th>Total</th><th></th><th>About 2 hours</th></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="box">
+  <h2>What to submit</h2>
+  <p>Submit these two completed files:</p>
+  <ol>
+    <li>
+      <code>Homework_09-23.ipynb</code> — your completed notebook containing all
+      predictions, answers, code, explanations, research responses, and final reflection.
+    </li>
+    <li>
+      <code>ai_chat_09-23.txt</code> — the complete OIM3600 Claude Project conversation(s)
+      you used while completing the homework.
+    </li>
+  </ol>
+</section>
+
+<section class="box">
+  <h2>Before you submit</h2>
+  <ul>
+    <li>I answered every question in <code>Homework_09-23.ipynb</code>.</li>
+    <li>I wrote predictions before running code when requested.</li>
+    <li>I kept incorrect predictions and explained what I learned.</li>
+    <li>I can explain the code and written answers I submitted.</li>
+    <li>My research answers are in my own words.</li>
+    <li>I used at least two reliable non-AI sources for Problem 11.</li>
+    <li>I listed my research sources and explained why I considered them trustworthy.</li>
+    <li>I copied my complete OIM3600 Claude Project conversation(s) into <code>ai_chat_09-23.txt</code>.</li>
+  </ul>
+</section>
+
+<section class="box">
+  <h2>Grading emphasis</h2>
+  <p>
+    The overall objective is to <strong>demonstrate understanding, solve the problems
+    correctly, and use AI in a way that supports rather than replaces your own thinking</strong>.
+  </p>
+  <table class="rubric">
+    <thead>
+      <tr><th>Area</th><th>What is being evaluated</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Understanding</td><td>Accurate explanations of the Python concepts in Sections 7–11.</td></tr>
+      <tr><td>Problem solving</td><td>Correct predictions, code, tracing, experiments, and conclusions.</td></tr>
+      <tr><td>Research</td><td>Use of reliable sources and a clear explanation of what you learned.</td></tr>
+      <tr><td>AI use</td><td>Claude supports your learning rather than replacing your reasoning, and the complete conversation is submitted.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="footer">
+  OIM3600 · Computational Thinking with AI and Python · Homework 09-23
+</div>
+
+</div>
+</body>
+</html>
