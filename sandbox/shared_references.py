@@ -6,6 +6,7 @@ for l in b:
     print (id(l))  # all '1's and '2's have same id
 print()
 
+
 c = [1,2]
 d = c * 3
 print(c,d)
