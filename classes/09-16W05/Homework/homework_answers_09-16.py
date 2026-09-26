@@ -42,10 +42,10 @@ def question_a1():
     """
 
     # PREDICTION:
-    # 1. 73
-    # 2. 777
+    # 1. 73 or '73'
+    # 2. 777 or '777', maybe error
     # 3. string
-    # 4. integer
+    # 4. integer or int
 
     x = "7"
     y = 3
@@ -57,14 +57,14 @@ def question_a1():
 
     # ACTUAL RESULT:
     # 1. 73
-    # 2. 777
-    # 3. string
-    # 4. integer
+    # 2.777
+    # 3. <class 'str'>
+    # 4. <class 'int'>
 
     # EXPLANATION:
-    #
+    # I was surprised that type() placed the name of the object type in quotes
+# question_a1()
 
-#question_a1()
 def question_a2():
     """
     A2 — Strings, indexing, and slicing
@@ -90,19 +90,23 @@ def question_a2():
     print(text[::-1])
 
     # ACTUAL RESULT:
-    # 1. B
-    # 2. e
-    # 3. abson
-    # 4. Babson
-    # 5. egelloC nosbaB
+    # 1. for all same as prediction
+    # 2.
+    # 3.
+    # 4.
+    # 5.
 
     # Which expression creates the largest new string?
-    # print(text[::-1])
+    #  print(text[::-1])
 
     # Explain indexing vs slicing:
-    # indexing gets a singfle element at one position  slicing creates a new object substring
+    '''
+    indexing let's us access a specific element in a tuple, list or string
+    slicing creates a new tuple, list or string based on the slice arguments
+    
+    '''
 
-#question_a2()
+# question_a2()
 def question_a3():
     """
     A3 — Lists and sorting
@@ -119,16 +123,16 @@ def question_a3():
     ordered = sorted(numbers)
 
     print(numbers)
-    print(ordered)
+    print(ordered) 
 
     # ACTUAL RESULT:
-    # numbers: [4, 1, 3, 2]
-    # ordered: [1, 2, 3, 4]:
+    # numbers:
+    # ordered:
 
     # Does sorted(numbers) change numbers? Explain:
-    # no, it returns a new sorted list
+    # no, it returns a new list
 
-question_a3()
+# question_a3()
 # ============================================================
 # PART B — INVESTIGATE A BUG
 # ============================================================
@@ -159,21 +163,27 @@ def question_b1():
     # INVESTIGATION:
     # Add a small experiment using type() below.
     # Keep your experiment in the file as evidence of your reasoning.
+    '''
+    no idea why we would use type() to investigate. sort() is a list method
+    that sorts the list in place. It returns None so items was re assigned to None    
+    '''
+
     print(type(items))
+
 
 
     # EXPLANATION:
     # Why did items become what it became?
-    # because sort is a method that mutates list and returns None
+    # see above
 
 
     # FIX 1:
     # Rewrite the idea so items itself becomes [1, 2, 3].
     # YOUR CODE:
+    
     items = [3, 1, 2]
-    items = sorted(items)
+    items.sort()
     print(items)
-
 
 
     # FIX 2:
@@ -182,8 +192,8 @@ def question_b1():
     # result in a different variable.
     # YOUR CODE:
     items = [3, 1, 2]
-    new_items = sorted(items)
-    print(items, new_items)
+    sorted_items = sorted(items)
+    print(sorted_items)
 
 
 #question_b1()
@@ -209,30 +219,32 @@ def question_c1():
     sales = [1240.50, 875.25, 1920.00, 650.75, 1435.50, 990.00]
 
     # YOUR CODE:
-    order_sales = sorted(sales, reverse = True)
-    print(order_sales)
-    print(sales)
+    ordered_sales = sorted(sales, reverse = True)
+    top_three = ordered_sales[0:3]
+    sale_count = len(sales)
 
-    top_three = order_sales[:3]
-    print(top_three)
+    print(f'oredered sales: {ordered_sales} \ntop three: {top_three}\nsale count {sale_count:d}')
+
+
+
 
     # 6. Why does your code not change sales?
-    # sorted() is a function that returns a new object, retrieves sales but does not mutate it
+    # because sorted returned a new object
 
 
     # 7. Which line creates a new list by sorting?
-    # order_sales = sorted(sales, reverse = True)
+    #  ordered_sales = sorted(sales)
 
 
     # 8. Which line creates a new list by slicing?
-    # top_three = order_sales[:3]
+    # top_three = ordered_sales[0:3]
 
-#question_c1()
+
 # ============================================================
 # PART D — BUILD A SMALL SALES SNAPSHOT
 # ============================================================
 
-
+# question_c1()
 def question_d1():
     """
     D1 — Build a small sales snapshot
@@ -266,58 +278,24 @@ def question_d1():
     sales = [1240.50, 875.25, 1920.00, 650.75, 1435.50, 990.00]
 
     # YOUR CODE:
-    '''
-    1. Remove the extra spaces from report_name.
-    '''
-    report_name = report_name.strip()
-    print(report_name)
 
-    '''
-        2. Display the report name in uppercase.
-    '''
-    print(report_name.upper())
-
-    '''
-        3. Create a new descending sorted list without changing sales.
-    '''
+    report_name = report_name.strip()    
     sorted_sales = sorted(sales, reverse = True)
-    print(sorted_sales)
-    '''
-        4. Use indexing to obtain the largest and smallest sale.
-    '''
-    largest = sorted_sales[0]
     smallest = sorted_sales[-1]
-    print(largest, smallest)
-
-    '''
-        5. Use slicing to obtain the top three.
-    '''
+    largest = sorted_sales[0]
     top_three = sorted_sales[:3]
-    print(top_three)
+    number_sales = len(sales)    
 
-    '''
-        6. Use len() for the number of sales.
-    '''
-    length = len(sales)
-    print(length)
 
-    '''
-        7. Use f-strings for the printed report
-    '''
-    print(f"{report_name.upper()} - {region}")
-    print(f"Number of sales: {len(sales)}")
-    print(f"Largest sale: ${largest:,.2f}")
-    print(f"Smallest sale: ${smallest:,.2f}")
-    print(f"Top three: {top_three}")
+    print(f'{report_name.upper()} - {region}')
+    print(f'Number of Sales: {number_sales}')
+    print(f'Largest sale: ${largest:,.2f}')
+    print(f'Smallest sale: ${smallest:,.2f}')
+    print(f'Top three: {top_three}')
 
-    '''
-        8. Add one additional useful line of information of your own choosing.
-    
-    '''
-    bottom_three = sorted_sales[-3:]
-    print(f"Bottom Three: ${bottom_three}")
+    print(f'\n\nThe sum of all sales is: ${sum(sales):,.2f}')
+
 question_d1()
-
 # ============================================================
 # PART E — COMPUTATIONAL THINKING REFLECTION
 # ============================================================
@@ -339,11 +317,11 @@ def question_e1():
     """
 
     # CHOSEN IDEA:
-    #
+    # no idea
 
     # EXPLANATION:
-    #
-    #
+    # we really didn't do any of these in the exercise. The instructions
+    # were very explicit and for each instruction we wrote a line of code
     #
     #
 

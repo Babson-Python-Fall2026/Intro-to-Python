@@ -56,10 +56,11 @@ def question_a1():
     print(type(y))
 
     # ACTUAL RESULT:
-    # 1. 73
-    # 2. 777
-    # 3. string
-    # 4. integer
+    # 73
+    # 777
+    # <class 'str'>
+    # <class 'int'>
+
 
     # EXPLANATION:
     #
@@ -100,7 +101,7 @@ def question_a2():
     # print(text[::-1])
 
     # Explain indexing vs slicing:
-    # indexing gets a singfle element at one position  slicing creates a new object substring
+    # indexing gets a single element at one position  slicing creates a new object substring
 
 #question_a2()
 def question_a3():
@@ -123,12 +124,12 @@ def question_a3():
 
     # ACTUAL RESULT:
     # numbers: [4, 1, 3, 2]
-    # ordered: [1, 2, 3, 4]:
+    # ordered: [1, 2, 3, 4]#
 
     # Does sorted(numbers) change numbers? Explain:
     # no, it returns a new sorted list
 
-question_a3()
+#question_a3()
 # ============================================================
 # PART B — INVESTIGATE A BUG
 # ============================================================
@@ -159,7 +160,7 @@ def question_b1():
     # INVESTIGATION:
     # Add a small experiment using type() below.
     # Keep your experiment in the file as evidence of your reasoning.
-    print(type(items))
+    print(type(items)) # prints <class 'NoneType'>
 
 
     # EXPLANATION:
@@ -171,7 +172,7 @@ def question_b1():
     # Rewrite the idea so items itself becomes [1, 2, 3].
     # YOUR CODE:
     items = [3, 1, 2]
-    items = sorted(items)
+    items.sort()
     print(items)
 
 
@@ -209,23 +210,31 @@ def question_c1():
     sales = [1240.50, 875.25, 1920.00, 650.75, 1435.50, 990.00]
 
     # YOUR CODE:
-    order_sales = sorted(sales, reverse = True)
-    print(order_sales)
+    ordered_sales = sorted(sales, reverse = True)
+    print(ordered_sales)
     print(sales)
 
-    top_three = order_sales[:3]
+    top_three = ordered_sales[:3]
     print(top_three)
+
+    sale_count = len(sales)
+    print(sale_count)
+
+    print(f"Ordered Sales: {ordered_sales}")
+    print(f"Top three: {top_three}")
+    print(f"Sale Count: {sale_count}")
+
 
     # 6. Why does your code not change sales?
     # sorted() is a function that returns a new object, retrieves sales but does not mutate it
 
 
     # 7. Which line creates a new list by sorting?
-    # order_sales = sorted(sales, reverse = True)
+    # ordered_sales = sorted(sales, reverse = True)
 
 
     # 8. Which line creates a new list by slicing?
-    # top_three = order_sales[:3]
+    # top_three = ordered_sales[:3]
 
 #question_c1()
 # ============================================================
@@ -315,7 +324,7 @@ def question_d1():
     
     '''
     bottom_three = sorted_sales[-3:]
-    print(f"Bottom Three: ${bottom_three}")
+    print(f"Bottom Three: {bottom_three}")
 question_d1()
 
 # ============================================================
@@ -339,13 +348,16 @@ def question_e1():
     """
 
     # CHOSEN IDEA:
-    #
+    # Pattern recognition
 
     # EXPLANATION:
-    #
-    #
-    #
-    #
+    # In A3, B1, and C1, I kept running into the same idea: sorted() returns a
+    # new list and leaves the original alone, while .sort() changes the original
+    # list and returns None. Once I recognized that pattern, I could explain the
+    # B1 bug (items = items.sort() saved None into items) and I knew to use
+    # sorted() in C1 and D1 when the instructions said to leave sales unchanged.
+    # This is pattern recognition because I noticed one rule repeating across
+    # different problems and used it to predict what would happen in new ones.
 
 
 # ============================================================
