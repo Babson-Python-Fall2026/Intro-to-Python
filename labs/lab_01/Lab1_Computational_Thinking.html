@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 1 — Computational Thinking with Python</title>
+<style>
+    :root {
+        --green: #2f6b4f;
+        --green-dark: #214c39;
+        --green-light: #eaf3ee;
+        --gold: #b58a35;
+        --ink: #1f2933;
+        --muted: #5f6b76;
+        --line: #d9e0e5;
+        --panel: #f7f9fa;
+        --white: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        background: #eef2f3;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.55;
+    }
+    .page {
+        max-width: 980px;
+        margin: 32px auto;
+        background: var(--white);
+        box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    }
+    header {
+        background: var(--green-dark);
+        color: white;
+        padding: 34px 46px 30px;
+        border-bottom: 6px solid var(--gold);
+    }
+    header h1 {
+        margin: 0 0 6px;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    header p {
+        margin: 0;
+        font-size: 1.05rem;
+        opacity: .92;
+    }
+    main { padding: 38px 46px 50px; }
+    h2 {
+        color: var(--green-dark);
+        border-bottom: 2px solid var(--green-light);
+        padding-bottom: 8px;
+        margin-top: 38px;
+    }
+    h3 { color: var(--green); margin-top: 28px; }
+    .intro, .note, .deliverable, .warning {
+        border-radius: 6px;
+        padding: 16px 18px;
+        margin: 18px 0;
+    }
+    .intro { background: var(--green-light); border-left: 5px solid var(--green); }
+    .note { background: var(--panel); border-left: 5px solid #7b8794; }
+    .deliverable { background: #fff8e8; border-left: 5px solid var(--gold); }
+    .warning { background: #fff1f0; border-left: 5px solid #b24a42; }
+    code {
+        font-family: Consolas, "Courier New", monospace;
+        background: #f1f3f5;
+        padding: 1px 4px;
+        border-radius: 3px;
+    }
+    pre {
+        background: #182026;
+        color: #f3f5f7;
+        padding: 18px 20px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: Consolas, "Courier New", monospace;
+        line-height: 1.35;
+    }
+    ul, ol { padding-left: 25px; }
+    li { margin: 6px 0; }
+    .question {
+        border: 1px solid var(--line);
+        background: #fbfcfd;
+        border-radius: 6px;
+        padding: 14px 16px;
+        margin: 13px 0;
+    }
+    .constraints {
+        border: 1px solid #cbd6cf;
+        background: #f8fbf9;
+        padding: 15px 18px;
+        border-radius: 6px;
+    }
+    .checklist li { margin-bottom: 8px; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+    }
+    th, td {
+        border: 1px solid var(--line);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+    }
+    th { background: var(--green-light); color: var(--green-dark); }
+    footer {
+        padding: 18px 46px 28px;
+        color: var(--muted);
+        font-size: .92rem;
+        border-top: 1px solid var(--line);
+    }
+    .small { color: var(--muted); font-size: .95rem; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+    <h1>Lab 1 — Computational Thinking with Python</h1>
+    <p>Patterns, data generation, and algorithm design</p>
+</header>
+
+<main>
+<section class="intro">
+    <strong>Purpose.</strong> This lab asks you to solve three different kinds of problems.
+    The emphasis is not just on getting Python to run, but on deciding how to represent a problem,
+    breaking it into manageable pieces, and testing whether your solution works.
+</section>
+
+<h2>Instructions</h2>
+<ul>
+    <li>Complete all three parts.</li>
+    <li>Read the entire problem before writing code.</li>
+    <li>Use meaningful variable and function names.</li>
+    <li>Test your program with more than one input.</li>
+    <li>Keep your code readable and add comments where they clarify your reasoning.</li>
+    <li>Use AI for syntax/reference help only. You are responsible for understanding and explaining your solution.</li>
+    <li>Complete the lab using your <strong>OIM3600 Project</strong>.</li>
+    <li>Place all lab files in <code>labs\lab_01</code>.</li>
+    <li>Save Part 1 in <code>labs\lab_01\draw.py</code>.</li>
+    <li>Save Part 2 in <code>labs\lab_01\generate.py</code>.</li>
+    <li>Save Part 3 in <code>labs\lab_01\caesar.py</code>.</li>
+    <li>Copy the link to the OIM3600 Project used for this lab and paste it into <code>labs\lab_01\ai_lab1_link.txt</code>.</li>
+    <li>Save your work, commit your changes, and sync your repository when finished.</li>
+</ul>
+
+<h2>Part 1 — Draw an X Inside a Square</h2>
+<p><strong>File:</strong> <code>labs\lab_01\draw.py</code></p>
+
+<h3>Problem</h3>
+<p>
+Ask the user for an odd integer representing the size of a square. Print a square made from
+<code>*</code> characters with an <strong>X</strong> drawn inside it.
+</p>
+
+<p>
+The outside border of the square should be stars. The two diagonals that form the X should also be stars.
+All other positions should be spaces.
+</p>
+
+<h3>Example output</h3>
+<p>For a size of <code>7</code>, your output should look like this:</p>
+
+<pre>*******
+**   **
+* * * *
+*  *  *
+* * * *
+**   **
+*******</pre>
+
+<div class="constraints">
+<strong>Requirements</strong>
+<ul>
+    <li>Prompt the user for the square size.</li>
+    <li>You may assume the user enters an odd integer of at least 3.</li>
+    <li>Your solution must work for different odd sizes, not just 7.</li>
+    <li>Use loops and conditional logic to decide what to print at each position.</li>
+    <li>Do not hard-code the finished picture.</li>
+</ul>
+</div>
+
+<h3>Before you code</h3>
+<div class="question">
+    <strong>1.</strong> For a given row and column, what conditions tell you that the position belongs to the outside border?
+</div>
+<div class="question">
+    <strong>2.</strong> What relationship between the row number and column number identifies one diagonal?
+</div>
+<div class="question">
+    <strong>3.</strong> What relationship identifies the other diagonal?
+</div>
+
+<h3>After you code</h3>
+<div class="question">
+    Briefly explain how your program decides whether each position should contain a star or a space.
+</div>
+
+<h2>Part 2 — Generate Random Student Test Data</h2>
+<p><strong>File:</strong> <code>labs\lab_01\generate.py</code></p>
+
+<h3>Background</h3>
+<p>
+When testing programs, it is often useful to create random input data instead of typing many test records by hand.
+For this exercise, you will write a function that generates random student records.
+</p>
+
+<h3>Problem</h3>
+<p>
+Write a function that takes <code>N</code> as a parameter, where <code>N</code> is the number of student records
+to generate and return.
+</p>
+
+<p>Each student record must be a dictionary with exactly these keys:</p>
+
+<pre>'id'
+'fname'
+'mi'
+'lname'</pre>
+
+<p><code>mi</code> stands for middle initial.</p>
+
+<h3>Data to use</h3>
+<p>Inside your function, hard-code three lists:</p>
+
+<ul>
+    <li><code>fname</code> — at least 5 unique first names</li>
+    <li><code>mi</code> — the letters A through Z</li>
+    <li><code>lname</code> — at least 5 unique last names</li>
+</ul>
+
+<p>
+If you use exactly 5 first names and 5 last names, then there are:
+</p>
+
+<pre>5 × 26 × 5 = 650</pre>
+
+<p>possible unique combinations of first name, middle initial, and last name.</p>
+
+<div class="constraints">
+<strong>Requirements</strong>
+<ul>
+    <li>Place <code>import random</code> at the top of your program.</li>
+    <li>Look up the functions available in the <code>random</code> library that may help you.</li>
+    <li>The function must return exactly <code>N</code> student dictionaries.</li>
+    <li>Student IDs must be sequential integers starting with <code>1</code>.</li>
+    <li>The combination <code>fname + mi + lname</code> must be unique for every returned student.</li>
+    <li>Your function must prevent the request from exceeding the number of unique student-name combinations your lists can produce.</li>
+    <li>Do not simply type out the student records manually.</li>
+</ul>
+</div>
+
+<h3>Example of one student dictionary</h3>
+
+<pre>{
+    'id': 1,
+    'fname': 'Maya',
+    'mi': 'Q',
+    'lname': 'Chen'
+}</pre>
+
+<p class="small">
+Your names may be different. The example only shows the required structure.
+</p>
+
+<h3>Questions to answer</h3>
+<div class="question">
+    <strong>1.</strong> What data structure does your function return? Why is that structure a good choice for a collection of student records?
+</div>
+<div class="question">
+    <strong>2.</strong> How does your program make sure that two students do not receive the same first-name, middle-initial, last-name combination?
+</div>
+<div class="question">
+    <strong>3.</strong> What should happen if the requested value of <code>N</code> is larger than the number of unique records your lists can produce?
+</div>
+
+<h2>Part 3 — Caesar Cipher</h2>
+<p><strong>File:</strong> <code>labs\lab_01\caesar.py</code></p>
+
+<h3>What is a Caesar cipher?</h3>
+<p>
+A Caesar cipher replaces each letter with another letter a fixed number of positions away in the alphabet.
+When the shift passes the end of the alphabet, it wraps back to the beginning.
+</p>
+
+<p>For example, with a shift of <code>3</code>:</p>
+
+<pre>A → D
+B → E
+C → F
+...
+X → A
+Y → B
+Z → C</pre>
+
+<p>With a shift of <code>8</code>, the word <code>hello</code> becomes <code>PMTTW</code> if your program produces uppercase output.</p>
+
+<h3>Your task</h3>
+<p>
+Write a program that can both encrypt and decrypt text using a Caesar cipher.
+</p>
+
+<div class="constraints">
+<strong>Requirements</strong>
+<ul>
+    <li>Ask the user for the text.</li>
+    <li>Ask the user for an integer shift value.</li>
+    <li>Ask whether the user wants to encrypt or decrypt.</li>
+    <li>Convert the input text to uppercase before processing it.</li>
+    <li>Leave spaces, punctuation, and digits unchanged.</li>
+    <li>Your program must handle shift values greater than 26.</li>
+    <li>Your program must handle negative shift values.</li>
+    <li>Your program must correctly wrap from the end of the alphabet back to the beginning.</li>
+    <li><strong>You may not use <code>ord()</code> or <code>chr()</code>.</strong></li>
+</ul>
+</div>
+
+<div class="warning">
+<strong>Important:</strong> You are expected to determine your own representation and lookup strategy.
+The lab is intentionally not prescribing the exact data structures or steps you should use.
+</div>
+
+<h3>Example</h3>
+
+<table>
+    <tr>
+        <th>Input</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Text</td>
+        <td><code>Hello, Bob!</code></td>
+    </tr>
+    <tr>
+        <td>Shift</td>
+        <td><code>3</code></td>
+    </tr>
+    <tr>
+        <td>Mode</td>
+        <td>Encrypt</td>
+    </tr>
+</table>
+
+<p>Output:</p>
+
+<pre>KHOOR, ERE!</pre>
+
+<h3>Questions to answer</h3>
+<div class="question">
+    <strong>1.</strong> How did you represent the alphabet in your program?
+</div>
+<div class="question">
+    <strong>2.</strong> Explain how your program handles wraparound. For example, why does shifting <code>Z</code> forward by 3 produce <code>C</code>?
+</div>
+<div class="question">
+    <strong>3.</strong> What should happen when the shift value is negative? Use an example to explain your answer.
+</div>
+<div class="question">
+    <strong>4.</strong> What should happen when the shift value is exactly <code>26</code>? Why?
+</div>
+<div class="question">
+    <strong>5.</strong> What effective shift should your program use when the user enters <code>300</code>? Explain how you determined it.
+</div>
+<div class="question">
+    <strong>6.</strong> Why should a shift of <code>29</code> have the same effect as a shift of <code>3</code>?
+</div>
+<div class="question">
+    <strong>7.</strong> How does your decryption logic reverse the encryption?
+</div>
+
+<h2>Reflection</h2>
+
+<p>Answer each question in complete sentences.</p>
+
+<ol>
+    <li>Which of the three problems required the most planning before you began coding? Why?</li>
+    <li>Choose one problem and explain how you broke it into smaller pieces.</li>
+    <li>Describe one important data-representation decision you made in Part 2 or Part 3.</li>
+    <li>Describe one bug you encountered or one test case that helped you discover a problem in your code.</li>
+    <li>If you had to make one of your solutions work for a much larger input, what part of your approach would you reconsider first?</li>
+</ol>
+
+<section class="deliverable">
+    <strong>Before submitting:</strong>
+    <ul class="checklist">
+        <li>Run each program with multiple test cases.</li>
+        <li>Make sure Part 1 works for more than one odd square size.</li>
+        <li>Make sure Part 2 returns exactly N records and contains no duplicate full-name combinations.</li>
+        <li>Make sure Part 3 successfully encrypts and then decrypts your own test message.</li>
+        <li>Test Part 3 with a negative shift, a shift of 26, and a shift of 300.</li>
+        <li>Answer all written questions and the reflection.</li>
+        <li>Confirm that <code>draw.py</code>, <code>generate.py</code>, <code>caesar.py</code>, and <code>ai_lab1_link.txt</code> are all located in <code>labs\lab_01</code>.</li>
+        <li>Paste the link to the OIM3600 Project used for this lab into <code>labs\lab_01\ai_lab1_link.txt</code>.</li>
+        <li>Commit and sync your completed work.</li>
+    </ul>
+</section>
+
+</main>
+
+<footer>
+OIM3600 — Computational Thinking with AI &amp; Python
+</footer>
+</div>
+</body>
+</html>
