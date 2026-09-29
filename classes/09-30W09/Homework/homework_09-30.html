@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM 3600 Homework 09-30</title>
+<style>
+:root {
+  --bg: #f7f7f4;
+  --card: #ffffff;
+  --text: #1d2327;
+  --muted: #5b6770;
+  --accent: #0b6e4f;
+  --accent-soft: #e3f1ec;
+  --border: #dcdfd8;
+  --code-bg: #f1f3ef;
+  --warn-bg: #fff6e0;
+  --warn-border: #e8b64c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15191b;
+    --card: #1e2427;
+    --text: #e6e9e7;
+    --muted: #a0aaa6;
+    --accent: #5cc79e;
+    --accent-soft: #1f3a31;
+    --border: #334047;
+    --code-bg: #11161a;
+    --warn-bg: #3a2f14;
+    --warn-border: #a8801f;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+header { border-bottom: 3px solid var(--accent); padding-bottom: 12px; margin-bottom: 24px; }
+header .course { color: var(--accent); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 14px; }
+h1 { margin: 4px 0 6px; font-size: 30px; line-height: 1.2; }
+header .meta { color: var(--muted); font-size: 15px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 17px; margin: 20px 0 6px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin: 0 0 20px;
+}
+.problem-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); white-space: nowrap;
+}
+.note {
+  background: var(--warn-bg); border-left: 4px solid var(--warn-border);
+  padding: 10px 14px; border-radius: 6px; margin: 12px 0;
+}
+code { font-family: Consolas, "SF Mono", Menlo, monospace; font-size: 14px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.codebox { position: relative; margin: 10px 0 14px; }
+pre {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; margin: 0;
+}
+pre code { background: none; padding: 0; font-size: 14px; line-height: 1.5; }
+.copy {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 12px; padding: 3px 10px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--card); color: var(--muted);
+}
+.copy:hover { color: var(--accent); border-color: var(--accent); }
+table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 15px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--accent-soft); }
+.tablewrap { overflow-x: auto; }
+ol, ul { padding-left: 22px; }
+li { margin: 3px 0; }
+nav.toc ol { columns: 2; column-gap: 32px; margin: 6px 0 0; }
+nav.toc a { color: var(--accent); text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+.path { font-family: Consolas, "SF Mono", Menlo, monospace; font-size: 14px; }
+@media (max-width: 600px) {
+  nav.toc ol { columns: 1; }
+  h1 { font-size: 25px; }
+  .card { padding: 16px; }
+}
+@media print {
+  .copy { display: none; }
+  .card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="course">OIM 3600 · Computational Thinking with AI and Python</div>
+  <h1>Homework 09-30: Decisions, Loops, and Exceptions</h1>
+  <div class="meta">Covers the <code>conditionals_loops_exceptions.ipynb</code> class notebook · Estimated time: about 2–2½ hours · 9 problems · 90 points</div>
+</header>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="card">
+  <h2>Before you start</h2>
+  <p>This homework practices the material from class: shallow vs. deep copies, imports, comparison and logical operators, De Morgan's laws, <code>if</code>/<code>elif</code>/<code>else</code>, <code>for</code> and <code>while</code> loops, <code>range()</code>, <code>pass</code>/<code>continue</code>/<code>break</code>, nested loops, and exceptions (including <code>raise</code> and custom exceptions).</p>
+
+  <h3>Where your answers go</h3>
+  <p><strong>All of your answers go in the homework notebook, <span class="path">Homework_09-30.ipynb</span>.</strong> It is in your course repo at <span class="path">classes/09-30W08/Homework/</span>. This page explains the problems; the notebook is where you do them.</p>
+  <ul>
+    <li>Every problem has its own section in the notebook, with the starter code already in place and a cell for each part.</li>
+    <li>Type your written answers after the labels provided: <code># Prediction:</code>, <code># Actual:</code>, <code># Explanation:</code>, <code># Answer:</code>. Tables and design work go in markdown cells; double-click one to edit it.</li>
+    <li>Don't rename the notebook, move it, or delete cells.</li>
+    <li>Run every cell so its output is showing when you submit.</li>
+  </ul>
+
+  <div class="note"><strong>Predict before you run.</strong> When a problem asks for a prediction, write it down first and keep it, even if it turns out wrong. A wrong prediction followed by a good explanation of why earns full credit. A "prediction" copied from the output after running does not.</div>
+
+  <h3>Using AI</h3>
+  <p>You may use the <strong>OIM3600 project</strong> in Claude for this homework. No other AI tools or general chats.</p>
+  <ul>
+    <li>Put the <strong>public share link</strong> for every OIM3600 project chat you use in a text file named <span class="path">ai_chat_links.txt</span>, in the same folder as the notebook (see Submission below).</li>
+    <li>Use AI to understand concepts and debug, not to produce your answers. Predictions, traces, and explanations must be your own thinking.</li>
+    <li>If you didn't use AI at all, write <code>No AI used</code> in <span class="path">ai_chat_links.txt</span>.</li>
+  </ul>
+
+  <nav class="toc">
+    <h3>Problems</h3>
+    <ol>
+      <li><a href="#p1">Copies and imports</a></li>
+      <li><a href="#p2">Boolean logic and De Morgan</a></li>
+      <li><a href="#p3">Fix the commission tiers</a></li>
+      <li><a href="#p4">Movie ticket pricing</a></li>
+      <li><a href="#p5">Trace: continue and break</a></li>
+      <li><a href="#p6">range() practice</a></li>
+      <li><a href="#p7">Nested loops</a></li>
+      <li><a href="#p8">while loops</a></li>
+      <li><a href="#p9">Exceptions</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ============ P1 ============ -->
+<section class="card" id="p1">
+  <div class="problem-head"><h2>Problem 1 · Copies and imports</h2><div class="chips"><span class="chip">Predict</span><span class="chip">~10 min</span><span class="chip">10 pts</span></div></div>
+  <p>A manager keeps a dictionary of team rosters and makes two backups before editing it.</p>
+<div class="codebox"><pre><code>import copy
+
+teams = {"sales": ["Ana", "Ben"], "ops": ["Cy"]}
+shallow = teams.copy()
+deep = copy.deepcopy(teams)
+
+teams["sales"].append("Dee")
+teams["ops"] = ["Eve"]
+
+print("shallow:", shallow)
+print("deep:", deep)
+print(teams["sales"] is shallow["sales"])
+print(teams["ops"] is shallow["ops"])</code></pre></div>
+  <ol type="a">
+    <li>Before running, fill in the <code># Prediction:</code> lines for all four printed lines.</li>
+    <li>Run it and record the <code># Actual:</code> output.</li>
+    <li><code># Explanation:</code> <code>shallow</code> picked up <code>"Dee"</code> but did <em>not</em> pick up <code>["Eve"]</code>. Why does one change show up in the shallow copy and the other doesn't? Use the words <em>mutate</em> and <em>rebind</em> in your answer.</li>
+    <li>Rewrite just the import and the <code>deepcopy</code> line two more ways: once using <code>from copy import deepcopy</code>, and once using an alias of your choice (<code>import copy as ...</code>). Show that each version still produces the same <code>deep</code> result.</li>
+  </ol>
+</section>
+
+<!-- ============ P2 ============ -->
+<section class="card" id="p2">
+  <div class="problem-head"><h2>Problem 2 · Boolean logic and De Morgan</h2><div class="chips"><span class="chip">Predict</span><span class="chip">Write</span><span class="chip">~15 min</span><span class="chip">10 pts</span></div></div>
+  <p>A lender is screening a loan applicant.</p>
+<div class="codebox"><pre><code>credit_score = 690
+income = 72000
+has_cosigner = True
+debt_ratio = 0.35
+
+print(credit_score &gt;= 700)                                     # 1
+print(income &gt; 50000 and debt_ratio &lt; 0.4)                     # 2
+print(credit_score &gt;= 700 or has_cosigner)                     # 3
+print(not has_cosigner)                                        # 4
+print(not credit_score &gt;= 700 and income &gt; 50000)              # 5
+print(not (credit_score &gt;= 700 and income &gt; 50000))            # 6
+print(credit_score &gt;= 650 and income &gt; 80000 or has_cosigner)  # 7
+print(600 &lt;= credit_score &lt; 700)                               # 8</code></pre></div>
+  <ol type="a">
+    <li>Predict <code>True</code> or <code>False</code> for all eight lines, then run and compare.</li>
+    <li>Lines 5 and 6 look almost the same. Explain why they can give different results in general, even if they happen to match here. Find values of <code>credit_score</code> and <code>income</code> that make lines 5 and 6 disagree.</li>
+    <li>Line 7 mixes <code>and</code> and <code>or</code> with no parentheses. Which one does Python evaluate first? Rewrite line 7 with parentheses that make that order explicit.</li>
+    <li>The lender rejects an application when <code>not (good_credit or has_cosigner)</code>. Use De Morgan's law to rewrite this condition with no <code>not</code> in front of the parentheses.</li>
+    <li>Prove your rewrite is correct: write nested <code>for</code> loops over <code>[False, True]</code> for <code>good_credit</code> and <code>has_cosigner</code> that print both the original expression and your rewrite for all four combinations.</li>
+  </ol>
+</section>
+
+<!-- ============ P3 ============ -->
+<section class="card" id="p3">
+  <div class="problem-head"><h2>Problem 3 · Fix the commission tiers</h2><div class="chips"><span class="chip">Fix</span><span class="chip">~10 min</span><span class="chip">10 pts</span></div></div>
+  <p>The sales commission rules are:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Sales</th><th>Commission rate</th></tr>
+    <tr><td>$50,000 or more</td><td>8%</td></tr>
+    <tr><td>$25,000 or more</td><td>5%</td></tr>
+    <tr><td>$10,000 or more</td><td>2%</td></tr>
+    <tr><td>Less than $10,000</td><td>0%</td></tr>
+  </table></div>
+  <p>A coworker wrote this code. It runs without errors but gives wrong answers.</p>
+<div class="codebox"><pre><code>sales = 50000
+
+if sales &gt; 10000:
+    rate = 0.02
+elif sales &gt; 25000:
+    rate = 0.05
+elif sales &gt; 50000:
+    rate = 0.08
+else:
+    rate = 0.0
+
+print("Commission:", sales * rate)</code></pre></div>
+  <ol type="a">
+    <li>Predict what the program prints for <code>sales = 50000</code>, and explain why it is wrong. There are <strong>two different</strong> bugs. Name both.</li>
+    <li>Fix the program. Test it with 60000, 50000, 25000, 10000, and 9999, and record each result in a comment.</li>
+    <li>Write a second working version that keeps the tests in <em>ascending</em> order (checking the lowest tier first). Hint: chained comparisons like <code>10000 &lt;= sales &lt; 25000</code>.</li>
+  </ol>
+</section>
+
+<!-- ============ P4 ============ -->
+<section class="card" id="p4">
+  <div class="problem-head"><h2>Problem 4 · Movie ticket pricing</h2><div class="chips"><span class="chip">Write</span><span class="chip">~15 min</span><span class="chip">10 pts</span></div></div>
+  <p>Write an <code>if</code>/<code>elif</code>/<code>else</code> program that uses <code>age</code>, <code>show_hour</code> (24-hour clock, 0–23), and <code>member</code> (<code>True</code>/<code>False</code>) to print the ticket price.</p>
+  <ul>
+    <li>If <code>age</code> is below 0 or above 120, print <code>"Invalid age"</code> and nothing else.</li>
+    <li>Children under 12 and seniors 65 or older pay <strong>$9</strong>.</li>
+    <li>Everyone else pays <strong>$11</strong> for a matinee (show starts before 17:00) and <strong>$15</strong> otherwise.</li>
+    <li>Members get <strong>$2 off</strong> any valid ticket.</li>
+  </ul>
+  <p>Run your program with every row below. The notebook has a copy of this table in a markdown cell: fill in the Expected column <em>before</em> running, then fill in Actual.</p>
+  <div class="tablewrap"><table>
+    <tr><th>age</th><th>show_hour</th><th>member</th><th>Expected</th><th>Actual</th></tr>
+    <tr><td>8</td><td>19</td><td>False</td><td></td><td></td></tr>
+    <tr><td>30</td><td>14</td><td>False</td><td></td><td></td></tr>
+    <tr><td>30</td><td>20</td><td>True</td><td></td><td></td></tr>
+    <tr><td>70</td><td>20</td><td>True</td><td></td><td></td></tr>
+    <tr><td>12</td><td>20</td><td>False</td><td></td><td></td></tr>
+    <tr><td>65</td><td>10</td><td>False</td><td></td><td></td></tr>
+    <tr><td>40</td><td>17</td><td>False</td><td></td><td></td></tr>
+    <tr><td>-4</td><td>12</td><td>True</td><td></td><td></td></tr>
+  </table></div>
+  <p><code># Answer:</code> Which rows test <em>boundaries</em>? Why are those rows the most likely to catch a bug?</p>
+</section>
+
+<!-- ============ P5 ============ -->
+<section class="card" id="p5">
+  <div class="problem-head"><h2>Problem 5 · Trace: <code>continue</code> and <code>break</code></h2><div class="chips"><span class="chip">Trace</span><span class="chip">~10 min</span><span class="chip">10 pts</span></div></div>
+  <p>An order log uses <code>-1</code> and <code>0</code> for voided entries and <code>999</code> as an end-of-day marker.</p>
+<div class="codebox"><pre><code>orders = [120, -1, 45, 0, 300, -1, 80, 999, 60]
+total = 0
+count = 0
+
+for amount in orders:
+    if amount == 999:
+        break
+    if amount &lt;= 0:
+        continue
+    total += amount
+    count += 1
+
+print(total, count)</code></pre></div>
+  <ol type="a">
+    <li>Without running, fill in the trace table in the notebook, one row per iteration: <code>amount | action (added / skipped / stopped) | total after | count after</code>.</li>
+    <li>What is printed? Which value in the list is never examined at all?</li>
+    <li>Predict the output if <code>continue</code> is replaced with <code>pass</code>. Explain.</li>
+    <li>Predict the output if <code>break</code> is replaced with <code>continue</code> (and the <code>continue</code> on the other line is left alone). Explain.</li>
+    <li>The notebook has a separate cell for each version. Make the change in each and run all three to check your predictions.</li>
+  </ol>
+</section>
+
+<!-- ============ P6 ============ -->
+<section class="card" id="p6">
+  <div class="problem-head"><h2>Problem 6 · <code>range()</code> practice</h2><div class="chips"><span class="chip">Predict</span><span class="chip">Write</span><span class="chip">~10 min</span><span class="chip">10 pts</span></div></div>
+  <ol type="a">
+    <li>Predict the exact list each of these produces, then check with <code>print(list(...))</code>:
+      <br><code>range(3, 8)</code> · <code>range(0, 20, 5)</code> · <code>range(20, 0, -5)</code> · <code>range(5, 5)</code> · <code>range(1, 10, -1)</code>
+      <br>Two of these produce an empty list. Explain why for each.</li>
+    <li>Write a <code>for</code> loop with <code>range()</code> for each task:
+      <ol>
+        <li>Print the multiples of 7 from 7 through 70.</li>
+        <li>Count down 30, 27, 24, … , 3.</li>
+        <li>Add up all the odd numbers from 1 through 99 and print the total.</li>
+        <li>Given <code>months = ["Jan", "Feb", "Mar", "Apr"]</code>, use <code>range(len(months))</code> to print each position and month, like <code>0 Jan</code>.</li>
+      </ol>
+    </li>
+  </ol>
+</section>
+
+<!-- ============ P8 ============ -->
+<section class="card" id="p7">
+  <div class="problem-head"><h2>Problem 7 · Nested loops</h2><div class="chips"><span class="chip">Write</span><span class="chip">Investigate</span><span class="chip">~15 min</span><span class="chip">10 pts</span></div></div>
+  <h3>Part A: seating chart</h3>
+  <p>Using <code>rows = ["A", "B", "C"]</code> and seats 1 through 4, print one line per row:</p>
+<div class="codebox"><pre><code>A1 A2 A3 A4
+B1 B2 B3 B4
+C1 C2 C3 C4</code></pre></div>
+  <p>Hint: inside the outer loop, start an empty string and add to it in the inner loop; print it after the inner loop finishes. Or check out the options in the <code>print()</code> function.</p>
+
+  <h3>Part B: what fits the budget?</h3>
+<div class="codebox"><pre><code>prices = {"notebook": 4, "pen": 2, "backpack": 35, "calculator": 18, "lamp": 22}
+names = list(prices.keys())
+budget = 25</code></pre></div>
+  <ol type="a">
+    <li>Use nested loops to print every pair of two <em>different</em> items whose combined price is within the budget. Each pair should appear only once (don't print both <code>pen + lamp</code> and <code>lamp + pen</code>). Print the number of pairs found at the end.<br>
+    Hint: loop over positions with <code>range(len(names))</code>, and start the inner loop one position after the outer one.</li>
+    <li><code># Answer:</code> How many times does the budget check run in your version? What would the count be if the inner loop started at 0 instead, and what two kinds of wrong pairs would show up?</li>
+  </ol>
+</section>
+
+<!-- ============ P9 ============ -->
+<section class="card" id="p8">
+  <div class="problem-head"><h2>Problem 8 · <code>while</code> loops</h2><div class="chips"><span class="chip">Write</span><span class="chip">Fix</span><span class="chip">~20 min</span><span class="chip">10 pts</span></div></div>
+  <h3>Part A: savings goal</h3>
+  <p>An account starts at $1,000 and earns 5% per year. Use a <code>while</code> loop to find how many years it takes to reach at least $2,000. Print the number of years and the final balance rounded to 2 decimals.</p>
+  <p><code># Answer:</code> Why is a <code>while</code> loop a better fit here than a <code>for</code> loop?</p>
+
+  <h3>Part B: find the bug (do NOT run this as written)</h3>
+<div class="codebox"><pre><code>inventory = 50
+day = 0
+
+while inventory != 0:
+    inventory -= 15
+    day += 1
+
+print("Out of stock on day", day)</code></pre></div>
+  <ol type="a">
+    <li>Trace the value of <code>inventory</code> for the first five iterations. Explain why this loop never ends.</li>
+    <li>Fix the condition so the loop stops, then run it. On which day does it run out?</li>
+  </ol>
+
+  <h3>Part C: PIN lockout</h3>
+  <p>Write a program that asks for a PIN using <code>input()</code>. The correct PIN is <code>"4821"</code>. The user gets at most 3 attempts:</p>
+  <ul>
+    <li>Correct PIN: print <code>Access granted</code> and stop asking.</li>
+    <li>Wrong PIN: print how many attempts are left.</li>
+    <li>After 3 wrong attempts: print <code>Card locked</code>.</li>
+  </ul>
+  <p>Test it twice: once succeeding on the 2nd try, once failing 3 times. The notebook keeps only the last run's output, so paste the first run's output into the comment provided.</p>
+</section>
+
+<!-- ============ P10 ============ -->
+<section class="card" id="p9">
+  <div class="problem-head"><h2>Problem 9 · Exceptions</h2><div class="chips"><span class="chip">Predict</span><span class="chip">Write</span><span class="chip">~20 min</span><span class="chip">10 pts</span></div></div>
+  <h3>Part A: which blocks run?</h3>
+<div class="codebox"><pre><code>try:
+    boxes = int(input("Number of boxes: "))
+    if boxes &lt; 0:
+        raise ValueError("boxes cannot be negative")
+    per_box = 240 / boxes
+except ValueError as error:
+    print("Bad input:", error)
+except ZeroDivisionError:
+    print("Cannot split into zero boxes")
+else:
+    print("Items per box:", per_box)
+finally:
+    print("Done")</code></pre></div>
+  <ol type="a">
+    <li>Predict the complete output for each input: <code>12</code>, <code>0</code>, <code>abc</code>, <code>-3</code>. Then run the cell four times, once per input, and record the results.</li>
+    <li>For <code>abc</code> and <code>-3</code>, the same <code>except</code> block runs. Where does each error message come from?</li>
+  </ol>
+
+  <h3>Part B: name that exception</h3>
+  <p>Without running, write which exception each line raises. The notebook gives each line its own cell; run them one at a time to confirm. (Don't use Run All here, because it stops at the first error.)</p>
+<div class="codebox"><pre><code>int("3.5")
+["a", "b"][2]
+{"x": 1}["y"]
+"Total: " + 5
+7 % 0
+print(totl)</code></pre></div>
+
+  <h3>Part C: discount code validator</h3>
+  <p>Define a custom exception <code>InvalidDiscountError</code>. Then write a loop that keeps asking for a discount percentage until it gets a valid one:</p>
+  <ul>
+    <li>Not an integer: print an error and ask again.</li>
+    <li>An integer outside 0–50: <code>raise InvalidDiscountError</code> with a helpful message, print that message, and ask again.</li>
+    <li>Valid: in the <code>else</code> block, print the sale price of an $80 item after the discount, and stop.</li>
+  </ul>
+  <p>Run it once, entering <code>ten</code>, <code>75</code>, <code>-5</code>, <code>20</code> in that order.</p>
+</section>
+
+<!-- ============ REFLECTION ============ -->
+<section class="card" id="reflection">
+  <h2>Reflection (3–5 sentences)</h2>
+  <p>In the notebook's last cell, answer: what was the hardest bug you hit in this homework, and how did you find it? If you used the OIM3600 project, did it help you understand the problem or just hand you a fix?</p>
+</section>
+
+<!-- ============ SUBMISSION ============ -->
+<section class="card" id="submit">
+  <h2>Submission</h2>
+  <p>Both files go in <span class="path">classes/09-30W08/Homework/</span> in your course repo. Then commit and push.</p>
+  <div class="tablewrap"><table>
+    <tr><th>File</th><th>Contents</th></tr>
+    <tr><td class="path">Homework_09-30.ipynb</td><td>The homework notebook with all 9 problems and the reflection answered, every cell run, and outputs showing.</td></tr>
+    <tr><td class="path">ai_chat_links.txt</td><td>A plain text file you create. One line per OIM3600 project chat you used: the problem number(s) and the public share link, e.g.<br><code>P8, P11 - https://claude.ai/share/...</code><br>If you didn't use AI, write <code>No AI used</code>.</td></tr>
+  </table></div>
+
+  <div class="note"><strong>Your links must be public.</strong> Several chat links last week were private and couldn't be opened; those count as missing. In the chat's <strong>Share</strong> menu, make sure the link is viewable by anyone with the link, not just you. Then <strong>test every link in a private/incognito browser window</strong> before you submit. If you can't see the chat there, neither can I.</div>
+
+  <h3>Checklist</h3>
+  <ul>
+    <li>File names are exact: <span class="path">Homework_09-30.ipynb</span> and <span class="path">ai_chat_links.txt</span>, no extra spaces.</li>
+    <li>Both files are in <span class="path">classes/09-30W08/Homework/</span></li>
+    <li>Every cell has been run and outputs are showing.</li>
+    <li>Your answers are in the notebook, and predictions were written before running.</li>
+    <li>Every chat link opens in an incognito window.</li>
+    <li>You committed <em>and pushed</em>. Check GitHub to confirm the files are there.</li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+document.querySelectorAll(".codebox").forEach(function (box) {
+  var btn = document.createElement("button");
+  btn.className = "copy";
+  btn.type = "button";
+  btn.textContent = "Copy";
+  box.appendChild(btn);
+  btn.addEventListener("click", function () {
+    var text = box.querySelector("code").innerText;
+    function done() {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Select & copy"; }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  });
+});
+</script>
+</body>
+</html>
