@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM3600 Capstone Teams</title>
+<style>
+:root {
+  --bg: #f4f6f8;
+  --paper: #ffffff;
+  --text: #1f2933;
+  --muted: #667085;
+  --line: #d8dee8;
+  --accent: #1f4e79;
+  --bull: #1f7a4d;
+  --bull-soft: #eaf6ef;
+  --bear: #9b2c2c;
+  --bear-soft: #fbeeee;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1050px;
+  margin: 36px auto;
+  background: var(--paper);
+  padding: 48px 56px 64px;
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(0,0,0,.08);
+}
+h1 {
+  margin: 0 0 10px;
+  font-size: 2.2rem;
+  line-height: 1.15;
+  color: #17324d;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.08rem;
+  margin-bottom: 30px;
+}
+.team {
+  margin: 36px 0 10px;
+  border-radius: 12px;
+  padding: 22px 24px 26px;
+}
+.team.bulls { background: var(--bull-soft); border-left: 6px solid var(--bull); }
+.team.bears { background: var(--bear-soft); border-left: 6px solid var(--bear); }
+.team-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-bottom: 16px;
+}
+.team-name {
+  margin: 0;
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+.bulls .team-name { color: var(--bull); }
+.bears .team-name { color: var(--bear); }
+.team-label {
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.team-count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid #e2e7ee;
+  border-radius: 10px;
+  padding: 16px 18px 12px;
+}
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #17324d;
+}
+.lab {
+  font-weight: 700;
+  font-size: .95rem;
+}
+.bulls .lab { color: var(--bull); }
+.bears .lab { color: var(--bear); }
+.focus {
+  color: var(--muted);
+  font-size: .92rem;
+  margin: 2px 0 10px;
+}
+ul.members {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+ul.members li {
+  padding: 7px 0;
+  border-bottom: 1px solid #eef1f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ul.members li:last-child { border-bottom: none; }
+.badge {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.bulls .badge { background: var(--bull); }
+.bears .badge { background: var(--bear); }
+.lead-name { font-weight: 700; }
+.footer-note {
+  margin-top: 34px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .95rem;
+}
+@media (max-width: 800px) {
+  .container {
+    margin: 0;
+    padding: 28px 16px 42px;
+    border-radius: 0;
+  }
+  .grid { grid-template-columns: 1fr; }
+  .team { padding: 18px 16px 20px; }
+  .team-count { margin-left: 0; }
+}
+@media print {
+  body { background: white; }
+  .container {
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+    padding: .45in;
+  }
+  .team, .card { break-inside: avoid; }
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+  <h1>OIM3600 Capstone Teams</h1>
+  <div class="subtitle">Equity Portfolio Management System · Labs 2, 3, and 4</div>
+
+  <section class="team bulls">
+    <div class="team-head">
+      <span class="team-label">Team A</span>
+      <h2 class="team-name">The Bulls</h2>
+      <span class="team-count">13 students</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Group 1</h3>
+        <div class="lab">Lead group · Lab 2</div>
+        <div class="focus">Data structures, login, and access</div>
+        <ul class="members">
+          <li><span class="lead-name">Aria</span><span class="badge">Lead</span></li>
+          <li>Joel</li>
+          <li>Ben</li>
+          <li>Rafaela</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Group 2</h3>
+        <div class="lab">Lead group · Lab 3</div>
+        <div class="focus">Transitions</div>
+        <ul class="members">
+          <li><span class="lead-name">Isabel</span><span class="badge">Lead</span></li>
+          <li>Molly</li>
+          <li>Izzy</li>
+          <li>Jason</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Group 3</h3>
+        <div class="lab">Lead group · Lab 4</div>
+        <div class="focus">Reports</div>
+        <ul class="members">
+          <li><span class="lead-name">Tony</span><span class="badge">Lead</span></li>
+          <li>Mo</li>
+          <li>Joao</li>
+          <li>Gabriel</li>
+          <li>Pedro</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="team bears">
+    <div class="team-head">
+      <span class="team-label">Team B</span>
+      <h2 class="team-name">The Bears</h2>
+      <span class="team-count">13 students</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Group 1</h3>
+        <div class="lab">Lead group · Lab 2</div>
+        <div class="focus">Data structures, login, and access</div>
+        <ul class="members">
+          <li><span class="lead-name">Alex</span><span class="badge">Lead</span></li>
+          <li>Joshua</li>
+          <li>Henrique</li>
+          <li>Aryaa</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Group 2</h3>
+        <div class="lab">Lead group · Lab 3</div>
+        <div class="focus">Transitions</div>
+        <ul class="members">
+          <li><span class="lead-name">Andrew</span><span class="badge">Lead</span></li>
+          <li>Yafry</li>
+          <li>Marcel</li>
+          <li>Diego</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Group 3</h3>
+        <div class="lab">Lead group · Lab 4</div>
+        <div class="focus">Reports</div>
+        <ul class="members">
+          <li><span class="lead-name">Julio A</span><span class="badge">Lead</span></li>
+          <li>Shaffey</li>
+          <li>Nicole</li>
+          <li>Julio C</li>
+          <li>Tona</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    OIM3600 · Computational Thinking with AI and Python
+  </div>
+</main>
+</body>
+</html>

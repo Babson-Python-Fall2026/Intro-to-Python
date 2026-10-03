@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM3600 Capstone Project — Equity Portfolio Management System</title>
+<style>
+:root {
+  --bg: #f4f6f8;
+  --paper: #ffffff;
+  --text: #1f2933;
+  --muted: #667085;
+  --line: #d8dee8;
+  --accent: #1f4e79;
+  --accent2: #2f6f55;
+  --soft: #eef4f9;
+  --soft2: #eef7f2;
+  --warn: #fff7e6;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1050px;
+  margin: 36px auto;
+  background: var(--paper);
+  padding: 48px 56px 64px;
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(0,0,0,.08);
+}
+h1 {
+  margin: 0 0 10px;
+  font-size: 2.2rem;
+  line-height: 1.15;
+  color: #17324d;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.08rem;
+  margin-bottom: 30px;
+}
+h2 {
+  margin: 42px 0 16px;
+  color: var(--accent);
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 8px;
+}
+h3 {
+  margin: 26px 0 10px;
+  color: #27445f;
+}
+p { margin: 10px 0 14px; }
+ul, ol { margin: 8px 0 16px 22px; }
+li { margin: 5px 0; }
+
+.hero {
+  background: linear-gradient(135deg, #eef4f9, #f8fbfd);
+  border: 1px solid #cddbea;
+  border-left: 6px solid var(--accent);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 24px 0 30px;
+}
+.hero strong { color: var(--accent); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 18px 0 8px;
+}
+.card {
+  border: 1px solid #e2e7ee;
+  border-radius: 10px;
+  padding: 18px;
+  background: #fbfcfd;
+}
+.card h3 {
+  margin-top: 0;
+  color: var(--accent);
+}
+.role-card {
+  border-left: 4px solid var(--accent2);
+  background: var(--soft2);
+}
+.grade-card .pct {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+.dates {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0 8px;
+}
+.dates th, .dates td {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+.dates th {
+  background: var(--soft);
+  color: #24435e;
+}
+.dates td:first-child {
+  font-weight: 700;
+  width: 16%;
+  white-space: nowrap;
+}
+.dates tr.milestone td {
+  background: #fbfcfd;
+}
+
+.callout {
+  background: var(--warn);
+  border-left: 5px solid #c58b18;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 18px 0;
+}
+.callout strong {
+  color: #805b12;
+}
+
+.deliverable {
+  background: var(--soft2);
+  border-left: 5px solid var(--accent2);
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 18px 0;
+}
+.deliverable strong { color: var(--accent2); }
+
+.examples {
+  background: var(--soft);
+  border: 1px solid #cfddeb;
+  border-radius: 10px;
+  padding: 14px 18px 6px;
+  margin: 14px 0 18px;
+}
+.examples .label {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.architecture {
+  background: var(--soft);
+  border: 1px solid #cfddeb;
+  padding: 16px 18px;
+  border-radius: 10px;
+}
+.architecture h3 { margin-top: 0; }
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0 4px;
+}
+.step {
+  background: #f8fafc;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-weight: 600;
+}
+.arrow { color: var(--muted); font-weight: 700; }
+
+.formula {
+  font-family: Consolas, "Courier New", monospace;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.small {
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+.footer-note {
+  margin-top: 34px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+@media (max-width: 800px) {
+  .container {
+    margin: 0;
+    padding: 28px 20px 42px;
+    border-radius: 0;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .dates td:first-child { white-space: normal; }
+}
+@media print {
+  body { background: white; }
+  .container {
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+    padding: .45in;
+  }
+  .card, .hero, .callout, .deliverable, .examples, .architecture, table {
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+  <h1>OIM3600 Capstone Project</h1>
+  <div class="subtitle">Equity Portfolio Management System · Labs 2, 3, and 4</div>
+
+  <div class="hero">
+    <strong>Capstone goal:</strong> Over the remainder of the semester, the class will build an equity portfolio management system through three related labs. Each lab focuses on a different part of the system, but all three must work together as one integrated application.
+  </div>
+
+  <h2>Project Structure</h2>
+  <p>The class will be divided into <strong>two development teams</strong>. Each team will have approximately 13 students and will be divided into three working groups.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Group 1</h3>
+      <p><strong>4 students</strong></p>
+      <p>Lead group for Lab 2: login, data structures, and access to project data.</p>
+    </div>
+    <div class="card">
+      <h3>Group 2</h3>
+      <p><strong>4 students</strong></p>
+      <p>Lead group for Lab 3: system transitions—how the state of the portfolio changes.</p>
+    </div>
+    <div class="card">
+      <h3>Group 3</h3>
+      <p><strong>5 students</strong></p>
+      <p>Lead group for Lab 4: reports and presentation of portfolio information.</p>
+    </div>
+  </div>
+
+  <h3>Who writes the code</h3>
+  <p><strong>Every student writes their own code for all three labs</strong> in their individual course repository. Group assignments do not divide the coding. Instead, each group becomes the team’s lead group for one lab and is responsible for helping the team understand, organize, and present that part of the system.</p>
+
+  <p>What the <em>team</em> produces together is a <strong>shared design</strong>: the data structures and function interfaces that every team member’s code must follow. One design per team, individual implementations by each student.</p>
+
+  <h3>Specification and baseline</h3>
+  <p>Two shared artifacts hold each team together:</p>
+  <ul>
+    <li>The <strong>specification</strong> is the written design: the data structures and the functions the rest of the system uses to access them.</li>
+    <li>The <strong>baseline</strong> is working code that implements the specification. It is chosen from the team’s submissions at the end of each lab and becomes everyone’s starting point for the next lab.</li>
+  </ul>
+
+  <h3>How the labs build on one another</h3>
+  <p>Each lab begins with individual work, but the team converges on one shared implementation on the lab’s due date.</p>
+  <ol>
+    <li>Every student submits their own solution <strong>before class</strong> on the due date.</li>
+    <li>In that class, the lead group presents a proposed team baseline, chosen from the team’s submissions.</li>
+    <li>The team discusses the proposal and agrees on the baseline. If the team agrees on revisions during the presentation, the instructor implements them.</li>
+    <li>The instructor places the approved baseline in every team member’s repository by the end of the day.</li>
+    <li>All students begin the next lab from that common baseline, even if their own submission used a different implementation.</li>
+  </ol>
+  <p>Once agreed, a baseline is fixed for the duration of the next lab.</p>
+
+  <h2>Group Roles</h2>
+
+  <div class="grid">
+    <div class="card role-card">
+      <h3>Group Leader</h3>
+      <p>Each group will have a designated leader who is responsible for organizing meetings, getting the group together, and helping keep the group on schedule.</p>
+    </div>
+    <div class="card role-card">
+      <h3>Team Coordinator</h3>
+      <p>Each group will also have a designated coordinator. The coordinator must be a different person from the group leader.</p>
+      <p>The coordinator works with the coordinators from the other two groups on the same team.</p>
+    </div>
+    <div class="card role-card">
+      <h3>Instructor Role</h3>
+      <p>The instructor will act as an internal consultant and adviser to each group, and as the coordinator between the two teams.</p>
+      <p>The instructor may ask questions, challenge designs, point out risks, and suggest alternatives, but the groups remain responsible for the design decisions.</p>
+    </div>
+  </div>
+
+  <h2>Team Architecture Group</h2>
+  <div class="architecture">
+    <h3>The three coordinators form the Team Architecture Group.</h3>
+    <p>Their job is to make sure the three labs can work together as one system. In particular, they must agree on the data structures and interfaces shared by the three groups and help manage the handoff from one official team baseline to the next.</p>
+
+    <div class="flow">
+      <span class="step">Group 1: Data Structures</span>
+      <span class="arrow">→</span>
+      <span class="step">Group 2: Transitions</span>
+      <span class="arrow">→</span>
+      <span class="step">Group 3: Reports</span>
+    </div>
+
+    <p class="small">A design decision made in one lab may create constraints for the later labs. The purpose of the architecture group is to make those dependencies explicit and manageable.</p>
+  </div>
+
+  <div class="callout">
+    <strong>Important:</strong> Group 1 does not have unilateral control over the data structures. Group 1 will propose and implement the initial structures, but the shared architecture must be agreed upon by the three coordinators because Groups 2 and 3 must use the same structures.
+  </div>
+
+  <h2>Class Time</h2>
+  <p>About 30 minutes of each remaining class will be devoted to the capstone. Most coding happens outside class. Class time is for the work that needs people in the same room:</p>
+  <ul>
+    <li>Team Architecture Group meetings;</li>
+    <li>group check-ins and design reviews with the instructor;</li>
+    <li>reviewing and agreeing to the interface specification;</li>
+    <li>agreeing to and announcing specification changes;</li>
+    <li>presentations and baseline selection.</li>
+  </ul>
+  <p>Classes on lab due dates will devote additional time to presentations and baseline selection.</p>
+
+  <h2>Getting Started</h2>
+
+  <h3>Before the kickoff (October 5 – October 19)</h3>
+  <p>Groups and roles are assigned on October 5. Data structures are covered in class on October 5 and 7. Before the kickoff, each student should:</p>
+  <ul>
+    <li>read this document;</li>
+    <li>know their team, group, group leader, and coordinator;</li>
+    <li>look over the instructor-provided JSON data.</li>
+  </ul>
+  <p>Group 1 may bring rough candidate data structures to the kickoff. This is optional, but a draft gives the class something concrete to test the requirements against.</p>
+
+  <h3>Kickoff: scope and requirements (October 19)</h3>
+  <p>The October 19 class is a 90-minute session in which the class agrees on the <strong>required transitions</strong> (Lab 3) and the <strong>required reports</strong> (Lab 4). Both teams will build the same required set, so the presentations compare design choices rather than scope.</p>
+  <p>Requirements for all three labs are settled at the kickoff, before the Lab 2 design is finalized, because the data structures must support every transition and report the system will need. Design and implementation of transitions and reports still happen in Labs 3 and 4.</p>
+  <p>The example lists in the Lab 3 and Lab 4 sections below are the starting point for that discussion.</p>
+
+  <h2>Lab 2 — Data Structures, Login, and Access</h2>
+  <p><strong>Due: November 2, before class</strong></p>
+  <p>Lab 2 establishes the foundation of the portfolio management system. Choosing the right data structures is one of the most important design decisions in the project: good structures make the later labs easier to build, while poor structures create problems downstream. Expect Lab 2 to require substantial design work.</p>
+
+  <h3>Primary responsibilities</h3>
+  <ul>
+    <li>Define the major data structures used by the project.</li>
+    <li>Represent users and login information, protecting passwords using the approach covered in class.</li>
+    <li>Represent portfolios, securities, positions, transactions, prices, cash, and other required project data.</li>
+    <li>Define how the rest of the system will access this data.</li>
+    <li>Provide a clear, consistent interface that later labs can use.</li>
+    <li>Document the assumptions built into the structures.</li>
+  </ul>
+
+  <h3>Cost basis: average price accounting</h3>
+  <p>The project uses <strong>average price accounting</strong> for cost basis. Each position carries an average cost per share.</p>
+  <ul>
+    <li>When shares are bought, the average cost is recalculated to include the new shares.</li>
+    <li>When shares are sold, the average cost of the remaining shares does not change.</li>
+    <li>The gain or loss on a sale is <span class="formula">(sale price − average cost) × shares sold</span></li>
+  </ul>
+  <p>Your data structures must make this calculation possible for Labs 3 and 4.</p>
+
+  <h3>Questions the team should be able to answer</h3>
+  <ul>
+    <li>What information must the system remember?</li>
+    <li>Which data structures best represent that information?</li>
+    <li>Why do those structures fit the problem?</li>
+    <li>How will later parts of the system access the information?</li>
+    <li>What could become difficult if the structure is poorly chosen?</li>
+  </ul>
+
+  <div class="deliverable">
+    <strong>Lab 2 handoff deliverable:</strong> a written interface specification describing the shared data structures and the functions later labs will use to access them. The specification must be reviewed and agreed to by the Group 2 and Group 3 coordinators before Lab 2 is complete.
+  </div>
+
+  <div class="callout">
+    <strong>Specification changes:</strong> Within each lab’s timeframe, the Team Architecture Group may revise the specification by agreement. Changes are agreed to and announced to the whole team during class time, and the specification document is updated so it remains the written record. The baseline from the previous lab is not changed.
+  </div>
+
+  <div class="callout">
+    <strong>Lab 2 baseline:</strong> In class on November 2, Group 1 will present a proposed baseline chosen from the team’s Lab 2 submissions. Once the team agrees, that implementation becomes the official team baseline for Lab 3.
+  </div>
+
+  <h2>Lab 3 — Transitions</h2>
+  <p><strong>Due: November 18, before class</strong></p>
+  <p>Lab 3 adds the behavior of the portfolio management system. It focuses on how the system changes from one valid state to another.</p>
+
+  <h3>Required transitions</h3>
+  <p>The class will agree on the required transitions at the October 19 kickoff. Group 2 will lead the design and presentation of how those transitions should operate while preserving the system's invariants.</p>
+
+  <div class="examples">
+    <div class="label">Examples — starting point for the kickoff</div>
+    <ul>
+      <li>Create a portfolio.</li>
+      <li>Add a security.</li>
+      <li>Buy shares.</li>
+      <li>Sell shares.</li>
+      <li>Update a cash balance.</li>
+      <li>Add or withdraw cash.</li>
+      <li>Update market prices.</li>
+      <li>Record transactions.</li>
+    </ul>
+  </div>
+
+  <h3>Lab 3 must protect system invariants</h3>
+  <ul>
+    <li>A position should not become invalid.</li>
+    <li>A user should not sell shares that are not owned unless the design explicitly allows it.</li>
+    <li>Cash balances and holdings must remain consistent with recorded transactions.</li>
+    <li>Average costs must remain consistent with recorded purchases.</li>
+    <li>The same underlying data must support later reporting.</li>
+  </ul>
+
+  <div class="deliverable">
+    <strong>Lab 3 handoff deliverable:</strong> a set of tests that check the system invariants (for example, that selling more shares than are owned is rejected). These tests become part of the system specification and must continue to pass as Lab 4 is developed.
+  </div>
+
+  <div class="callout">
+    <strong>Lab 3 baseline:</strong> In class on November 18, Group 2 will present a proposed baseline chosen from the team’s Lab 3 submissions, built on the official Lab 2 baseline. Once the team agrees, that implementation becomes the official team baseline for Lab 4.
+  </div>
+
+  <h2>Lab 4 — Reports</h2>
+  <p><strong>Due: December 7, before class</strong></p>
+  <p>Lab 4 turns the stored portfolio data and transaction history into useful information for the user.</p>
+
+  <h3>Required reports</h3>
+  <p>The class will agree on the required reports at the October 19 kickoff. Group 3 will lead the design and presentation of how the shared portfolio data should be transformed into those reports.</p>
+
+  <div class="examples">
+    <div class="label">Examples — starting point for the kickoff</div>
+    <ul>
+      <li>Current portfolio holdings.</li>
+      <li>Current portfolio value.</li>
+      <li>Cash balance.</li>
+      <li>Transaction history.</li>
+      <li>Gain or loss by security, based on average cost.</li>
+      <li>Portfolio allocation by security.</li>
+      <li>Portfolio performance over time.</li>
+    </ul>
+  </div>
+
+  <p>Reports should use the same shared data structures agreed upon by the team. The reporting group should not create a separate, incompatible data model simply to make reporting easier.</p>
+
+  <div class="callout">
+    <strong>Lab 4 completion:</strong> After individual Lab 4 submissions are complete, Group 3 will present the completed system built on the official Lab 3 baseline. The final presentation should show how the three labs now operate together as one portfolio management system.
+  </div>
+
+  <h2>Project Data</h2>
+  <p>The official project will use <strong>instructor-provided JSON test data</strong>. This makes the project repeatable and allows all students and both teams to work with the same known dataset.</p>
+
+  <p>The class will also look at free market-data libraries such as <code>yfinance</code>. These can be useful for experimentation and for understanding how real applications obtain market data, but they may be unreliable, change behavior, or impose access limits.</p>
+
+  <div class="callout">
+    <strong>Project rule:</strong> Your required solution must work with the supplied JSON data. Live market-data access may be demonstrated or added as an extension, but it should not be required for the core system to function.
+  </div>
+
+  <p>A useful design principle is to separate the portfolio system from the source of the market data. For example, the rest of the program should be able to request a price without needing to know whether that price came from JSON or from an external service.</p>
+
+  <h2>Submissions</h2>
+  <p>For each lab, before class on the due date, every student submits:</p>
+  <ul>
+    <li>their own code for the lab, committed to their individual course repository;</li>
+    <li>links to the AI chats used to produce that code.</li>
+  </ul>
+  <p>Your code must follow your team’s agreed specification. If an AI assistant suggests structures that differ from the team design, use the team design.</p>
+
+  <p>When you work with your AI assistant on Labs 3 and 4, give it your team’s current specification and baseline at the start of the conversation. The baseline is fixed; build on it rather than changing it.</p>
+
+  <p>Your individual submission may differ from the implementation ultimately chosen as the team baseline. Once the team approves a baseline, however, that approved version becomes the required starting point for the next lab.</p>
+
+  <h2>Grading</h2>
+  <p>Each lab is weighted equally. Together, the course’s four labs count for <strong>30% of the course grade</strong>. Each lab is graded as follows:</p>
+
+  <div class="grid">
+    <div class="card grade-card">
+      <div class="pct">20%</div>
+      <h3>Participation</h3>
+      <p>The instructor’s judgment, as consultant and adviser to each group, of each student’s participation in the project.</p>
+    </div>
+    <div class="card grade-card">
+      <div class="pct">40%</div>
+      <h3>Code</h3>
+      <p>The code you submit for the lab.</p>
+    </div>
+    <div class="card grade-card">
+      <div class="pct">40%</div>
+      <h3>AI Chats</h3>
+      <p>The conceptual thinking shown in your AI chats as you develop your own code.</p>
+    </div>
+  </div>
+
+  <h2>Presentations</h2>
+  <p>Each group will be responsible for presenting the lab for which it is the lead group.</p>
+
+  <ul>
+    <li>Group 1 will present Lab 2 in class on November 2.</li>
+    <li>Group 2 will present Lab 3 in class on November 18.</li>
+    <li>Group 3 will present Lab 4 in the final class, after the December 7 due date.</li>
+  </ul>
+
+  <p>Because there are two development teams, there will be <strong>two presentations for each lab</strong>. This allows the class to compare different design choices for the same problem.</p>
+
+  <p>Presentations should explain not only <em>what</em> was built, but also <em>why</em> the group made its major design choices, what alternatives were considered, and what tradeoffs resulted. For Labs 2 and 3, the presentation also serves as the starting point for selecting the team baseline that everyone will use in the next lab.</p>
+
+  <h2>Timeline</h2>
+  <table class="dates">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Event</th>
+        <th>Handoff Deliverable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="milestone">
+        <td>October 5</td>
+        <td>Groups and roles assigned; data structures in class (October 5 and 7)</td>
+        <td>—</td>
+      </tr>
+      <tr class="milestone">
+        <td>October 14</td>
+        <td>Midterm</td>
+        <td>—</td>
+      </tr>
+      <tr class="milestone">
+        <td>October 19</td>
+        <td>Kickoff (90 minutes): agree on required transitions and reports</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>November 2</td>
+        <td>Lab 2 due before class; Group 1 presentations; Lab 2 baseline agreed and placed in student repositories by end of day</td>
+        <td>Interface specification, reviewed and agreed to by Group 2 and 3 coordinators</td>
+      </tr>
+      <tr>
+        <td>November 18</td>
+        <td>Lab 3 due before class; Group 2 presentations; Lab 3 baseline agreed and placed in student repositories by end of day</td>
+        <td>Invariant tests</td>
+      </tr>
+      <tr>
+        <td>December 7</td>
+        <td>Lab 4 due before class; Group 2 presentations; Lab 4 baseline agreed and placed in student repositories by end of day</td>
+        <td>—</td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <h2>What Success Looks Like</h2>
+  <p>The goal is not simply to produce three working lab submissions. By the end of the project, each team should have a coherent portfolio management system in which:</p>
+
+  <ul>
+    <li>the data structures are understandable and consistent;</li>
+    <li>the transitions preserve the rules of the system;</li>
+    <li>the reports are generated from the same shared data;</li>
+    <li>groups communicate across boundaries;</li>
+    <li>design decisions can be explained and defended;</li>
+    <li>the entire system works together rather than as three disconnected assignments.</li>
+  </ul>
+
+  <div class="footer-note">
+    OIM3600 · Computational Thinking with AI and Python
+  </div>
+</main>
+</body>
+</html>
