@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OIM 3600 Agenda 10-05</title>
+<style>
+:root {
+  --bg: #f7f7f4;
+  --card: #ffffff;
+  --text: #1d2327;
+  --muted: #5b6770;
+  --accent: #0b6e4f;
+  --accent-soft: #e3f1ec;
+  --border: #dcdfd8;
+  --code-bg: #f1f3ef;
+  --warn-bg: #fff6e0;
+  --warn-border: #e8b64c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15191b;
+    --card: #1e2427;
+    --text: #e6e9e7;
+    --muted: #a0aaa6;
+    --accent: #5cc79e;
+    --accent-soft: #1f3a31;
+    --border: #334047;
+    --code-bg: #11161a;
+    --warn-bg: #3a2f14;
+    --warn-border: #a8801f;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+header { border-bottom: 3px solid var(--accent); padding-bottom: 12px; margin-bottom: 24px; }
+header .course { color: var(--accent); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 14px; }
+h1 { margin: 4px 0 6px; font-size: 30px; line-height: 1.2; }
+header .meta { color: var(--muted); font-size: 15px; }
+h2 { font-size: 22px; margin: 0 0 8px; }
+h3 { font-size: 17px; margin: 20px 0 6px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin: 0 0 20px;
+}
+.problem-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); white-space: nowrap;
+}
+.note {
+  background: var(--warn-bg); border-left: 4px solid var(--warn-border);
+  padding: 10px 14px; border-radius: 6px; margin: 12px 0;
+}
+code { font-family: Consolas, "SF Mono", Menlo, monospace; font-size: 14px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.codebox { position: relative; margin: 10px 0 14px; }
+pre {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; margin: 0;
+}
+pre code { background: none; padding: 0; font-size: 14px; line-height: 1.5; }
+.copy {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 12px; padding: 3px 10px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--card); color: var(--muted);
+}
+.copy:hover { color: var(--accent); border-color: var(--accent); }
+table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 15px; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--accent-soft); }
+.tablewrap { overflow-x: auto; }
+ol, ul { padding-left: 22px; }
+li { margin: 3px 0; }
+nav.toc ol { columns: 2; column-gap: 32px; margin: 6px 0 0; }
+nav.toc a { color: var(--accent); text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+.path { font-family: Consolas, "SF Mono", Menlo, monospace; font-size: 14px; }
+@media (max-width: 600px) {
+  nav.toc ol { columns: 1; }
+  h1 { font-size: 25px; }
+  .card { padding: 16px; }
+}
+@media print {
+  .copy { display: none; }
+  .card { break-inside: avoid; }
+}
+
+.card h2 { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+  <div class="course">OIM 3600 · Computational Thinking with AI and Python</div>
+  <h1>Agenda 10-05</h1>
+  <div class="meta">Monday, October 5, 2026</div>
+</header>
+<section class="card"><h2>1. Questions</h2></section>
+<section class="card"><h2>2. Review Sessions and Midterm</h2></section>
+<section class="card"><h2>3. Labs 2, 3 and 4</h2></section>
+<section class="card"><h2>4. Data Structures Part 1</h2></section>
+</main>
+</body>
+</html>
