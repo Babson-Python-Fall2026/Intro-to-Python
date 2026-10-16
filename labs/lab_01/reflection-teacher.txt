@@ -1,0 +1,54 @@
+drawing:
+1. For a given row and column, what conditions tell you that the position belongs to the outside border?
+row idx = 0 any col , row index n- 1 any col, col 0 any row, col n-1 any row
+2. What relationship between the row number and column number identifies one diagonal?
+row and col are the same for first diagnol
+3. What relationship identifies the other diagonal?
+rows go in order cols count backwards from n-1
+
+generate:
+1. What data structure does your function return? Why is that structure a good choice for a collection of student records?
+list of dictionaries.  list let's us have access to all students and dictionaries keep student data align
+2. How does your program make sure that two students do not receive the same first-name, middle-initial, last-name combination?
+Uses the random_sample function which does not use replacement
+3. What should happen if the requested value of N is larger than the number of unique records your lists can produce?
+ask for a smaller number
+
+1. How did you represent the alphabet in your program?
+as a dictionary
+2. Explain how your program handles wraparound. For example, why does shifting Z forward by 3 produce C?
+we use the % operator. so 25 + 3 = 28 and 28%26 = 2 and with 0 base indexing 2 -> C
+3. What should happen when the shift value is negative? Use an example to explain your answer.
+python handles this automatically. shifting -8 is the same as shiftin 18 .i.e 26 - 8 = 18
+4. What should happen when the shift value is exactly 26? Why?
+it should create a shift of 0 or no shift because 26%26 = 0. 
+5. What effective shift should your program use when the user enters 300? Explain how you determined it.
+14 = 300%26
+6. Why should a shift of 29 have the same effect as a shift of 3?
+because 29%26 = 3%26
+7. How does your decryption logic reverse the encryption?
+we do the same thing we just switch the keys and values in our dictionaries
+
+
+
+
+reflections:
+Which of the three problems required the most planning before you began coding? Why?
+Draw required the most planning. I had to really examine the diagram to figure
+out how many spaces were needed on each line between the *
+
+Choose one problem and explain how you broke it into smaller pieces.
+In draw I realized that the drawing was symetrical around the middle and with 0 indexing
+and an odd number would be equal to n // . Next I realized that the top middle and bottom lines were different,
+and finalyy I realized I needed to compute the spaces between the *'s on the other lines
+
+Describe one important data-representation decision you made in Part 2 or Part 3.
+I made my encrypt and decrypt tables dictionaries for easy lookup
+
+Describe one bug you encountered or one test case that helped you discover a problem in your code.
+In draw I realized that in this statement: 
+print(f"*{(mid - abs(mid-idx)-1) * ' '}*{(n - 4 - 2 * (mid - abs(mid-idx)-1)) * ' '}*{(mid - abs(mid-idx)-1) * ' '}*")
+I needed to be very careful about the use of () so I could multiple a string space ' '
+
+If you had to make one of your solutions work for a much larger input, what part of your approach would you reconsider first?
+In generate instead of first computing all possible combinations I would create the retyurn dynamically
