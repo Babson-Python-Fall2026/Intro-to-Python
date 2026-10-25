@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>PEMS — Portfolio Data Structure</title>
+<style>
+:root{--navy:#183153;--blue:#2068a4;--teal:#087e81;--pale:#f3f7fb;--line:#dbe4ed;--ink:#233245}*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Arial,sans-serif}.page{max-width:1040px;margin:30px auto;background:#fff;padding:48px 56px;box-shadow:0 8px 30px #20344c18;border-radius:12px}h1{color:var(--navy);font-size:2.2rem;margin:0 0 6px}h2{font-size:1.38rem;color:var(--navy);margin-top:34px;border-bottom:2px solid var(--line);padding-bottom:7px}h3{font-size:1.05rem;color:var(--blue)}.subtitle{font-size:1.08rem;color:#53657a;margin-top:0}.note{background:#edf7f7;border-left:4px solid var(--teal);padding:13px 18px;margin:18px 0}.hierarchy{border:1px solid var(--line);border-radius:8px;padding:22px;background:#fafcfe}.node{border-left:3px solid #bbd0df;padding:6px 0 6px 18px;margin:5px 0 5px 14px}.root{margin-left:0;border-left:none;padding-left:0}.kind{color:#65768a;font-size:.87em;margin-left:5px}.pill{display:inline-block;background:#e2f0fa;color:#155785;border-radius:4px;padding:1px 6px;font-family:Consolas,monospace}pre{background:#17293d;color:#f2f7ff;white-space:pre;overflow:auto;padding:20px;border-radius:8px;font:13.4px/1.5 Consolas,'Courier New',monospace}code{font-family:Consolas,'Courier New',monospace}p code,td code{color:#0a5685;background:#eff5fa;padding:2px 4px;border-radius:3px}table{border-collapse:collapse;width:100%;margin:14px 0 24px}th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}th{background:#eaf1f8;color:#193e61}tr:nth-child(even) td{background:#fbfdff}.small{font-size:.9rem;color:#637187}.foot{border-top:1px solid var(--line);margin-top:36px;padding-top:12px;color:#6b7789;font-size:.88rem}@media print{body{background:#fff}.page{margin:0;box-shadow:none;padding:16px 25px;max-width:none}pre{white-space:pre-wrap;overflow-wrap:anywhere}h2{break-after:avoid}table,pre,.hierarchy{break-inside:avoid}}@media(max-width:650px){.page{margin:0;padding:24px 17px;border-radius:0}pre{font-size:12px}}</style></head>
+<body><main class="page">
+<h1>PEMS: Portfolio Data Structure</h1><p class="subtitle">Computational Thinking with AI &amp; Python · Capstone Reference</p>
+<div class="note"><strong>Design principle:</strong> Client transactions are the source of truth. Holdings, cash balances, and reports are calculated from transaction history—not stored as separate balances.</div>
+<h2>1. System-maintained JSON files</h2>
+<table><thead><tr><th>File</th><th>Purpose</th></tr></thead><tbody><tr><td><code>pm_users.json</code></td><td>Portfolio manager login records (including password verification data). The manager initials identify each user.</td></tr><tr><td><code>pems.json</code></td><td>Portfolio manager client lists and each client's transaction history.</td></tr></tbody></table>
+<p>When <code>pems.json</code> is loaded, its top-level Python dictionary is named <strong><code>pems</code></strong>. The spelling and capitalization should be consistent throughout the project.</p>
+<h2>2. Hierarchy and Python types</h2>
+<div class="hierarchy"><div class="root"><strong>pems</strong><span class="kind">dictionary; keys are PM initials</span>
+<div class="node"><strong>"RSS"</strong><span class="kind">dictionary</span>
+<div class="node"><strong>"clients"</strong><span class="kind">list of client dictionaries</span>
+<div class="node"><strong>clients[0]</strong><span class="kind">dictionary</span><div class="node"><code>name</code>, <code>email</code>, <code>phone</code><span class="kind">strings</span></div><div class="node"><strong>"transactions"</strong><span class="kind">list of transaction dictionaries</span><div class="node"><strong>transactions[0]</strong><span class="kind">dictionary with seven fields</span></div></div></div><div class="node"><strong>clients[1]</strong><span class="kind">another client dictionary, if present</span></div></div></div>
+<div class="node"><strong>"ABC"</strong><span class="kind">another PM dictionary with its own clients list</span></div></div></div>
+<h2>3. Example <code>pems.json</code></h2>
+<pre>{
+  "RSS": {
+    "clients": [
+      {
+        "name": "David Morton",
+        "email": "dmorton@example.com",
+        "phone": "555-0100",
+        "transactions": [
+          {
+            "trans_id": 1,
+            "trd_day": 1,
+            "ticker": "$$$$",
+            "trn_type": "CONTRIBUTION",
+            "shares": 10000000.0,
+            "cps": 1.0,
+            "total_cost": 10000000.0
+          },
+          {
+            "trans_id": 2,
+            "trd_day": 2,
+            "ticker": "AAPL",
+            "trn_type": "BUY",
+            "shares": 100,
+            "cps": 230.50,
+            "total_cost": 23050.0
+          }
+        ]
+      },
+      {
+        "name": "Mary Jones",
+        "email": "mary@example.com",
+        "phone": "555-0101",
+        "transactions": [
+          {"trans_id": 1, "trd_day": 1, "ticker": "$$$$", "trn_type": "CONTRIBUTION", "shares": 0.0, "cps": 1.0, "total_cost": 0.0}
+        ]
+      }
+    ]
+  },
+  "ABC": {
+    "clients": []
+  }
+}</pre>
+<p class="small">The data above is illustrative. New clients are created with an initial cash contribution transaction (which may be zero if permitted by the application). Numeric values in JSON cannot use underscore separators such as <code>10_000_000</code>.</p>
+<h2>4. Transaction dictionary</h2>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>trans_id</code></td><td>Integer transaction identifier, sequential within a client.</td></tr>
+<tr><td><code>trd_day</code></td><td>Integer simulated trading-day number.</td></tr>
+<tr><td><code>ticker</code></td><td>Security ticker, or <code>$$$$</code> for cash.</td></tr>
+<tr><td><code>trn_type</code></td><td>Transaction action, such as <code>BUY</code>, <code>SELL</code>, <code>CONTRIBUTION</code>, or <code>WITHDRAWAL</code>. The action determines direction.</td></tr>
+<tr><td><code>shares</code></td><td><strong>Nonnegative quantity</strong> involved in the transaction; for cash, the quantity represents dollars because each cash unit is worth $1. Do not use a negative sign to encode direction; <code>trn_type</code> determines addition versus subtraction.</td></tr>
+<tr><td><code>cps</code></td><td>Cost per share (for cash, <code>1.0</code>). The precise interpretation for sells and corporate actions must be consistent with the cost-basis rules.</td></tr>
+<tr><td><code>total_cost</code></td><td>Transaction's associated total cost basis, using the project's consistent accounting rules.</td></tr>
+</tbody></table>
+<h3>Direction comes from <code>trn_type</code></h3>
+<table><thead><tr><th>Type</th><th>Ticker</th><th>Shares</th><th>Effect</th></tr></thead><tbody><tr><td>CONTRIBUTION</td><td><code>$$$$</code></td><td>10000</td><td>Add $10,000 cash</td></tr><tr><td>WITHDRAWAL</td><td><code>$$$$</code></td><td>2000</td><td>Remove $2,000 cash</td></tr><tr><td>BUY</td><td><code>AAPL</code></td><td>100</td><td>Add 100 AAPL shares; cash decreases</td></tr><tr><td>SELL</td><td><code>AAPL</code></td><td>40</td><td>Remove 40 AAPL shares; cash increases</td></tr></tbody></table>
+<h2>5. Program state and <code>client_idx</code></h2>
+<p><code>client_idx</code> is the <strong>zero-based list index</strong> of the currently selected client. It is part of temporary program state, <strong>not</strong> a field in <code>pems.json</code>. We do not need a separate client ID because clients are not deleted or reordered in this project.</p>
+<pre>state = {
+    "pm": current_pm,
+    "pems": pems,
+    "clients": pems[current_pm]["clients"],
+    "client_idx": None,
+    "trd_day": 1,
+    "market_data": market_data,
+    "security_info": security_info
+}</pre>
+<p>When selecting client number 1 from a numbered menu:</p>
+<pre>state["client_idx"] = choice - 1  # First client: index 0
+client = state["clients"][state["client_idx"]]
+print(client["name"])</pre>
+<p><strong>Important:</strong> Test <code>state["client_idx"] is not None</code>, not <code>if state["client_idx"]</code>, because index <code>0</code> is a valid first client.</p>
+<h2>6. Creating clients and recording transactions</h2>
+<p>Create a new client by appending its completed dictionary to the manager's clients list:</p>
+<pre>clients = state["clients"]
+client = {
+    "name": name,
+    "email": email,
+    "phone": phone,
+    "transactions": [transaction]
+}
+clients.append(client)</pre>
+<p>For an <strong>existing</strong> client, do not append the client again. Append only the transaction:</p>
+<pre>client = state["clients"][state["client_idx"]]
+client["transactions"].append(transaction)</pre>
+<p><code>state["clients"]</code> refers to the same list contained in <code>state["pems"][state["pm"]]["clients"]</code>, so these changes update <code>pems</code> in memory.</p>
+<h2>7. Loading, saving, and persistence</h2>
+<pre>import json
+
+with open("labs/#capstone/data/pems.json", "r", encoding="utf-8") as file:
+    pems = json.load(file)
+
+# The instructor supplies save_pems(state).
+# After successfully creating a client:
+save_pems(state)
+
+# The supplied helper writes state["pems"] to pems.json.</pre>
+<p>Students do not write the save_pems(state) helper; it is provided. <strong>Memory vs. disk:</strong> <code>append()</code> changes the live objects in memory. <code>json.dump()</code> writes those changes back to <code>pems.json</code>. Reports ordinarily only read data and do not require saving.</p>
+<p>Unlike the earlier dictionary-of-clients design, this list-of-clients design needs <strong>no conversion of client ID keys</strong> when loading JSON.</p>
+<h2>8. What is not stored in <code>pems.json</code>?</h2>
+<p>Current holdings, cash balances, and the selected client's index are not stored. Holdings and cash are reconstructed from transactions. <code>client_idx</code>, current menu stack, and other interaction details live only in program state.</p>
+<div class="foot">PEMS Capstone · Data structure reference · Python dictionary → list → dictionary → list → dictionary</div>
+</main></body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Agenda — October 26, 2026</title>
+  <style>
+    :root { color-scheme: light; --ink:#1b2b40; --muted:#536477; --blue:#17619a; --line:#d9e3eb; --paper:#fff; --bg:#f4f7fa; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial,Helvetica,sans-serif; line-height:1.55; }
+    main { max-width:920px; margin:38px auto; padding:38px 46px; background:var(--paper); border:1px solid var(--line); border-radius:12px; box-shadow:0 6px 24px rgba(28,51,75,.06); }
+    .eyebrow { margin:0 0 8px; color:var(--blue); letter-spacing:.09em; text-transform:uppercase; font-size:13px; font-weight:700; }
+    h1 { font-size:36px; line-height:1.2; margin:0 0 8px; }
+    .date { margin:0 0 30px; font-size:18px; color:var(--muted); }
+    ol { list-style:none; margin:0; padding:0; counter-reset:agenda; }
+    li { counter-increment:agenda; display:grid; grid-template-columns:48px 1fr; gap:18px; padding:23px 0; border-top:1px solid var(--line); }
+    li::before { content:counter(agenda); background:#eaf3fa; color:var(--blue); font-weight:700; width:42px; height:42px; display:grid; place-items:center; border-radius:9px; font-size:19px; }
+    h2 { margin:0 0 6px; font-size:22px; }
+    p { margin:0; color:var(--muted); }
+    .due { display:inline-block; margin-top:10px; padding:7px 12px; background:#eaf3fa; color:#144e7a; border-radius:6px; font-weight:700; }
+    @media print { body { background:white; } main { margin:0; max-width:none; border:0; border-radius:0; box-shadow:none; padding:20px; } li { break-inside:avoid; } }
+    @media (max-width:600px) { main { margin:0; padding:28px 22px; border:0; border-radius:0; } h1 { font-size:29px; } li { gap:12px; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">OIM3600 · Computational Thinking with AI and Python</p>
+  <h1>Class Agenda</h1>
+  <p class="date">Monday, October 26, 2026</p>
+  <ol>
+    <li><div><h2>Questions</h2><p>Open questions and clarifications before starting the capstone work.</p></div></li>
+    <li><div><h2>Stack Menu System</h2><p>Walk through the menu flowchart. Discuss how the menu definitions and stack represent state, how navigation works, and how actions are dispatched.</p></div></li>
+    <li><div><h2>PEMS Data Structure</h2><p>Review the Portfolio Equity Management System (PEMS) data structures and how program state, client data, and market data fit together.</p></div></li>
+    <li><div><h2>Lab 2</h2><p>Introduce the assignment, review expectations, and discuss how to inspect and validate the data before writing code.</p><span class="due">Due Monday, November 9, 2026</span></div></li>
+  </ol>
+</main>
+</body>
+</html>

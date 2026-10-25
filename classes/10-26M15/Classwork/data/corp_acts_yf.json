@@ -388,13 +388,13 @@
     "SCCO": [
       {
         "Date": "2025-08-15 00:00:00-04:00",
-        "Dividends": 0.76261,
+        "Dividends": 0.80,
         "Stock Splits": 1.01
       },
       {
         "Date": "2025-11-12 00:00:00-05:00",
-        "Dividends": 0.86577,
-        "Stock Splits": 1.008
+        "Dividends": 0.90,
+        "Stock Splits": 1.01
       }
     ],
     "BLK": [
@@ -584,6 +584,11 @@
       {
         "Date": "2025-11-07 00:00:00-05:00",
         "Dividends": 0.592342,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-08 00:00:00-05:00",
+        "Dividends": 2.984,
         "Stock Splits": 0.0
       },
       {

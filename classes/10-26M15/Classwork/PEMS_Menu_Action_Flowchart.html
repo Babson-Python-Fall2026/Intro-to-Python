@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>PEMS — Menu &amp; Action Flowchart</title>
+<style>
+:root{--ink:#17233e;--muted:#596b85;--blue:#2457a7;--line:#aebfd7;--pale:#eef4fc;--teal:#087e80;--green:#16805b;--orange:#9c551b;--bg:#f6f8fc}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink)}main{max-width:1170px;margin:0 auto;padding:38px 32px 65px}.eyebrow{color:var(--blue);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}h1{font-size:32px;letter-spacing:-.035em;margin:5px 0 8px}h2{font-size:20px;margin:0 0 15px}p.lead{color:var(--muted);max-width:850px;margin:0 0 24px}.panel{background:white;border:1px solid #dfe6f1;border-radius:16px;padding:24px;box-shadow:0 4px 16px #1939600c;margin:20px 0}.legend{display:flex;gap:19px;flex-wrap:wrap;color:#40546f;font-size:13px;margin-top:16px}.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.menu{border:1px solid #ccdaec;border-radius:12px;padding:17px;background:#fbfdff}.menu h3{margin:0;font-size:17px}.menu .key{font-size:12px;color:#58718e;margin-bottom:12px;font-family:ui-monospace,monospace}.option{padding:9px 10px;border-top:1px solid #e6edf5;display:flex;justify-content:space-between;gap:15px}.option strong{font-weight:550}.type{font-size:11px;white-space:nowrap;padding:3px 7px;border-radius:5px;background:#e5f4ee;color:#166c50;align-self:center}.type.nav{background:#e7effd;color:#2457a7}.type.both{background:#f9edda;color:#88530f}code{font-size:12px;background:#eef2f8;padding:2px 5px;border-radius:4px}pre{white-space:pre-wrap;overflow:auto;background:#13223a;color:#edf6ff;border-radius:10px;padding:18px;font:13px/1.65 ui-monospace,Consolas,monospace}.note{border-left:4px solid var(--teal);padding:10px 15px;background:#eff8f8;border-radius:0 9px 9px 0;color:#285260}.foot{color:var(--muted);font-size:13px;margin-top:14px}svg{width:100%;height:auto;display:block}svg text{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}svg .box{fill:#eef4fc;stroke:#7f9dc6;stroke-width:1.6}svg .auth{fill:#edf7f2;stroke:#51a17e}svg .decision{fill:#fff7e9;stroke:#ce9b58}svg .action{fill:#f1edfa;stroke:#a093c8}svg .txt{fill:#1d3455;font-size:15px;font-weight:700;text-anchor:middle}svg .sub{fill:#516984;font-size:11px;text-anchor:middle}svg .arr{fill:none;stroke:#6d87a9;stroke-width:2;marker-end:url(#arrow)}svg .small{font-size:12px;fill:#667f9c;font-weight:650}svg .dashed{stroke-dasharray:6 6}.step{padding:7px 0}.state-table{width:100%;border-collapse:collapse;font-size:13px;margin:15px 0}.state-table th,.state-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #e3eaf3;vertical-align:top}.state-table th{background:#edf3fb;color:#25446f}.state-table td:first-child{white-space:nowrap;font-family:ui-monospace,Consolas,monospace;color:#2457a7;font-weight:650}.state-table tr:last-child td{border-bottom:none}.q{background:#f5f8fe;border:1px solid #dce5f3;border-radius:10px;padding:13px 17px;margin-top:14px}.q p{margin:6px 0}.pillline{color:#526985;font-size:13px}.state-table-wrap{overflow-x:auto}footer{text-align:center;color:#667891;font-size:12px}@media(max-width:700px){main{padding:24px 13px}.panel{padding:15px}.grid{grid-template-columns:1fr}h1{font-size:26px}}@media print{body{background:#fff}main{padding:10mm}.panel{box-shadow:none;break-inside:avoid}h1{font-size:26px}.grid{gap:10px}}
+</style></head><body><main><div class="eyebrow">OIM3600 · Computational Thinking with AI &amp; Python</div><h1>PEMS — Menu &amp; Action System</h1><p class="lead">Portfolio Equity Management System · Login is outside the menu stack. The stack controls navigation; actions update shared state. Based on <code>menus.json</code> and the current <code>pems()</code> design.</p>
+<section class="panel"><h2>1 · Program control flow</h2>
+<svg aria-label="Flowchart showing load and login, initial menu stack, displaying choices, Enter popping stack, actions and optional navigation, and returning to login when stack is empty." role="img" viewbox="0 0 1040 700">
+<defs><marker id="arrow" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0 0 L10 5 L0 10 z" fill="#6d87a9"></path></marker></defs>
+<rect class="auth" height="50" rx="12" width="250" x="395" y="10"></rect><text class="txt" x="520" y="31">Start · login()</text><text class="sub" x="520" y="47">Outer PM session loop</text>
+<path class="arr" d="M520 60 V88"></path><polygon class="decision" points="520,89 650,127 520,165 390,127"></polygon><text class="txt" x="520" y="123">PM authenticated?</text><text class="sub" x="520" y="140">current_pm is not None</text>
+<path class="arr" d="M650 127 H834 V95"></path><rect class="auth" height="51" rx="11" width="160" x="754" y="44"></rect><text class="txt" x="834" y="65">Terminate program</text><text class="sub" x="834" y="81">No PM entered</text><text class="small" x="671" y="118">No</text>
+<path class="arr" d="M520 165 V190"></path><text class="small" x="533" y="184">Yes</text><rect class="box" height="61" rx="11" width="330" x="355" y="190"></rect><text class="txt" x="520" y="214">load_data() · initialize state</text><text class="sub" x="520" y="232">stack = ["client_management"]</text>
+<path class="arr" d="M520 251 V278"></path><polygon class="decision" points="520,279 645,315 520,351 395,315"></polygon><text class="txt" x="520" y="312">Stack nonempty?</text><text class="sub" x="520" y="329">while stack</text>
+<path class="arr" d="M395 315 H177 V126 H390"></path><text class="small" x="280" y="304">No · log off</text><text class="small" x="210" y="147">Return to login</text>
+<path class="arr" d="M520 351 V371"></path><rect class="box" height="56" rx="10" width="310" x="365" y="371"></rect><text class="txt" x="520" y="395">Display top menu</text><text class="sub" x="520" y="412">Get and validate menu choice</text>
+<path class="arr" d="M520 427 V449"></path><polygon class="decision" points="520,450 640,486 520,522 400,486"></polygon><text class="txt" x="520" y="482">Enter pressed?</text><text class="sub" x="520" y="497">choice == ""</text>
+<path class="arr" d="M640 486 H807 V446"></path><rect class="box" height="58" rx="10" width="154" x="730" y="388"></rect><text class="txt" x="807" y="412">stack.pop()</text><text class="sub" x="807" y="428">Go back one level</text><path class="arr" d="M884 416 H972 V315 H645"></path><text class="small" x="658" y="475">Yes</text>
+<path class="arr" d="M520 522 V545"></path><text class="small" x="534" y="537">No</text><rect class="action" height="56" rx="10" width="310" x="365" y="545"></rect><text class="txt" x="520" y="570">Execute action, if present</text><text class="sub" x="520" y="587">option["action"](state)</text>
+<path class="arr" d="M365 572 H215 V399 H365"></path><text class="small" x="229" y="558">Returns False</text><text class="small" x="230" y="574">Stay on menu</text>
+<path class="arr" d="M520 601 V622"></path><rect class="box" height="53" rx="10" width="340" x="350" y="622"></rect><text class="txt" x="520" y="645">Push next_menu, if present</text><text class="sub" x="520" y="662">Otherwise stay on current menu</text><path class="arr" d="M690 647 H995 V315 H645"></path>
+</svg>
+<div class="legend"><span><i class="dot" style="background:#edf7f2;border:1px solid #51a17e"></i>Login / exit</span><span><i class="dot" style="background:#eef4fc;border:1px solid #7f9dc6"></i>Menu / stack operation</span><span><i class="dot" style="background:#fff7e9;border:1px solid #ce9b58"></i>Decision</span><span><i class="dot" style="background:#f1edfa;border:1px solid #a093c8"></i>Action call</span></div>
+</section>
+<section class="panel"><h2>2 · What is state? What is included for convenience?</h2>
+<p>Our program uses a dictionary named <code>state</code>, but <strong>not every entry is independent state</strong>. To reason about state, first ask: <em>What information must the system retain to determine its next behavior, given its inputs and the underlying data?</em></p>
+<pre>state = {
+    "pm": current_pm,
+    "pems": pems,
+    "clients": pems[current_pm]["clients"],
+    "client_idx": None,
+    "trd_day": 1,
+    "market_data": market_data,
+    "security_info": security_info
+}
+
+stack = ["client_management"]</pre>
+<div class="state-table-wrap"><table class="state-table"><thead><tr><th>Item</th><th>Role</th><th>Why it matters</th></tr></thead><tbody>
+<tr><td>state["pm"]</td><td>Session state</td><td>Identifies the authenticated portfolio manager.</td></tr>
+<tr><td>state["client_idx"]</td><td>Session state</td><td>Identifies the currently selected client; <code>None</code> means none is selected.</td></tr>
+<tr><td>state["trd_day"]</td><td>Simulation state</td><td>Tracks which of the 100 simulated trading days is current. The calendar date can be derived from <code>market_data</code>.</td></tr>
+<tr><td>stack</td><td>Navigation state</td><td>Tracks the current menu and the path back. It is real state even though it lives outside the <code>state</code> dictionary.</td></tr>
+<tr><td>state["pems"]</td><td>Persistent business state (held by reference)</td><td>Contains PMs, clients, and transaction histories. Transactions are the persistent source of truth for portfolio holdings and cash.</td></tr>
+<tr><td>state["clients"]</td><td>Convenience reference</td><td>An alias for <code>state["pems"][state["pm"]]["clients"]</code>. Makes action code shorter, but adds no new information.</td></tr>
+<tr><td>state["market_data"]</td><td>Reference data</td><td>Provides prices, dividends, and splits. Passed through the dictionary for easy access; it is not independently changing session state.</td></tr>
+<tr><td>state["security_info"]</td><td>Reference data</td><td>Provides descriptions and classifications of securities; also passed for convenient access.</td></tr>
+</tbody></table></div>
+<div class="note"><strong>The key distinction:</strong> The name <code>state</code> is a programming convenience, not a definition. Actual state includes session and navigation variables <em>and</em> persistent business information. Reference data and duplicate aliases do not become new independent state merely by appearing in this dictionary.</div>
+<h3>Minimum sufficient session state</h3>
+<p>Given the persistent PM records and the reference datasets, we can identify the essential session and navigation information with:</p>
+<pre>session_state = {"pm": current_pm, "client_idx": None, "trd_day": 1}
+stack = ["client_management"]
+
+# Both of these can be derived rather than stored independently:
+clients = pems[session_state["pm"]]["clients"]
+trade_date = market_data[session_state["trd_day"]]["date"]</pre>
+<p>We still choose to pass <code>pms</code>, <code>clients</code>, <code>market_data</code>, and <code>security_info</code> in the larger <code>state</code> dictionary so every action can accept the simple interface <code>action(state)</code>. This avoids long parameter lists; it does <strong>not</strong> require storing copies of those datasets.</p>
+<h3>Mutability and the source of truth</h3>
+<pre>state["clients"] is state["pems"][state["pm"]]["clients"]  # True
+
+# Modifying the existing dictionary updates the same client data:
+state["clients"].append({"name": "Bob Smith", "email": "", "phone": "", "transactions": []})
+
+# But rebinding the alias breaks that connection:
+# state["clients"] = []     # Avoid: new, separate list</pre>
+<p>Adding a client or appending a transaction changes persistent business state <em>in memory</em>; the relevant action then calls <code>save_pems(state)</code> to persist it. Holdings and cash balances are reconstructed from transactions plus applicable corporate actions, rather than stored as competing sources of truth. The save_pems(state) helper is supplied to students; they call it rather than implement it.</p>
+<div class="q"><strong>Discussion: ISTI — Inputs, State, Transitions, Invariants</strong><p><strong>Inputs:</strong> choices, trade instructions, and external market events. <strong>State:</strong> PM, selected client, trade day, menu stack, and persistent transactions. <strong>Transitions:</strong> select client, buy/sell, advance day, push/pop a menu. <strong>Invariants:</strong> a selected client belongs to the logged-in PM; PM identities match across credential and portfolio files; transactions cannot sell more shares than are available (assuming no short sales).</p><p><strong>Think:</strong> If we remove <code>clients</code> from the dictionary, what information is lost? If we remove <code>trd_day</code>, how would the program know which price to use? Why can two accounts with identical holdings and cash still have different cost bases?</p></div>
+</section>
+<section class="panel"><h2>3 · Menu hierarchy and actions</h2><p class="lead">Every numbered option below corresponds to an entry in <code>menus.json</code>. A selected client is required to enter Client Portfolio.</p>
+<div class="grid">
+<div class="menu"><h3>① Client Management</h3><div class="key">client_management · bottom of stack</div><div class="option"><strong>1. Select Client</strong><span class="type both">action → menu</span></div><div class="option"><strong>2. Create Client</strong><span class="type">action only</span></div><p class="foot">Select Client calls <code>select_client(state)</code>; on success, push <code>client_portfolio</code>. On False, remain here. Enter empties stack → log out.</p></div>
+<div class="menu"><h3>② Client Portfolio</h3><div class="key">client_portfolio · after client selected</div><div class="option"><strong>1. Transactions</strong><span class="type nav">navigate only</span></div><div class="option"><strong>2. Reports</strong><span class="type nav">navigate only</span></div><p class="foot">Push <code>transactions</code> or <code>reports</code>. Enter pops back to Client Management; the current client is then cleared.</p></div>
+<div class="menu"><h3>③ Transactions</h3><div class="key">transactions</div><div class="option"><strong>1. Buy Stock</strong><span class="type">buy_stock</span></div><div class="option"><strong>2. Sell Stock</strong><span class="type">sell_stock</span></div><div class="option"><strong>3. Contribution</strong><span class="type">record_contribution</span></div><div class="option"><strong>4. Withdrawal</strong><span class="type">record_withdrawal</span></div><div class="option"><strong>5. Advance Trade Day</strong><span class="type">advance_trd_day</span></div><p class="foot">Action only; no next menu. Enter pops back to Client Portfolio.</p></div>
+<div class="menu"><h3>④ Reports</h3><div class="key">reports</div><div class="option"><strong>1. Holdings</strong><span class="type">report_holdings</span></div><div class="option"><strong>2. Transactions</strong><span class="type">report_transactions</span></div><div class="option"><strong>3. Performance</strong><span class="type">report_performance</span></div><div class="option"><strong>4. Cash Summary</strong><span class="type">report_cash_summary</span></div><p class="foot">Action only; no next menu. Enter pops back to Client Portfolio.</p></div>
+</div></section>
+<section class="panel"><h2>4 · How one menu choice is processed</h2><pre>option = menu["options"][int(choice) - 1]
+
+if option["action"] is not None:
+    if option["action"](state) is False:
+        continue                 # Stay on current menu
+
+if option["next_menu"] is not None:
+    stack.append(option["next_menu"])</pre><div class="note"><strong>Critical distinction:</strong> Pressing Enter at the stack menu prompt pops the stack. Pressing Enter inside <code>select_client()</code> should return <code>False</code>, which skips navigation and leaves the current stack unchanged.</div></section>
+<section class="panel"><h2>5 · What changes when an action runs?</h2><div class="grid"><div><h3>Session state</h3><p><code>state["client_idx"]</code> changes on client selection; <code>state["trd_day"]</code> changes when advancing trading days. <code>state["clients"]</code> references the current PM’s clients.</p></div><div><h3>Persistent records</h3><p>Create client and successful buy, sell, contribution, or withdrawal actions should save <code>pems.json</code> via <code>save_pems(state)</code>. Dividends and splits are derived from market data and handled under the corporate-action processing rules; they are not user-entered transactions. The saving helper is instructor-supplied.</p></div></div><div class="note">The menu stack is navigation state, not portfolio state. <code>menus.json</code> supplies action names and next-menu names. The loader maps action-name strings to callable Python functions before the menu loop starts.</div></section>
+<section class="panel"><h2>6 · In-memory mutation versus saving</h2><p>These operations change the same Python objects already reachable through <code>state["pems"]</code>:</p><pre>assert state["clients"] is state["pems"][state["pm"]]["clients"]
+
+# New client
+state["clients"].append(client)
+
+# Transaction for an existing client
+client = state["clients"][state["client_idx"]]
+client["transactions"].append(transaction)
+
+# Save only after modifying persistent records
+save_pems(state)</pre><p><strong>Selection is different:</strong> setting <code>state["client_idx"]</code> changes temporary session state, so it does not require saving. A client with index <code>0</code> is valid: use <code>is not None</code> when checking selection.</p><p><strong>Capstone rule:</strong> No Delete Client option. Clients are held in a list and are not removed or reordered; all transaction quantities are nonnegative, with direction determined by <code>trn_type</code>.</p></section><footer>PEMS capstone · Flow follows the current four-menu configuration · Standalone, printable HTML</footer></main></body></html>

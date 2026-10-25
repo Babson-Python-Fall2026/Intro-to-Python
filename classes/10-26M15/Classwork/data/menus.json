@@ -1,0 +1,22 @@
+
+{
+    "client_management": {
+        "title": "CLIENT MANAGEMENT",
+        "options": [
+            {
+                "menu_item": "Select Client",
+                "action": "select_client",
+                "next_menu": "client_portfolio"
+            },
+            {
+                "menu_item": "Create Client",
+                "action": "create_client",
+                "next_menu": null
+            }            
+        ]
+    },
+    "client_portfolio": {
+        "title": "CLIENT PORTFOLIO",
+        "options": []
+    }    
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OIM3600 | Lab 2 — Market Data and Client Management</title>
+<style>
+:root{--navy:#19334f;--blue:#24639a;--ink:#233347;--muted:#617185;--line:#d9e2eb;--pale:#f4f8fb;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#edf2f6;color:var(--ink);font-family:Segoe UI,Arial,sans-serif;font-size:15px;line-height:1.65}.sheet{max-width:900px;margin:34px auto;background:white;padding:48px 60px;box-shadow:0 8px 32px #19334f18}.eyebrow{color:var(--blue);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12px}h1{font-size:29px;line-height:1.22;color:var(--navy);margin:8px 0 10px}h2{font-size:19px;color:var(--navy);margin:30px 0 10px;border-bottom:2px solid var(--line);padding-bottom:6px}h3{font-size:16px;color:var(--navy);margin:18px 0 6px}p{margin:8px 0 13px}.subtitle{font-size:17px;color:var(--muted)}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.meta div{border-top:3px solid var(--blue);background:var(--pale);padding:10px 13px;font-size:13px}.meta strong{display:block;color:var(--navy)}code{font-family:Consolas,'Courier New',monospace;font-size:.92em;background:#eef3f8;padding:1px 4px;border-radius:3px}pre{padding:18px 20px;background:#142b42;color:#e8f2ff;border-radius:6px;overflow:auto;font-size:13px;line-height:1.55}pre code{color:inherit;background:none;padding:0}.note{background:#f2f7fc;border-left:4px solid var(--blue);padding:12px 16px;margin:18px 0}.hint{background:#f8fafc;border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:12px 0}.hint strong{color:var(--blue)}ol,ul{padding-left:23px}li{margin:8px 0}.questions li{padding-left:3px;margin:12px 0}.small{font-size:13px;color:var(--muted)}.foot{margin-top:35px;border-top:1px solid var(--line);padding-top:13px;color:var(--muted);font-size:12px}@media print{body{background:white}.sheet{max-width:none;margin:0;box-shadow:none;padding:14mm 17mm}h2{break-after:avoid}pre,.hint,.note{break-inside:avoid}@page{size:letter;margin:0}}
+
+.points{float:right;color:var(--blue);font-size:13px;font-weight:700}.rubric{border-collapse:collapse;width:100%;margin:14px 0 20px}.rubric th,.rubric td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}.rubric th{background:var(--pale);color:var(--navy)}.rubric td:last-child,.rubric th:last-child{text-align:right;width:80px}.rubric .total{font-weight:700;background:var(--pale)}@media print{.points{float:right}.rubric tr{break-inside:avoid}}</style>
+</head>
+<body><main class="sheet">
+<div class="eyebrow">Babson College · OIM3600 · Computational Thinking with AI &amp; Python</div>
+<h1>Lab 2 — Market Data and Client Management</h1>
+<p class="subtitle">Capstone, Part 1 of 3 · Understand the data, construct market_data, and implement working client management.</p>
+<div class="meta"><div><strong>Assessment</strong>Lab 2 · 7.5% of course grade</div><div><strong>Due</strong>As announced in class</div><div><strong>Submit</strong>Code, inspection notes, tests, short answers</div></div>
+<h2>Purpose and milestone</h2>
+<p>In this first capstone lab, you will turn supplied market files into a structure that the Portfolio Equity Management System (PEMS) can use, then implement the two actions that manage clients. The login process, menu definitions, menu stack, and action placeholders are provided. <strong>Your job is to understand the inputs and make the client-management features work.</strong></p>
+<h2>Get Your Hands Dirty with the Data</h2>
+<div class="note"><strong>Before you write code to transform data, understand the data you actually have.</strong> A program that runs without errors can still produce incorrect results. Good programmers investigate the <em>shape</em> of their data (nested dictionaries and lists, fields, types, indexing) and its <em>quality</em> (missing observations, missing keys, ordering, alignment, duplicates, and unexpected values) rather than assuming the source matches its documentation.</div>
+<h3>Write small utility programs to investigate</h3>
+<p>Opening a JSON file and looking at a handful of records is a useful beginning, but not enough. Write short exploratory scripts or functions that count, summarize, compare, and test the datasets. These utilities support your investigation; they are not part of the final portfolio application. Do not simply print thousands of records.</p>
+<ul>
+<li>Discover the nesting: what does <code>json.load()</code> return, which keys are available, and where do lists and dictionaries appear?</li>
+<li>Count observations by ticker, identify earliest and latest dates, and test whether dates are sorted, aligned across tickers, duplicated, or missing.</li>
+<li>Check whether every record has the fields you expect and whether values have the expected data types.</li>
+<li>Locate dividend and split events, inspect unusual values, and compare related events across source files when appropriate.</li>
+</ul>
+<h3>Turn expectations into checks</h3>
+<p>Before relying on an assumption, ask: <strong>What do I expect to be true, and what small program could prove or disprove it?</strong> For example, you may expect 100 observations for each of 100 tickers, all aligned to the same dates. Test those conditions across the <em>entire</em> dataset, not just the first two securities.</p>
+<p>A missing trading day for one ticker can shift every subsequent list-index lookup. The code might continue running while assigning a stock price to the wrong date—often more dangerous than an immediate exception.</p>
+<h3>Missing does not always mean zero</h3>
+<p>Distinguish between a <strong>missing field</strong>, a field containing <code>None</code>, a value of <code>0</code>, a <strong>missing time-series observation</strong>, and a value that looks incorrect. These situations do not necessarily mean the same thing. A corporate-action record without a <code>Stock Splits</code> field may describe only a dividend; a missing EOD closing price could prevent the system from valuing a holding. Do not substitute zero without understanding the meaning.</p>
+<h3>Let the investigation influence your design</h3>
+<p>Exploration should sometimes confirm your expectations and sometimes challenge them. Either outcome is useful. Use what you discover to decide how to structure <code>market_data</code>, handle absent fields, and validate the finished transformation.</p>
+<div class="hint"><strong>Document evidence, not assumptions.</strong> Include a concise Data Exploration Notes section showing which utility checks you wrote, what you tested, what you found, and how your findings affected your code. Include a few representative results; do not submit pages of raw output. A check that finds <em>no</em> problems is still valuable if it thoroughly verifies the assumption.</div>
+<h2>Part A — Explore the source data <span class="points">15 points</span></h2>
+<p>Use small exploratory Python programs and targeted output to investigate the supplied files. Part A is discovery and documentation; Part C turns important findings into repeatable validation checks on the finished market_data. Do not start by printing all 10,000 EOD records.</p>
+<ol>
+<li>Inspect <code>nyse_top100.json</code>, <code>raw_eod_yf.json</code>, and <code>corp_acts_yf.json</code>. Identify what <code>json.load()</code> returns, the relevant top-level keys, and the types and organization of the objects beneath those keys.</li>
+<li>Inspect at least <strong>two tickers</strong> and <strong>two different trading dates</strong>. Show a sample EOD record and a sample corporate-action record, and identify the fields used in your transformation.</li>
+<li>Determine how dates are represented, whether records appear chronologically ordered, and whether ticker records align at the same day index. Test these assumptions rather than guessing.</li>
+<li>Find and inspect a real dividend and a real split in the supplied date range. Explain how each appears in the input and how it should appear in <code>market_data</code>.</li>
+<li>Identify at least <strong>two quality risks</strong> that your program depends on (for example, absent dates, missing keys, unsorted actions, ambiguous split factors). State what you actually checked and what remains an assumption.</li>
+</ol>
+<h3>Exploration hints</h3>
+<pre><code>print(type(eod_prices))
+print(list(eod_prices)[:5])
+print(len(eod_prices["TSM"]))
+pp(eod_prices["TSM"][0])
+print(type(corporate_actions["TSM"]))</code></pre>
+<p class="small">These are examples of useful inspection, not a checklist to copy verbatim. Include a short “Data Exploration Notes” section in your submission, with representative output and conclusions.</p>
+<h2>Part B — Construct <code>market_data</code> <span class="points">25 points</span></h2>
+<p>Complete the unfinished portion of <code>load_data.py</code>. The output is a <strong>dictionary indexed by integer trading day</strong> (0 through 99). Each day contains its calendar <code>date</code> and a dictionary record for each ticker. Do not repeat the date and ticker in each individual security record.</p>
+<pre><code>market_data = {
+    0: {
+        "date": "2025-08-15",
+        "TSM": {"price": 238.88, "div": 0,
+                "split_in": 1, "split_out": 1},
+        "LLY": {"price": 701.23, "div": 1.50,
+                "split_in": 1, "split_out": 1},
+        # ... remaining tickers
+    },
+    1: {
+        "date": "2025-08-18",
+        # ... ticker records for this trading day
+    },
+    # ... trading days 2 through 99
+}</code></pre>
+<p class="small">Example data illustrates the structure. Read actual values from the source files.</p>
+<ol>
+<li>Create all <strong>100 trading days × 100 tickers</strong>.</li>
+<li>Use the EOD <code>Close</code> for <code>price</code>; default dividends to zero and split numerator/denominator to one.</li>
+<li>Match corporate actions to the calendar date; incorporate dividends and splits on that date. Use <code>split_out / split_in</code> for new shares per old share.</li>
+<li>Retain the provided loader's other responsibilities and return values.</li>
+</ol>
+<h3>Implementation hints (not a finished solution)</h3>
+<div class="hint"><strong>Start small.</strong> Develop with <code>range(5)</code> and <code>tickers[:5]</code>, inspect your nested structure, and then expand it. You can use <code>pp()</code> on small samples.</div>
+<div class="hint"><strong>Build outside to inside.</strong> Loop over trading days, create a dictionary for the date, then loop through tickers and attach a small record for each security. Store the completed day under its index.</div>
+<div class="hint"><strong>Start with defaults.</strong> Most day/ticker combinations have no corporate action. Set normal values first, then override them only when an action occurs on the matching date.</div>
+<div class="hint"><strong>Compare comparable dates.</strong> The supplied <code>Date</code> strings can be compared using their <code>[:10]</code> calendar-date portion. An early <code>break</code> in an action search requires chronological sorting.</div>
+<div class="hint"><strong>Check the split ratio.</strong> <code>Decimal(str(split_factor)).as_integer_ratio()</code> may help turn a decimal factor into an integer ratio. Confirm which output should be <code>split_out</code> and which <code>split_in</code>, and consider whether provider rounding affects the intended ratio.</div>
+<h2>Part C — Validate market_data <span class="points">15 points</span></h2>
+<p>Part C verifies the <code>market_data</code> dictionary you constructed in Part B. Write repeatable checks of its completeness, structure, date alignment, closing prices, dividends, and splits by comparing results with the original source files. Part C does not validate client records, the menu system, or pems.json. Keep the tests in your submission (they may live in a separate test script).</p>
+<ol>
+<li>Confirm that there are exactly 100 trading days and each day's record contains exactly 100 ticker keys plus <code>date</code>.</li>
+<li>Check that all source EOD records at each index have the same date and that trading dates increase in order.</li>
+<li>Check positive prices, nonnegative dividends, and positive integer split fields.</li>
+<li>Use direct lookups such as <code>market_data[day][ticker]["price"]</code> to inspect at least three selected records.</li>
+<li>Locate at least one nonzero dividend and one split from the transformed data, and verify that each corresponds to the input corporate-action event.</li>
+</ol>
+<div class="note"><strong>Important:</strong> Having 100 records per ticker does not guarantee date alignment. Likewise, a program can produce 10,000 records and still have mapped corporate actions to the wrong dates. Test meaning, not merely counts.</div>
+<h2>Part D — Implement client-management actions <span class="points">30 points</span></h2>
+<p>Implement <strong>two</strong> client-management actions, plus a reusable save helper. <strong>Delete Client is not part of this capstone.</strong> Clients are stored as a <strong>list of dictionaries</strong>; their positions in the list identify them during a session. Each action receives <code>state</code> and modifies the shared objects in place. No separate client ID is generated. The save_pems(state) helper is supplied; students are responsible for calling it, not writing it.</p>
+<h3>1. create_client(state) — 10 points</h3>
+<ol><li>Prompt for name, email, phone, and starting cash; validate inputs as specified in the starter code.</li><li>Construct a new client dictionary with <code>name</code>, <code>email</code>, <code>phone</code>, and <code>transactions</code> (a list).</li><li>Create the initial <strong>cash-only CONTRIBUTION</strong> transaction: <code>trans_id</code>, <code>trd_day</code>, <code>ticker</code> (<code>$$$$</code>), <code>trn_type</code>, <code>shares</code>, <code>cps</code> (<code>1.0</code>), and <code>total_cost</code>. The quantity is nonnegative; transaction type determines direction.</li><li>Append the initial transaction to the new client’s transaction list, then append the completed client to state["clients"]. Call the supplied save_pems(state) helper and remain on Client Management.</li></ol><div class="hint"><strong>Understanding the two append operations (answer immediately after Create Client).</strong><p>Why do we append the initial cash transaction to client["transactions"] and then append the client to clients? When recording a later transaction for an existing client, why is only client["transactions"].append(transaction) needed? What would happen if clients.append(client) were repeated for an existing client, both in memory and after saving and reloading JSON? Explain; do not implement another transaction-entry action in Lab 2.</p></div>
+<h3>2. select_client(state) — 10 points</h3>
+<ol><li>Display clients with menu numbers starting at 1. Handle an empty list and Enter-to-cancel by returning <code>False</code>.</li><li>Reprompt for invalid input. On success set <code>state["client_idx"] = choice - 1</code> and return <code>True</code>, so the wrapper opens Client Portfolio.</li><li>When testing selection, use <code>is not None</code>: the first client has index <code>0</code>, which is falsy.</li><li>Do <strong>not</strong> save JSON when merely selecting a client: only temporary session state changes.</li></ol>
+<h3>3. Persistence and shared-reference investigation — 10 points</h3>
+<p>The instructor supplies <code>save_pems(state)</code> as a working helper. Do not implement or modify it. Call the supplied helper after successful client creation and, in later labs, after successful transactions. The helper saves <code>state["pems"]</code> to <code>labs/#capstone/data/pems.json</code>; it does not change pm_users.json.</p>
+<p><strong>Investigate and demonstrate</strong> the difference between changing shared objects in memory and persisting changes to disk. Include short tests and explanations of all of the following:</p>
+<ol><li>Show that <code>state["clients"] is state["pems"][state["pm"]]["clients"]</code> evaluates to <code>True</code>, and explain what <code>is</code> tests.</li><li>Create a client using <code>clients.append(client)</code>; verify it appears through <code>state["pems"]</code> without reassigning that dictionary.</li><li>Demonstrate that modifying the already-selected client dictionary (for example changing a test copy of its phone field) is visible through state["pems"] without re-appending that client. Do not alter the supplied production data for this demonstration.</li><li>Explain why append() alone does not update pems.json. Call the supplied save_pems(state) after creating a client, reload the file, and confirm persistence.</li><li>Select a client, verify <code>client_idx</code> changes, and verify this does not modify <code>pems</code> or require saving.</li></ol>
+<div class="hint"><strong>Reference structure.</strong> <code>state["pems"]</code> is the in-memory PM dictionary; <code>state["clients"]</code> is an alias for the logged-in PM's client list. The only persisted portfolio file is <code>pems.json</code>. No client deletion, client ID keys, or integer-key JSON conversions are needed.</div>
+<h2>Part E — ISTI and design questions <span class="points">10 points</span></h2><p>Answer briefly in your own words, using examples from your checks where relevant.</p><ol>
+<li>Why organize <code>market_data</code> by trading day and ticker? Why avoid repeating date and ticker in each security record?</li>
+<li>Which assumptions about completeness, chronological order, and ticker-date alignment must be tested? What happens if a ticker is missing a date?</li>
+<li>Why does <code>state</code> need <code>trd_day</code> but not a separate calendar date?</li>
+<li>Differentiate session state (pm, client_idx, trd_day, stack), persistent portfolio records (the pems dictionary), and reference data (market_data, security_info).</li>
+<li>Why does mutating <code>state["clients"]</code> change <code>pems</code> in memory? Why is a save operation still necessary?</li>
+<li>Why can two clients have the same name without confusing selection? Explain list indexes and why <code>client_idx == 0</code> is valid.</li>
+</ol><h2>Part F — Integration demonstration <span class="points">5 points</span></h2><p>Run the full application and document this sequence:</p><ol>
+<li>Log in as a PM with no clients; try Select Client and confirm it stays on Client Management.</li>
+<li>Create two clients with different starting cash amounts. Inspect the resulting <code>pems</code> data and confirm each has an initial cash contribution transaction.</li>
+<li>Select the <strong>first</strong> client and reach Client Portfolio; verify that <code>client_idx</code> is <code>0</code>. Return to Client Management and confirm the selection clears.</li>
+<li>Log out and back in. Verify that both clients and their transactions persisted, but the selected client index did not.</li>
+<li>Confirm that no Delete Client choice appears anywhere in the menu.</li>
+</ol><p>Provide concise evidence or a small test log, including any failed check and its correction.</p><h2>Grading and submission</h2>
+<table class="rubric"><thead><tr><th>Component</th><th>Points</th></tr></thead><tbody>
+<tr><td>A · Explore raw data and document findings</td><td>15</td></tr>
+<tr><td>B · Construct complete <code>market_data</code></td><td>25</td></tr>
+<tr><td>C · Validate market_data against source data</td><td>15</td></tr>
+<tr><td>D · Client-management actions and save helper</td><td>30</td></tr>
+<tr><td>E · ISTI/design questions</td><td>10</td></tr>
+<tr><td>F · Integration demonstration</td><td>5</td></tr>
+<tr class="total"><td>Total</td><td>100</td></tr></tbody></table>
+<p>Submit your updated <code>load_data.py</code>, <code>actions.py</code>, any new helper/test files, brief data exploration notes, validation evidence, written responses, and the integration test log using the course submission process. Do not submit passwords or credential secrets in your notes.</p>
+<brk><brk>
+    <p><strong>Lab 2 is Due Monday, November 9th</strong></p>
+
+<p class="foot"><strong>Capstone principle:</strong> Effective computational thinking begins with understanding the actual data. Inspect its structure, challenge assumptions about quality, design a representation for the program's needs, and test the invariants before relying on it.</p>
+
+</main></body></html>
