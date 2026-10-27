@@ -11,7 +11,7 @@ def select_client(state):
     if len(clients) == 0:
         print('You have no clients. Create a client')
         pause(2)
-        return False
+        return False   # returning False will keep you on the same menu    
     else:
         for idx, client in enumerate(clients, 1):
             print(f"{idx}) {client['name']}")
