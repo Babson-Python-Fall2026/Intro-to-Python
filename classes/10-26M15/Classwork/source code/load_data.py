@@ -54,9 +54,10 @@ def load_data():
         print("FATAL ERROR: PM JSON files are not in sync.")
         sys.exit(1)       
 
-    
-
+   
+ 
     market_data = {}
+    
 
     ''' 
     market_data should look like:
