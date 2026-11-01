@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PEMS Finance Primer</title>
+<style>
+@page{size:letter;margin:.65in .7in}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#17283b;background:#fff;line-height:1.45;font-size:10.5pt;max-width:820px;margin:0 auto;padding:25px}h1{font-size:24pt;color:#123653;margin:0 0 6px}h2{font-size:14.5pt;color:#145477;border-bottom:2px solid #b9d4e0;padding-bottom:5px;margin:22px 0 10px}p{margin:7px 0}table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:9.8pt}th{background:#e5f1f5;text-align:left}td,th{padding:6px 8px;border:1px solid #cad9df;vertical-align:top}tr{break-inside:avoid}.subtitle{color:#4d6475;font-size:12pt;margin:0}.small{font-size:9pt;color:#516577}.callout{background:#eff7f8;border-left:4px solid #247d91;padding:10px 14px;margin:12px 0}.note{background:#fff7e9;border-left:4px solid #c78a2a;padding:9px 13px;margin:10px 0}.math{font-family:Consolas,monospace;background:#f0f4f7;padding:2px 5px}code{font-family:Consolas,monospace;font-size:9.5pt;background:#f0f4f7;padding:1px 4px}ul,ol{margin:6px 0 9px;padding-left:23px}li{margin:3px 0}@media print{body{max-width:none;margin:0;padding:0;font-size:9.8pt}}
+</style></head><body>
+
+<header><h1>Finance Primer for PEMS</h1><p class="subtitle">The few finance ideas you need to build PEMS</p><p class="small">OIM3600 · Computational Thinking with AI and Python · Student reference</p></header>
+
+<div class="callout">This is not an investments course. PEMS models a small set of financial events; this primer covers only those.</div>
+
+<h2>1. Clients, cash, and shares</h2>
+<p>A portfolio manager (PM) manages several <strong>clients</strong>. Each client's portfolio is <strong>cash</strong> plus <strong>holdings</strong>: shares of stocks, each identified by a <strong>ticker</strong> such as <code>AAPL</code>.</p>
+<p>PEMS treats cash like a security: its ticker is <code>"$$$$"</code> and its price is always <code>1.0</code>. So $1,000 of cash is 1,000 "shares" of <code>$$$$</code>.</p>
+
+<h2>2. Transactions</h2>
+<p>A transaction is an event that changes a client's portfolio. PEMS records every transaction and calculates cash and holdings from that record.</p>
+<table>
+<tr><th>Transaction</th><th>Effect</th><th>When</th></tr>
+<tr><td>Contribution</td><td>Cash goes in.</td><td rowspan="2">Part 1 (cash only)</td></tr>
+<tr><td>Withdrawal</td><td>Cash comes out.</td></tr>
+<tr><td>Buy</td><td>Cash goes down; shares of a stock go up.</td><td rowspan="2">Part 2</td></tr>
+<tr><td>Sell</td><td>Shares of a stock go down; cash goes up.</td></tr>
+</table>
+<p>All amounts are recorded as positive numbers. <code>trans_type</code> says which direction the money moves.</p>
+<div class="callout"><strong>Example.</strong> Contribute $1,000, then withdraw $250. Cash is <strong>$750</strong>. The two transactions are what's stored; $750 is calculated from them.</div>
+
+<h2>3. Prices and value</h2>
+<p>Each <strong>trading day</strong> (a day the market is open), every stock has a <strong>closing price</strong>: its price at the end of that day. <code>market_data</code> holds the closing price of every stock for 100 trading days.</p>
+<p><strong>Market value</strong> of a holding is <span class="math">shares × price</span>. A client's total value is the market value of all holdings plus cash. Value changes when prices change, even if the client does nothing.</p>
+<div class="note"><strong>PEMS prices are unadjusted.</strong> Each price is the price the stock actually traded at on that day. They have <em>not</em> been adjusted for later splits or dividends. That's why PEMS has to apply splits and dividends itself (next section): the prices won't do it for you.</div>
+
+<h2>4. Dividends and splits</h2>
+<p>Companies, not clients, cause these events. They change a client's portfolio without the client doing anything. In <code>market_data</code>, each stock on each day has a <code>div</code> amount and a split ratio.</p>
+<table>
+<tr><th>Event</th><th>What happens</th><th>Example</th></tr>
+<tr><td>Cash dividend</td><td>The company pays cash for each share held. The client's cash goes up by <span class="math">shares × dividend per share</span>.</td><td>100 shares, $0.50 dividend: +$50 cash.</td></tr>
+<tr><td>Stock split</td><td>Each share becomes several shares (or several become one, in a reverse split). The share count changes; the price changes the opposite way.</td><td>100 shares at $50, 2-for-1 split: 200 shares at about $25. Still worth about $5,000.</td></tr>
+</table>
+<p>Because prices are unadjusted, a split shows up as a sudden drop in price on the split day. If PEMS didn't also double the shares, the holding would appear to lose half its value. A split changes the number of shares, not the client's wealth.</p>
+
+<h2>5. Account growth is not profit</h2>
+<p>Contributions and withdrawals change how much is in an account, but they aren't investment gains or losses.</p>
+<div class="callout"><strong>Example.</strong> A portfolio starts at $10,000. The client contributes $5,000, and the portfolio ends at $16,000. The account grew by $6,000, but the investment gain is only <strong>$1,000</strong>: the other $5,000 was the client's own money.</div>
+
+<h2>6. Check yourself</h2>
+<ol>
+<li>Why does a contribution increase cash but not count as profit?</li>
+<li>How can a portfolio's value change on a day with no transactions?</li>
+<li>A client holds 50 shares when a 3-for-1 split happens. How many shares do they hold after? Did their wealth change?</li>
+<li>Why does PEMS need to apply splits itself, instead of relying on the prices?</li>
+<li>Why store transactions and calculate cash from them, instead of storing a cash balance?</li>
+</ol>
+
+</body></html>

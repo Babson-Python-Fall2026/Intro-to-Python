@@ -1,0 +1,54 @@
+{
+    "client_management": {
+        "title": "Client Management Menu",
+        "options": [
+            {
+                "menu_item": "Select Client",
+                "next_menu": "client_workspace"
+            },
+            {
+                "menu_item": "Create Client",
+                "next_menu": null
+            }
+        ]
+    },
+    "client_workspace": {
+        "title": "Client Workspace",
+        "options": [
+            {
+                "menu_item": "Transactions",
+                "next_menu": "transactions"
+            },
+            {
+                "menu_item": "Reports",
+                "next_menu": "reports"
+            }
+        ]
+    },
+    "transactions": {
+        "title": "Transactions",
+        "options": [
+            {
+                "menu_item": "Contribution",
+                "next_menu": null
+            },
+            {
+                "menu_item": "Withdrawal",
+                "next_menu": null
+            }
+        ]
+    },
+    "reports": {
+        "title": "Reports",
+        "options": [
+            {
+                "menu_item": "Holdings",
+                "next_menu": null
+            },
+            {
+                "menu_item": "Performance",
+                "next_menu": null
+            }
+        ]
+    }
+}

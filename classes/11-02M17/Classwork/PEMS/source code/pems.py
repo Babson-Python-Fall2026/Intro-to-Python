@@ -63,7 +63,7 @@ def pems():
 
             option = cur_menu["options"][int(choice) - 1]
 
-            if option["action"] is not None:
+            if option.get("action") is not None:
                 if option["action"](state) is False:
                     continue         
             

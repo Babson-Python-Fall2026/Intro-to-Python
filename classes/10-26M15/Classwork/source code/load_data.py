@@ -2,7 +2,7 @@ import json
 import sys
 
 from pprint import pprint as pp
-from decimal import Decimal
+
 
 from clear_screen import clear
 from actions import actions

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>PEMS Actions Lesson</title>
+<style>
+:root{--ink:#17233e;--muted:#596b85;--blue:#2457a7;--line:#dfe6f1;--pale:#eef4fc;--teal:#087e80;--green:#16805b;--orange:#9c551b;--bg:#f6f8fc;--card:#fff;--code:#eef2f8;--pre:#13223a;--pretext:#edf6ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px/1.55 system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink)}
+main{max-width:980px;margin:0 auto;padding:38px 32px 65px}
+.eyebrow{color:var(--blue);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+h1{font-size:32px;letter-spacing:-.035em;margin:5px 0 8px}
+h2{font-size:20px;margin:0 0 12px}
+h3{font-size:16px;margin:20px 0 8px}
+p.lead{color:var(--muted);max-width:820px;margin:0 0 20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 4px 16px #1939600c;margin:20px 0}
+code{font-size:12.5px;background:var(--code);padding:2px 5px;border-radius:4px;font-family:ui-monospace,Consolas,monospace}
+pre{white-space:pre-wrap;overflow:auto;background:var(--pre);color:var(--pretext);border-radius:10px;padding:16px 18px;font:13px/1.6 ui-monospace,Consolas,monospace}
+pre code{background:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid #e3eaf3;vertical-align:top}
+th{background:#edf3fb;color:#25446f}
+tr:last-child td{border-bottom:none}
+.wrap{overflow-x:auto}
+.note{border-left:4px solid var(--teal);padding:10px 15px;background:#eff8f8;border-radius:0 9px 9px 0;color:#285260;margin:14px 0}
+.warn{border-left:4px solid var(--orange);padding:10px 15px;background:#fbf3ea;border-radius:0 9px 9px 0;color:#6b3d14;margin:14px 0}
+.do{border:1px solid #cfe6db;background:#f2faf6;border-radius:10px;padding:12px 16px;margin:14px 0}
+.do strong:first-child{color:var(--green)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.menu{border:1px solid #ccdaec;border-radius:12px;padding:14px;background:#fbfdff}
+.menu h4{margin:0 0 2px;font-size:15px}
+.menu .key{font-size:12px;color:#58718e;font-family:ui-monospace,monospace;margin-bottom:8px}
+.menu .opt{padding:6px 0;border-top:1px solid #e6edf5;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.tag{font-size:11px;padding:2px 7px;border-radius:5px;background:#e7effd;color:#2457a7;white-space:nowrap;align-self:center}
+.tag.act{background:#e5f4ee;color:#166c50}
+.tag.ni{background:#f1f1f4;color:#666}
+ol.steps>li{margin:6px 0}
+ul.check{list-style:none;padding-left:0}
+ul.check li{margin:6px 0}
+ul.check input{margin-right:8px;vertical-align:-1px}
+.toc{columns:2;font-size:14px;margin:0;padding-left:20px}
+.toc a{color:var(--blue);text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.tree{font:13px/1.7 ui-monospace,Consolas,monospace;background:var(--pale);border-radius:10px;padding:14px 18px;white-space:pre;overflow-x:auto}
+footer{text-align:center;color:#667891;font-size:12px}
+@media(max-width:700px){main{padding:24px 16px}.panel{padding:16px}.grid{grid-template-columns:1fr}.toc{columns:1}h1{font-size:26px}}
+@media print{body{background:#fff}main{padding:10mm}.panel{box-shadow:none;break-inside:avoid}}
+</style></head><body><main>
+
+<div class="eyebrow">OIM3600 · Computational Thinking with AI &amp; Python</div>
+<h1>PEMS: Menus and Actions</h1>
+<p class="lead">Today PEMS starts to <em>do</em> things. You'll review where the system stands, see where it's headed, learn the shape of the data, and add the first two actions: <strong>Select Client</strong> and <strong>Create Client</strong>. Work through the sections in order.</p>
+
+<section class="panel">
+<h2>Contents</h2>
+<ol class="toc">
+<li><a href="#s1">Where we are</a></li>
+<li><a href="#s2">Where we're going</a></li>
+<li><a href="#s3">Part 1: stack navigation</a></li>
+<li><a href="#s4">The data model</a></li>
+<li><a href="#s5">What an action is</a></li>
+<li><a href="#s6">Part 2: adding actions</a></li>
+<li><a href="#s7">Homework: finish create_client</a></li>
+</ol>
+</section>
+
+<!-- 1 -->
+<section class="panel" id="s1">
+<h2>1 · Where we are</h2>
+<p>PEMS is a set of small programs, each with one job. Your project folder looks like this:</p>
+<div class="tree">PEMS/
+├── data/
+│   ├── pm_users.json     PM logins (salt + password hash)
+│   ├── pems.json         PMs → clients → transactions
+│   ├── menus.json        menu data
+│   └── …                 market and company data
+└── source code/
+    ├── create_pm.py      ├── pems.py
+    ├── login.py          ├── actions.py      ← new today
+    ├── load_data.py      └── helpers: save_pems.py, menu_print.py,
+                              pause.py, clear_screen.py</div>
+
+<div class="wrap"><table>
+<thead><tr><th>File</th><th>Job</th></tr></thead>
+<tbody>
+<tr><td><code>create_pm.py</code></td><td>A standalone program, run on its own. It creates a PM, or adds one, in <code>pm_users.json</code> and <code>pems.json</code>, so the two files always list the same PMs.</td></tr>
+<tr><td><code>login.py</code></td><td>Logs a PM into PEMS. Returns the PM's initials, or <code>None</code> if the user presses Enter.</td></tr>
+<tr><td><code>load_data.py</code></td><td>Loads the external data and shapes it. You wrote the <code>market_data</code> part. It also reads <code>menus.json</code>; you'll see what else it does with the menus in Part 2.</td></tr>
+<tr><td><code>pems.py</code></td><td>The wrapper of the system: login, then load the data, then run the menus until the PM logs off.</td></tr>
+<tr><td><code>menus.json</code></td><td>Holds the menus as data: titles, options, and where each option leads.</td></tr>
+</tbody></table></div>
+
+<h3>Review on your own</h3>
+<p>These are in the <code>student review</code> folder. Use them before class or whenever something in this lesson feels shaky.</p>
+<ul>
+<li><code>Finance_Primer.html</code>: the finance terms PEMS uses (contributions, withdrawals, holdings, dividends, splits).</li>
+<li><code>Preparation_Nested_Structures_Readiness.ipynb</code>: practice with dictionaries and lists nested inside each other, the way <code>pems.json</code> is built. Exercise C2 (two references to one object) matters in Part 2.</li>
+<li><code>Preparation_Nested_Structures_Readiness_Answers.ipynb</code>: the answers. Try the exercises first.</li>
+</ul>
+</section>
+
+<!-- 2 -->
+<section class="panel" id="s2">
+<h2>2 · Where we're going</h2>
+<p>Open <code>flowchart/PEMS_Menu_Action_Flowchart.html</code>. Section 1 shows how the program runs. Section 3 shows the full menu structure PEMS will eventually need: buying and selling stock, advancing the trade day, and four kinds of reports.</p>
+<p>We build toward that in steps. For now, PEMS uses four menus:</p>
+<div class="grid">
+<div class="menu"><h4>Client Management</h4><div class="key">client_management · first menu</div>
+<div class="opt">1. Select Client <span class="tag act">action → menu</span></div>
+<div class="opt">2. Create Client <span class="tag act">action</span></div></div>
+<div class="menu"><h4>Client Workspace</h4><div class="key">client_workspace · after a client is selected</div>
+<div class="opt">1. Transactions <span class="tag">menu</span></div>
+<div class="opt">2. Reports <span class="tag">menu</span></div></div>
+<div class="menu"><h4>Transactions</h4><div class="key">transactions</div>
+<div class="opt">Contribution, Withdrawal <span class="tag ni">next assignment</span></div></div>
+<div class="menu"><h4>Reports</h4><div class="key">reports</div>
+<div class="opt">Holdings, Performance <span class="tag ni">assignment after</span></div></div>
+</div>
+<p>This week, only <strong>Select Client</strong> and <strong>Create Client</strong> do real work. In Part 2 you'll give Transactions and Reports a single <em>Not Implemented</em> option each, so every menu is still reachable.</p>
+</section>
+
+<!-- 3 -->
+<section class="panel" id="s3">
+<h2>3 · Part 1: stack navigation and indirection</h2>
+<div class="do"><strong>Do:</strong> Open <code>Menus_and_Nav_part_1.ipynb</code> and work through it in order. Predict before you run each cell.</div>
+<p>run <code>navigation_only.py</code>. This notebook explains why that one short loop can run every menu. Focus on two ideas:</p>
+<ul>
+<li><strong>The stack</strong> remembers your route. <code>append()</code> moves forward, <code>pop()</code> goes back, and <code>stack[-1]</code> is the current menu.</li>
+<li><strong>Indirection.</strong> An option stores the next menu's <em>name</em>, a string. The loop uses that name to look up the menu on the next pass.</li>
+</ul>
+<div class="note"><strong>Notice what's missing.</strong> In Part 1 you can choose Select Client and land in Client Workspace without ever picking a client. Contribution records no money. Menus can move you around, but they can't <em>do</em> anything. The rest of this lesson fixes that.</div>
+</section>
+
+<!-- 4 -->
+<section class="panel" id="s4">
+<h2>4 · The data model: what actions act on</h2>
+<p>Before writing actions, you need to know the data they change. All business data lives in <code>pems.json</code>. It nests four levels deep:</p>
+<div class="tree">pems.json            a dict keyed by PM initials
+└── "RSS"            a dict with one key: "clients"
+    └── clients      a list of client dicts
+        └── client   name, email, phone, transactions
+            └── transactions   a list of transaction dicts</div>
+
+<h3>A client</h3>
+<p>Every client has exactly these keys:</p>
+<pre><code>CLIENT_KEYS = ["name", "email", "phone", "transactions"]</code></pre>
+<p><code>"transactions"</code> is a list. A new client starts with one transaction in it: the starting cash.</p>
+
+<h3>A transaction</h3>
+<p>Every transaction has exactly these keys, in this order, whatever its type:</p>
+<pre><code>TRANSACTION_KEYS = ["trans_id", "trd_day", "trans_type", "ticker", "shares",
+                    "cost_per_share", "total", "div_amnt",
+                    "shares_before", "shares_after"]</code></pre>
+<p>A key that doesn't apply to a transaction is set to <code>None</code>. That way, any code can read any key of any transaction without a <code>KeyError</code>.</p>
+
+<h3>Example: one client after Create Client</h3>
+<pre><code>{
+  "RSS": {
+    "clients": [
+      {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "phone": "555-0101",
+        "transactions": [
+          {
+            "trans_id": 1,
+            "trd_day": 1,
+            "trans_type": "CONTRIBUTION",
+            "ticker": "$$$$",
+            "shares": 1000.0,
+            "cost_per_share": 1.0,
+            "total": 1000.0,
+            "div_amnt": null,
+            "shares_before": null,
+            "shares_after": null
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+
+<h3>Conventions</h3>
+<ul>
+<li><strong>Keys are lowercase; values are uppercase:</strong> <code>"trans_type": "CONTRIBUTION"</code>.</li>
+<li><strong>Cash is treated like a security.</strong> Its ticker is <code>"$$$$"</code> and it is priced at <code>1.0</code>, so 1,000 dollars is 1,000 "shares" of cash.</li>
+<li><strong>All amounts are positive.</strong> Direction comes from <code>trans_type</code>: a withdrawal is a positive <code>total</code> with <code>trans_type</code> <code>"WITHDRAWAL"</code>.</li>
+<li><strong><code>div_amnt</code>, <code>shares_before</code>, and <code>shares_after</code></strong> are for dividends and splits, which PEMS handles later. For anything you enter, they are <code>None</code>.</li>
+</ul>
+</section>
+
+<!-- 5 -->
+<section class="panel" id="s5">
+<h2>5 · What an action is</h2>
+<p>An <strong>action</strong> is a function that runs when the user chooses a menu option. Every action follows the same contract:</p>
+<ul>
+<li>It takes <strong>one parameter, <code>state</code></strong>: a dictionary holding everything an action might need, such as the PM, their clients, the selected client, and the trade day.</li>
+<li>It does its work by <strong>changing <code>state</code></strong>. For example, Select Client records the chosen client in <code>state['client_idx']</code>.</li>
+<li>It returns <strong><code>False</code></strong> when the user should stay on the current menu (nothing was done, or the user cancelled). Any other return value lets navigation continue.</li>
+</ul>
+<p>The actions live in <code>actions.py</code>, along with an <code>actions</code> dictionary that maps each action's name to its function. Part 2 shows how a name in <code>menus.json</code> becomes a function call.</p>
+</section>
+
+<!-- 6 -->
+<section class="panel" id="s6">
+<h2>6 · Part 2: adding actions</h2>
+<div class="do"><strong>Do:</strong> Open <code>Menus_and_Actions_part_2.ipynb</code>. Nothing in it asks for input, so <strong>Kernel → Restart &amp; Run All</strong> is always safe.</div>
+<div class="wrap"><table>
+<thead><tr><th>Notebook section</th><th>What you do</th></tr></thead>
+<tbody>
+<tr><td>1 · Rebuild the menus</td><td><strong>Write code.</strong> Replace the Transactions and Reports options with one <code>"Not Implemented"</code> option each.</td></tr>
+<tr><td>2 · Add actions</td><td><strong>Write code.</strong> Add an <code>"action"</code> key to every option, then save the menus as <code>menus.json</code>.</td></tr>
+<tr><td>3 · Functions are objects</td><td>Read and predict: a function can be stored in a dictionary and looked up by name.</td></tr>
+<tr><td>4 · <code>actions.py</code></td><td>Read the worked example, <code>select_client</code>, and the <code>actions</code> dictionary.</td></tr>
+<tr><td>5 · Binding</td><td>See how <code>load_data.py</code> replaces each action name with its function, and what happens when an action is missing.</td></tr>
+<tr><td>6 · <code>pems.py</code></td><td>Find the three new lines that call an action and stay on the menu when it returns <code>False</code>.</td></tr>
+<tr><td>7 · <code>state</code></td><td>Learn what <code>state</code> holds, and why <code>state["clients"]</code> is the same list as the one inside <code>pems</code>.</td></tr>
+</tbody></table></div>
+<div class="warn"><strong>Don't skip this step.</strong> After Section 2, copy the <code>menus.json</code> the notebook wrote into <code>PEMS/data/</code>, replacing the old file. Until you do, PEMS still runs the old menus and Select Client never asks you to pick a client.</div>
+</section>
+
+<!-- 7 -->
+<section class="panel" id="s7">
+<h2>7 · Homework: finish <code>create_client</code></h2>
+<p><code>create_client</code> in <code>actions.py</code> already asks for the name, email, phone, and starting cash, and rejects bad input. Your job is the two <code>#TODO</code>s.</p>
+<ol class="steps">
+<li><strong>Build the client.</strong> Give it every key in <code>CLIENT_KEYS</code>. <code>"transactions"</code> starts as an empty list.</li>
+<li><strong>Build the opening transaction</strong> in <code>TRANSACTION_KEYS</code> order, using these values:
+<div class="wrap"><table>
+<thead><tr><th>Key</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td><code>trans_id</code></td><td><code>len(transactions) + 1</code></td></tr>
+<tr><td><code>trd_day</code></td><td><code>state['trd_day']</code></td></tr>
+<tr><td><code>trans_type</code></td><td><code>"CONTRIBUTION"</code></td></tr>
+<tr><td><code>ticker</code></td><td><code>"$$$$"</code></td></tr>
+<tr><td><code>shares</code></td><td>the cash amount</td></tr>
+<tr><td><code>cost_per_share</code></td><td><code>1.0</code></td></tr>
+<tr><td><code>total</code></td><td>the cash amount</td></tr>
+<tr><td><code>div_amnt</code>, <code>shares_before</code>, <code>shares_after</code></td><td><code>None</code></td></tr>
+</tbody></table></div></li>
+</ol>
+
+<h3>If PEMS stops with a FATAL ERROR</h3>
+<p><code>create_client</code> checks your work before it saves anything, so a failed run never damages <code>pems.json</code>.</p>
+<div class="wrap"><table>
+<thead><tr><th>Message</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>FATAL ERROR: Client record incomplete</code></td><td>Your client has no <code>"transactions"</code> key.</td></tr>
+<tr><td><code>FATAL ERROR: Transaction record incomplete</code></td><td>Your transaction is missing a key, has an extra one, or has its keys in a different order from <code>TRANSACTION_KEYS</code>.</td></tr>
+</tbody></table></div>
+
+<h3>Test it</h3>
+<p>Run <code>pems.py</code>, log in, and check each item:</p>
+<ul class="check">
+<li><label><input type="checkbox"/>With no clients, Select Client says you have none, and you stay on Client Management.</label></li>
+<li><label><input type="checkbox"/>Create Client with a blank field, or cash of 0 or text, says "Client not created," and you stay on Client Management.</label></li>
+<li><label><input type="checkbox"/>Create Client with valid input says "Client Created," and <code>pems.json</code> shows the client with one transaction that has all ten keys.</label></li>
+<li><label><input type="checkbox"/>Select Client lists the new client; choosing it opens Client Workspace with the client's name in the title.</label></li>
+<li><label><input type="checkbox"/>Transactions and Reports open; "Not Implemented" does nothing; Enter goes back.</label></li>
+<li><label><input type="checkbox"/>Enter from Client Workspace returns to Client Management; Enter there logs you off.</label></li>
+<li><label><input type="checkbox"/>Log in again: the client is still there.</label></li>
+</ul>
+</section>
+
+<footer>PEMS capstone · OIM3600 · Menus and Actions lesson</footer>
+</main></body></html>
