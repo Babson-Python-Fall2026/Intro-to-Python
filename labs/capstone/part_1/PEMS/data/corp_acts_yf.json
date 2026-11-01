@@ -1,0 +1,782 @@
+{
+  "provider": "yfinance",
+  "collected_at_utc": "2026-10-03T19:19:39.891464+00:00",
+  "notes": "Yahoo/yfinance corporate actions from 2025-08-15 through 2026-01-07.",
+  "data": {
+    "TSM": [
+      {
+        "Date": "2025-09-16 00:00:00-04:00",
+        "Dividends": 0.822,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-11 00:00:00-05:00",
+        "Dividends": 0.835,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BRK.B": [],
+    "LLY": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 1.5,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 1.5,
+        "Stock Splits": 0.0
+      }
+    ],
+    "JPM": [
+      {
+        "Date": "2025-10-06 00:00:00-04:00",
+        "Dividends": 1.5,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2026-01-06 00:00:00-05:00",
+        "Dividends": 1.5,
+        "Stock Splits": 0.0
+      }
+    ],
+    "XOM": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.99,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 1.03,
+        "Stock Splits": 0.0
+      }
+    ],
+    "V": [
+      {
+        "Date": "2025-11-12 00:00:00-05:00",
+        "Dividends": 0.67,
+        "Stock Splits": 0.0
+      }
+    ],
+    "JNJ": [
+      {
+        "Date": "2025-08-26 00:00:00-04:00",
+        "Dividends": 1.3,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-25 00:00:00-05:00",
+        "Dividends": 1.3,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MA": [
+      {
+        "Date": "2025-10-09 00:00:00-04:00",
+        "Dividends": 0.76,
+        "Stock Splits": 0.0
+      }
+    ],
+    "ABBV": [
+      {
+        "Date": "2025-10-15 00:00:00-04:00",
+        "Dividends": 1.64
+      }
+    ],
+    "ORCL": [
+      {
+        "Date": "2025-10-09 00:00:00-04:00",
+        "Dividends": 0.5,
+        "Stock Splits": 0.0
+      }
+    ],
+    "CVX": [
+      {
+        "Date": "2025-08-19 00:00:00-04:00",
+        "Dividends": 1.71,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-18 00:00:00-05:00",
+        "Dividends": 1.71,
+        "Stock Splits": 0.0
+      }
+    ],
+    "CAT": [
+      {
+        "Date": "2025-10-20 00:00:00-04:00",
+        "Dividends": 1.51,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BAC": [
+      {
+        "Date": "2025-09-05 00:00:00-04:00",
+        "Dividends": 0.28,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-05 00:00:00-05:00",
+        "Dividends": 0.28,
+        "Stock Splits": 0.0
+      }
+    ],
+    "KO": [
+      {
+        "Date": "2025-09-15 00:00:00-04:00",
+        "Dividends": 0.51,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-01 00:00:00-05:00",
+        "Dividends": 0.51,
+        "Stock Splits": 0.0
+      }
+    ],
+    "DELL": [
+      {
+        "Date": "2025-10-21 00:00:00-04:00",
+        "Dividends": 0.525,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MRK": [
+      {
+        "Date": "2025-09-15 00:00:00-04:00",
+        "Dividends": 0.81,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-15 00:00:00-05:00",
+        "Dividends": 0.85,
+        "Stock Splits": 0.0
+      }
+    ],
+    "PG": [
+      {
+        "Date": "2025-10-24 00:00:00-04:00",
+        "Dividends": 1.057,
+        "Stock Splits": 0.0
+      }
+    ],
+    "UNH": [
+      {
+        "Date": "2025-09-15 00:00:00-04:00",
+        "Dividends": 2.21,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-08 00:00:00-05:00",
+        "Dividends": 2.21,
+        "Stock Splits": 0.0
+      }
+    ],
+    "HSBC": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.5
+      },
+      {
+        "Date": "2025-11-07 00:00:00-05:00",
+        "Dividends": 0.5
+      }
+    ],
+    "GE": [
+      {
+        "Date": "2025-09-29 00:00:00-04:00",
+        "Dividends": 0.36,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-29 00:00:00-05:00",
+        "Dividends": 0.36,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MS": [
+      {
+        "Date": "2025-10-31 00:00:00-04:00",
+        "Dividends": 1.0,
+        "Stock Splits": 0.0
+      }
+    ],
+    "PM": [
+      {
+        "Date": "2025-10-03 00:00:00-04:00",
+        "Dividends": 1.47
+      },
+      {
+        "Date": "2025-12-26 00:00:00-05:00",
+        "Dividends": 1.47
+      }
+    ],
+    "HD": [
+      {
+        "Date": "2025-09-04 00:00:00-04:00",
+        "Dividends": 2.3,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-04 00:00:00-05:00",
+        "Dividends": 2.3,
+        "Stock Splits": 0.0
+      }
+    ],
+    "GS": [
+      {
+        "Date": "2025-08-29 00:00:00-04:00",
+        "Dividends": 4.0
+      },
+      {
+        "Date": "2025-12-02 00:00:00-05:00",
+        "Dividends": 4.0
+      }
+    ],
+    "SHEL": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.716,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 0.716,
+        "Stock Splits": 0.0
+      }
+    ],
+    "RY": [],
+    "NVS": [],
+    "GEV": [
+      {
+        "Date": "2025-10-20 00:00:00-04:00",
+        "Dividends": 0.25
+      },
+      {
+        "Date": "2026-01-05 00:00:00-05:00",
+        "Dividends": 0.5
+      }
+    ],
+    "BABA": [],
+    "ANET": [],
+    "MUFG": [],
+    "RTX": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.68,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-21 00:00:00-05:00",
+        "Dividends": 0.68,
+        "Stock Splits": 0.0
+      }
+    ],
+    "AZN": [],
+    "WFC": [
+      {
+        "Date": "2025-11-07 00:00:00-05:00",
+        "Dividends": 0.45,
+        "Stock Splits": 0.0
+      }
+    ],
+    "TMO": [
+      {
+        "Date": "2025-09-15 00:00:00-04:00",
+        "Dividends": 0.43,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-15 00:00:00-05:00",
+        "Dividends": 0.43,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SAP": [],
+    "BHP": [],
+    "C": [
+      {
+        "Date": "2025-11-03 00:00:00-05:00",
+        "Dividends": 0.6,
+        "Stock Splits": 0.0
+      }
+    ],
+    "APH": [
+      {
+        "Date": "2025-09-16 00:00:00-04:00",
+        "Dividends": 0.0825,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-16 00:00:00-05:00",
+        "Dividends": 0.125,
+        "Stock Splits": 0.0
+      }
+    ],
+    "TM": [],
+    "IBM": [
+      {
+        "Date": "2025-11-10 00:00:00-05:00",
+        "Dividends": 1.68,
+        "Stock Splits": 0.0
+      }
+    ],
+    "AXP": [
+      {
+        "Date": "2025-10-10 00:00:00-04:00",
+        "Dividends": 0.82,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2026-01-02 00:00:00-05:00",
+        "Dividends": 0.82,
+        "Stock Splits": 0.0
+      }
+    ],
+    "CRM": [
+      {
+        "Date": "2025-09-17 00:00:00-04:00",
+        "Dividends": 0.416,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-18 00:00:00-05:00",
+        "Dividends": 0.416,
+        "Stock Splits": 0.0
+      }
+    ],
+    "TD": [],
+    "SAN": [],
+    "VZ": [
+      {
+        "Date": "2025-10-10 00:00:00-04:00",
+        "Dividends": 0.69,
+        "Stock Splits": 0.0
+      }
+    ],
+    "TTE": [
+      {
+        "Date": "2025-09-30 00:00:00-04:00",
+        "Dividends": 0.994,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-31 00:00:00-05:00",
+        "Dividends": 0.995,
+        "Stock Splits": 0.0
+      }
+    ],
+    "DE": [
+      {
+        "Date": "2025-09-30 00:00:00-04:00",
+        "Dividends": 1.62,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-31 00:00:00-05:00",
+        "Dividends": 1.62,
+        "Stock Splits": 0.0
+      }
+    ],
+    "DIS": [
+      {
+        "Date": "2025-12-15 00:00:00-05:00",
+        "Dividends": 0.75,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SCCO": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.80,
+        "Stock Splits": 1.01
+      },
+      {
+        "Date": "2025-11-12 00:00:00-05:00",
+        "Dividends": 0.90,
+        "Stock Splits": 1.01
+      }
+    ],
+    "BLK": [
+      {
+        "Date": "2025-09-05 00:00:00-04:00",
+        "Dividends": 5.21
+      },
+      {
+        "Date": "2025-12-05 00:00:00-05:00",
+        "Dividends": 5.21
+      }
+    ],
+    "ETN": [
+      {
+        "Date": "2025-11-05 00:00:00-05:00",
+        "Dividends": 1.04,
+        "Stock Splits": 0.0
+      }
+    ],
+    "ABT": [
+      {
+        "Date": "2025-10-15 00:00:00-04:00",
+        "Dividends": 0.59,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SCHW": [
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 0.27,
+        "Stock Splits": 0.0
+      }
+    ],
+    "T": [
+      {
+        "Date": "2025-10-10 00:00:00-04:00",
+        "Dividends": 0.278,
+        "Stock Splits": 0.0
+      }
+    ],
+    "NVO": [
+      {
+        "Date": "2025-08-18 00:00:00-04:00",
+        "Dividends": 0.584,
+        "Stock Splits": 0.0
+      }
+    ],
+    "UNP": [
+      {
+        "Date": "2025-08-29 00:00:00-04:00",
+        "Dividends": 1.38,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-05 00:00:00-05:00",
+        "Dividends": 1.38,
+        "Stock Splits": 0.0
+      }
+    ],
+    "WELL": [
+      {
+        "Date": "2025-11-10 00:00:00-05:00",
+        "Dividends": 0.74,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MCD": [
+      {
+        "Date": "2025-09-02 00:00:00-04:00",
+        "Dividends": 1.77,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-01 00:00:00-05:00",
+        "Dividends": 1.86,
+        "Stock Splits": 0.0
+      }
+    ],
+    "NEE": [
+      {
+        "Date": "2025-08-28 00:00:00-04:00",
+        "Dividends": 0.567,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-21 00:00:00-05:00",
+        "Dividends": 0.567,
+        "Stock Splits": 0.0
+      }
+    ],
+    "RIO": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 1.48,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SMFG": [],
+    "PFE": [
+      {
+        "Date": "2025-11-07 00:00:00-05:00",
+        "Dividends": 0.43,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BA": [],
+    "COP": [
+      {
+        "Date": "2025-08-18 00:00:00-04:00",
+        "Dividends": 0.78,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-17 00:00:00-05:00",
+        "Dividends": 0.84,
+        "Stock Splits": 0.0
+      }
+    ],
+    "DHR": [
+      {
+        "Date": "2025-09-26 00:00:00-04:00",
+        "Dividends": 0.32,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-26 00:00:00-05:00",
+        "Dividends": 0.32,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BBVA": [
+      {
+        "Date": "2025-11-06 00:00:00-05:00",
+        "Dividends": 0.369,
+        "Stock Splits": 0.0
+      }
+    ],
+    "UBS": [],
+    "TJX": [
+      {
+        "Date": "2025-11-13 00:00:00-05:00",
+        "Dividends": 0.425,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BUD": [],
+    "GLW": [
+      {
+        "Date": "2025-08-29 00:00:00-04:00",
+        "Dividends": 0.28,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 0.28,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SONY": [],
+    "UBER": [],
+    "BX": [
+      {
+        "Date": "2025-11-03 00:00:00-05:00",
+        "Dividends": 1.29
+      }
+    ],
+    "NOW": [
+      {
+        "Date": "2025-12-18 00:00:00-05:00",
+        "Stock Splits": 5.0
+      }
+    ],
+    "PBR": [
+      {
+        "Date": "2025-08-25 00:00:00-04:00",
+        "Dividends": 0.247,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MFG": [],
+    "UL": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.588964,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-07 00:00:00-05:00",
+        "Dividends": 0.592342,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-08 00:00:00-05:00",
+        "Dividends": 2.984,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-09 00:00:00-05:00",
+        "Dividends": 0.0,
+        "Stock Splits": 0.888
+      }
+    ],
+    "CB": [],
+    "PLD": [
+      {
+        "Date": "2025-09-16 00:00:00-04:00",
+        "Dividends": 1.01
+      },
+      {
+        "Date": "2025-12-16 00:00:00-05:00",
+        "Dividends": 1.01
+      }
+    ],
+    "BMY": [
+      {
+        "Date": "2025-10-03 00:00:00-04:00",
+        "Dividends": 0.62,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2026-01-02 00:00:00-05:00",
+        "Dividends": 0.63,
+        "Stock Splits": 0.0
+      }
+    ],
+    "NET": [],
+    "PH": [
+      {
+        "Date": "2025-09-02 00:00:00-04:00",
+        "Dividends": 1.8,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-07 00:00:00-05:00",
+        "Dividends": 1.8,
+        "Stock Splits": 0.0
+      }
+    ],
+    "PGR": [
+      {
+        "Date": "2025-10-02 00:00:00-04:00",
+        "Dividends": 0.1,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2026-01-02 00:00:00-05:00",
+        "Dividends": 13.6,
+        "Stock Splits": 0.0
+      }
+    ],
+    "NEM": [
+      {
+        "Date": "2025-09-04 00:00:00-04:00",
+        "Dividends": 0.25,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-26 00:00:00-05:00",
+        "Dividends": 0.25,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SNOW": [],
+    "COF": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.6,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-17 00:00:00-05:00",
+        "Dividends": 0.8,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MPC": [
+      {
+        "Date": "2025-08-20 00:00:00-04:00",
+        "Dividends": 0.91,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-19 00:00:00-05:00",
+        "Dividends": 1.0,
+        "Stock Splits": 0.0
+      }
+    ],
+    "ACN": [],
+    "VLO": [
+      {
+        "Date": "2025-11-20 00:00:00-05:00",
+        "Dividends": 1.13,
+        "Stock Splits": 0.0
+      }
+    ],
+    "LMT": [
+      {
+        "Date": "2025-09-02 00:00:00-04:00",
+        "Dividends": 3.3,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-01 00:00:00-05:00",
+        "Dividends": 3.45,
+        "Stock Splits": 0.0
+      }
+    ],
+    "HDB": [
+      {
+        "Date": "2025-09-08 00:00:00-04:00",
+        "Dividends": 0.0,
+        "Stock Splits": 2.0
+      }
+    ],
+    "BMO": [],
+    "BP": [
+      {
+        "Date": "2025-08-15 00:00:00-04:00",
+        "Dividends": 0.499,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-14 00:00:00-05:00",
+        "Dividends": 0.499,
+        "Stock Splits": 0.0
+      }
+    ],
+    "SPGI": [
+      {
+        "Date": "2025-08-26 00:00:00-04:00",
+        "Dividends": 0.908231,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-11-25 00:00:00-05:00",
+        "Dividends": 0.908231,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BTI": [
+      {
+        "Date": "2025-10-03 00:00:00-04:00",
+        "Dividends": 0.749,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-30 00:00:00-05:00",
+        "Dividends": 0.749,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MO": [
+      {
+        "Date": "2025-09-15 00:00:00-04:00",
+        "Dividends": 1.06,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-26 00:00:00-05:00",
+        "Dividends": 1.06,
+        "Stock Splits": 0.0
+      }
+    ],
+    "BNS": [],
+    "CVS": [
+      {
+        "Date": "2025-10-23 00:00:00-04:00",
+        "Dividends": 0.665,
+        "Stock Splits": 0.0
+      }
+    ],
+    "MDT": [
+      {
+        "Date": "2025-09-26 00:00:00-04:00",
+        "Dividends": 0.71,
+        "Stock Splits": 0.0
+      },
+      {
+        "Date": "2025-12-26 00:00:00-05:00",
+        "Dividends": 0.71,
+        "Stock Splits": 0.0
+      }
+    ]
+  }
+}
