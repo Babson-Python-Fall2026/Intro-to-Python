@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Agenda · November 4</title>
+<style>
+:root{--ink:#17233e;--muted:#596b85;--blue:#2457a7;--line:#dfe6f1;--bg:#f6f8fc;--code:#eef2f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px/1.55 system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink)}
+main{max-width:900px;margin:0 auto;padding:38px 32px 65px}
+.eyebrow{color:var(--blue);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+h1{font-size:32px;letter-spacing:-.035em;margin:5px 0 8px}
+h2{font-size:19px;margin:0 0 8px;display:flex;gap:10px;align-items:baseline}
+h2 .n{display:inline-block;min-width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;background:var(--blue);color:#fff;font-size:14px}
+p{margin:0}
+p.lead{color:var(--muted);margin:0 0 20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;box-shadow:0 4px 16px #1939600c;margin:16px 0}
+code{font-size:12.5px;background:var(--code);padding:2px 5px;border-radius:4px;font-family:ui-monospace,Consolas,monospace}
+.bridge{margin:22px 4px;padding:12px 16px;border-left:4px solid var(--blue);background:#eaf1fb;border-radius:0 9px 9px 0;color:var(--blue);font-weight:600}
+footer{text-align:center;color:#667891;font-size:12px;margin-top:24px}
+@media(max-width:700px){main{padding:24px 16px}.panel{padding:16px}h1{font-size:26px}}
+@media print{body{background:#fff}.panel{box-shadow:none;break-inside:avoid}}
+</style></head><body><main>
+
+<div class="eyebrow">OIM3600 · Wednesday, November 4</div>
+<h1>Today's Agenda</h1>
+<p class="lead">How a menu program works, in two short notebooks, then how the same idea runs PEMS, then what's due for Part 1.</p>
+
+<section class="panel">
+<h2><span class="n">1</span>Plan for today</h2>
+<p>What we're doing and why, and a request: bring your questions, especially the basic ones.</p>
+</section>
+
+<section class="panel">
+<h2><span class="n">2</span><code>Stack_Menu_Navigation.ipynb</code></h2>
+<p>How menus work: a stack of menu names. Append to go in, pop to go back.</p>
+</section>
+
+<section class="panel">
+<h2><span class="n">3</span><code>Stack_Menu_Actions.ipynb</code></h2>
+<p>How actions work: functions stored in a dictionary, an <code>action</code> on each option, and returning <code>False</code> to stay on the current menu.</p>
+</section>
+
+<section class="panel">
+<h2><span class="n">4</span>From the notebooks to PEMS</h2>
+<p>Run <code>pems.py</code> in <code>NAV &amp; ACTIONS</code>: the same loop, with menus read from <code>menus.json</code> and actions connected by <code>load_data.py</code>. PEMS is this loop plus login and <code>state</code>.</p>
+</section>
+
+<section class="panel">
+<h2><span class="n">5</span>The PEMS rules, hands-on</h2>
+<p>In <code>PEMS/data/menus.json</code>, add a menu option and add an <code>"action"</code> key to every option. Then run PEMS and check it.</p>
+</section>
+
+<section class="panel">
+<h2><span class="n">6</span>Capstone Part 1 deliverables</h2>
+<p>What's in <code>labs/capstone/part_1</code>, what each step asks for, and what to submit.</p>
+</section>
+
+<footer>OIM3600 · November 4</footer>
+</main></body></html>

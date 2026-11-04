@@ -6,8 +6,11 @@ import sys
 
 def select_client(state):
     clear()
+    # clients is a list. client_idx is the index number in that list of our selected client.
+    # PEMS uses a dictionary called state to pass in information to our action functions
     state['client_idx'] = None
-    
+
+    # clients are the list of client dicts for logged in manager
     clients = state['clients']
     
     if len(clients) == 0:
@@ -15,6 +18,7 @@ def select_client(state):
         pause(2)
         return False   # returning False will keep you on the same menu    
     else:
+        # will print out each of our clients
         for idx, client in enumerate(clients, 1):
             print(f"{idx}) {client['name']}")
 
@@ -32,7 +36,11 @@ def select_client(state):
                 pass
             txt = 'Enter a valid choice (Enter to cancel): '
 
+        # we update state['client_idx'] with the client we want to work with
         state['client_idx'] = choice - 1
+
+        # the function returns none and goes back to PEMS.py inside the while loop
+        # and navigates to client_workspace
         
         
     
@@ -116,9 +124,8 @@ def create_client(state):
 
 
 
-
+# TODO update as needed
 actions = {
-    "select_client": select_client,
-    "create_client": create_client    
+    "select_client": select_client    
     
 }

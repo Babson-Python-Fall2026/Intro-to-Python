@@ -52,18 +52,30 @@ footer{text-align:center;color:#667891;font-size:12px}
 
 <section class="panel">
 <h2><span class="n">3</span>Update <code>menus.json</code></h2>
-<p>Replace <code>PEMS/data/menus.json</code> with the <code>menus.json</code> you created in <code>Menus_and_Actions_part_2</code>. Every option should have an <code>"action"</code> key.</p>
+<p>Edit <code>PEMS/data/menus.json</code> so that every option has an <code>"action"</code> key:</p>
+<ul>
+<li>Select Client: <code>"select_client"</code></li>
+<li>Create Client: <code>"create_client"</code></li>
+<li>Every other option: <code>null</code></li>
+</ul>
+<p>For example, Select Client becomes:</p>
+<div class="tree">{
+    "menu_item": "Select Client",
+    "next_menu": "client_workspace",
+    "action": "select_client"
+}</div>
+<div class="warn">In JSON, "no action" is <code>null</code>, not <code>None</code>. Action names must match the keys in the <code>actions</code> dictionary in <code>actions.py</code> exactly. Remember the comma after <code>"next_menu"</code>'s value.</div>
 </section>
 
 <section class="panel">
 <h2><span class="n">4</span>Complete <code>create_client</code></h2>
-<p>Finish the two <code>#TODO</code>s in <code>create_client</code> in <code>PEMS/source code/actions.py</code>. Then run <code>pems.py</code>, log in, and check each item:</p>
+<p>Finish the three <code>#TODO</code>'s in <code>PEMS/source code/actions.py</code>. Then run <code>create_pm.py</code> to create your own PM, run <code>pems.py</code>, log in, and check each item:</p>
 <ul class="check">
 <li><label><input type="checkbox"/>With no clients, Select Client says you have none, and you stay on Client Management.</label></li>
 <li><label><input type="checkbox"/>Create Client with a blank field, or cash of 0 or text, says "Client not created," and you stay on Client Management.</label></li>
 <li><label><input type="checkbox"/>Create Client with valid input says "Client Created," and <code>pems.json</code> shows the client with one transaction that has all ten keys.</label></li>
 <li><label><input type="checkbox"/>Select Client lists the new client; choosing it opens Client Workspace.</label></li>
-<li><label><input type="checkbox"/>Transactions and Reports open; "Not Implemented" does nothing; Enter goes back.</label></li>
+<li><label><input type="checkbox"/>Transactions and Reports open; their options do nothing yet; Enter goes back.</label></li>
 <li><label><input type="checkbox"/>Enter from Client Workspace returns to Client Management; Enter there logs you off.</label></li>
 <li><label><input type="checkbox"/>Log in again: the client is still there.</label></li>
 </ul>

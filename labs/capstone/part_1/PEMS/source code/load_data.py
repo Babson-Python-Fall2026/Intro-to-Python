@@ -11,7 +11,7 @@ from pathlib import Path
 
 def load_data():
 
-    DATA = (Path(__file__).parent.parent / "data").resolve()
+    DATA = (Path(__file__).parent.parent / "data").resolve()    
     
     with open(DATA / "nyse_top100.json", "r", encoding="utf-8") as file:
         tickers = json.load(file)['tickers']

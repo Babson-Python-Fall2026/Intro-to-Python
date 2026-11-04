@@ -1,0 +1,107 @@
+{
+    "dinner": {
+        "title": "Dinner",
+        "options": [
+            {
+                "menu_item": "Dine In",
+                "next_menu": "dine_in",
+                "action": null
+            },
+            {
+                "menu_item": "Dine Out",
+                "next_menu": "dine_out",
+                "action": null
+            }
+        ]
+    },
+    "dine_in": {
+        "title": "Dine In",
+        "options": [
+            {
+                "menu_item": "Bob Cooks",
+                "next_menu": "bob_cooks",
+                "action": null
+            },
+            {
+                "menu_item": "Deb Cooks",
+                "next_menu": "deb_cooks",
+                "action": null
+            }
+        ]
+    },
+    "dine_out": {
+        "title": "Dine Out",
+        "options": [
+            {
+                "menu_item": "Seafood",
+                "next_menu": "seafood",
+                "action": null
+            },
+            {
+                "menu_item": "Italian",
+                "next_menu": "italian",
+                "action": null
+            }
+        ]
+    },
+    "bob_cooks": {
+        "title": "Chef Bob",
+        "options": [
+            {
+                "menu_item": "Hamburgers",
+                "next_menu": null,
+                "action": null
+            },
+            {
+                "menu_item": "Hot Dogs",
+                "next_menu": null,
+                "action": null
+            }
+        ]
+    },
+    "deb_cooks": {
+        "title": "Chef Deb",
+        "options": [
+            {
+                "menu_item": "Mediterranean Surprise",
+                "next_menu": null,
+                "action": "mediterranean_surprise"
+            },
+            {
+                "menu_item": "Stir Fry",
+                "next_menu": null,
+                "action": null
+            }
+        ]
+    },
+    "seafood": {
+        "title": "Seafood",
+        "options": [
+            {
+                "menu_item": "Salmon",
+                "next_menu": null,
+                "action": null
+            },
+            {
+                "menu_item": "Halibut",
+                "next_menu": null,
+                "action": null
+            }
+        ]
+    },
+    "italian": {
+        "title": "Italian",
+        "options": [
+            {
+                "menu_item": "Fettuccine",
+                "next_menu": null,
+                "action": null
+            },
+            {
+                "menu_item": "Chicken Piccata",
+                "next_menu": null,
+                "action": null
+            }
+        ]
+    }
+}
