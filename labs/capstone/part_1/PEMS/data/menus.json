@@ -1,52 +1,90 @@
+
 {
     "client_management": {
-        "title": "Client Management Menu",
+        "title": "CLIENT MANAGEMENT",
         "options": [
             {
                 "menu_item": "Select Client",
-                "next_menu": "client_workspace"
+                "action": "select_client",
+                "next_menu": "client_portfolio"
             },
             {
                 "menu_item": "Create Client",
+                "action": "create_client",
                 "next_menu": null
             }
+            
         ]
     },
-    "client_workspace": {
-        "title": "Client Workspace",
+
+    "client_portfolio": {
+        "title": "CLIENT PORTFOLIO",
         "options": [
             {
                 "menu_item": "Transactions",
+                "action": null,
                 "next_menu": "transactions"
             },
             {
                 "menu_item": "Reports",
+                "action": null,
                 "next_menu": "reports"
             }
         ]
     },
+
     "transactions": {
-        "title": "Transactions",
+        "title": "TRANSACTIONS",
         "options": [
             {
+                "menu_item": "Buy Stock",
+                "action": null,
+                "next_menu": null
+            },
+            {
+                "menu_item": "Sell Stock",
+                "action": null,
+                "next_menu": null
+            },
+            {
                 "menu_item": "Contribution",
+                "action": null,
                 "next_menu": null
             },
             {
                 "menu_item": "Withdrawal",
+                "action": null,
+                "next_menu": null
+            },
+            {
+                "menu_item": "Advance Trade Day",
+                "action": null,
                 "next_menu": null
             }
         ]
     },
+
     "reports": {
-        "title": "Reports",
+        "title": "REPORTS",
         "options": [
             {
                 "menu_item": "Holdings",
+                "action": null,
+                "next_menu": null
+            },
+            {
+                "menu_item": "Transactions",
+                "action": null,
                 "next_menu": null
             },
             {
                 "menu_item": "Performance",
+                "action": null,
+                "next_menu": null
+            },
+            {
+                "menu_item": "Cash Summary",
+                "action": null,
                 "next_menu": null
             }
         ]
