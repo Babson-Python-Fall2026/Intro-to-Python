@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda · November 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbfaf7; --surface: #ffffff; --text: #1f2328; --muted: #5d636b;
+  --border: #e2ded6; --accent: #1d5c8f; --accent-soft: #e6eff7;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #15171a; --surface: #1c1f23; --text: #e6e6e3; --muted: #9da3aa;
+          --border: #33383e; --accent: #7ab3e0; --accent-soft: #1d2b38; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.6; }
+main { max-width: 720px; margin: 0 auto; padding: 56px 16px 80px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+h1 { font-family: "Source Serif 4", Georgia, serif; font-size: 40px; line-height: 1.15; font-weight: 600; margin: 0 0 6px; }
+.date { color: var(--muted); font-size: 18px; margin: 0 0 32px; }
+ol { list-style: none; counter-reset: item; padding: 0; margin: 0; }
+li { counter-increment: item; position: relative; display: flex; align-items: center; min-height: 64px;
+     padding: 14px 18px 14px 70px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 10px;
+     background: var(--surface); font-size: 19px; font-weight: 600; }
+li::before { content: counter(item); position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+     width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--bg);
+     display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; }
+@media (max-width: 600px) { h1 { font-size: 30px; } li { font-size: 17px; } }
+@media print { body { background: #fff; color: #171717; } li { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">OIM 3600 · Computational Thinking with AI and Python</div>
+  <h1>Agenda</h1>
+  <p class="date">Monday, November 9, 2026</p>
+  <ol>
+    <li>Class feedback</li>
+    <li>Review Part 1 of the capstone</li>
+    <li>Problem Solving Method Framework</li>
+  </ol>
+</main>
+</body>
+</html>

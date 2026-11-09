@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OIM3600 — Homework Due November 11 and 16</title>
+  <style>
+    :root { color-scheme: light; --ink:#263342; --muted:#5a6775; --line:#dbe3eb; --accent:#285d7c; --panel:#fff; --bg:#f4f7fa; }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:32px 18px; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); }
+    main { max-width:920px; margin:auto; }
+    h1 { margin:0 0 24px; font-size:clamp(1.65rem,3vw,2.3rem); }
+    .assignments { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; align-items:stretch; }
+    article { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:28px; box-shadow:0 5px 20px rgba(30,50,70,.06); }
+    .due { text-transform:uppercase; letter-spacing:.08em; font-size:.82rem; font-weight:700; color:var(--accent); margin:0 0 8px; }
+    h2 { font-size:1.55rem; line-height:1.2; margin:0 0 18px; }
+    p,li { font-size:1.12rem; line-height:1.55; }
+    p { margin:0 0 14px; }
+    ol { margin:10px 0 20px; padding-left:1.6em; }
+    li { padding-left:4px; margin-bottom:5px; }
+    .note { border-top:1px solid var(--line); padding-top:18px; margin-top:20px; }
+    code { background:#edf2f6; padding:2px 5px; border-radius:4px; font-size:.93em; }
+    @media(max-width:680px) { body{padding:18px 12px;} .assignments{grid-template-columns:1fr;} article{padding:22px;} }
+    @media print { body{background:#fff; padding:0;} article{box-shadow:none; break-inside:avoid;} .assignments{gap:12px;} }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>OIM3600 — Homework Assignments</h1>
+    <div class="assignments">
+      <article>
+        <p class="due">Due Wednesday, November 11</p>
+        <h2>Homework — The ISTI Model</h2>
+        <p>Reread <strong>WB4: The ISTI Model</strong>, sections <strong>0, 1, 2, and 3</strong>.</p>
+      </article>
+      <article>
+        <p class="due">Due Monday, November 16</p>
+        <h2>Homework — Capstone Project, Part 2</h2>
+        <p>Work in <code>labs/capstone/part_2</code>.</p>
+        <p><strong>Only make changes to <code>menus.json</code> and <code>actions.py</code>.</strong></p>
+        <p>For the capstone project, implement the following actions in <code>actions.py</code>:</p>
+        <ol>
+          <li>Buy</li>
+          <li>Sell</li>
+          <li>Contribution</li>
+          <li>Withdrawal</li>
+        </ol>
+        <p class="note"><strong>Simplifying assumption:</strong> There are no corporate actions.</p>
+        <p>Using this assumption, <strong>derive the holdings data structure</strong>.</p>
+      </article>
+    </div>
+  </main>
+</body>
+</html>

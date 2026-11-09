@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem Solving Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f3f1ec;
+  --text: #1f2328;
+  --muted: #5d636b;
+  --border: #e2ded6;
+  --accent: #1d5c8f;
+  --accent-soft: #e6eff7;
+  --green: #2f7a4f;
+  --green-soft: #e7f3ec;
+  --amber: #9a6512;
+  --amber-soft: #fbf1df;
+  --red: #a33a3a;
+  --red-soft: #f8e9e9;
+  --code-bg: #f4f2ee;
+  --x: #1d5c8f;
+  --hash: #8a8f96;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a;
+    --surface: #1c1f23;
+    --surface-2: #23272c;
+    --text: #e6e6e3;
+    --muted: #9da3aa;
+    --border: #33383e;
+    --accent: #7ab3e0;
+    --accent-soft: #1d2b38;
+    --green: #74c095;
+    --green-soft: #1b2b22;
+    --amber: #e0b064;
+    --amber-soft: #2e2617;
+    --red: #e08b8b;
+    --red-soft: #2f1d1d;
+    --code-bg: #202429;
+    --x: #7ab3e0;
+    --hash: #7d838a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a;
+  --surface: #1c1f23;
+  --surface-2: #23272c;
+  --text: #e6e6e3;
+  --muted: #9da3aa;
+  --border: #33383e;
+  --accent: #7ab3e0;
+  --accent-soft: #1d2b38;
+  --green: #74c095;
+  --green-soft: #1b2b22;
+  --amber: #e0b064;
+  --amber-soft: #2e2617;
+  --red: #e08b8b;
+  --red-soft: #2f1d1d;
+  --code-bg: #202429;
+  --x: #7ab3e0;
+  --hash: #7d838a;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 28px 18px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+nav.sidebar .brand { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+nav.sidebar .sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+nav.sidebar a {
+  display: block;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+nav.sidebar a:hover { background: var(--surface-2); color: var(--text); }
+nav.sidebar a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 48px 56px 120px;
+  max-width: 900px;
+}
+h1 { font-family: "Source Serif 4", Georgia, serif; font-size: 40px; line-height: 1.15; margin: 0 0 10px; font-weight: 600; }
+h2 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 28px; font-weight: 600;
+  margin: 64px 0 14px;
+  padding-top: 8px;
+  scroll-margin-top: 20px;
+}
+h3 { font-size: 18px; margin: 30px 0 8px; }
+p { margin: 0 0 14px; }
+.lede { font-size: 19px; color: var(--muted); margin-bottom: 28px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+code { font-family: "JetBrains Mono", monospace; font-size: .88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre {
+  font-family: "JetBrains Mono", monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+pre code { background: none; padding: 0; font-size: inherit; }
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 18px 0;
+}
+.callout.green { border-color: var(--green); background: var(--green-soft); }
+.callout.amber { border-color: var(--amber); background: var(--amber-soft); }
+.callout.red { border-color: var(--red); background: var(--red-soft); }
+.callout p:last-child { margin-bottom: 0; }
+.callout strong.tag { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 15px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--surface-2); font-weight: 600; font-size: 14px; }
+.table-wrap { overflow-x: auto; }
+
+.grid-pair { display: flex; gap: 28px; flex-wrap: wrap; margin: 14px 0 18px; }
+.grid-pair figure { margin: 0; }
+.grid-pair figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.charpic {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 17px; line-height: 1.25;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  white-space: pre;
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.charpic .x { color: var(--x); font-weight: 700; }
+.charpic .h { color: var(--hash); }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.compare > div { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: var(--surface); min-width: 0; }
+.compare h4 { margin: 0 0 6px; font-size: 15px; }
+.compare ul { margin: 0; padding-left: 18px; font-size: 15px; }
+
+.trigger { display: grid; grid-template-columns: 110px 1fr; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 14px 0 18px; }
+.trigger div { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.trigger div:nth-last-child(-n+2) { border-bottom: none; }
+.trigger .k { font-weight: 700; background: var(--surface-2); }
+
+.theme-toggle {
+  margin-top: 22px; font: inherit; font-size: 13px;
+  background: var(--surface-2); color: var(--muted);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; cursor: pointer; width: 100%;
+}
+
+main a { color: var(--accent); }
+.exercise { border: 1px dashed var(--accent); border-radius: 10px; padding: 16px 20px; margin: 16px 0; background: var(--surface); }
+.exercise h4 { margin: 0 0 8px; font-size: 16px; color: var(--accent); }
+.exercise p:last-child, .exercise ol:last-child { margin-bottom: 0; }
+.exercise ol, .exercise ul { padding-left: 21px; }
+.exercise li { margin: 5px 0; }
+.details-key { border: 1px solid var(--border); border-radius: 8px; margin: 18px 0; background: var(--surface); }
+.details-key summary { font-weight: 700; color: var(--accent); padding: 12px 16px; cursor: pointer; }
+.details-key .details-inside { padding: 4px 16px 14px; }
+.details-key[open] summary { border-bottom: 1px solid var(--border); }
+.seg { display: inline-block; font-family: "JetBrains Mono", monospace; border: 1px solid var(--border); border-radius: 5px; padding: 2px 8px; margin: 2px 2px; background: var(--surface-2); font-size: 14px; }
+.seg.x { background: var(--accent-soft); color: var(--x); font-weight: 700; }
+.seg.sp { color: var(--muted); font-style: italic; }
+
+.hero-strap { color: var(--muted); font-size: 18px; max-width: 66ch; margin-bottom: 18px; }
+.challenge-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 22px 0 26px; }
+.challenge { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 17px 16px; min-width: 0; }
+.challenge .num { font-size: 12px; color: var(--accent); text-transform: uppercase; font-weight: 700; letter-spacing: .06em; }
+.challenge h3 { margin: 5px 0 9px; font-size: 17px; }
+.challenge p { font-size: 14px; margin: 0; line-height: 1.55; }
+.section-kicker { margin: 0 0 10px; text-transform: uppercase; font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+.method-card { border: 1px solid var(--border); background: var(--surface); border-radius: 11px; padding: 17px 20px; margin: 14px 0; }
+.method-card h3 { margin: 0 0 7px; font-size: 19px; }
+.method-card p { margin-bottom: 8px; }
+.method-card ul, .method-card ol { margin: 7px 0 4px; padding-left: 26px; }
+.method-card li { margin: 6px 0; }
+.method-card ol > li::marker { font-weight: 700; color: var(--accent); }
+.decision { font-size: 14px; color: var(--muted); border-left: 2px solid var(--border); padding-left: 12px; margin: 10px 0; }
+.small-note { font-size: 14px; color: var(--muted); }
+.flowline { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; margin: 13px 0; text-align: center; }
+.flowline .arrows { font-size: 20px; color: var(--accent); }
+.guiding-question { font-size: 18px; color: var(--text); font-family: 'Source Serif 4', Georgia, serif; }
+
+.flow { overflow-x: auto; margin: 14px 0 6px; padding: 16px 8px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.tree { width: max-content; margin: 0 auto; }
+.tree ul { display: flex; justify-content: center; position: relative; margin: 0; padding: 20px 0 0; }
+.tree > ul { padding-top: 0; }
+.tree li { list-style: none; position: relative; display: flex; flex-direction: column; align-items: center; padding: 20px 4px 0; margin: 0; }
+.tree li::before, .tree li::after { content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 20px; border-top: 2px solid var(--accent); }
+.tree li::after { right: auto; left: 50%; border-left: 2px solid var(--accent); }
+.tree li:only-child { padding-top: 0; }
+.tree li:only-child::before, .tree li:only-child::after { display: none; }
+.tree li:first-child::before, .tree li:last-child::after { border: 0; }
+.tree li:last-child::before { border-right: 2px solid var(--accent); border-radius: 0 6px 0 0; }
+.tree li:first-child::after { border-radius: 6px 0 0 0; }
+.tree ul ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 20px; border-left: 2px solid var(--accent); }
+.fc { display: inline-block; border: 2px solid var(--accent); background: var(--accent-soft); color: var(--text); border-radius: 8px; padding: 6px 10px; font-size: 13px; font-weight: 600; line-height: 1.3; white-space: nowrap; }
+.fc-caption { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+@media print { .flow { break-inside: avoid; } }
+@media (max-width: 900px) { .challenge-grid { grid-template-columns: 1fr; } }
+@media (max-width: 860px) {
+  .layout { display: block; }
+  nav.sidebar { position: static; width: auto; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+  nav.sidebar .links { display: flex; flex-wrap: wrap; gap: 4px; }
+  nav.sidebar a { padding: 4px 8px; font-size: 13px; }
+  main { padding: 28px 16px 80px; }
+  h1 { font-size: 30px; }
+  .compare { grid-template-columns: 1fr; }
+  .trigger { grid-template-columns: 80px 1fr; }
+}
+@media print {
+  @page { size: letter; margin: .6in; }
+  :root, :root[data-theme="dark"] { --bg:#fff; --surface:#fff; --surface-2:#f3f3f3; --text:#171717; --muted:#505050; --border:#ccc; --accent:#1d5c8f; --accent-soft:#eef4fa; --green-soft:#eef7f0; --amber-soft:#fff7e9; --red-soft:#fff0f0; --code-bg:#f7f7f7; --x:#1d5c8f; --hash:#6b6b6b; }
+  body { font-size: 11pt; }
+  nav.sidebar { display: none; }
+  .layout { display: block; }
+  main { max-width: none; padding: 0; }
+  h1 { font-size: 28pt; } h2 { font-size: 19pt; margin: 22pt 0 8pt; } h3 { font-size: 13pt; }
+  .exercise, .callout, .details-key, pre, table, .compare > div, .method-card, .challenge { break-inside: avoid; }
+  .challenge-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  a { color: inherit; text-decoration: none; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="layout">
+<nav class="sidebar" aria-label="Workbook sections">
+  <div class="brand">OIM 3600</div>
+  <div class="sub">Problem Solving Workbook</div>
+  <div class="links">
+    <a href="#why">Why a method?</a>
+    <a href="#challenges">Three challenges</a>
+    <a href="#method">A working method</a>
+    <a href="#example-x">Example 1: X in a square</a>
+    <a href="#example-portfolio">Example 2: A tiny portfolio</a>
+    <a href="#revising">Revising the design</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" type="button">Toggle light / dark</button>
+</nav>
+<main>
+  <div class="eyebrow">OIM 3600 · Computational Thinking with AI and Python</div>
+  <h1>Problem Solving Workbook</h1>
+  <p class="hero-strap">How to move from understanding a problem to designing a solution a computer can carry out.</p>
+
+  <h2 id="why">Why a method?</h2>
+  <p>When someone describes a problem, we can often imagine what a successful result looks like. But knowing what the result <em>should be</em> does not tell us how to produce it with a program.</p>
+  <p>Some problems are naturally divided into components with clear inputs and outputs. Others are easy for a person to grasp but surprisingly hard to express as computer operations. <b>Most substantial problems involve both.</b></p>
+  <p>Our goal is not to memorize a checklist. It is to develop ways of thinking that help us whenever we reach a point where we do not yet know what to do.</p>
+
+  <h2 id="challenges">Three challenges in problem solving</h2>
+  <div class="challenge-grid">
+    <div class="challenge"><div class="num">Challenge 1 · Step 1</div><h3>Understand</h3><p>What does the problem mean? What should happen? What rules and assumptions determine a correct answer?</p></div>
+    <div class="challenge"><div class="num">Challenge 2 · Step 2</div><h3>Organize</h3><p>What pieces of work are needed? What goes into each component, what comes out, and what changes?</p></div>
+    <div class="challenge"><div class="num">Challenge 3 · Steps 3–7</div><h3>Discover an algorithm</h3><p>How can a computer perform this work using explicit data, operations, decisions, and repetition?</p></div>
+  </div>
+  <p>Step 8 brings the components together: integrate, code, and test.</p>
+  <p><b>These are not three stages we complete once.</b> Understanding the problem suggests components. Exploring a component's algorithm may reveal that it needs different information or a different decomposition. We revise our earlier decisions as we learn.</p>
+  <div class="compare">
+    <div><h4>Example 1: draw an X</h4><p style="font-size:15px;margin:0">Any person can draw it. The challenge is working out <b>how a computer, which prints text one line at a time, can produce it</b>.</p></div>
+    <div><h4>Example 2: a portfolio</h4><p style="font-size:15px;margin:0">Once we understand how transactions affect cash and shares, the challenge is <b>decomposition</b>: deciding the components and how they work together, which one produces what another needs. Inside each component, we still have to think the way the computer must.</p></div>
+  </div>
+
+  <h2 id="method">A working method</h2>
+  <p>Use the three challenges as questions to guide your work. Each challenge has numbered steps: concrete moves you can make, including when you get stuck. The numbers give everyone, including the AI instructor, a shared vocabulary: “I'm on step 4” means something specific.</p>
+
+  <div class="method-card">
+    <div class="section-kicker">Challenge 1 · Understand the problem</div>
+    <h3>Step 1. Define the problem: begin with a concrete result</h3>
+    <ul>
+      <li><b>Describe success precisely.</b> For a calculation or picture: show an input and its exact output. For an interactive system: show an action, its result, and what changes afterward.</li>
+      <li><b>Find the rules.</b> Use the assignment and the domain itself. If the domain is unfamiliar, work through one small example from beginning to end before designing the system.</li>
+      <li><b>Expose open questions.</b> What happens if a value is zero, missing, invalid, or at a boundary? If the assignment doesn't settle it, decide it and write it down, rather than letting code decide accidentally.</li>
+      <li><b>State simplifying assumptions.</b> You may set part of the problem aside for now (only odd sizes, say). Write that down too. It stays on your list until you handle it.</li>
+    </ul>
+    <p class="decision"><b>When stuck:</b> If you cannot work out what the answer should be for a tiny example, you do not understand the problem well enough yet. Return to the meaning and the rules.</p>
+  </div>
+  <div class="flowline"><span class="arrows">↓ ↑</span> The outline is a first guess, not a commitment</div>
+  <div class="method-card">
+    <div class="section-kicker">Challenge 2 · Organize the solution</div>
+    <h3>Step 2. Decompose and outline the system</h3>
+    <p><b>Find the components</b> from user actions or meaningful parts of the desired output, and draw a flowchart of how they fit together.</p>
+    <div class="flow" role="img" aria-label="Flowchart: the lending desk menu branches to Check out, Return, and Availability report.">
+      <div class="tree"><ul><li><span class="fc">Lending desk menu</span><ul>
+        <li><span class="fc">Check out</span></li>
+        <li><span class="fc">Return</span></li>
+        <li><span class="fc">Availability report</span></li>
+      </ul></li></ul></div>
+    </div>
+    <p class="fc-caption"><b>Example: an equipment lending desk.</b> Students check out calculators and return them. Each user action is a component: <b>Check out</b> takes a student's name and records the loan; <b>Return</b> takes the name and ends the loan; <b>Availability report</b> changes nothing and outputs how many are available and who has one.</p>
+    <p><b>For each component, say what goes in, and what comes out or changes:</b> what information its function receives, what it returns, and what it changes in the system. Check out, for example, changes who has a calculator; it doesn't return a result. If you can't say what goes in and what comes out or changes, the component isn't well defined yet.</p>
+    <p><b>Identify the categories:</b> the situations a component can face, which depend on its inputs, the system's state, or both. Check out has to handle: a calculator is available and the student doesn't have one; none are available; the student already has one. Each category needs its own handling.</p>
+    <p><b>Spanning the universe of possibilities.</b> Together, the categories should span the universe: every possible situation falls into exactly one category. That means they are <b>exhaustive</b> (nothing is left out) and <b>mutually exclusive</b> (nothing falls into two). You may know this from other courses as MECE. In Python, an <code>if</code> / <code>elif</code> / <code>else</code> chain does both: <code>elif</code> makes the branches exclusive, and <code>else</code> catches everything left over. When categories can overlap, the first branch that matches wins, so the order of the checks is a decision, not an accident.</p>
+    <p><b>System state.</b> By now you can make a first guess at what the system must know between actions. It comes from the components' effects: if Check out changes who has a calculator, the system must keep track of who has one. For the lending desk, a first guess is the number of calculators available and who has one. It's a guess; the Discover steps may show that part of it can be derived. (Could the number available be computed from who has one?)</p>
+    <p>The flowchart and each component's inputs, outputs, effects, and categories, with your guess at system state, form the <b>system outline</b>: the basis of your program. Each component becomes a function, and the flowchart shows how they fit together.</p>
+    <p class="decision"><b>When stuck:</b> If a component has no clear responsibility or you cannot say what it receives and produces, revise the outline. If you still lack domain understanding, go back to a worked example.</p>
+  </div>
+  <div class="flowline"><span class="arrows">↓ ↑</span> Sometimes the algorithm forces a new decomposition</div>
+  <div class="method-card">
+    <div class="section-kicker">Challenge 3 · Discover the computational solution</div>
+    <h3>Steps 3–7. Work inside one component</h3>
+    <ol start="3">
+      <li><b>Pick the simplest meaningful example.</b> Remove distractions, but keep the difficulty that makes the problem interesting.</li>
+      <li><b>Solve it by hand, the way the computer must.</b> First restate the problem in terms of what the computer can do in this setting: read, calculate, compare, repeat, store, or output. If your human solution relies on an operation the computer cannot perform in this setting, find a new representation. Then carry out the small example using only those operations. What you had to remember is your candidate state; the operations you performed are your candidate transitions. <b>Recheck your step 2 guess of system state:</b> did the hand solution need something the guess left out, or did you never use something it included? Then check that your hand solution really produces the result from step 1.</li>
+      <li><b>Design the component and draft its pseudocode.</b> From your hand solution, write the component's inputs, state, transitions, invariants, and data representation: your ISTI design. Then write the steps you took by hand as pseudocode.</li>
+      <li><b>Generalize and trace.</b> Work a second, different example through your pseudocode. What stays the same is the procedure. Where the draft fails or hard-codes the first example, explain what changed: why did it change, and what does it depend on? The answer becomes part of the algorithm, as an input, a calculation, or a new category. Repeated work suggests a loop; information carried between steps suggests state. Revise the design and the pseudocode until a person could translate it to Python without inventing missing logic, then trace it through both examples.</li>
+      <li><b>Add edge cases and revise.</b> Only after the simple case works. Return to your categories: handle each one you set aside, and the boundaries between them. For each, decide whether it's a <b>bug</b> (the code doesn't do what you decided) or an <b>open question</b> (no one decided).</li>
+    </ol>
+    <p class="decision"><b>When stuck:</b> If your pseudocode says “calculate holdings” or “draw the X,” it is still naming the task, not explaining how to do it. Make the operation smaller and more concrete.</p>
+    <p class="small-note">Steps 3–7 are done for one component at a time. Expect to go back to earlier steps, sometimes all the way to step 2.</p>
+  </div>
+  <div class="method-card">
+    <div class="section-kicker">Bringing it together</div>
+    <h3>Step 8. Integrate, code, and test</h3>
+    <p>Combine the components and revisit the outline: does each responsibility belong to exactly one component? Decide what is stored (the source of truth) and what is derived. Translate the pseudocode into Python. Your hand examples become your first tests, since you already know the right answers. Add a test for each category.</p>
+  </div>
+  <p class="small-note"><b>What students should produce:</b> a worked example with expected result (step 1); a system outline (step 2); a step-by-step procedure in pseudocode (steps 5 and 6); and a trace or test showing that it produces the expected result (steps 6 and 8). These are evidence of reasoning—not paperwork for its own sake.</p>
+
+  <h2 id="example-x">Example 1: An X inside a square</h2>
+  <p class="lede">A person can draw this at a glance. Most of the work in this example is <b>translation</b>: restating what a person does in terms of what a computer can do.</p>
+
+  <h3>Step 1 · Understand: What is the exact result?</h3>
+  <p>Given <code>size</code>, print a square border made of <code>#</code> characters and an X of <code>X</code> characters joining the inside corners. The size includes the border. Here is the smallest example that shows a real X pattern:</p>
+  <div class="charpic"><span class="h">#####</span>
+<span class="h">#</span><span class="x">X</span> <span class="x">X</span><span class="h">#</span>
+<span class="h">#</span> <span class="x">X</span> <span class="h">#</span>
+<span class="h">#</span><span class="x">X</span> <span class="x">X</span><span class="h">#</span>
+<span class="h">#####</span></div>
+  <p style="margin-top:14px">Input: <code>size = 5</code>. Output: exactly five rows, each with exactly five characters. For now, we make a simplifying assumption: <b>odd sizes of at least 3</b>. Even sizes and invalid sizes are separate cases to revisit later.</p>
+
+  <h3>Step 2 · Organize: Why the first decomposition fails</h3>
+  <p>A person might say, “Draw a square, then draw two diagonals.” That is an intuitive decomposition, but our program is printing characters to a console. It cannot draw diagonal strokes onto an existing picture. It produces a sequence of characters and lines.</p>
+  <p>So we change the representation: <b>produce the square one row at a time.</b> On an odd-sized square, every row is exactly one of three row types:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Row type</th><th>Example</th><th>Rule</th></tr>
+    <tr><td>Border row</td><td><code>#####</code></td><td>First and last</td></tr>
+    <tr><td>Two-X row</td><td><code>#X X#</code></td><td>Interior, but not the middle</td></tr>
+    <tr><td>One-X row</td><td><code># X #</code></td><td>The middle row</td></tr>
+  </table></div>
+  <p>For the sizes we are handling, these three row types <b>span the universe of rows</b>: every row belongs to one type, and no row belongs to two. That lets us express the solution with a decision.</p>
+  <p>The entire system has one component, <b>draw the square</b>. Inside it, the work is now building one row at a time: given the size and a row number, produce the string for that row.</p>
+  <div class="callout"><p><b>Where the components come from.</b> In many problems, the components come from the problem itself: the user's actions, or the parts of a report. Here they come from the computer. The problem gives us one component, <i>draw the square</i>. What the computer can do (print one line at a time, built left to right) forces us to break it into rows, and each row into segments. Example 2 shows the other pattern: the business rules supply the components, and inside them we still have to think the way the computer must.</p></div>
+  <p>The sizes fall into categories too: odd sizes of 3 or more, even sizes, size 1, and size 0 or less. Our assumption sets all but the first aside for now.</p>
+
+  <h3>Steps 3–4 · Discover: Build one row using allowed operations</h3>
+  <p>The program can construct a string by joining segments. A two-X row consists of seven segments:</p>
+  <p><span class="seg">#</span><span class="seg sp">leading spaces</span><span class="seg x">X</span><span class="seg sp">spaces between</span><span class="seg x">X</span><span class="seg sp">trailing spaces</span><span class="seg">#</span></p>
+  <p>For the first interior row of the 5×5, those segments have lengths <code>1, 0, 1, 1, 1, 0, 1</code>. This produces <code>#X X#</code>. For the middle row, there is only one X: <code># X #</code>.</p>
+  <div class="exercise"><h4>Your turn</h4><p>Without drawing diagonals, build each row of the 5×5 from left to right, one segment at a time. For each row, write down its row type (border, two-X, or one-X), its segments, and the length of each. What information did you need to build each row?</p></div>
+
+  <h3>Step 5 · Design the component and draft its pseudocode</h3>
+  <p>From the hand solution:</p>
+  <ul>
+    <li><b>Inputs:</b> size.</li>
+    <li><b>State:</b> which row we're on; its row type; its segment lengths; the row being built.</li>
+    <li><b>Transitions:</b> build the row from its segments, print it, move on to the next row.</li>
+    <li><b>Invariants:</b> exactly <code>size</code> rows are printed, each with exactly <code>size</code> characters.</li>
+    <li><b>Representation:</b> each row is a string.</li>
+  </ul>
+  <p>And a first draft of the pseudocode, written straight from the 5×5:</p>
+  <pre><code>Draw an X (draft, from the 5×5):
+    For each row from 0 through size - 1:
+        If the row is the first or the last:
+            Print size "#" characters.
+        Otherwise, if the row is the middle row (size // 2):
+            Print "#", 1 space, "X", 1 space, "#".
+        Otherwise:
+            Print "#", "X", 1 space, "X", "#".</code></pre>
+  <p>The draft works for the 5×5. But look at the numbers in it: are they really constants?</p>
+
+  <h3>Step 6 · Generalize and trace</h3>
+  <p>Run a different size through the draft:</p>
+  <div class="grid-pair">
+    <figure><div class="charpic"><span class="h">#####</span>
+<span class="h">#</span><span class="x">X</span> <span class="x">X</span><span class="h">#</span>
+<span class="h">#</span> <span class="x">X</span> <span class="h">#</span>
+<span class="h">#</span><span class="x">X</span> <span class="x">X</span><span class="h">#</span>
+<span class="h">#####</span></div><figcaption>size 5</figcaption></figure>
+    <figure><div class="charpic"><span class="h">#######</span>
+<span class="h">#</span><span class="x">X</span>   <span class="x">X</span><span class="h">#</span>
+<span class="h">#</span> <span class="x">X</span> <span class="x">X</span> <span class="h">#</span>
+<span class="h">#</span>  <span class="x">X</span>  <span class="h">#</span>
+<span class="h">#</span> <span class="x">X</span> <span class="x">X</span> <span class="h">#</span>
+<span class="h">#</span><span class="x">X</span>   <span class="x">X</span><span class="h">#</span>
+<span class="h">#######</span></div><figcaption>size 7</figcaption></figure>
+  </div>
+  <p>Number rows from 0. Here are the segment counts for size 7:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Row</th><th>Row type</th><th>Leading</th><th>Between</th><th>Trailing</th></tr>
+    <tr><td>0</td><td>Border</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>1</td><td>Two-X</td><td>0</td><td>3</td><td>0</td></tr>
+    <tr><td>2</td><td>Two-X</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>3</td><td>One-X</td><td>2</td><td>—</td><td>2</td></tr>
+    <tr><td>4</td><td>Two-X</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>5</td><td>Two-X</td><td>0</td><td>3</td><td>0</td></tr>
+    <tr><td>6</td><td>Border</td><td>—</td><td>—</td><td>—</td></tr>
+  </table></div>
+  <p>The draft fails. Rows 1 and 2 are different two-X rows, and the middle row has two spaces on each side, not one. The numbers in the draft depend on something; find out what.</p>
+  <div class="exercise"><h4>Find the pattern before reading further</h4><p>What is the relationship between the row number and leading spaces in the top half? What do you notice about the bottom half? How can you calculate the spaces between the X's if the whole row must be <code>size</code> characters wide?</p></div>
+  <details class="details-key"><summary>Check the rules you discovered</summary><div class="details-inside">
+    <p>The bottom half repeats the top half in reverse, without repeating the middle. For a two-X row in the top half, <code>leading = row − 1</code>, and trailing spaces equal leading spaces.</p>
+    <p>A two-X row contains two <code>#</code> characters and two <code>X</code> characters. Its length is therefore <code>4 + 2 × leading + between = size</code>. Solving for the unknown gives:</p>
+    <pre><code>between = size - 4 - 2 * leading</code></pre>
+    <p>For the middle row, there are two <code>#</code> characters, one <code>X</code>, and equal leading and trailing spaces: <code>3 + 2 × leading = size</code>. Therefore <code>leading = (size − 3) // 2</code> for odd sizes.</p>
+  </div></details>
+
+  <h3>Step 6 (continued) · Revise the design and the pseudocode</h3>
+  <p>We have discovered three building rules, enough to build any top-half row from <code>size</code> and its row number. The bottom half needs no new rules: its rows are the top-half rows again, in reverse, without the middle. For the 5×5, rows 0, 1, 2 are followed by 1, 0. So the bottom loop builds rows exactly as the top loop does; only its range changes, counting down from <code>middle − 1</code> to 0. In the bottom loop, the loop variable doesn't number the row being printed; it <b>selects</b> which top-half row to print again. It never reaches the middle, so it needs no one-X branch. Because every row is rebuilt from <code>size</code> and its number, we never have to remember earlier rows.</p>
+  <p>The revised design keeps much less than the first. <b>Working state:</b> which row we are producing, and the string being built. <b>Derived values:</b> middle row, leading spaces, between spaces, and row type. <b>Invariants:</b> unchanged.</p>
+  <pre><code>Draw an X (odd sizes of at least 3):
+    Set middle to size // 2.
+
+    Top half: print each row, from the border down to the middle.
+    For row from 0 through middle:
+        If row is 0:
+            Print size "#" characters.
+        Otherwise, if row is less than middle:
+            Set leading to row - 1 and between to size - 4 - 2 * leading.
+            Print "#", leading spaces, "X", between spaces, "X", leading spaces, "#".
+        Otherwise:                                     (row is middle)
+            Set leading to (size - 3) // 2.
+            Print "#", leading spaces, "X", leading spaces, "#".
+
+    Bottom half: print the top half's rows again, in reverse, without the middle.
+    For top_row from middle - 1 down through 0:        (which top-half row to repeat)
+        If top_row is 0:
+            Print size "#" characters.
+        Otherwise:
+            Set leading to top_row - 1 and between to size - 4 - 2 * leading.
+            Print "#", leading spaces, "X", between spaces, "X", leading spaces, "#".</code></pre>
+  <p>This is detailed pseudocode: the order, the decisions, the repetitions, and all the calculations are specified. Trace it for size 5: the top loop prints rows 0, 1, 2 and the bottom loop prints 1, 0. That's exactly the five lines in the first picture; size 7 gives rows 0, 1, 2, 3, 2, 1, 0 and matches the table.</p>
+  <details class="details-key"><summary>Python translation</summary><div class="details-inside">
+    <p>Every line of the pseudocode translates directly; the only new choices are Python mechanics, such as <code>range(middle - 1, -1, -1)</code> for “from middle − 1 down through 0.”</p>
+    <pre><code>def draw_x(size):                                # odd sizes of at least 3
+    middle = size // 2
+
+    # Top half: print each row, from the border down to the middle.
+    for row in range(middle + 1):
+        if row == 0:                             # border
+            print('#' * size)
+        elif row &lt; middle:                       # two-X row
+            leading = row - 1
+            between = size - 4 - 2 * leading
+            print('#' + ' ' * leading + 'X' + ' ' * between + 'X' + ' ' * leading + '#')
+        else:                                    # row is middle: one-X row
+            leading = (size - 3) // 2
+            print('#' + ' ' * leading + 'X' + ' ' * leading + '#')
+
+    # Bottom half: print the top half's rows again, in reverse, without the middle.
+    for top_row in range(middle - 1, -1, -1):    # which top-half row to repeat
+        if top_row == 0:                         # border
+            print('#' * size)
+        else:                                    # two-X row
+            leading = top_row - 1
+            between = size - 4 - 2 * leading
+            print('#' + ' ' * leading + 'X' + ' ' * between + 'X' + ' ' * leading + '#')
+
+
+draw_x(5)</code></pre>
+    <p>Choosing string multiplication is a Python mechanic; determining how many spaces belong in each row was the problem-solving work.</p>
+  </div></details>
+
+  <h3>Step 7 · Revisit the cases we set aside</h3>
+  <p>Return to the size categories and trace each one through the pseudocode.</p>
+  <ul>
+    <li><b>Size 3:</b> rows 0, 1, 0 give <code>###</code>, <code>#X#</code>, <code>###</code>. It works.</li>
+    <li><b>Size 1:</b> the middle is 0, so row 0 is <b>both</b> the border row and the middle row. The row types overlap. The top loop checks for the border first, so it prints <code>#</code>. But the order of the checks made a decision nobody made on purpose: should a 1×1 square be <code>#</code> or <code>X</code>? That's an open question. Decide it, or declare size 1 invalid.</li>
+    <li><b>Size 0 or less:</b> size 0 prints one empty line and negative sizes print nothing. These sizes are most likely invalid: reject them.</li>
+    <li><b>Even sizes:</b> trace size 6. The middle is 3, so the rows are 0, 1, 2, 3, 2, 1, 0:</li>
+  </ul>
+  <div class="charpic"><span class="h">######</span>
+<span class="h">#</span><span class="x">X</span>  <span class="x">X</span><span class="h">#</span>
+<span class="h">#</span> <span class="x">XX</span> <span class="h">#</span>
+<span class="h">#</span> <span class="x">X</span> <span class="h">#</span>      <span style="color:var(--red)">← shouldn't exist, and it's only 5 wide</span>
+<span class="h">#</span> <span class="x">XX</span> <span class="h">#</span>
+<span class="h">#</span><span class="x">X</span>  <span class="x">X</span><span class="h">#</span>
+<span class="h">######</span></div>
+  <p style="margin-top:14px">Seven lines instead of six, and one of them is the wrong width. Both invariants catch it. An even square has no middle row: its two center rows are the same two-X row. So the middle-row branch should run only for odd sizes:</p>
+  <pre><code>        Otherwise, if size is odd:                     (row is middle; only odd sizes have one)
+            Set leading to (size - 3) // 2.
+            Print "#", leading spaces, "X", leading spaces, "#".
+        (Even sizes have no middle row, so nothing prints for row middle.)</code></pre>
+  <p>With size 6, the top loop prints rows 0, 1, 2 and skips row 3; the bottom loop prints 2, 1, 0. Six lines, with a 2×2 center.</p>
+
+  <h3>Step 8 · Code and test</h3>
+  <p>There's only one component, so integrating means checking that the outline still holds: the size goes in, <code>size</code> lines come out, and nothing is kept. The only changes from step 6 are the even-size fix to the middle-row branch and a check that rejects sizes below 1. Then test one size from each category, starting with the 5×5 you worked by hand.</p>
+  <pre><code>def draw_x(size):
+    if size &lt; 1:
+        raise ValueError('size must be at least 1')
+    middle = size // 2
+
+    # Top half: print each row, from the border down to the middle.
+    for row in range(middle + 1):
+        if row == 0:                             # border
+            print('#' * size)
+        elif row &lt; middle:                       # two-X row
+            leading = row - 1
+            between = size - 4 - 2 * leading
+            print('#' + ' ' * leading + 'X' + ' ' * between + 'X' + ' ' * leading + '#')
+        elif size % 2 == 1:                      # row is middle; only odd sizes have one
+            leading = (size - 3) // 2
+            print('#' + ' ' * leading + 'X' + ' ' * leading + '#')
+        # even sizes have no middle row, so nothing prints here
+
+    # Bottom half: print the top half's rows again, in reverse, without the middle.
+    for top_row in range(middle - 1, -1, -1):    # which top-half row to repeat
+        if top_row == 0:                         # border
+            print('#' * size)
+        else:                                    # two-X row
+            leading = top_row - 1
+            between = size - 4 - 2 * leading
+            print('#' + ' ' * leading + 'X' + ' ' * between + 'X' + ' ' * leading + '#')
+
+
+for size in (5, 7, 6, 3, 1):                     # one size from each category
+    draw_x(size)
+    print()</code></pre>
+  <p>The comment after the last <code>elif</code> matters. An <code>elif</code> with no <code>else</code> is fine only when the remaining cases need nothing; the comment shows that was decided, not forgotten.</p>
+  <div class="callout green"><p><b>What this example teaches:</b> the important move was not breaking the picture into a border and diagonals. It was finding a representation compatible with the output operation: rows, then segments within rows. The draft from one example hard-coded its numbers; the second example showed what they depend on. The first design kept five things; the final design keeps two.</p></div>
+
+  <h2 id="example-portfolio">Example 2: A tiny portfolio</h2>
+  <p class="lede">Here the work is mostly understanding the rules and decomposing the system—but we still have to invent algorithms inside the components.</p>
+
+  <h3>Step 1 · Understand: Work one financial example end to end</h3>
+  <p>Imagine a tiny version of PEMS with one client, a cash security named <code>$$$$</code>, and one stock named ABC. Every transaction record has the same fields: <code>trans_id</code>, <code>trd_day</code> (the trading day), <code>ticker</code>, <code>trn_typ</code> (the type), <code>shares</code>, <code>cps</code> (cost per share), and <code>total_cost</code>. Cash is represented like any other security; with a <code>cps</code> of 1, its <code>shares</code> are dollars.</p>
+  <p>Our example has these closing prices:</p>
+  <div class="table-wrap"><table><tr><th><code>trd_day</code></th><th>1</th><th>2</th><th>3</th></tr><tr><td>ABC close</td><td>$150</td><td>$155</td><td>$160</td></tr></table></div>
+  <p>On <b>day 1</b> the client contributes $1,000. On <b>day 2</b> the client buys 5 ABC shares. The purchase uses day 1's $150 close, so it costs $750. Buying a stock means paying for it with cash, so we record it as two transaction records:</p>
+  <div class="table-wrap"><table>
+    <tr><th><code>trd_day</code></th><th><code>trn_typ</code></th><th><code>ticker</code></th><th><code>shares</code></th><th><code>cps</code></th><th><code>total_cost</code></th></tr>
+    <tr><td>1</td><td>CONTRIBUTION</td><td><code>$$$$</code></td><td>1,000</td><td>1</td><td>1,000</td></tr>
+    <tr><td>2</td><td>BUY</td><td>ABC</td><td>5</td><td>150</td><td>750</td></tr>
+    <tr><td>2</td><td>SELL</td><td><code>$$$$</code></td><td>750</td><td>1</td><td>750</td></tr>
+  </table></div>
+  <p>At the end of day 2, the client holds <code>$$$$</code> 250 and ABC 5 shares. The day-2 report uses the day-2 closing price: 5 × $155 + $250 = <b>$1,025</b>. A report as of day 1 shows just <code>$$$$</code> 1,000: <b>a report includes only the transactions up to its day.</b> We can produce the right answer by hand before discussing Python.</p>
+
+  <p><b>The rules this example uses:</b></p>
+  <ul>
+    <li><b>Cash is a security,</b> <code>$$$$</code>, with a <code>cps</code> of 1.</li>
+    <li><b>Every stock trade is saved with its cash leg,</b> immediately after it: a stock BUY with a <code>$$$$</code> SELL, a stock SELL with a <code>$$$$</code> BUY.</li>
+    <li><b>Prices:</b> a trade executes at the close of <code>trd_day − 1</code>; a report values holdings at the close of the report day.</li>
+    <li><b>Cash and shares can never go negative.</b> A transaction that would break a rule is rejected, and nothing is recorded.</li>
+    <li><b>Average cost:</b> a sale removes cost at the shares sold × (total cost ÷ shares held), not at the sale's proceeds.</li>
+    <li><b>Saved transactions can be trusted:</b> each was checked when it was recorded.</li>
+  </ul>
+  <details class="details-key"><summary>The full PEMS rules</summary><div class="details-inside">
+  <ol>
+    <li><b>Cash</b> is the security <code>$$$$</code>, with a <code>cps</code> of 1. Money is rounded to 2 decimal places.</li>
+    <li><b>CONTRIBUTION and WITHDRAWAL</b> apply only to <code>$$$$</code>.</li>
+    <li><b>Stock tickers</b> come from a ticker universe list, and every listed ticker has a closing price for every day from 0 to 99. A ticker not on the list is rejected. Stock shares are whole numbers.</li>
+    <li><b>Every stock trade is saved with its cash leg</b>, immediately after it: a stock BUY with a <code>$$$$</code> SELL, a stock SELL with a <code>$$$$</code> BUY. With no corporate actions (rule 13), cash is never bought or sold on its own.</li>
+    <li><b>Prices:</b> a trade executes at the closing price of <code>trd_day − 1</code>. The system computes <code>cps</code> and <code>total_cost</code> (shares × cps). A report values holdings at the closing price of the report day, which must be between 1 and the current <code>trd_day</code>.</li>
+    <li><b>Cash can never be negative:</b> a BUY or a WITHDRAWAL needs enough cash.</li>
+    <li><b>A client can't sell shares they don't own:</b> shares can never be negative. A transaction's <code>shares</code> must be positive; 0 means no trade, and nothing is recorded.</li>
+    <li><b>A transaction that would break a rule is rejected, not recorded.</b> Recorded transactions can't be edited or deleted.</li>
+    <li><b>Time:</b> <code>trd_day</code> runs from 1 to 99 and only moves forward, through <code>adv_trd_day</code>, which stops at 99. New transactions are recorded only on the current day, and a client can make many on one day.</li>
+    <li><b>Clients:</b> every client's first transaction is their opening cash contribution, recorded when the client was created. Only an existing client can be selected.</li>
+    <li><b>Cost:</b> a sale reduces a position's total cost at the <b>average cost</b>: the shares sold × (total cost ÷ shares held).</li>
+    <li><b>Simplifying assumption:</b> the saved transactions are never changed outside the system. Every saved transaction was checked when it was recorded, so when we read them back in, we can trust them.</li>
+    <li><b>Simplifying assumption:</b> no corporate actions. Dividends and splits with cash in lieu would create a <code>$$$$</code> BUY with no stock trade before it, so rule 4 and the cash invariants hold only under this assumption.</li>
+  </ol>
+  </div></details>
+  <p><b>What the rules imply.</b> Rules don't just constrain the program; they tell you what it needs.</p>
+  <ul>
+    <li><b>Recording a transaction needs the client's current holdings</b>: you can't check cash or shares without them.</li>
+    <li><b>A report for any day from 1 to today needs the holdings as of that day</b>, so holdings must exist for <b>every day</b>, not just today.</li>
+    <li><b>Only the current day's holdings can change</b>; earlier days are fixed.</li>
+    <li><b>Holdings come from the transactions</b>, which are the source of truth.</li>
+    <li><b>Holdings start empty.</b> Day 0 has no holdings; <code>$$$$</code> appears with the opening contribution and stays, even at 0. Any other ticker that drops to 0 shares is removed.</li>
+  </ul>
+  <div class="exercise"><h4>Before designing the program</h4><p>Which facts came from finance (for example, buying stock requires payment), and which were our choices about representation (for example, recording a stock trade and its cash leg as two records)? Which of these could a designer change, and what else would have to change with it?</p></div>
+
+  <h3>Step 2 · Organize: Outline the system</h3>
+  <p>For a system that responds to actions, decomposition starts from what the user can do. Here is the PEMS menu structure, defined in <code>menus.json</code>:</p>
+  <div class="flow" role="img" aria-label="Flowchart: Log in, then Load data. Load data branches to Select client, Advance the trading day, and Create client. Select client branches to Transactions and Reports. Transactions branches to Buy, Sell, Contribution, and Withdrawal.">
+    <div class="tree"><ul><li><span class="fc">Log in</span><ul><li><span class="fc">Load data</span><ul>
+      <li><span class="fc">Select client</span><ul>
+        <li><span class="fc">Transactions</span><ul>
+          <li><span class="fc">Buy</span></li>
+          <li><span class="fc">Sell</span></li>
+          <li><span class="fc">Contribution</span></li>
+          <li><span class="fc">Withdrawal</span></li>
+        </ul></li>
+        <li><span class="fc">Reports</span></li>
+      </ul></li>
+      <li><span class="fc">Advance the trading day</span></li>
+      <li><span class="fc">Create client</span></li>
+    </ul></li></ul></li></ul></div>
+  </div>
+  <p>Menus only route the user. Each item at the end of a branch is an <b>action</b>, and each action is a component with its own inputs, outputs, and effects. This example works through Select client (Part A) and the transaction actions (Part B). Create client, Advance the trading day, and Reports are left for you.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Component</th><th>Inputs</th><th>Output or effect</th></tr>
+    <tr><td><b>Load data</b></td><td>Saved transactions (JSON), current day</td><td>Reads every client's transactions into memory</td></tr>
+    <tr><td><b>Select client</b></td><td>The chosen client's transactions, current day</td><td>Builds that client's holdings for every day, in memory</td></tr>
+    <tr><td><b>Create client</b></td><td>Client name, opening contribution</td><td>Adds the client and records their opening CONTRIBUTION</td></tr>
+    <tr><td><b>Buy, Sell</b></td><td>Ticker, shares; current holdings, prices</td><td>Reject, or save the trade and its cash leg and update current holdings</td></tr>
+    <tr><td><b>Contribution, Withdrawal</b></td><td>Amount; current holdings</td><td>Reject, or save it and update current holdings</td></tr>
+    <tr><td><b>Advance the trading day</b></td><td>Current day</td><td>Adds 1 to the current day</td></tr>
+    <tr><td><b>Reports</b></td><td>Report day, holdings history, prices</td><td>Shares, cash, and market values for that day</td></tr>
+  </table></div>
+  <p>The transaction actions face many categories: enough cash or not, enough shares or not, a ticker that isn't in the universe, a quantity of 0, and more. Several can apply at once. In Part B, an if / elif / else chain handles them: covering every possibility makes the chain exhaustive, and elif makes it mutually exclusive. The order of the checks still matters. It keeps the program from crashing (we can't look up the price of a ticker that isn't in the universe), and it decides which rejection a request gets when more than one applies.</p>
+  <p><b>System state.</b> A first guess at what the system keeps between actions: <i>the clients, their transactions, and their holdings by day, all saved to the file.</i></p>
+  <p>But is that really our best guess? Check it against the rules. Holdings come from the transactions, so they're <b>derived</b>. If we saved both, they could disagree. Holdings are still system state: the system has to remember them from one action to the next. They just don't need to be saved. So the file holds only the clients and their transactions. When a client is selected, the holdings are rebuilt and kept in memory, and the transaction actions update them in real time.</p>
+  <p>We work through these in two parts.</p>
+
+  <h3>Part A, steps 3–4 · Select client: build holdings from saved transactions, by hand</h3>
+  <p><b>Two kinds of transactions.</b> A client's transactions come from two places, and the system treats them differently.</p>
+  <ul>
+    <li><b>Saved transactions</b> come from the JSON file. When a client is selected, we apply them in order to build the holdings for every day through today. By the rules, each one was checked when it was recorded, so there's nothing to check now. We just apply them.</li>
+    <li><b>New transactions</b> are the ones the client makes today. Each must be checked against the current holdings (is there enough cash? enough shares?) before it's saved and applied.</li>
+  </ul>
+  <p>Part A handles saved transactions. Part B handles new ones.</p>
+  <p>Start with the two-day example. Day 0 has nothing. A new day's holdings begin as a copy of the previous day's; then we apply that day's transaction records in order.</p>
+  <div class="table-wrap"><table>
+    <tr><th>End of day</th><th>Cash</th><th>ABC</th><th>ABC's remaining cost</th></tr>
+    <tr><td>0</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>1</td><td>$1,000</td><td>—</td><td>—</td></tr>
+    <tr><td>2</td><td>$250</td><td>5 shares</td><td>$750</td></tr>
+  </table></div>
+  <p><b>What did we have to remember?</b> For each ticker, the shares held and what they cost, and each day's ending holdings. That matches our step 2 guess: holdings by day, built from the transactions.</p>
+
+  <h3>Part A, step 5 · Design the component and draft its pseudocode</h3>
+  <ul>
+    <li><b>Inputs:</b> a client's saved transactions and the current <code>trd_day</code>.</li>
+    <li><b>State:</b> each ticker's shares and total cost, for each day from 0 through the current day.</li>
+    <li><b>Transitions:</b> start a new day from yesterday's holdings; apply each record to one ticker.</li>
+    <li><b>Invariants:</b> no ticker's shares, cash included, go negative; only the current day changes.</li>
+    <li><b>Representation:</b> a dictionary keyed by day, where each day is a dictionary of ticker → position.</li>
+  </ul>
+  <pre><code>Load a client's saved transactions (draft, from days 1–2):
+    Start with empty holdings for day 0.
+    For each day from 1 through the current day:
+        Start from a copy of yesterday's holdings.
+        For each saved record for this day, in order:
+            If the type is CONTRIBUTION or BUY:
+                Add its shares and total_cost to the ticker's position.
+            Otherwise (a SELL):
+                Subtract its shares and total_cost from the ticker's position.</code></pre>
+  <p>The draft works for days 1 and 2. The only SELL so far is a cash SELL, where subtracting <code>total_cost</code> happens to be right.</p>
+
+  <h3>Part A, step 6 · Generalize and trace</h3>
+  <p>On <b>day 3</b>, the client sells 2 ABC at day 2's closing price of $155, then withdraws $60.</p>
+  <div class="exercise"><h4>Your turn: compute day 3 by hand</h4><p>Write the three transaction records (the stock sale, its cash leg, and the withdrawal). Compute the ending cash, ABC shares, and ABC's remaining cost. Then run them through the draft. Does it agree with you?</p></div>
+  <details class="details-key"><summary>Check the day-3 calculation</summary><div class="details-inside">
+    <div class="table-wrap"><table><tr><th><code>trd_day</code></th><th><code>trn_typ</code></th><th><code>ticker</code></th><th><code>shares</code></th><th><code>cps</code></th><th><code>total_cost</code></th></tr>
+      <tr><td>3</td><td>SELL</td><td>ABC</td><td>2</td><td>155</td><td>310</td></tr>
+      <tr><td>3</td><td>BUY</td><td><code>$$$$</code></td><td>310</td><td>1</td><td>310</td></tr>
+      <tr><td>3</td><td>WITHDRAWAL</td><td><code>$$$$</code></td><td>60</td><td>1</td><td>60</td></tr>
+    </table></div>
+    <p>Cash: 250 + 310 − 60 = <b>$500</b>. ABC shares: 5 − 2 = <b>3</b>. The 5 shares originally cost $750, or $150 each; the sale removes 2 × $150 = $300 of cost, leaving <b>$450</b>.</p>
+    <p>The draft gets cash and shares right, but ABC's cost comes out 750 − 310 = <b>$440</b>: it subtracts the sale's proceeds, not its cost.</p>
+  </div></details>
+  <p>Two things changed, and both need explaining. <b>A stock sale</b> must remove cost at the average cost, not at the proceeds; the draft only worked because its one SELL was cash. <b>WITHDRAWAL</b> has no branch of its own: it lands in the SELL branch and works only by accident, and a misspelled type would land there too. The draft's categories didn't span the universe.</p>
+  <p>The rest of the draft holds up: each day starts from yesterday's holdings, and each record changes one ticker. We must carry forward <b>each ticker's shares and total cost</b>. A dictionary of positions for each day represents that:</p>
+  <pre><code>position_history = {
+    0: {},
+    1: {'$$$$': {'shares': 1000, 'total_cost': 1000}},
+    2: {'$$$$': {'shares': 250, 'total_cost': 250},
+        'ABC':  {'shares': 5,   'total_cost': 750}},
+    3: {'$$$$': {'shares': 500, 'total_cost': 500},
+        'ABC':  {'shares': 3,   'total_cost': 450}},
+}
+current_holdings = position_history[3]</code></pre>
+  <p>Here <code>position_history[3]['ABC']['shares']</code> is 3. We need a separate copy of each day's positions so that changing today's holdings does not change yesterday's. The revised pseudocode splits the repeated work into smaller algorithms:</p>
+  <pre><code>Start a new day:
+    Copy yesterday's holdings, including a separate copy of every position.
+
+Apply one transaction record to today's holdings:
+    Find the ticker's position, or start a new position with 0 shares and 0 cost.
+    If the type is CONTRIBUTION or BUY:
+        Add the record's shares and total_cost to the position.
+    Otherwise, if the type is WITHDRAWAL or SELL:
+        Remove shares * (position total cost / position shares) from the position's cost.
+        Subtract the record's shares from the position.
+    Otherwise:
+        Stop: unknown transaction type.
+    Round the shares and cost to 2 decimal places.
+    If shares are now 0, remove the ticker unless it is $$$$.
+    Otherwise, store the updated position.
+
+Load a client's saved transactions:
+    Start with empty holdings for day 0.
+    For each day from 1 through the current day:
+        Start a new day from yesterday's holdings.
+        For each saved record for this day, in order:
+            Apply that transaction record.
+        Keep this day's resulting holdings in position_history.</code></pre>
+  <p>Trace both examples. Days 1 and 2 give <code>$$$$</code> 250 and ABC 5 (cost 750), as before. On day 3, the sale removes 2 × (750 ÷ 5) = $300 of cost, leaving ABC 3 (cost 450), and cash ends at $500. Both match the hand calculations.</p>
+  <p>The important algorithmic insight is not “use a dictionary.” It is <b>process transactions in order, carry positions forward, and apply one general update rule to each record</b>. The dictionary makes that procedure representable.</p>
+  <p><b>One invariant deserves attention:</b> every stock BUY is <b>immediately followed</b> by its <code>$$$$</code> SELL, and every stock SELL by its <code>$$$$</code> BUY. Why immediately? A check that only looks for <i>some</i> matching cash record on the same day would accept two $100 purchases paired with a single $100 sale, because both purchases find the same sale.</p>
+  <details class="details-key"><summary>All the invariants</summary><div class="details-inside">
+  <ul>
+    <li>CONTRIBUTION and WITHDRAWAL use only <code>$$$$</code>.</li>
+    <li>Every stock BUY is immediately followed by a <code>$$$$</code> SELL on the same <code>trd_day</code> whose <code>shares</code> equal the stock's <code>total_cost</code>; every stock SELL is immediately followed by a matching <code>$$$$</code> BUY.</li>
+    <li>With no corporate actions, a <code>$$$$</code> BUY or SELL only ever appears immediately after a stock trade.</li>
+    <li><code>total_cost</code> always equals <code>shares × cps</code>. PEMS stores this derived value, so the rule that keeps it consistent is an invariant.</li>
+    <li>A client's first transaction is a CONTRIBUTION.</li>
+    <li>No ticker's shares, cash included, are ever negative, on any day.</li>
+    <li>Every day from 0 through the current <code>trd_day</code> has holdings. Day 0 is empty. From the opening contribution on, <code>$$$$</code> is always present, even at 0; no other ticker is kept at 0 shares.</li>
+    <li>Only the current day's holdings ever change, and each day's holdings equal what the transactions through that day produce.</li>
+  </ul>
+  </div></details>
+
+  <h3>Part A, step 7 · Edge cases</h3>
+  <ul>
+    <li><b>Selling a whole position:</b> ABC drops to 0 shares and is removed. If cash drops to 0, <code>$$$$</code> stays, at 0.</li>
+    <li><b>A client who last traded on day 9 when the current day is 12:</b> loading walks every day through 12, so days 10–12 start from copies of day 9, and <code>current_holdings</code> exists for day 12.</li>
+    <li><b>A purchase saved without its cash SELL:</b> cash would be overstated. The immediately-followed invariant catches it.</li>
+  </ul>
+
+  <h3>Part A, step 8 · Code and test</h3>
+  <details class="details-key"><summary>Python: implementing “apply” and “load”</summary><div class="details-inside">
+    <p>Saved transactions were validated when recorded, so the replay function can trust them. Each transaction dictionary uses the PEMS fields; other metadata is omitted here.</p>
+    <pre><code>import copy
+
+
+def apply_transaction(holdings, transaction):
+    ticker = transaction['ticker']
+    position = holdings.get(ticker, {'shares': 0, 'total_cost': 0})
+    transaction_type = transaction['trn_typ']
+    shares = transaction['shares']
+
+    if transaction_type in ('CONTRIBUTION', 'BUY'):
+        position['shares'] += shares
+        position['total_cost'] += transaction['total_cost']
+    elif transaction_type in ('WITHDRAWAL', 'SELL'):
+        average_cost = position['total_cost'] / position['shares']
+        position['total_cost'] -= shares * average_cost
+        position['shares'] -= shares
+    else:
+        raise ValueError('Unknown transaction type')
+
+    position['shares'] = round(position['shares'], 2)
+    position['total_cost'] = round(position['total_cost'], 2)
+    if ticker != '$$$$' and position['shares'] == 0:
+        holdings.pop(ticker, None)
+    else:
+        holdings[ticker] = position
+
+
+def load_client(transactions, current_day):
+    position_history = {0: {}}
+    for day in range(1, current_day + 1):
+        # start the day from a full copy of yesterday, every position included
+        holdings = copy.deepcopy(position_history[day - 1])
+        for transaction in transactions:
+            if transaction['trd_day'] == day:
+                apply_transaction(holdings, transaction)
+        position_history[day] = holdings
+    return position_history</code></pre>
+    <p><b>Two Python details worth noticing:</b> <code>dict.get</code> does not insert a missing ticker; <code>holdings[ticker] = position</code> does that. And a shallow copy (<code>.copy()</code>) of yesterday's holdings would copy only the outer dictionary; the position dictionaries inside would be shared, so changing today's ABC would change yesterday's too. <code>copy.deepcopy</code> copies every position as well.</p>
+  </div></details>
+  <p>Select client runs <code>load_client</code> for the chosen client. Test it with the examples you already worked: loading the first example on day 2 should give <code>$$$$</code> 250 and ABC 5 (cost 750); loading the second on day 3 should give <code>$$$$</code> 500 and ABC 3 (cost 450).</p>
+
+  <h3>Part B, steps 3–4 · Record a new transaction, by hand</h3>
+  <p>Now suppose the client has reached <b>day 4</b>. A day-4 trade uses the day-3 close of $160. Day 4 begins with the end-of-day-3 holdings: <code>$$$$</code> 500 and ABC 3 shares (remaining cost $450).</p>
+  <p>The client tries three trades, one after another:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Requested trade</th><th>Check at that moment</th><th>Result</th><th>Holdings afterward</th></tr>
+    <tr><td>BUY 5 ABC ($800)</td><td>$500 cash is insufficient.</td><td>Reject</td><td>Cash 500; ABC 3</td></tr>
+    <tr><td>SELL 1 ABC ($160)</td><td>3 shares are available.</td><td>Accept</td><td>Cash 660; ABC 2 (cost 300)</td></tr>
+    <tr><td>BUY 4 ABC ($640)</td><td>Cash is now $660.</td><td>Accept</td><td>Cash 20; ABC 6 (cost 940)</td></tr>
+  </table></div>
+  <p>The third request succeeds only because the second already changed the current holdings. That tells us what the transaction actions must remember: <b>current holdings after each accepted transaction</b>.</p>
+
+  <h3>Part B, step 5 · Design the components and draft their pseudocode</h3>
+  <ul>
+    <li><b>Inputs:</b> the request (a ticker and shares, or an amount), <code>current_holdings</code>, and prices.</li>
+    <li><b>State:</b> <code>current_holdings</code>, updated after each accepted transaction.</li>
+    <li><b>Transitions:</b> an accepted request adds records and applies them to <code>current_holdings</code>; a rejected one changes nothing.</li>
+    <li><b>Invariants:</b> cash and shares never go negative.</li>
+  </ul>
+  <pre><code>Buy or Sell (draft, from day 4):
+    Set cps to the ticker's close on trd_day - 1, and total_cost to shares * cps.
+    Buy: if total_cost is more than the cash in current_holdings, reject it.
+    Sell: if the client holds fewer shares than requested, reject it.
+    Otherwise, save the record and its cash leg, and apply both to current_holdings.</code></pre>
+
+  <h3>Part B, step 6 · Generalize and trace</h3>
+  <p>Try requests the day-4 example didn't include: a ticker that isn't in the universe, 0 shares, −3 shares, 2.5 shares of a stock, a withdrawal larger than the cash. The draft handles none of them. Several can be wrong at once (an unknown ticker <i>and</i> not enough cash), so each action handles them with one if / elif / else chain. Checking every possibility makes the chain exhaustive, and elif makes it mutually exclusive. The order still matters: it keeps the program from crashing (we can't look up the price of a ticker that isn't in the universe), and it decides which rejection a request gets when more than one applies.</p>
+  <pre><code>Every rejection records nothing and reports why.
+
+Check the quantity (shares for Buy or Sell, the amount for Contribution or Withdrawal):
+    If it is negative: reject it.
+    Otherwise, if it is 0: there's no trade; record nothing.
+
+Buy or Sell (ticker, shares):
+    Check the quantity; stop if it rejected or recorded nothing.
+    If ticker isn't in the ticker universe: reject it.
+        ($$$$ isn't in the universe, so cash can't be bought or sold on its own.)
+    Otherwise, if shares isn't a whole number: reject it.
+    Otherwise:
+        Set cps to ticker's close on trd_day - 1.
+        Set total_cost to shares * cps, rounded to 2 decimal places.
+        Buy: if total_cost is more than the $$$$ shares in current_holdings,
+          reject it (not enough cash).
+        Sell: if current_holdings has fewer than shares of ticker (0 if not held),
+          reject it (not enough shares).
+        Otherwise, record the stock record, then its $$$$ cash leg of total_cost
+          (a $$$$ SELL for a Buy, a $$$$ BUY for a Sell).
+
+Contribution or Withdrawal (amount):
+    Check the quantity; stop if it rejected or recorded nothing.
+    Withdrawal: if amount is more than the $$$$ shares in current_holdings,
+      reject it (not enough cash).
+    Otherwise, record it with ticker $$$$ and cps 1.
+
+Record (one or more new records):
+    Save them with the client's transactions.
+    Apply each to current_holdings, in order, as in Part A.
+    Report success.
+
+Advance the trading day:
+    If trd_day is 99, refuse.
+    Otherwise, add 1 to trd_day. (The next time a client is selected,
+      their holdings are rebuilt through the new day.)</code></pre>
+  <p>Trace the day-4 trades: the first BUY fails the cash check; the SELL passes and records ABC and its <code>$$$$</code> BUY; the second BUY passes against the updated cash. Notice the reuse: the transaction actions use the same “apply one transaction” algorithm as Part A.</p>
+
+  <h3>Part B, step 7 · Edge cases</h3>
+  <ul>
+    <li><b>Several trades on one day:</b> each is checked against <code>current_holdings</code> as it stands after the trades before it, as the day-4 example shows.</li>
+    <li><b>Selling a whole position:</b> the ticker is removed from <code>current_holdings</code>, so a second sale of it that day is rejected.</li>
+    <li><b>Advancing past day 99:</b> refused.</li>
+  </ul>
+
+  <h3>Step 8 · Integrate: What is stored, and what is derived?</h3>
+  <p>Working out the algorithms confirms the step 2 decision: <b>saved transactions are the source of truth</b>, and <code>position_history</code> is rebuilt from them. For speed, we keep it in memory while working with the client, but we never save it as a second, independent record.</p>
+  <p>A useful integration test is to record the day-4 transactions, note the current holdings, and then reload the client from saved transactions. The holdings reconstructed for day 4 must be identical: <code>$$$$</code> 20 and ABC 6 shares, with remaining cost $940. If they don't match, recording and loading disagree about what a transaction does.</p>
+  <div class="exercise"><h4>Check what you've learned</h4><ol>
+    <li>Which components were easy to identify from the business problem?</li>
+    <li>Where did you still need to discover an algorithm?</li>
+    <li>Why would a one-line instruction “calculate holdings” be insufficient pseudocode?</li>
+    <li>What did checking the first guess against the rules teach us about what the system should store?</li>
+  </ol></div>
+  <div class="callout green"><p><b>What this example teaches:</b> domain rules suggested the components and their interfaces, and told us what the program needs. But inside Select client and the transaction actions, we still had to discover precise algorithms. Drafts from one example worked until a second example showed what they had hard-coded, and checking our first guess against the rules showed what to store.</p></div>
+
+  <h2 id="revising">Revising the design</h2>
+  <p><b>A first design is a hypothesis.</b> We make it so we have something concrete to test; we do not expect it to be perfect. Examples, pseudocode, and tests tell us when to change it.</p>
+  <div class="trigger">
+    <div class="k">Missing</div><div>Does an operation need information the component does not receive or remember? Add it or change the interface.</div>
+    <div class="k">Unnecessary</div><div>Is information stored but never needed? Consider removing it.</div>
+    <div class="k">Derived</div><div>Could information be recomputed from something already stored? Consider deriving it instead.</div>
+    <div class="k">Conflict</div><div>Could two pieces of stored information disagree? Choose a source of truth, or state how consistency is maintained.</div>
+  </div>
+  <p>Both examples revised their initial design. In the X, we changed from diagonal strokes to rows and discovered that previous rows need not be stored. In the portfolio, we found that daily holdings could be derived from transaction records, so they need not be saved separately.</p>
+  <p class="guiding-question"><b>When you are stuck, ask:</b> Do I misunderstand the problem, have I organized the work poorly, or have I not yet found a procedure the computer can execute?</p>
+  <p>The answer tells you which kind of thinking to return to. That is the method.</p>
+</main>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("themeToggle");
+  try {
+    var saved = localStorage.getItem("ps-theme");
+    if (saved) { root.setAttribute("data-theme", saved); }
+  } catch (e) {}
+  btn.addEventListener("click", function () {
+    var current = root.getAttribute("data-theme");
+    if (!current) {
+      current = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    var next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("ps-theme", next); } catch (e) {}
+  });
+
+  var links = document.querySelectorAll("nav.sidebar a");
+  var sections = [];
+  links.forEach(function (a) {
+    var el = document.querySelector(a.getAttribute("href"));
+    if (el) { sections.push({ link: a, el: el }); }
+  });
+  function onScroll() {
+    var y = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function (s) { if (s.el.offsetTop <= y) { current = s; } });
+    links.forEach(function (a) { a.classList.remove("active"); });
+    if (current) { current.link.classList.add("active"); }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  var opened = [];
+  window.addEventListener("beforeprint", function () {
+    opened = [];
+    document.querySelectorAll("details.details-key").forEach(function (d) {
+      if (!d.open) { opened.push(d); d.open = true; }
+    });
+  });
+  window.addEventListener("afterprint", function () {
+    opened.forEach(function (d) { d.open = false; });
+    opened = [];
+  });
+})();
+</script>
+</body>
+</html>

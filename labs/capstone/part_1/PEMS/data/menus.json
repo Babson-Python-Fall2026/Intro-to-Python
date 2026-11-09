@@ -1,91 +1,61 @@
-
 {
     "client_management": {
-        "title": "CLIENT MANAGEMENT",
+        "title": "Client Management Menu",
         "options": [
             {
                 "menu_item": "Select Client",
-                "action": "select_client",
-                "next_menu": "client_portfolio"
+                "next_menu": "client_workspace",
+                "action":"select_client"
             },
             {
                 "menu_item": "Create Client",
-                "action": "create_client",
-                "next_menu": null
+                "next_menu": null,
+                "action": "create_client"
             }
-            
         ]
     },
-
-    "client_portfolio": {
-        "title": "CLIENT PORTFOLIO",
+    "client_workspace": {
+        "title": "Client Workspace",
         "options": [
             {
                 "menu_item": "Transactions",
-                "action": null,
-                "next_menu": "transactions"
+                "next_menu": "transactions",
+                "action": null
             },
             {
                 "menu_item": "Reports",
-                "action": null,
-                "next_menu": "reports"
+                "next_menu": "reports",
+                "action": null
             }
         ]
     },
-
     "transactions": {
-        "title": "TRANSACTIONS",
+        "title": "Transactions",
         "options": [
             {
-                "menu_item": "Buy Stock",
-                "action": null,
-                "next_menu": null
-            },
-            {
-                "menu_item": "Sell Stock",
-                "action": null,
-                "next_menu": null
-            },
-            {
                 "menu_item": "Contribution",
-                "action": null,
-                "next_menu": null
+                "next_menu": null,
+                "action": null
             },
             {
                 "menu_item": "Withdrawal",
-                "action": null,
-                "next_menu": null
-            },
-            {
-                "menu_item": "Advance Trade Day",
-                "action": null,
-                "next_menu": null
+                "next_menu": null,
+                "action": null
             }
         ]
     },
-
     "reports": {
-        "title": "REPORTS",
+        "title": "Reports",
         "options": [
             {
                 "menu_item": "Holdings",
-                "action": null,
-                "next_menu": null
-            },
-            {
-                "menu_item": "Transactions",
-                "action": null,
-                "next_menu": null
+                "next_menu": null,
+                "action": null
             },
             {
                 "menu_item": "Performance",
-                "action": null,
-                "next_menu": null
-            },
-            {
-                "menu_item": "Cash Summary",
-                "action": null,
-                "next_menu": null
+                "next_menu": null,
+                "action": null
             }
         ]
     }

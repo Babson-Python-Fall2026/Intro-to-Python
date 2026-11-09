@@ -28,12 +28,14 @@ def load_data():
     with open(DATA / "menus.json", "r", encoding="utf-8") as file:
             menus = json.load(file)
 
+
+    # assign functions to option["action"] i.e. replace string with function
     for menu in menus.values():
         for option in menu["options"]:
-            action_name = option.get("action")
+            action_name = option.get("action")  # action name is a string
 
             if action_name is not None:
-                option["action"] = actions[action_name]
+                option["action"] = actions[action_name] # assign the functions frtom actions {}
 
     try:
         with open(DATA / "pm_users.json", "r", encoding="utf-8") as file:
@@ -56,13 +58,15 @@ def load_data():
 
     
     market_data = {}    
+    
 
-    for day in range(len(tickers)):      
+    for day in range(len(eod_prices[tickers[0]])):  # gets the number of records for first ticker (number of days)
 
         daily_record = {'date': eod_prices[tickers[0]][day]['Date'][:10]}       
 
         for ticker in tickers:           
 
+            # default record with no corp action
             ticker_record = {
                 'price': eod_prices[ticker][day]['Close'],
                 'div': 0,
@@ -70,6 +74,7 @@ def load_data():
                 'split_out': 1
             }            
 
+            # update ticker record for corp action
             for action in corporate_actions[ticker]:                
 
                 action_date = action['Date'][:10]                
@@ -78,11 +83,11 @@ def load_data():
 
                     ticker_record['div'] = action.get('Dividends', 0)
                     
-                    split_factor = action.get('Stock Splits', 0)
+                    split_factor = action.get('Stock Splits', 1)
                    
                     if split_factor:
                         ticker_record['split_out'], ticker_record['split_in'] = (
-                            Decimal(str(split_factor)).as_integer_ratio()
+                            Decimal(str(split_factor)).as_integer_ratio() # ai this!
                         )                   
 
                     break                
@@ -90,8 +95,10 @@ def load_data():
                 if action_date > daily_record['date']:
                     break
 
+            # for every ticker on this day 
             daily_record[ticker] = ticker_record
-        
+
+        # for every day
         market_data[day] = daily_record
 
     if False:
@@ -99,7 +106,8 @@ def load_data():
             print(f"Day {day}:")
             pp(market_data[day], sort_dicts=False)
 
-        
+
+    
         
     return market_data, menus, pems, security_info
 

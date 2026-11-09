@@ -78,6 +78,9 @@ def load_data():
     #     ...
     # }
 
+   
+    # CONVERT THE ABOVE TO THE FOLLOWING:
+
     # Day 0:{'date': '2025-08-15',
     #        'TSM': {'price': 238.88, 'div': 0, 'split_in': 1, 'split_out': 1},
     #        'BRK.B': {'price': 477.2, 'div': 0, 'split_in': 1, 'split_out': 1},
@@ -143,7 +146,7 @@ def load_data():
                              'split_in': 1,
                              'split_out': 1}            
 
-            # chewck for corporate action
+            # check for corporate action
             for action in corporate_actions[ticker]:
                 action_date = action['Date'][:10]
                 if action_date == daily_record['date']:
@@ -153,16 +156,18 @@ def load_data():
 
                     if split_factor:
                         ticker_record['split_out'], ticker_record['split_in'] = (
-                            Decimal(str(split_factor)).as_integer_ratio()
+                            Decimal(str(split_factor)).as_integer_ratio() # look this up in ai!
                         )
                     break
 
                 if action_date > daily_record['date']:
                     break
-            #daily_record is a dictionary with keys 'date', and then keys for each ticker
-            daily_record[ticker] = ticker_record 
-        # market_data is a dictionary with keys 0 - 99 for trd_day  whose value is daily_record          
-        market_data[day] = daily_record
+
+            # for every ticker               
+            daily_record[ticker] = ticker_record  # create ticker key
+
+        # for every day        
+        market_data[day] = daily_record # create day key
 
     
     # pp(market_data, width = 120, sort_dicts = False)
