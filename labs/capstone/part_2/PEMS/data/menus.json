@@ -35,12 +35,27 @@
             {
                 "menu_item": "Contribution",
                 "next_menu": null,
-                "action": null
+                "action": "contribution"
             },
             {
                 "menu_item": "Withdrawal",
                 "next_menu": null,
-                "action": null
+                "action": "withdrawal"
+            },
+            {
+                "menu_item": "buy",
+                "next_menu": null,
+                "action": "buy"
+            },
+            {
+                "menu_item": "sell",
+                "next_menu": null,
+                "action": "sell"
+            },
+            {
+                "menu_item": "advance trade day",
+                "next_menu": null,
+                "action": "adv_trd_day"
             }
         ]
     },

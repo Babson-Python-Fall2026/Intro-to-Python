@@ -3,12 +3,16 @@ from clear_screen import clear
 from pause import pause
 from load_data import load_data
 from pprint import pprint as pp
+from actions import update_holdings
+import json
+from pathlib import Path
 
 from menu_print import menu_print
 
 clear()
 
-def pems():
+def pems():    
+
     while True:
         clear()
         current_pm = login()
@@ -24,6 +28,10 @@ def pems():
 
         market_data, MENUS, pems, security_info = load_data()
 
+        # loading current trade day
+        DATA = (Path(__file__).parent.parent / "data").resolve()    
+        with open(DATA / "trd_day.json", "r", encoding="utf-8") as file:
+            cur_trd_day = json.load(file)
 
         stack = ["client_management"]
 
@@ -40,11 +48,13 @@ def pems():
                 "pm": current_pm,
                 'pems': pems,
                 "clients": pems[current_pm]["clients"],
-                "client_idx": None,
-                "trd_day": 1,
+                "client_idx": None,                
+                "trd_day": cur_trd_day,
                 "market_data": market_data,
-                "security_info": security_info
-            }
+                "security_info": security_info,
+                "holdings": {0:{}},
+                "advance": True
+            }       
 
         while stack:
 
