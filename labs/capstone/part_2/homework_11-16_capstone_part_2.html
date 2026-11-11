@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OIM3600 Homework — November 16, 2026</title>
+  <style>
+    :root { color-scheme: light; --ink:#1d2939; --muted:#526177; --border:#d9e2ec; --blue:#1f4e79; --pale:#edf4fa; --accent:#e5edf6; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:#f6f8fb; color:var(--ink); line-height:1.55; }
+    main { width:min(850px,calc(100% - 36px)); margin:40px auto; background:#fff; border:1px solid var(--border); border-radius:10px; padding:35px 43px 43px; box-shadow:0 5px 20px rgba(15,35,65,.06); }
+    .course { color:var(--blue); font-size:.85rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; margin-bottom:6px; }
+    h1 { font-size:1.75rem; line-height:1.25; margin:0 0 12px; color:#173b5c; }
+    .due { display:inline-block; font-weight:700; background:var(--pale); border-left:4px solid var(--blue); padding:9px 14px; margin:5px 0 22px; }
+    p { margin:10px 0 16px; }
+    h2 { font-size:1.15rem; color:var(--blue); margin:26px 0 9px; }
+    ol { padding-left:24px; margin:10px 0; }
+    li { padding-left:4px; margin:0 0 15px; }
+    li ol { margin-top:9px; padding-left:24px; }
+    li ol li { margin-bottom:6px; }
+    code { font-family:Consolas,'Courier New',monospace; overflow-wrap:anywhere; background:#f1f4f8; padding:2px 4px; border-radius:3px; font-size:.96em; }
+    .path { display:block; background:#f1f4f8; padding:11px 14px; border-radius:6px; margin:10px 0 16px; font-weight:600; }
+    .note { padding:15px 18px; background:#f8fafc; border:1px solid var(--border); border-left:4px solid #6a829a; border-radius:5px; margin-top:24px; }
+    .note strong { color:#173b5c; }
+    @media (max-width:600px) { main { margin:16px auto; padding:24px 22px 30px; } h1 {font-size:1.5rem;} }
+    @media print { body { background:#fff; } main { margin:0 auto; width:100%; border:0; border-radius:0; box-shadow:none; padding:16px 24px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="course">OIM3600 · Capstone Project · Part 2</div>
+    <h1>Homework — Monday, November 16</h1>
+    <div class="due">Due: Monday, November 16, 2026</div>
+
+    <p>Work in the following folder in your student repository:</p>
+    <code class="path">student_repo/labs/capstone/part_2</code>
+
+    <h2>Assignment</h2>
+    <ol>
+      <li>
+        <strong>Review and, if needed, edit the menu file:</strong>
+        <code>data/menus.json</code>.
+        The necessary changes may already be complete. Check the file and make any updates needed.
+      </li>
+      <li>
+        <strong>Edit the actions file:</strong> <code>source_code/actions.py</code>.
+        <ol type="a">
+          <li>Complete <code>def buy()</code>, <code>def sell()</code>, and <code>def withdrawal()</code>.</li>
+          <li>Update the <code>actions</code> data structure in this file as needed.</li>
+        </ol>
+      </li>
+      <li>
+        <strong>Review and understand these functions:</strong>
+        <ol type="a">
+          <li><code>update_holdings()</code></li>
+          <li><code>rebuild_holdings()</code></li>
+        </ol>
+        These functions create <code>state['holdings']</code>. Be prepared to explain their purpose and how they work.
+      </li>
+      <li>
+        <strong>Understand the overall workflow of the PEMS project.</strong>
+        Be able to explain how the menus, actions, state, transactions, and holdings fit together.
+      </li>
+    </ol>
+
+    <div class="note">
+      <strong>Simplifying assumption for this homework:</strong> Ignore corporate actions for now.
+      <p>As you work, think about <strong>where in the PEMS workflow corporate actions might need to be applied</strong>. Corporate actions will be an assignment for next week; you do not need to implement them now.</p>
+    </div>
+  </main>
+</body>
+</html>

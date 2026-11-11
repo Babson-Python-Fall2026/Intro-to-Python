@@ -1,0 +1,2 @@
+All work in class today was done in labs/capstone/part_2
+review menus.json and actions.py
